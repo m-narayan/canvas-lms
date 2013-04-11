@@ -30,6 +30,7 @@
 /public/stylesheets/compiled/
 /spec/javascripts/
 /tmp/
+.rvmrc
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
