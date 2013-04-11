@@ -33,6 +33,7 @@
 /spec/javascripts/
 /tmp/
 /vendor/plugins/rails_upgrade
+.rvmrc
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
