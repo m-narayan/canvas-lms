@@ -31,6 +31,7 @@
 /spec/javascripts/
 /tmp/
 .rvmrc
+tags
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
