@@ -34,6 +34,7 @@
 /tmp/
 /vendor/plugins/rails_upgrade
 .rvmrc
+tags
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
