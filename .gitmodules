@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/canvas-mt"]
+	path = vendor/plugins/canvas-mt
+	url = https://github.com/m-narayan/canvas-mt
