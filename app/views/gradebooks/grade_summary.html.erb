@@ -116,7 +116,6 @@
     <%
        submission = assignment_presenter.submission
        assignment = assignment_presenter.assignment
-       assignment_submissions = assignment_presenter.submissions
        can_view_distribution = can_do(@context, @current_user, :read_as_admin) || !assignment_presenter.hide_distribution_graphs?
     %>
     <tr class="student_assignment <%= 'assignment_graded' if assignment_presenter.graded? %> <%= assignment_presenter.special_class %>" data-muted="<%= assignment.muted? %>" id="<%= "submission_" + assignment.id.to_s %>">
@@ -291,7 +290,7 @@
                 <% if comment.media_comment_id && comment.media_comment_type %>
                   <div class="comment_media">
                     <%= t(:media_comment, "This is a media comment,") %><br/>
-                    <a href="#" class="play_comment_link media-comment"><%= t('links.click_to_view', "click here to view") %></a>
+                    <a href="#" class="play_comment_link <%= comment.media_comment_type %>_comment"><%= t('links.click_to_view', "click here to view") %></a>
                     <span class="media_comment_id" style="display: none;"><%= comment.media_comment_id %></span>
                     <div class="media_comment_content">
                     </div>

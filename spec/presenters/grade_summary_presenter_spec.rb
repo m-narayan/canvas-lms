@@ -4,12 +4,13 @@ describe GradeSummaryPresenter do
   describe '#selectable_courses' do
 
     describe 'all on one shard' do
-      let(:user) { User.create! }
       let(:course) { Course.create! }
-      let(:presenter) { GradeSummaryPresenter.new(course, user, nil) }
+      let(:presenter) { GradeSummaryPresenter.new(course, @user, nil) }
+      let(:assignment) { assignment_model(:course => course) }
 
       before do
-        enrollment = StudentEnrollment.create!(:course => course, :user => user)
+        user
+        enrollment = StudentEnrollment.create!(:course => course, :user => @user)
         enrollment.update_attribute(:workflow_state, 'active')
         course.update_attribute(:workflow_state, 'available')
       end
@@ -17,10 +18,26 @@ describe GradeSummaryPresenter do
       it 'includes courses where the user is enrolled' do
         presenter.selectable_courses.should include(course)
       end
+
+      describe "submissions_by_assignment" do
+        before do
+          Setting.set('grade_distributions_submission_count_threshold', '2')
+          assignment.submissions.create!(:user => @user)
+        end
+
+        it "loads submissions in a small course" do
+          presenter.submissions_by_assignment[assignment.id].size.should == 1
+        end
+
+        it "doesn't load in a large course" do
+          assignment.submissions.create!(:user => student_in_course(:course => course).user)
+          presenter.submissions_by_assignment.size.should == 0
+        end
+      end
     end
 
     describe 'across shards' do
-      it_should_behave_like 'sharding'
+      specs_require_sharding
 
       it 'can find courses when the user and course are on the same shard' do
         user = course = enrollment = nil

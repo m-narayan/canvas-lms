@@ -89,7 +89,7 @@ class GradeSummaryPresenter
   def assignments
     @assignments ||= begin
       scope = @context.assignments.active.gradeable
-      array = scope.find(:all, :include => [:assignment_overrides]).collect{|a| a.overridden_for(student)}.sort
+      array = scope.includes(:assignment_overrides).collect{|a| a.overridden_for(student)}.sort
       # pre-cache the assignment group for each assignment object
       group_index = groups.index_by(&:id)
       array.each{ |a| a.assignment_group = group_index[a.assignment_group_id] }
@@ -99,17 +99,19 @@ class GradeSummaryPresenter
 
   def submissions
     @submissions ||= @context.submissions.
-      scoped(:include => %w(submission_comments rubric_assessments assignment)).
+      except(:includes).
+      includes(:submission_comments, :rubric_assessments, :assignment).
       find_all_by_user_id(student)
   end
 
   def submissions_by_assignment
     @submissions_by_assignment ||=
-      if @context.allows_gradebook_uploads?
+      if allow_loading_all_submissions?
         # Yes, fetch *all* submissions for this course; otherwise the view will end up doing a query for each
         # assignment in order to calculate grade distributions
         @context.submissions.
-          all(:select => "submissions.assignment_id, submissions.score, submissions.grade, submissions.quiz_submission_id").
+          select([:assignment_id, :score, :grade, :quiz_submission_id]).
+          except(:includes).
           group_by(&:assignment_id)
       else
         {}
@@ -167,4 +169,10 @@ class GradeSummaryPresenter
     assignments.concat(value)
   end
 
+  protected
+
+  def allow_loading_all_submissions?
+    threshold = Setting.get('grade_distributions_submission_count_threshold', '0').to_i
+    @context.allows_gradebook_uploads? && (threshold == 0 || @context.submissions.count < threshold)
+  end
 end
