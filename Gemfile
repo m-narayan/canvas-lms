@@ -1,4 +1,4 @@
-source 'https://rubygems.org/'
+source 'http://rubygems.org/'
 
 ONE_NINE = RUBY_VERSION >= "1.9."
 require File.expand_path("../config/canvas_rails3", __FILE__)
@@ -172,6 +172,8 @@ end
 group :statsd do
   gem 'statsd-ruby', '1.0.0', :require => 'statsd'
 end
+
+gem 'subdomain-fu'
 
 # Non-standard Canvas extension to Bundler behavior -- load the Gemfiles from
 # plugins.
