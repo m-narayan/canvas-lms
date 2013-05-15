@@ -602,7 +602,7 @@ class Account < ActiveRecord::Base
   end
   
   def default_time_zone
-    read_attribute(:default_time_zone) || "Mountain Time (US & Canada)"
+    read_attribute(:default_time_zone) || "New Delhi"
   end
   
   workflow do
