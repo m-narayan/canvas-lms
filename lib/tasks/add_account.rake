@@ -1,4 +1,5 @@
 namespace :db do
+
   task add_account: :environment do
 
 
@@ -14,6 +15,11 @@ namespace :db do
           @account.name = name
           puts "Creating Account #{name}... "
           @account.save!
+          #now add the siteAdmin account admin to this account admin
+          site_admin_ac_admin_user = Account.site_admin.account_users.first
+          @account.add_user(site_admin_ac_admin_user.user, 'AccountAdmin')
+          @account.save!
+          puts "added the site-admin to the list of account admins"
         else
           puts "Account Already Exists"
         end
@@ -35,7 +41,7 @@ namespace :db do
           # fail here.
           puts "#{email}"
           pseudonym = user.pseudonyms.create!(:unique_id => email,
-                                              :password => "validpassword", :password_confirmation =>                                  "validpassword",
+                                              :password => "validpassword", :password_confirmation => "validpassword",
                                               :account => @account )
           user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
         end
@@ -82,5 +88,6 @@ namespace :db do
       create_admin_user(email, password)
       puts "Successfully created admin user with email: #{email}, password: #{password} for account: #{@account.name}"
     end
-  end
+ end
+
 end

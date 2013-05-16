@@ -226,5 +226,5 @@
 <% cache('global_dialogs_render') do %>
   <%= render :partial => "shared/global_dialogs" %>
 <% end %>
-
+<%= debug(params) %>
 <%= render :partial => 'layouts/foot', :locals => { :include_common_bundle => true } %>
