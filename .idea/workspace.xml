@@ -2,19 +2,533 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="acda36b4-e90a-40da-b992-41249f10fff1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/sysadmin.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.corrupted.20130514-040053.ids" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130312231026_add_message_account_id.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130325204913_create_quiz_statistics_table.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130411031858_add_table_submission_versions.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130415221953_populate_submission_versions.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130423162205_change_migration_issue_strings_to_text.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130429201937_add_some_indices.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20130508214241_add_quiz_statistics_foreign_key.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/collections/CommMessageCollection.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/views/accounts/admin_tools/CommMessageItemView.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/views/accounts/admin_tools/CommMessagesContentPaneView.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/views/accounts/admin_tools/CommMessagesSearchFormView.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/models/Conversation.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/models/ConversationSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/models/CreateUserList.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/views/courses/roster/CreateUsersView.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/views/courses/roster/CreateUsersViewSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/views/MessageStudentsDialog.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/views/MessageStudentsDialogSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/backbone-ext/ModelSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/models/Progress.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/models/ProgressSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/shared/_flash_notice.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/_messageStudentsWhoRecipientList.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/stylesheets/jqueryui/_overrides.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/views/assignments/_syllabus_content.html.erb_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/stylesheets/account_admin_tools.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/selenium/admin_tools_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/attr_config.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/lib/attr_config_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/aws_sdk.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/commMessageItem.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/commMessagesContentPane.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/commMessagesSearchForm.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/commMessagesSearchOverview.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/commMessagesSearchResults.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/api/v1/comm_message.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/comm_messages_api_controller.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/apis/v1/comm_messages_api_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/courses/roster/createUsers.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/courses/roster/createUsersWrapper.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/event_stream.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/lib/event_stream_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/quiz_question/file_upload_question.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/calendar/genericSelectOptions.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/event_stream/index.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/lib/event_stream/index_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/marginalia.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/marginalia.yml.example" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/jst/messageStudentsDialog.handlebars" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/stylesheets/jst/messageStudentsDialog.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/script/migration_lint" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/data_fixup/populate_submission_versions.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/migrations/populate_submission_versions_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/models/progressable.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/models/progressableSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/quiz_statistics.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/models/quiz_statistics_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/event_stream/record.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/util/round.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/coffeescripts/util/roundSpec.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/initializers/shackles.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/coffeescripts/util/stateList.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/guard/styleguide.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/stylesheets/styleguide.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/styleguide.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/models/submission_version.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/models/submission_version_spec.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/stylesheets/syntax.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doc/styleguide/template.mustache" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/testem.yml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/config/initializers/connection_specification.rb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/spec/lib/connection_specification_with_environment_spec.rb" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/coffeescripts/views/courses/RosterUserView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/courses/roster/RosterUserView.coffee" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/coffeescripts/views/courses/RosterView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/courses/roster/RosterView.coffee" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/views/info/styleguide.html.erb" afterPath="$PROJECT_DIR$/app/views/info/old_styleguide.html.erb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/sis/csv/base_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/csv_base_importer.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/spec/messages/alert.erb_spec.erb" afterPath="$PROJECT_DIR$/spec/messages/alert.erb_spec.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/canvas-mt" afterPath="$PROJECT_DIR$/vendor/plugins/canvas-mt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.generators" afterPath="$PROJECT_DIR$/.idea/.generators" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.rakeTasks" afterPath="$PROJECT_DIR$/.idea/.rakeTasks" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20111020191436_translate_links_on_assessment_questions.rb" afterPath="$PROJECT_DIR$/db/migrate/20111020191436_translate_links_on_assessment_questions.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/migrate/20111111165300_cleanup_quiz_question_links.rb" afterPath="$PROJECT_DIR$/db/migrate/20111111165300_cleanup_quiz_question_links.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/AdminTools.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/accounts/admin_tools/AdminTools.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/accounts/admin_tools/AdminToolsView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/accounts/admin_tools/AdminToolsView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/coffeescripts/views/accounts/admin_tools/AdminToolsViewSpec.coffee" afterPath="$PROJECT_DIR$/spec/coffeescripts/views/accounts/admin_tools/AdminToolsViewSpec.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/models/AssignmentOverride.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/models/AssignmentOverride.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/coffeescripts/models/AssignmentOverrideSpec.coffee" afterPath="$PROJECT_DIR$/spec/coffeescripts/models/AssignmentOverrideSpec.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/calendar/Calendar.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/calendar/Calendar.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/widget/ContextSearch.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/widget/ContextSearch.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/conversations/Conversation.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/conversations/Conversation.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/conversations/ConversationsPane.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/conversations/ConversationsPane.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/DialogFormView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/DialogFormView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/calendar/EditAssignmentDetails.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/calendar/EditAssignmentDetails.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/calendar/EditCalendarEventDetails.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/calendar/EditCalendarEventDetails.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/calendar/EditEventView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/calendar/EditEventView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/assignments/EditView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/assignments/EditView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/DiscussionTopic/EntriesView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/DiscussionTopic/EntriesView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/DiscussionTopic/EntryView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/DiscussionTopic/EntryView.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/add_account.rake" afterPath="$PROJECT_DIR$/lib/tasks/add_account.rake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/gradebook2/Gradebook.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/gradebook2/Gradebook.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Guardfile" afterPath="$PROJECT_DIR$/Guardfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/conversations/MessageForm.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/conversations/MessageForm.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/backbone-ext/Model.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/backbone-ext/Model.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/course_settings/NavigationView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/course_settings/NavigationView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/outcomes/OutcomeContentBase.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/outcomes/OutcomeContentBase.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/outcomes/OutcomeIconBase.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/outcomes/OutcomeIconBase.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/outcomes/OutcomeView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/outcomes/OutcomeView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/PaginatedCollectionView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/PaginatedCollectionView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/PaginatedView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/PaginatedView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/registration/SelfEnrollmentForm.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/registration/SelfEnrollmentForm.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/courses/SyllabusView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/courses/SyllabusView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/coffeescripts/views/SyllabusViewSpec.coffee" afterPath="$PROJECT_DIR$/spec/coffeescripts/views/SyllabusViewSpec.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/calendar/TimeBlockRow.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/calendar/TimeBlockRow.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/coffeescripts/calendar/TimeBlockRowSpec.coffee" afterPath="$PROJECT_DIR$/spec/coffeescripts/calendar/TimeBlockRowSpec.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/widget/TokenSelector.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/widget/TokenSelector.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/widget/TokenSelectorList.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/widget/TokenSelectorList.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/ValidatedFormView.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/ValidatedFormView.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/ValidatedMixin.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/ValidatedMixin.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/backbone-ext/View.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/backbone-ext/View.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/courses/_add_users.html.erb" afterPath="$PROJECT_DIR$/app/views/courses/_add_users.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/utilities/_admin_links.scss" afterPath="$PROJECT_DIR$/app/stylesheets/utilities/_admin_links.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/self_enrollments/_authenticate.html.erb" afterPath="$PROJECT_DIR$/app/views/self_enrollments/_authenticate.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/self_enrollments/_authenticate_or_register.html.erb" afterPath="$PROJECT_DIR$/app/views/self_enrollments/_authenticate_or_register.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/self_enrollments/_confirm_enrollments.html.erb" afterPath="$PROJECT_DIR$/app/views/self_enrollments/_confirm_enrollments.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/context_modules/_content.html.erb" afterPath="$PROJECT_DIR$/app/views/context_modules/_content.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/context_modules/_context_module.html.erb" afterPath="$PROJECT_DIR$/app/views/context_modules/_context_module.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/translations/_core_en.js" afterPath="$PROJECT_DIR$/public/javascripts/translations/_core_en.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/_email_footer.email.erb" afterPath="$PROJECT_DIR$/app/messages/_email_footer.email.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/calendars/_event.html.erb" afterPath="$PROJECT_DIR$/app/views/calendars/_event.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/shared/_flash_notices.html.erb" afterPath="$PROJECT_DIR$/app/views/shared/_flash_notices.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/_foot.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/_foot.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/_form_question.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/_form_question.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/collaborations/_forms.html.erb" afterPath="$PROJECT_DIR$/app/views/collaborations/_forms.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/utilities/_forms.scss" afterPath="$PROJECT_DIR$/app/stylesheets/utilities/_forms.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/utilities/_icons.scss" afterPath="$PROJECT_DIR$/app/stylesheets/utilities/_icons.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/jqueryui/_jquery.ui.all.scss" afterPath="$PROJECT_DIR$/app/stylesheets/jqueryui/_jquery.ui.all.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/_layout.email.html.erb" afterPath="$PROJECT_DIR$/app/messages/_layout.email.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/base/_layout.sass" afterPath="$PROJECT_DIR$/app/stylesheets/base/_layout.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/facebook/_message.html.erb" afterPath="$PROJECT_DIR$/app/views/facebook/_message.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/messages/_message.html.erb" afterPath="$PROJECT_DIR$/app/views/messages/_message.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/context_modules/_module_item.html.erb" afterPath="$PROJECT_DIR$/app/views/context_modules/_module_item.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/bootstrap_parts/_overrides.scss" afterPath="$PROJECT_DIR$/app/stylesheets/bootstrap_parts/_overrides.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/_question_group.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/_question_group.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/_question_statistic.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/_question_statistic.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/_single_answer.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/_single_answer.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/utilities/_spacing.scss" afterPath="$PROJECT_DIR$/app/stylesheets/utilities/_spacing.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/assignments/_syllabus_content.html.erb" afterPath="$PROJECT_DIR$/app/views/assignments/_syllabus_content.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/utilities/_token_selector.sass" afterPath="$PROJECT_DIR$/app/stylesheets/utilities/_token_selector.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/_variables.sass" afterPath="$PROJECT_DIR$/app/stylesheets/_variables.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/abstract_course_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/abstract_course_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/account.rb" afterPath="$PROJECT_DIR$/app/models/account.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/admin/account_admin_manage_groups_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/admin/account_admin_manage_groups_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/account_admin_tools.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/account_admin_tools.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/account_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/account_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/canvas/account_reports.rb" afterPath="$PROJECT_DIR$/lib/canvas/account_reports.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/account_spec.rb" afterPath="$PROJECT_DIR$/spec/models/account_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/accounts_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/accounts_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/accounts_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/accounts_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/accounts_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/accounts_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/active_record.rb" afterPath="$PROJECT_DIR$/config/initializers/active_record.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/added_to_conversation.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/added_to_conversation.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/messages/added_to_conversation.twitter.erb_spec.rb" afterPath="$PROJECT_DIR$/spec/messages/added_to_conversation.twitter.erb_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/behaviors/admin-links.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/behaviors/admin-links.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/accounts/admin_tools.html.erb" afterPath="$PROJECT_DIR$/app/views/accounts/admin_tools.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/alert.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/alert.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/announcements_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/announcements_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api.rb" afterPath="$PROJECT_DIR$/lib/api.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/api_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/api_spec_helper.rb" afterPath="$PROJECT_DIR$/spec/apis/api_spec_helper.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/integration/application_spec.rb" afterPath="$PROJECT_DIR$/spec/integration/application_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_canceled_by_user.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_canceled_by_user.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/messages/appointment_canceled_by_user.twitter.erb_spec.rb" afterPath="$PROJECT_DIR$/spec/messages/appointment_canceled_by_user.twitter.erb_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_deleted_for_user.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_deleted_for_user.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/messages/appointment_deleted_for_user.twitter.erb_spec.rb" afterPath="$PROJECT_DIR$/spec/messages/appointment_deleted_for_user.twitter.erb_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/appointment_group.rb" afterPath="$PROJECT_DIR$/app/models/appointment_group.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_group_deleted.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_group_deleted.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_group_published.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_group_published.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_group_updated.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_group_updated.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/appointment_groups_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/appointment_groups_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_reserved_by_user.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_reserved_by_user.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/appointment_reserved_for_user.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/appointment_reserved_for_user.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/ar.yml" afterPath="$PROJECT_DIR$/config/locales/ar.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/coffeescripts/helpers/assertions.coffee" afterPath="$PROJECT_DIR$/spec/coffeescripts/helpers/assertions.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/assessment_question.rb" afterPath="$PROJECT_DIR$/app/models/assessment_question.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/assets.yml" afterPath="$PROJECT_DIR$/config/assets.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/assignment.rb" afterPath="$PROJECT_DIR$/app/models/assignment.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/assignment.rb" afterPath="$PROJECT_DIR$/lib/api/v1/assignment.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_changed.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_changed.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_created.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_created.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_due_date_changed.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_due_date_changed.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_due_date_override_changed.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_due_date_override_changed.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/assignment_edit.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/assignment_edit.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_graded.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_graded.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/assignment_group.rb" afterPath="$PROJECT_DIR$/app/models/assignment_group.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_resubmitted.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_resubmitted.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/assignment_spec.rb" afterPath="$PROJECT_DIR$/spec/models/assignment_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_submitted.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_submitted.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/assignment_submitted_late.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/assignment_submitted_late.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/assignments.js" afterPath="$PROJECT_DIR$/public/javascripts/assignments.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/assignments_api_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/assignments_api_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/assignments_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/assignments_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/assignments_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/assignments_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/assignments_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/assignments_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/attachment.rb" afterPath="$PROJECT_DIR$/app/models/attachment.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/attachment.rb" afterPath="$PROJECT_DIR$/lib/api/v1/attachment.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/factories/attachment_factory.rb" afterPath="$PROJECT_DIR$/spec/factories/attachment_factory.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/base_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/base_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/messageable_user/calculator.rb" afterPath="$PROJECT_DIR$/lib/messageable_user/calculator.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/calendar.js" afterPath="$PROJECT_DIR$/public/javascripts/calendar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/calendar2_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/calendar2_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/calendar_event.rb" afterPath="$PROJECT_DIR$/app/models/calendar_event.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/calendar_event.rb" afterPath="$PROJECT_DIR$/lib/api/v1/calendar_event.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/calendar_event_spec.rb" afterPath="$PROJECT_DIR$/spec/models/calendar_event_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/calendar_events_api_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/calendar_events_api_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/calendar_events_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/calendar_events_api_spec.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/canvas-lms.iml" afterPath="$PROJECT_DIR$/.idea/canvas-lms.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/canvas.rake" afterPath="$PROJECT_DIR$/lib/tasks/canvas.rake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/cc/importer/canvas_cartridge_converter_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/cc/importer/canvas_cartridge_converter_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/canvas/cassandra.rb" afterPath="$PROJECT_DIR$/lib/canvas/cassandra.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/canvas/cassandra_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/canvas/cassandra_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cc/xsd/cccv1p0.xsd" afterPath="$PROJECT_DIR$/lib/cc/xsd/cccv1p0.xsd" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/collaboration_invitation.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/collaboration_invitation.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/collaborations.js" afterPath="$PROJECT_DIR$/public/javascripts/collaborations.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/common.rb" afterPath="$PROJECT_DIR$/spec/selenium/common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/cc/importer/common_cartridge_converter_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/cc/importer/common_cartridge_converter_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/communication_channel.rb" afterPath="$PROJECT_DIR$/app/models/communication_channel.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conference_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conference_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/content_imports_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/content_imports_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/content_imports_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/content_imports_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/content_migration.rb" afterPath="$PROJECT_DIR$/app/models/content_migration.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/content_migration_spec.rb" afterPath="$PROJECT_DIR$/spec/models/content_migration_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/content_participation_count.rb" afterPath="$PROJECT_DIR$/app/models/content_participation_count.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/content_participation_count_spec.rb" afterPath="$PROJECT_DIR$/spec/models/content_participation_count_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/context_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/context_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/context_module.rb" afterPath="$PROJECT_DIR$/app/models/context_module.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/context_module.rb" afterPath="$PROJECT_DIR$/lib/api/v1/context_module.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/views/context_modules/context_modules.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/views/context_modules/context_modules.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/context_modules.js" afterPath="$PROJECT_DIR$/public/javascripts/context_modules.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/context_modules_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/context_modules_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/context_modules_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/context_modules_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/conversation.rb" afterPath="$PROJECT_DIR$/app/models/conversation.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/conversations/conversationItem.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/conversations/conversationItem.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/conversation_message.rb" afterPath="$PROJECT_DIR$/app/models/conversation_message.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/conversation_message.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/conversation_message.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/conversation_participant.rb" afterPath="$PROJECT_DIR$/app/models/conversation_participant.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/conversation_spec.rb" afterPath="$PROJECT_DIR$/spec/models/conversation_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/conversations.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/conversations.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/conversations_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/conversations_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_attachments_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_attachments_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/conversations_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/conversations_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_context_filtering_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_context_filtering_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/conversations_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/conversations_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/conversations_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/conversations_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_group_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_group_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_recipient_finder_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_recipient_finder_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_sent_filter_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_sent_filter_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_submissions_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_submissions_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/conversations_user_notes_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/conversations_user_notes_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/data_fixup/copy_role_overrides.rb" afterPath="$PROJECT_DIR$/lib/data_fixup/copy_role_overrides.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/reporting/counts_report.rb" afterPath="$PROJECT_DIR$/lib/reporting/counts_report.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/course.rb" afterPath="$PROJECT_DIR$/app/models/course.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/course_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/course_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/course_json.rb" afterPath="$PROJECT_DIR$/lib/api/v1/course_json.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/course_json_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/course_json_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/course_section.rb" afterPath="$PROJECT_DIR$/app/models/course_section.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/course_settings_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/course_settings_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/courses_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/courses_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/courses_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/courses_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/courses_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/courses_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/css.rake" afterPath="$PROJECT_DIR$/lib/tasks/css.rake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/delayed_message.rb" afterPath="$PROJECT_DIR$/app/models/delayed_message.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/discussion.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/discussion.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/discussion_entry.rb" afterPath="$PROJECT_DIR$/app/models/discussion_entry.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/discussion_entry_participant.rb" afterPath="$PROJECT_DIR$/app/models/discussion_entry_participant.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/discussion_entry_spec.rb" afterPath="$PROJECT_DIR$/spec/models/discussion_entry_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/discussion_topic.rb" afterPath="$PROJECT_DIR$/app/models/discussion_topic.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/discussion_topics_api_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/discussion_topics_api_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/discussion_topics_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/discussion_topics_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/discussion_topics_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/discussion_topics_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/discussions.scss" afterPath="$PROJECT_DIR$/app/stylesheets/discussions.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/discussions_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/discussions_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/calendar/editAssignment.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/calendar/editAssignment.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/calendar/editCalendarEvent.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/calendar/editCalendarEvent.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/calendar/editCalendarEventFull.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/calendar/editCalendarEventFull.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/calendar/editCalendarEventFull.sass" afterPath="$PROJECT_DIR$/app/stylesheets/calendar/editCalendarEventFull.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/edit_rubric.js" afterPath="$PROJECT_DIR$/public/javascripts/edit_rubric.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/behaviors/elementToggler.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/behaviors/elementToggler.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/coffeescripts/behaviors/elementTogglerSpec.coffee" afterPath="$PROJECT_DIR$/spec/coffeescripts/behaviors/elementTogglerSpec.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/en.yml" afterPath="$PROJECT_DIR$/config/locales/en.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/generated/en.yml" afterPath="$PROJECT_DIR$/config/locales/generated/en.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/locales/en.yml" afterPath="$PROJECT_DIR$/public/locales/en.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/enrollment.rb" afterPath="$PROJECT_DIR$/app/models/enrollment.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/enrollment_accepted.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/enrollment_accepted.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/enrollment_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/enrollment_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/enrollment_invitation.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/enrollment_invitation.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/enrollment_notification.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/enrollment_notification.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/enrollment_registration.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/enrollment_registration.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/enrollments_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/enrollments_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/eportfolio.js" afterPath="$PROJECT_DIR$/public/javascripts/eportfolio.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/error_report.rb" afterPath="$PROJECT_DIR$/app/models/error_report.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/es.yml" afterPath="$PROJECT_DIR$/config/locales/es.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/event_date_changed.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/event_date_changed.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/external_feed.rb" afterPath="$PROJECT_DIR$/app/models/external_feed.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/facebook.rb" afterPath="$PROJECT_DIR$/lib/facebook.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/file_uploads_spec_helper.rb" afterPath="$PROJECT_DIR$/spec/apis/file_uploads_spec_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/files_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/files_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/files_controller_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/files_controller_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/files_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/files_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/integration/files_spec.rb" afterPath="$PROJECT_DIR$/spec/integration/files_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/jquery/fixDialogButtons.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/jquery/fixDialogButtons.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/fr.yml" afterPath="$PROJECT_DIR$/config/locales/fr.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/g_assignments.scss" afterPath="$PROJECT_DIR$/app/stylesheets/g_assignments.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/g_instructure.sass" afterPath="$PROJECT_DIR$/app/stylesheets/g_instructure.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/grade_calculator.rb" afterPath="$PROJECT_DIR$/lib/grade_calculator.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/grade_publishing_results_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/grade_publishing_results_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/gradebooks/grade_summary.html.erb" afterPath="$PROJECT_DIR$/app/views/gradebooks/grade_summary.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/grade_summary.js" afterPath="$PROJECT_DIR$/public/javascripts/grade_summary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/grade_summary.sass" afterPath="$PROJECT_DIR$/app/stylesheets/grade_summary.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/grade_weight_changed.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/grade_weight_changed.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/gradebook2_column_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/gradebook2_column_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/gradebook2_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/gradebook2_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/gradebook2_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/gradebook2_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/gradebook2_grade_edit_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/gradebook2_grade_edit_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/gradebook2_group_weight_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/gradebook2_group_weight_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/gradebook2_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/gradebook2_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/gradebook_history.rb" afterPath="$PROJECT_DIR$/lib/api/v1/gradebook_history.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/gradebook_history_api_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/gradebook_history_api_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/gradebook_history_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/gradebook_history_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/gradebook_history_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/gradebook_history_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/gradebooks_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/gradebooks_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/grades.html.erb" afterPath="$PROJECT_DIR$/app/views/users/grades.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/grading_standard.rb" afterPath="$PROJECT_DIR$/app/models/grading_standard.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/group.rb" afterPath="$PROJECT_DIR$/app/models/group.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/group_assignment_submitted_late.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/group_assignment_submitted_late.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/group_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/group_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/group_membership_accepted.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/group_membership_accepted.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/group_membership_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/group_membership_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/group_membership_rejected.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/group_membership_rejected.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/handlebars/handlebars.rb" afterPath="$PROJECT_DIR$/lib/handlebars/handlebars.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/i18n_extraction/handlebars_extractor.rb" afterPath="$PROJECT_DIR$/lib/i18n_extraction/handlebars_extractor.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/handlebars_helpers.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/handlebars_helpers.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/handlebars_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/handlebars_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/handlebars_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/handlebars_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/qti_exporter/spec_canvas/lib/qti/html_sanitization_spec.rb" afterPath="$PROJECT_DIR$/vendor/plugins/qti_exporter/spec_canvas/lib/qti/html_sanitization_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/i18n.rake" afterPath="$PROJECT_DIR$/lib/tasks/i18n.rake" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/import.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/import.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/imported_html_converter.rb" afterPath="$PROJECT_DIR$/lib/imported_html_converter.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/imported_html_converter_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/imported_html_converter_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/jst/courses/roster/index.handlebars" afterPath="$PROJECT_DIR$/app/views/jst/courses/roster/index.handlebars" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/conversations/index.html.erb" afterPath="$PROJECT_DIR$/app/views/conversations/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/rubrics/index.html.erb" afterPath="$PROJECT_DIR$/app/views/rubrics/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/views/account_authorization_configs/index.html.erb_spec.rb" afterPath="$PROJECT_DIR$/spec/views/account_authorization_configs/index.html.erb_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/info_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/info_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/academic_benchmark/init.rb" afterPath="$PROJECT_DIR$/vendor/plugins/academic_benchmark/init.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/ja.yml" afterPath="$PROJECT_DIR$/config/locales/ja.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/jobs_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/jobs_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery.instructure_date_and_time.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery.instructure_date_and_time.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery.instructure_forms.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery.instructure_forms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery.instructure_misc_helpers.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery.instructure_misc_helpers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/jquery.kylemenu.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/jquery.kylemenu.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/jquery.rails_flash_notifications.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/jquery.rails_flash_notifications.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/learning_outcome.rb" afterPath="$PROJECT_DIR$/app/models/learning_outcome.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/learning_outcome_result.rb" afterPath="$PROJECT_DIR$/app/models/learning_outcome_result.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/links_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/links_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/login_logout_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/login_logout_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/manage_groups_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/manage_groups_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/manage_groups_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/manage_groups_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/manage_groups_students_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/manage_groups_students_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/managed_quiz_data.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/managed_quiz_data.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/masquerade.html.erb" afterPath="$PROJECT_DIR$/app/views/users/masquerade.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/discussion_topic/materialized_view_spec.rb" afterPath="$PROJECT_DIR$/spec/models/discussion_topic/materialized_view_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/message.rb" afterPath="$PROJECT_DIR$/app/models/message.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/message_spec.rb" afterPath="$PROJECT_DIR$/spec/models/message_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/messageable_user.rb" afterPath="$PROJECT_DIR$/lib/messageable_user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/mini_calendar.sass" afterPath="$PROJECT_DIR$/app/stylesheets/mini_calendar.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/pseudonym_sessions/mobile_login.html.erb" afterPath="$PROJECT_DIR$/app/views/pseudonym_sessions/mobile_login.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/moodle2cc/spec_canvas/moodle_converter_spec.rb" afterPath="$PROJECT_DIR$/vendor/plugins/moodle2cc/spec_canvas/moodle_converter_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/self_enrollments/new.html.erb" afterPath="$PROJECT_DIR$/app/views/self_enrollments/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_account_user.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_account_user.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_announcement.email.erb" afterPath="$PROJECT_DIR$/app/messages/new_announcement.email.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_announcement.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_announcement.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_context_group_membership.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_context_group_membership.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_context_group_membership_invitation.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_context_group_membership_invitation.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_course.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_course.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_discussion_entry.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_discussion_entry.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_discussion_topic.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_discussion_topic.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_event_created.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_event_created.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_file_added.email.erb" afterPath="$PROJECT_DIR$/app/messages/new_file_added.email.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_file_added.email.html.erb" afterPath="$PROJECT_DIR$/app/messages/new_file_added.email.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_file_added.facebook.erb" afterPath="$PROJECT_DIR$/app/messages/new_file_added.facebook.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_file_added.sms.erb" afterPath="$PROJECT_DIR$/app/messages/new_file_added.sms.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_file_added.summary.erb" afterPath="$PROJECT_DIR$/app/messages/new_file_added.summary.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_file_added.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_file_added.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_files_added.email.erb" afterPath="$PROJECT_DIR$/app/messages/new_files_added.email.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_files_added.email.html.erb" afterPath="$PROJECT_DIR$/app/messages/new_files_added.email.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_files_added.facebook.erb" afterPath="$PROJECT_DIR$/app/messages/new_files_added.facebook.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_files_added.sms.erb" afterPath="$PROJECT_DIR$/app/messages/new_files_added.sms.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_files_added.summary.erb" afterPath="$PROJECT_DIR$/app/messages/new_files_added.summary.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_files_added.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_files_added.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_student_organized_group.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_student_organized_group.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_teacher_registration.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_teacher_registration.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/new_user.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/new_user.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/notification_message_creator.rb" afterPath="$PROJECT_DIR$/lib/notification_message_creator.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/notification_message_creator_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/notification_message_creator_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/behaviors/openAsDialog.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/behaviors/openAsDialog.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/page_view.rb" afterPath="$PROJECT_DIR$/app/models/page_view.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/page_view_spec.rb" afterPath="$PROJECT_DIR$/spec/models/page_view_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/profile_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/profile_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/progress.rb" afterPath="$PROJECT_DIR$/app/models/progress.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/pseudonym.rb" afterPath="$PROJECT_DIR$/app/models/pseudonym.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pseudonym_sessions_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pseudonym_sessions_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/pseudonym_sessions_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/pseudonym_sessions_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/pseudonym_spec.rb" afterPath="$PROJECT_DIR$/spec/models/pseudonym_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/pt.yml" afterPath="$PROJECT_DIR$/config/locales/pt.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/question_banks_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/question_banks_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/quiz.rb" afterPath="$PROJECT_DIR$/app/models/quiz.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/quiz.rb" afterPath="$PROJECT_DIR$/lib/api/v1/quiz.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/quiz_groups_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/quiz_groups_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/quiz_show.js" afterPath="$PROJECT_DIR$/public/javascripts/quiz_show.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/quiz_spec.rb" afterPath="$PROJECT_DIR$/spec/models/quiz_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/quiz_submission.rb" afterPath="$PROJECT_DIR$/app/models/quiz_submission.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/quiz_submission_spec.rb" afterPath="$PROJECT_DIR$/spec/models/quiz_submission_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/quiz_submissions_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/quiz_submissions_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/quizzes.js" afterPath="$PROJECT_DIR$/public/javascripts/quizzes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/stylesheets/quizzes.sass" afterPath="$PROJECT_DIR$/app/stylesheets/quizzes.sass" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/quizzes_api_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/quizzes_api_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/quizzes_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/quizzes_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/quizzes_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/quizzes_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/quizzes_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/quizzes_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/quizzes_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/quizzes_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/quizzes_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/quizzes_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/quizzes_question_creation_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/quizzes_question_creation_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/data_fixup/regenerate_user_thumbnails.rb" afterPath="$PROJECT_DIR$/lib/data_fixup/regenerate_user_thumbnails.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/role.rb" afterPath="$PROJECT_DIR$/app/models/role.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/role.rb" afterPath="$PROJECT_DIR$/lib/api/v1/role.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/role_override.rb" afterPath="$PROJECT_DIR$/app/models/role_override.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/role_override_spec.rb" afterPath="$PROJECT_DIR$/spec/models/role_override_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/role_spec.rb" afterPath="$PROJECT_DIR$/spec/models/role_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/roster.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/roster.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/context/roster.html.erb" afterPath="$PROJECT_DIR$/app/views/context/roster.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/ru.yml" afterPath="$PROJECT_DIR$/config/locales/ru.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/rubric.rb" afterPath="$PROJECT_DIR$/app/models/rubric.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/rubric_assessment_invitation.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/rubric_assessment_invitation.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/rubric_assessment_submission_reminder.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/rubric_assessment_submission_reminder.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/rubric_association_created.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/rubric_association_created.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cc/importer/canvas/rubrics_converter.rb" afterPath="$PROJECT_DIR$/lib/cc/importer/canvas/rubrics_converter.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/i18n_extraction/ruby_extractor.rb" afterPath="$PROJECT_DIR$/lib/i18n_extraction/ruby_extractor.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/javascripts/runner.html.erb" afterPath="$PROJECT_DIR$/spec/javascripts/runner.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/section_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/section_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/self_enrollment.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/self_enrollment.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/self_enrollment_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/self_enrollment_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/accounts/settings.html.erb" afterPath="$PROJECT_DIR$/app/views/accounts/settings.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/sharding_spec_helper.rb" afterPath="$PROJECT_DIR$/spec/sharding_spec_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/shared_boot.rb" afterPath="$PROJECT_DIR$/config/shared_boot.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/discussion_topics/show.html.erb" afterPath="$PROJECT_DIR$/app/views/discussion_topics/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/gradebook2/show.html.erb" afterPath="$PROJECT_DIR$/app/views/gradebook2/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/show.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/show.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/simply_versioned/lib/simply_versioned.rb" afterPath="$PROJECT_DIR$/vendor/plugins/simply_versioned/lib/simply_versioned.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/simply_versioned/test/simply_versioned_test.rb" afterPath="$PROJECT_DIR$/vendor/plugins/simply_versioned/test/simply_versioned_test.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis.rb" afterPath="$PROJECT_DIR$/lib/sis.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/account_reports/lib/canvas/account_reports/sis_exporter.rb" afterPath="$PROJECT_DIR$/vendor/plugins/account_reports/lib/canvas/account_reports/sis_exporter.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/account_reports/spec_canvas/sis_provisioning_reports_spec.rb" afterPath="$PROJECT_DIR$/vendor/plugins/account_reports/spec_canvas/sis_provisioning_reports_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/spec_helper.rb" afterPath="$PROJECT_DIR$/spec/spec_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/speed_grader_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/speed_grader_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/stats.rb" afterPath="$PROJECT_DIR$/lib/stats.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/stats_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/stats_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/stream_item.rb" afterPath="$PROJECT_DIR$/app/models/stream_item.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/stream_items_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/stream_items_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/student_quizzes_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/student_quizzes_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/student_submissions_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/student_submissions_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/student_wiki_and_tiny_files_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/student_wiki_and_tiny_files_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/student_wiki_and_tiny_images_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/student_wiki_and_tiny_images_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/student_wiki_and_tiny_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/student_wiki_and_tiny_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/styleguide.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/styleguide.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/submission.rb" afterPath="$PROJECT_DIR$/app/models/submission.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/submission.rb" afterPath="$PROJECT_DIR$/lib/api/v1/submission.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/submission_comment.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/submission_comment.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/submission_comment_for_teacher.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/submission_comment_for_teacher.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/submission_grade_changed.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/submission_grade_changed.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/submission_graded.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/submission_graded.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/submission_spec.rb" afterPath="$PROJECT_DIR$/spec/models/submission_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/submissions_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/submissions_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/submissions_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/submissions_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/submissions_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/submissions_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/summaries.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/summaries.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/summary_message_consolidator.rb" afterPath="$PROJECT_DIR$/lib/summary_message_consolidator.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/summary_message_consolidator_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/summary_message_consolidator_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/bundles/syllabus.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/bundles/syllabus.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/quizzes/take_quiz.html.erb" afterPath="$PROJECT_DIR$/app/views/quizzes/take_quiz.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/take_quiz.js" afterPath="$PROJECT_DIR$/public/javascripts/take_quiz.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_quizzes_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_quizzes_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_scheduler_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_scheduler_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_speed_grader_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_speed_grader_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_speed_grader_submission_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_speed_grader_submission_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_submissions_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_submissions_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_files_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_files_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_images_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_images_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_wysiwyg_spec.rb" afterPath="$PROJECT_DIR$/spec/selenium/teacher_wiki_and_tiny_wysiwyg_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/term_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/term_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/simply_versioned/test/test_helper.rb" afterPath="$PROJECT_DIR$/vendor/plugins/simply_versioned/test/test_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cc/importer/canvas/topic_converter.rb" afterPath="$PROJECT_DIR$/lib/cc/importer/canvas/topic_converter.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cc/topic_resources.rb" afterPath="$PROJECT_DIR$/lib/cc/topic_resources.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/coffeescripts/behaviors/trackEvent.coffee" afterPath="$PROJECT_DIR$/app/coffeescripts/behaviors/trackEvent.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/twitter_messenger.rb" afterPath="$PROJECT_DIR$/lib/twitter_messenger.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/lib/twitter_messenger_spec.rb" afterPath="$PROJECT_DIR$/spec/lib/twitter_messenger_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/updated_wiki_page.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/updated_wiki_page.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/api/v1/user.rb" afterPath="$PROJECT_DIR$/lib/api/v1/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/user_content_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/user_content_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/user_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/user_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/models/user_spec.rb" afterPath="$PROJECT_DIR$/spec/models/user_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/apis/v1/users_api_spec.rb" afterPath="$PROJECT_DIR$/spec/apis/v1/users_api_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/controllers/users_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/controllers/users_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/integration/users_controller_spec.rb" afterPath="$PROJECT_DIR$/spec/integration/users_controller_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/messages/web_conference_invitation.twitter.erb" afterPath="$PROJECT_DIR$/app/messages/web_conference_invitation.twitter.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/selenium/helpers/wiki_and_tiny_common.rb" afterPath="$PROJECT_DIR$/spec/selenium/helpers/wiki_and_tiny_common.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/wiki_page.rb" afterPath="$PROJECT_DIR$/app/models/wiki_page.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/delayed_job/lib/delayed/worker.rb" afterPath="$PROJECT_DIR$/vendor/plugins/delayed_job/lib/delayed/worker.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/sis/csv/xlist_importer.rb" afterPath="$PROJECT_DIR$/lib/sis/csv/xlist_importer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/locales/zh.yml" afterPath="$PROJECT_DIR$/config/locales/zh.yml" />
     </list>
     <ignored path="canvas-lms.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,6 +539,7 @@
     <file path="/application.html.erb" changelist="acda36b4-e90a-40da-b992-41249f10fff1" time="1368531224599" ignored="false" />
     <file path="/subdomain_test.rb" changelist="acda36b4-e90a-40da-b992-41249f10fff1" time="1368618903823" ignored="false" />
     <file path="/common.rb" changelist="acda36b4-e90a-40da-b992-41249f10fff1" time="1368682266183" ignored="false" />
+    <file path="/Gemfile" changelist="acda36b4-e90a-40da-b992-41249f10fff1" time="1368684726562" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,64 +564,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application_controller_extensions.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="application_controller_extensions.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/lib/canvas_mt/application_controller_extensions.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="8" selection-start="0" selection-end="506" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="accounts_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/selenium/accounts_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="76" selection-start="463" selection-end="463" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="subdomain_test.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/test/subdomain_test.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="81" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="canvas_mt_test.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/test/canvas_mt_test.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="37" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/selenium/admin/sub_accounts/users_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="14" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="take_quiz.html.erb_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/views/quizzes/take_quiz.html.erb_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="51" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spec/selenium/common.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="924" column="48" selection-start="29055" selection-end="29055" vertical-scroll-proportion="0.6875">
+            <state line="6" column="57" selection-start="191" selection-end="191" vertical-scroll-proportion="0.15126051">
               <folding />
             </state>
           </provider>
@@ -136,8 +597,6 @@
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
         <option value="$PROJECT_DIR$/lib/reporting/counts_report.rb" />
         <option value="$PROJECT_DIR$/lib/tasks/add_account.rake" />
-        <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
-        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/config/security.yml" />
         <option value="$PROJECT_DIR$/config/database.yml" />
         <option value="$PROJECT_DIR$/vendor/plugins/canvas-mt/test/database.yml" />
@@ -145,6 +604,8 @@
         <option value="$PROJECT_DIR$/vendor/plugins/canvas-mt/test/subdomain_test.rb" />
         <option value="$PROJECT_DIR$/test_result.txt" />
         <option value="$PROJECT_DIR$/spec/selenium/common.rb" />
+        <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+        <option value="$PROJECT_DIR$/Gemfile" />
       </list>
     </option>
   </component>
@@ -157,7 +618,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-3" />
-    <option name="width" value="1366" />
+    <option name="width" value="1372" />
     <option name="height" value="745" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -245,7 +706,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spec" />
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -259,65 +720,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="spec" />
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas-lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas-lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spec" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quizzes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas-lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas-lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas-lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas-lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="tasks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -961,7 +1368,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="0" width="1366" height="745" extended-state="6" />
+    <frame x="-3" y="0" width="1372" height="745" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939914" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -969,7 +1376,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34244373" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24919957" sideWeight="0.43254817" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28082192" sideWeight="0.6575563" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27954546" sideWeight="0.6575563" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5305466" sideWeight="0.9950495" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1080,47 +1487,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/spec/controllers/pseudonym_sessions_controller_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="372" column="31" selection-start="17072" selection-end="17072" vertical-scroll-proportion="1.9329897" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/lib/canvas_mt/application_controller_extensions.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="8" selection-start="0" selection-end="506" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_result.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5223" column="0" selection-start="541124" selection-end="541124" vertical-scroll-proportion="-3.392857" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/test/subdomain_test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="81" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/selenium/accounts_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="76" selection-start="463" selection-end="463" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script/destroy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="22" selection-start="104" selection-end="104" vertical-scroll-proportion="0.07853403" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script/generate">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="25" selection-start="102" selection-end="102" vertical-scroll-proportion="0.05235602" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/factories/account_factory.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="28" selection-start="859" selection-end="859" vertical-scroll-proportion="0.62827224">
@@ -1135,26 +1501,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/test/canvas_mt_test.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="37" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/selenium/admin/sub_accounts/users_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="14" selection-start="480" selection-end="480" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/quizzes/take_quiz.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="28" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.36753732">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1172,16 +1522,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/views/quizzes/take_quiz.html.erb_spec.rb">
+    <entry file="file://$PROJECT_DIR$/lib/tasks/add_account.rake">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="51" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.15706806">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/database.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="44" selection-start="0" selection-end="200" vertical-scroll-proportion="0.2356021">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gemfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="175" column="59" selection-start="5272" selection-end="5272" vertical-scroll-proportion="0.45026177">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="213" column="97" selection-start="9712" selection-end="9712" vertical-scroll-proportion="0.4402985">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/selenium/common.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="924" column="48" selection-start="29055" selection-end="29055" vertical-scroll-proportion="0.6875">
+        <state line="880" column="63" selection-start="27672" selection-end="27672" vertical-scroll-proportion="0.42016807">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/views/quizzes/take_quiz.html.erb_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="51" selection-start="574" selection-end="574" vertical-scroll-proportion="0.29411766">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/selenium/admin/sub_accounts/users_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="14" selection-start="480" selection-end="480" vertical-scroll-proportion="0.22689076">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/test/canvas_mt_test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="37" selection-start="619" selection-end="619" vertical-scroll-proportion="0.40336135">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/test/subdomain_test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="81" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/selenium/accounts_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="76" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.025210084">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/plugins/canvas-mt/lib/canvas_mt/application_controller_extensions.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="57" selection-start="191" selection-end="191" vertical-scroll-proportion="0.15126051">
           <folding />
         </state>
       </provider>
