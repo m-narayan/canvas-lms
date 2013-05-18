@@ -1,1 +1,4 @@
 
+[submodule "vendor/plugins/lms_customization"]
+	path = vendor/plugins/lms_customization
+	url = https://github.com/m-narayan/lms_customization.git

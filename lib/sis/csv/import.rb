@@ -410,7 +410,7 @@ module SIS
                   false
                 end
               end
-              add_error(csv, "Couldn't find Canvas CSV import headers") if importer.nil?
+              add_error(csv, "Couldn't find SmartLMS CSV import headers") if importer.nil?
               break
             end
           rescue FasterCSV::MalformedCSVError
