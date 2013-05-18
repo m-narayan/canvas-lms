@@ -12,6 +12,7 @@
 
 /.bundle/
 /.yardoc/
+/app/views/info/styleguide.html.erb
 /config/*.yml
 /config/build.js
 /config/environments/*-local.rb
@@ -32,6 +33,8 @@
 /RAILS3
 /spec/javascripts/
 /tmp/
+.rvmrc
+tags
 /vendor/plugins/rails_upgrade
 .rvmrc
 tags
@@ -44,3 +47,4 @@ tags
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
+/.idea/*.*
