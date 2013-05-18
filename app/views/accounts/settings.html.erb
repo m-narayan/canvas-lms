@@ -43,9 +43,6 @@
       <li><a href="#tab-alerts" id="tab-alerts-link"><%= t(:tab_alerts, "Alerts") %></a></li>
     <% end %>
 
-    <% if can_do(@context, @current_user, :manage_account_settings) %>
-      <li><a href="#tab-sms" id="tab-tools-link">SMS Settings</a></li>
-    <% end %>
   </ul>
   <% if can_do(@context, @current_user, :manage_account_settings) %>
     <div id="tab-settings">
@@ -791,6 +788,5 @@ TEXT
       </div>
   <% end %>
   
-  <%= render :partial => 'sms/settings' %>
-      
+     
 </div>
