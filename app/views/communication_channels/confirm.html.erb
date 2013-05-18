@@ -89,9 +89,9 @@ Which is you?", :count => @merge_opportunities.length %>
     </div>
   <% elsif @enrollment && @pseudonym %>
     <div class="disambiguation_box"<%= ' style="display: none;"'.html_safe if params[:register] %>>
-      <p><%= mt 'details.account_needed', "You've been invited to join **%{course}**. To accept this request you need a Canvas account. Click the link below to create a Canvas account.", :course => @course.name %></p>
+      <p><%= mt 'details.account_needed', "You've been invited to join **%{course}**. To accept this request you need a SmartLMS account. Click the link below to create a SmartLMS account.", :course => @course.name %></p>
       <div class="button_box">
-        <a href="<%= login_url(:host => HostUrl.context_host(@root_account, @request.try(:host_with_port)), :confirm => @communication_channel.confirmation_code, :enrollment => @enrollment.uuid) %>" class="btn not_external"><%=  t 'buttons.have_account', "I Have a Canvas Account" %></a>
+        <a href="<%= login_url(:host => HostUrl.context_host(@root_account, @request.try(:host_with_port)), :confirm => @communication_channel.confirmation_code, :enrollment => @enrollment.uuid) %>" class="btn not_external"><%=  t 'buttons.have_account', "I Have a SmartLMS Account" %></a>
         <a href="#" class="btn" id="register"><%= t 'buttons.create_account', 'Create My Account' %></a>
       </div>
     </div>
@@ -120,7 +120,7 @@ Which is you?", :count => @merge_opportunities.length %>
       <div class="control-group">
         <%= blabel :user, :time_zone, :en => "Time Zone", :class => 'control-label' %>
         <div class="controls">
-          <%= time_zone_select :user, :time_zone, ActiveSupport::TimeZone.us_zones, {:default => ((@pseudonym.account.default_time_zone) || "Mountain Time (US & Canada)"), :value => @user.time_zone} %>
+          <%= time_zone_select :user, :time_zone, ActiveSupport::TimeZone.us_zones, {:default => ((@pseudonym.account.default_time_zone) || "New Delhi"), :value => @user.time_zone} %>
         </div>
       </div>
       <% if @pseudonym.account == Account.default %>

@@ -42,6 +42,10 @@
     <% if @context.root_account.settings[:enable_alerts] && can_do(@context, @current_user, :manage_interaction_alerts) %>
       <li><a href="#tab-alerts" id="tab-alerts-link"><%= t(:tab_alerts, "Alerts") %></a></li>
     <% end %>
+
+    <% if can_do(@context, @current_user, :manage_account_settings) %>
+      <li><a href="#tab-sms" id="tab-tools-link">SMS Settings</a></li>
+    <% end %>
   </ul>
   <% if can_do(@context, @current_user, :manage_account_settings) %>
     <div id="tab-settings">
@@ -93,7 +97,7 @@
                 <% no_language = t(:no_language_preference, "Not set (defaults to %{language})", :language => available_locales[infer_locale(:context => @context.parent_account)]) %>
                 <%= f.select :default_locale, [[no_language, nil]] + available_locales.invert.sort, :selected => @context.default_locale %>
                 <span class="unbreakable"><%= mt :transifex_message, <<-TEXT, :transifex_url => "https://www.transifex.com/projects/p/canvas-lms/"
-Join the [Canvas Translation Community](%{transifex_url})
+Join the [SmartLMS Translation Community](%{transifex_url})
 TEXT
                 %>
                 </span>
@@ -195,6 +199,10 @@ TEXT
                   <%= settings.check_box :admins_can_change_passwords, :checked => @account.settings[:admins_can_change_passwords] == true %>
                   <%= settings.label :admins_can_change_passwords, :en => "Password setting by admins" %>
                 </div>
+                <div>
+                  <%= settings.check_box :admins_can_view_notifications, :checked => @account.settings[:admins_can_view_notifications] %>
+                  <%= settings.label :admins_can_view_notifications, :en => "Admins can view notifications" %>
+                </div>
                 <% unless @account.site_admin? %>
                   <div>
                     <%= f.check_box :enable_user_notes, :checked => @account.enable_user_notes %>
@@ -236,7 +244,7 @@ TEXT
                 <% if @account.account_authorization_config %>
                   <div>
                     <%= settings.check_box :canvas_authentication, :checked => @account.canvas_authentication? %>
-                    <%= settings.label :canvas_authentication, :en => "Canvas Authentication" %>
+                    <%= settings.label :canvas_authentication, :en => "SmartLMS Authentication" %>
                   </div>
                 <% end %>
               <% end %>
@@ -435,7 +443,7 @@ TEXT
                   "In order to make it easier for users, rather than forcing them to download " +
                   "things like Word docs, PDFs, Excel spreadsheets, and open office documents " +
                   "(In addition to requiring that those programs be installed on their on their " +
-                  "computer), in many areas throughout Canvas, it will allow you an inline " +
+                  "computer), in many areas throughout SmartLMS, it will allow you an inline " +
                   "preview of the document.\n\n" +
 
                   "If Scribd has been enabled for this account, it will try to use it to show the preview. " +
@@ -483,13 +491,13 @@ TEXT
 
         <% if @account.root_account? && !@account.site_admin? %>
           <h2><%= t(:email_notification_from_settings, 'E-mail Notification "From" Settings') %></h2>
-          <p><%= t(:email_notification_from_description, "This setting allows the Admin to brand or label the 'From' text on all notifications sent from Canvas for this Account.") %></p>
+          <p><%= t(:email_notification_from_description, "This setting allows the Admin to brand or label the 'From' text on all notifications sent from SmartLMS for this Account.") %></p>
           <% f.fields_for :settings do |settings| %>
             <div>
               <%= settings.radio_button :outgoing_email_default_name_option, 'default',
                                         :checked => @account.settings[:outgoing_email_default_name].blank?,
                                         :class => 'notification_from_name_option' %>
-              <%= settings.label :outgoing_email_default_name_option_default, :en => "Default Canvas Setting" %>
+              <%= settings.label :outgoing_email_default_name_option_default, :en => "Default SmartLMS Setting" %>
             </div>
             <div style='padding-left: 2em;'>
               <strong><%= t 'notifications.example', 'Example:' %></strong>
@@ -526,7 +534,7 @@ TEXT
             </div>
             <div style='padding-left: 2em;'>
               <p>
-                <%= t('notifications.custom_name_description', 'If selected, this will replace all other branding sent in Canvas notifications.') %>
+                <%= t('notifications.custom_name_description', 'If selected, this will replace all other branding sent in SmartLMS notifications.') %>
                 <br/>
                 <%= text_field_tag 'account[settings][outgoing_email_default_name]', @account.settings[:outgoing_email_default_name] %>
               </p>
@@ -574,7 +582,7 @@ TEXT
               <tr>
                 <td>
                   <b><%= t('notifications.external_services_warning_label', 'Pop-up Message Content:') %></b>
-                  <blockquote><%= t('notifications.external_services_warning', 'Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive Canvas course and group information outside of the institutional system.')%></blockquote>
+                  <blockquote><%= t('notifications.external_services_warning', 'Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive SmartLMS course and group information outside of the institutional system.')%></blockquote>
                 </td>
               </tr>
             </table>
@@ -782,4 +790,7 @@ TEXT
         <%= render :partial => 'alerts/alerts' %>
       </div>
   <% end %>
+  
+  <%= render :partial => 'sms/settings' %>
+      
 </div>

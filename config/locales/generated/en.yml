@@ -15,12 +15,21 @@ en:
     no_api_key: "An API key is required to use Academic Benchmarks"
     no_authority: "Couldn't find an authority to update"
     no_file: "No outcome file or authority given"
+  accont: 
+    feedback_pricing_sub: "Get the numbers for your institution"
   account: 
+    ask_canvas_network: "Ask the SmartLMS Network Community"
     default_account_name: "Default Account"
     default_site_administrator_account_name: "Site Admin"
     default_term_name: "Default Term"
     errors: 
       invalid_discovery_url: "The discovery URL is not valid"
+    feedback_coach: "Ask the Community"
+    feedback_coach_sub: "Get help from a SmartLMS expert"
+    feedback_feature_request: "Request a Feature"
+    feedback_feature_request_canvas_net: "Request a Feature in SmartLMS Network"
+    feedback_feature_request_sub: "Have an idea to improve SmartLMS?"
+    feedback_pricing: "SmartLMS Pricing Information"
     manually_created_courses: "Manually-Created Courses"
     root_account_cant_have_sis_id: "SIS IDs cannot be set on root accounts"
     sis_id_in_use: "SIS ID \"%{sis_id}\" is already in use"
@@ -70,13 +79,13 @@ en:
       canvas_login_tip: |-
           If you configure settings that cause you to not be able to log in you can add
           *%{url1}* to the end of your login url. This will let you login
-          using the normal Canvas login procedure. For this account the url would be %{url2}
+          using the normal SmartLMS login procedure. For this account the url would be %{url2}
       choose_auth_type_option: "Choose an authentication service"
       current_settings_title: "Current Integration"
       delete_auth_confirmation: "Are you sure? Users may not be able to log in if this is removed."
       delete_auth_link: "Remove Authentication"
       edit_auth_link: "Edit Details"
-      ip_address_list_description: "If you are using an authentication service that requires the Canvas servers to contact your servers directly, such as LDAP, you'll need to make sure that your servers can accept connections from these IP addresses:"
+      ip_address_list_description: "If you are using an authentication service that requires the SmartLMS servers to contact your servers directly, such as LDAP, you'll need to make sure that your servers can accept connections from these IP addresses:"
       no_auth_type_description: "This account does not currently integrate with an identity provider."
       page_title: "Authentication Settings"
       profile_page_link_example: "For example, here is your profile page: [%{friendlyname}](%{url})"
@@ -87,7 +96,7 @@ en:
     ldap_settings: 
       add_secondary_ldap_server_link: "Add Secondary LDAP Server"
       auth_type_label: Type
-      change_password_url_help: "Leave blank for default Canvas behavior"
+      change_password_url_help: "Leave blank for default SmartLMS behavior"
       change_password_url_not_specified: "None specified"
       labels: 
         change_password_url: "Forgot Password URL"
@@ -100,7 +109,7 @@ en:
     ldap_settings_fields: 
       auth_filter_description: "Use *%{placeholder}* as a placeholder for the username supplied by the user. For example: *(sAMAccountName=%{placeholder})*"
       auth_password_description: "Leave blank to continue using the current password."
-      identifer_format_description: "The LDAP attribute to use to look up the Canvas login. Leave blank to use the username supplied by the user."
+      identifer_format_description: "The LDAP attribute to use to look up the SmartLMS login. Leave blank to use the username supplied by the user."
       labels: 
         auth_base: Base
         auth_filter: Filter
@@ -123,14 +132,14 @@ en:
       ldap_test_login_button: "Test Login"
       test_ldap_bind_help_body: "Your LDAP server server rejected the bind attempt. Things to consider:"
       test_ldap_bind_help_fixes_1: "Verify the provided filter string (i.e. '(sAMAccountName={{login}})')."
-      test_ldap_bind_help_fixes_2: "Does the username require more scoping information? (i.e. 'cn=Canvas,ou=people,dc=example,dc=com')."
-      test_ldap_bind_help_header: "Canvas can't bind (login) to your LDAP server"
+      test_ldap_bind_help_fixes_2: "Does the username require more scoping information? (i.e. 'cn=SmartLMS,ou=people,dc=example,dc=com')."
+      test_ldap_bind_help_header: "SmartLMS can't bind (login) to your LDAP server"
       test_ldap_bind_label: "Testing LDAP bind..."
       test_ldap_connection_help_body: "The connection either timed out or was refused. Things to consider:"
-      test_ldap_connection_help_fixes_1: "Canvas is connecting to %{ips}"
+      test_ldap_connection_help_fixes_1: "SmartLMS is connecting to %{ips}"
       test_ldap_connection_help_fixes_2: "This was only a connection test. SSL certificates were not validated."
-      test_ldap_connection_help_fixes_3: "Check your firewall settings. Are all Canvas IP address allowed to access your server?"
-      test_ldap_connection_help_header: "Canvas can't connect to your LDAP server"
+      test_ldap_connection_help_fixes_3: "Check your firewall settings. Are all SmartLMS IP address allowed to access your server?"
+      test_ldap_connection_help_header: "SmartLMS can't connect to your LDAP server"
       test_ldap_connection_label: "Testing connection..."
       test_ldap_dialog_close: Close
       test_ldap_dialog_page_title: "Testing Your LDAP Configuration"
@@ -141,11 +150,11 @@ en:
       test_ldap_search_help_fixes_1: "Verify the provided filter string (i.e. '(sAMAccountName={{login}})')."
       test_ldap_search_help_fixes_2: "Verify the provided search base (i.e. 'ou=people,dc=example,dc=com')."
       test_ldap_search_help_fixes_3: "Verify that the user object in LDAP has search privileges for the provided search base."
-      test_ldap_search_help_header: "Canvas can't search your LDAP instance"
+      test_ldap_search_help_header: "SmartLMS can't search your LDAP instance"
       test_ldap_search_label: "Testing LDAP search..."
     ldap_timeout_error: 
       last_ldap_timeout_failure: "Last timeout failure"
-      ldap_timeout_failure_help: "If Canvas times out communicating with the LDAP server, it will block further login attempts from using that LDAP server for %{time}."
+      ldap_timeout_failure_help: "If SmartLMS times out communicating with the LDAP server, it will block further login attempts from using that LDAP server for %{time}."
     login_required: "must be supplied"
     no_auth_mixing: "Can not mix authentication types"
     no_changing_auth_types: "Can not change type of authorization config, please delete and create new config."
@@ -160,7 +169,7 @@ en:
       certificate_fingerprint: "Certificate Fingerprint"
       change_password_url: "Change Password Link"
       discovery_url: "Discovery URL:"
-      discovery_url_description: "If a discovery url is set, canvas will forward all users to that URL when they need to be authenticated. That page will need to then help the user figure out where they need to go to log in. If no discovery url is configured, the first SAML configuration will be used to attempt to authenticate the user."
+      discovery_url_description: "If a discovery url is set, SmartLMS will forward all users to that URL when they need to be authenticated. That page will need to then help the user figure out where they need to go to log in. If no discovery url is configured, the first SAML configuration will be used to attempt to authenticate the user."
       identifier_format: "Identifier Format"
       idp_entity_id: "IdP Entity ID"
       labels: 
@@ -192,7 +201,7 @@ en:
       auth_request_to_idp: "AuthnRequest sent to IdP"
       auth_response_from_idp: "AuthnResponse from IdP"
       labels: 
-        canvas_login_fail_message: "Canvas Login failure message"
+        canvas_login_fail_message: "SmartLMS Login failure message"
         fingerprint_from_idp: "IdP certificate fingerprint"
         idp_in_response_to: "IdP inResponseTo"
         idp_login_destination: "IdP LoginResponse destination"
@@ -203,10 +212,10 @@ en:
         idp_response_encoded: "IdP LoginResponse encoded"
         idp_response_xml_decrypted: "IdP LoginResponse Decrypted"
         idp_response_xml_encrypted: "IdP LoginResponse Encrypted"
-        is_valid_login_response: "Canvas thinks response is valid"
+        is_valid_login_response: "SmartLMS thinks response is valid"
         logged_in_user_id: "Logged in user id"
         login_response_validation_error: "Validation Error"
-        login_to_canvas_success: "User successfully logged into Canvas"
+        login_to_canvas_success: "User successfully logged into SmartLMS"
         logout_request_id: "Logout request id"
         logout_to_idp_url: "LogoutRequest encoded URL"
         logout_to_idp_xml: "LogoutRequest XML sent to IdP"
@@ -280,11 +289,43 @@ en:
     add_user_dialog_title: "Add a New User"
     adding_course_message: "Adding Course..."
     adding_user_message: "Adding User..."
+    additional_settings: 
+      labels: 
+        file_quota_in_gb: "File Storage"
+        media_quota_in_gb: "Media Storage"
+        student_quota: Students
+    additional_settings_right_side: 
+      links: 
+        suspend: "Suspend Account"
+        unsuspend: "Unsuspend Account"
+      title: 
+        suspend: "Suspend Account"
+      titles: 
+        unsuspend: "Unsuspend Account"
     admin_tools: 
       admin_tools: 
         tab_labels: 
           restore_course: "Restore Courses"
+        view_messages: "View Notifications"
       admin_tools_cumb: "Admin tools"
+      comm_message_item: 
+        created_at: "Created at"
+        from_name: From
+        reply_to: "Reply to"
+        sent_at: "Sent at"
+        to: To
+      comm_messages_content_pane: 
+        search_info: "To view all notifications sent to a SmartLMS user, enter their SmartLMS user ID and date range for your search."
+        view_notifications: "View Notifications"
+      comm_messages_search_form: 
+        canvas_user_id: "SmartLMS User ID"
+        find: Find
+        message_date_from: "From Date"
+        message_date_to: "To Date"
+      comm_messages_search_overview: 
+        messages_viewed: "Notifications sent to *%{user}* from *%{start_date}* to *%{end_date}*."
+      comm_messages_search_results: 
+        no_messages_found: "No messages found"
       course_search_form: 
         labels: 
           find_deleted_course: "Find a deleted course"
@@ -358,6 +399,13 @@ en:
       teachers_label: Teachers
     course_add_failed_message: "Adding Course Failed, please try again"
     course_added_message: "%{course} successfully added!"
+    course_status_csv_description: 
+      account_reports: 
+        auburn: 
+          course_status: 
+            text: "This report shows the status of all the courses for a given term. The resulting csv file will have one row per course section and will show the course, course status, term, effective start and end dates, and a teacher of record in the section."
+          description: 
+            header: Example
     courses: 
       courses_crumb: Courses
       no_results_message: "No Results Found"
@@ -372,6 +420,32 @@ en:
       go_button: Go
       hide_enrollmentless_courses: "Hide enrollmentless courses"
     crumb_statistics: Statistics
+    custom_grade_export_csv_description: 
+      account_reports: 
+        ross: 
+          description: 
+            header: Example
+            text: "This report shows the student final grade results for all students in a given term. The resulting csv file will have one row per enrollment, and will show the current and final grade that is displayed in the course gradebook."
+    custom_grade_export_csv_parameters: 
+      account_reports: 
+        ross: 
+          parameters: 
+            note: "Courses with muted assignments may not accurately reflect scores in this report."
+    date_picker_parameter: 
+      custom_reports: 
+        end: 
+          parameters: 
+            header: "End at:"
+        start: 
+          parameters: 
+            header: "Start at:"
+    google_doc_accounts_csv_description: 
+      account_reports: 
+        ut_austin: 
+          description: 
+            header: Example
+          google_doc: 
+            text: "This is a report of all users and the associated email address used for the Google Docs integration."
     grade_export_csv_description: 
       account_reports: 
         default: 
@@ -393,11 +467,26 @@ en:
       account_reports: 
         sis_export: 
           description: 
-            text: "This report will export all the needed information that relates to provisioning Canvas in its respective categories."
+            text: "This report will export all the needed information that relates to provisioning SmartLMS in its respective categories."
+    quiz_data_csv_description: 
+      account_reports: 
+        ace: 
+          quiz_data_description: 
+            header: Example
+            text: "This report shows quiz questions and answers for all quizzes in a given term. The resulting csv file will have one row per quiz question and answer."
+    quiz_statistics_csv_description: 
+      account_reports: 
+        ace: 
+          quiz_statistics_description: 
+            header: Example
+            text: "This report shows quiz questions, how many users answered the questions, and how many users answered them correctly for all quizzes in a given term. The resulting csv file will have one row per quiz question."
     retry_login: "Retry Login"
+    root_accounts: 
+      labels: 
+        name: "Account Name"
     settings: 
       about_google_docs: |-
-          In order to make it easier for users, rather than forcing them to download things like Word docs, PDFs, Excel spreadsheets, and open office documents (In addition to requiring that those programs be installed on their on their computer), in many areas throughout Canvas, it will allow you an inline preview of the document.
+          In order to make it easier for users, rather than forcing them to download things like Word docs, PDFs, Excel spreadsheets, and open office documents (In addition to requiring that those programs be installed on their on their computer), in many areas throughout SmartLMS, it will allow you an inline preview of the document.
           
           If Scribd has been enabled for this account, it will try to use it to show the preview. But because Scribd uses flash paper to display the documents, and many users (namely those using an iPad/iPhone) do not have Flash Player installed, that preview will not work.  By leaving Google Docs Previews enabled, when a browser does not have Flash enabled, or if Scribd is not enabled, it will use preview powered by Google Docs. Using this service is subject to Google's viewer [terms of service](%{terms_url})
       about_google_docs_tooltip: "About Google Docs Previews"
@@ -426,7 +515,7 @@ en:
       default_language_description: "This will override any browser/OS language settings. Preferred languages can still be set at the course/user level."
       delete: delete
       delete_announcement_tooltip: "Delete this Announcement"
-      email_notification_from_description: "This setting allows the Admin to brand or label the 'From' text on all notifications sent from Canvas for this Account."
+      email_notification_from_description: "This setting allows the Admin to brand or label the 'From' text on all notifications sent from SmartLMS for this Account."
       email_notification_from_settings: "E-mail Notification \"From\" Settings"
       enabled_web_serices_title: "Enabled Web Services"
       equall_endpoint_help: "This is the URL to your equella service. It will probably look something like \"%{sample_url}\"."
@@ -450,10 +539,11 @@ en:
       labels: 
         account_notification_icon: Icon
         admins_can_change_passwords: "Password setting by admins"
+        admins_can_view_notifications: "Admins can view notifications"
         allow_invitation_previews: "Invitation Previews"
         allow_sending_scores_in_emails: "Students can opt-in to receiving scores in email notifications"
         allow_sis_import: "SIS imports"
-        canvas_authentication: "Canvas Authentication"
+        canvas_authentication: "SmartLMS Authentication"
         default_course_storage_quota: "Default Course File Quota"
         default_language: "Default Language"
         default_time_zone: "Default Time Zone"
@@ -482,7 +572,7 @@ en:
         no_enrollments_can_create_courses: "Users with no enrollments"
         open_registration: "Open Registration"
         outgoing_email_default_name_option_custom: "Custom \"From\" Name"
-        outgoing_email_default_name_option_default: "Default Canvas Setting"
+        outgoing_email_default_name_option_default: "Default SmartLMS Setting"
         prevent_course_renaming_by_teachers: "Don't let teachers rename their courses"
         restrict_student_future_view: "Restrict students from viewing courses before start date"
         self_enrollment: "Allow Self-Enrollment"
@@ -508,14 +598,14 @@ en:
       never_allow_self_enrollment_option: Never
       no_language_preference: "Not set (defaults to %{language})"
       notifications: 
-        custom_name_description: "If selected, this will replace all other branding sent in Canvas notifications."
+        custom_name_description: "If selected, this will replace all other branding sent in SmartLMS notifications."
         email_date: Date
         email_reply_to: Reply-To
         email_to: To
         example: "Example:"
         external_services: "Notifications Sent to External Services"
         external_services_label: "Display one time pop-up warning on Notification Preferences page."
-        external_services_warning: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive Canvas course and group information outside of the institutional system."
+        external_services_warning: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive SmartLMS course and group information outside of the institutional system."
         external_services_warning_label: "Pop-up Message Content:"
         from: From
         sample_subject: "Grade Changed: Check In Survey, Testing Course"
@@ -548,7 +638,7 @@ en:
       tab_notifications: Notifications
       tab_reports: Reports
       tab_settings: Settings
-      transifex_message: "Join the [Canvas Translation Community](%{transifex_url})"
+      transifex_message: "Join the [SmartLMS Translation Community](%{transifex_url})"
       turnitin_comments_help: "these comments will be shown to students when submitting a Turnitin-enabled assignment"
       turnitin_pledge_help: "students must check a box acknowledging that they agree with this pledge"
       turnitin_settings_title: "Turnitin Settings"
@@ -639,6 +729,8 @@ en:
       started_at_message: "Started: %{started_at}"
       title: "SIS Import"
       try_import_again_link: "Try import again"
+    site_admin_statistics: 
+      page_title: "Statistics for %{account}"
     statistics: 
       concluded_at: "concluded %{at}"
       created_at: "created %{at}"
@@ -676,6 +768,53 @@ en:
         one: "%{file_size} *from one file*"
         other: "%{file_size} *from %{count} files*"
       uploaded_file_storage_header: "Uploaded File Storage"
+    student_access_csv_description: 
+      account_reports: 
+        tmcc: 
+          description: 
+            header: Example
+          student_activity: 
+            text: "This report shows all the activity from students enrolled in a given course or all courses in a given term. Resulting csv file will have one row per student activity and will have the following headers; section id, section sis id, section name, course id, course sis id, course name, user id, user sis id, content type, content, times viewed, times participated, last viewed. The times viewed and times participated are counters from the beginning of time until the time the report was generated."
+    student_ip_csv_description: 
+      account_reports: 
+        dubspot: 
+          description: 
+            header: Example
+          student_login: 
+            text: "This report shows all the students enrolled in a given course or all courses in a given term. Resulting csv file will have one row per student enrollment."
+    student_login_csv_description: 
+      account_reports: 
+        bucks: 
+          description: 
+            header: Example
+          student_login: 
+            text: "This report shows the students that have not logged in since a given date."
+    student_login_csv_parameters: 
+      account_reports: 
+        bucks: 
+          login: 
+            check_box: "Include users that have never logged in?"
+          parameters: 
+            note: "This report does not reflect the last activity in SmartLMS rather the last time that the user logged in."
+    student_submissions_csv_description: 
+      account_reports: 
+        vilas: 
+          description: 
+            header: Example
+          student_submissions: 
+            text: "This is a report of all students enrolled in a course in a given term that have submitted an assignment. This report contains one row per student submission."
+    students_with_no_submissions_csv_description: 
+      account_reports: 
+        vilas: 
+          description: 
+            header: Example
+          students_with_no_submissions: 
+            text: "This is a report of all students enrolled in a course in a given term that have not submitted an assignment between the given date range in the course. This report contains one row per student enrollment."
+    submission_data_csv_description: 
+      account_reports: 
+        submission_data: 
+          description: 
+            text: "This report contains dates of submissions for the attendance tool."
     terms_parameters: 
       account_reports: 
         default: 
@@ -688,6 +827,13 @@ en:
     test_ldap_result_ok: OK
     test_login: "Test Login"
     testing: Testing...
+    unused_courses_csv_description: 
+      account_reports: 
+        uw: 
+          description: 
+            header: Example
+          student_submissions: 
+            text: "This is a report of all courses that have none of the following items: assignments, announcements, discussions, modules, pages, or quizzes."
     update_failed_notice: "Account settings update failed"
     user_add_failed_message: "Adding User Failed, please try again"
     user_added_message: "*%{user}* successfully added!"
@@ -774,6 +920,29 @@ en:
       criteria_required: "At least one trigger is required"
       recipients_required: "At least one recipient is required"
       threshold_should_be_numeric: "This should be a positive number"
+  analytics: 
+    course: 
+      analytics: Analytics
+      page_title: "Analytics: %{course}"
+    crumb: 
+      completed: "Completed Courses"
+      current: "Current Courses"
+    department: 
+      analytics: Analytics
+    filters: 
+      completed: "Completed Courses"
+      current: "Current Courses"
+    page_title: 
+      completed: "Analytics: %{account} -- Completed Courses"
+      current: "Analytics: %{account} -- Current Courses"
+      term: "Analytics: %{account} -- %{term}"
+    student_in_course: 
+      analytics: Analytics
+      page_title: "Analytics: %{course} -- %{student}"
+  angel: 
+    file_copy_fail: "Could not copy folder \"%{base_path}\""
+    file_copy_fail_message: "Could not rename directory to path \"%{path}\""
+    file_import_fail: "Could not import file \"%{file_path}\""
   announcement: 
     no_title: "No Title"
   announcements: 
@@ -831,8 +1000,12 @@ en:
       page_disabled_for_course: "That page has been disabled for this course"
       page_disabled_for_group: "That page has been disabled for this group"
     warnings: 
+      details: 
+        suspended: "This institution's SmartLMS account has been suspended. Only Account Administrators may log in to correct any problems."
       please_log_in: "For security purposes, please enter your password to continue"
-      unsupported_browser: "Your browser does not meet the minimum requirements for Canvas. Please visit the *Canvas Guides* for a complete list of supported browsers."
+      titles: 
+        suspended: "Institution Suspended"
+      unsupported_browser: "Your browser does not meet the minimum requirements for SmartLMS. Please visit the *SmartLMS Guides* for a complete list of supported browsers."
     wiki_front_page_default_content_course: "Welcome to your new course wiki!"
     wiki_front_page_default_content_group: "Welcome to your new group wiki!"
   appointment_group: 
@@ -886,6 +1059,13 @@ en:
     show_advanced_options: "Show Advanced Options"
     submission_action_take_quiz: "Take %{title}"
     submission_action_turn_in_assignment: "Turn in %{title}"
+    submission_types: 
+      a_discussion_post: "a discussion post"
+      a_file_upload: "a file upload"
+      a_media_recording: "a media recording"
+      a_quiz: "a quiz"
+      a_text_entry_box: "a text entry box"
+      a_website_url: "a website url"
     titles: 
       grading_scheme_info: "View/Edit Grading Scheme"
     warnings: 
@@ -1330,16 +1510,16 @@ en:
           website: "Website URL"
       loading_tools: "Loading tools..."
       messages: 
-        google_docs_auth_required: "Before you can submit assignments directly from Google Docs you need to authorize Canvas to access your Google Docs account:"
+        google_docs_auth_required: "Before you can submit assignments directly from Google Docs you need to authorize SmartLMS to access your Google Docs account:"
         media_recording_ready: "Ready to Submit! Click 'Submit Assignment' button to finish."
-        media_recordings_disabled: "Media recordings are not enabled for this Canvas site, and you will not be able to submit these types of assignments. Please contact your instructor about changing the settings for this assignment, or your system administrator about enabling media recordings."
+        media_recordings_disabled: "Media recordings are not enabled for this SmartLMS site, and you will not be able to submit these types of assignments. Please contact your instructor about changing the settings for this assignment, or your system administrator about enabling media recordings."
         submitting: Submitting...
         uploading: "Retrieving a copy of your Google Doc to submit for this assignment. This may take a little while, depending on the size of the file..."
       no_files: "No Files"
       no_submission: "No Submission Selected"
       submission_url: "Submission:"
       titles: 
-        media_recordings_disabled: "Media recordings are not enabled for this Canvas site"
+        media_recordings_disabled: "Media recordings are not enabled for this SmartLMS site"
       upload_or_choose_file: "Upload a file, or choose a file you've already uploaded."
     syllabus: 
       page_title: "Syllabus for %{course}"
@@ -1449,8 +1629,68 @@ en:
     titles: 
       attendance_help: "Attendance Help"
       new_attendance_column: "New Attendance Column"
+  blackboard: 
+    no_manifest: "This Blackboard .zip has no imsmanifest.xml file in the root directory."
   bookmark_service: 
     default_title: "No Title"
+  bulk_course_migration: 
+    export_failed: "There was an error exporting the course with bb_lcid %{id} from Blackboard"
+    export_failed_no_id: "There was an error importing a course"
+    export_failed_not_found: "The course with bb_lcid %{id} could not be found in Blackboard with user %{user_name}"
+    export_failed_with_id: "There was an error importing the course with bb_lcid %{id} into SmartLMS"
+    no_course_found: "No course was found with %{id_type} of %{id}"
+    no_course_id_given: "No SmartLMS course was identified for bb_lcid %{id}"
+    no_credentials_found: "No credentials were found for the user name %{user_name}"
+    no_credentials_given: "No user name was given for the course %{course_identifier}"
+    no_lcid_found: "No bb_lcid was specified for a row"
+    queue_error: "There was an error while queueing the migrations."
+  bulk_course_migrations: 
+    bulk_course_migration: 
+      exporting: "Exporting from Blackboard"
+      failed: Failed
+      finished: Finished
+      importing: "Importing into SmartLMS"
+      migration_cancelled_on: "Cancelled on %{date}"
+      migration_failed_on: "Failed on %{date}"
+      migration_finished_on: "Finished on %{date}"
+      migration_queueing: "The individual course migrations are being queued to run."
+      migration_started_at: "Bulk migration started at %{time}"
+      migration_waiting: "The bulk migration is waiting to run."
+      see_results: "See results"
+      show_warnings: "Show warnings"
+      waiting_to_export: "Waiting to export from Blackboard"
+      waiting_to_import: "Waiting to import into SmartLMS"
+    index: 
+      available_courses: "Available Courses"
+      bulk_description: "These are the headers expected in the CSV:"
+      buttons: 
+        add_credentials: "Add Credentials"
+        migrate_courses: "Migrate Courses"
+      column_name: "Column Name"
+      course_id_description: "The SmartLMS id of the course to import into."
+      credential_description: "This tool will help you migrate multiple courses at the same time from a Blackboard Vista/CE system. Add a set of credentials for your Blackboard system then add SmartLMS course identifiers to the provided CSV template to migrate your courses."
+      csv_description: "Any other columns can be added but they will be ignored. Here is an example of a simple CSV for 3 courses in the account for a user name of \"greg\":"
+      csv_template: "CSV Template"
+      current_migration_batch: "Current Migration Batch"
+      description: Description
+      errors: 
+        choose_file: "You must choose a .csv file to upload"
+      labels: 
+        only_use_one: "Only use one of these two columns"
+        password: Password
+        school: School
+        user_name: "User Name"
+      lcid_description: "The lcid of the course in the Blackboard system."
+      login_credentials: "Blackboard login credentials"
+      page_title: "Bulk Course Migration"
+      previous_migration_batches: "Previous Migration Batches"
+      school: School
+      school_not_supported: "Please have your administrator contact Arrivu to help get your school supported."
+      sis_id_description: "The SIS ID of the SmartLMS course to import into."
+      upload_migration_csv: "Upload a Migration CSV"
+      user_name: "User Name"
+      user_name_description: "The user name of the user that has teacher/designer access to the course for the row. This must match one of the user name's listed in the Blackboard login credentials above."
+    only_one_bulk_migration: "Only one bulk course migration can be run at a time."
   button: 
     submit_assignment: "Submit Assignment"
   buttons: 
@@ -1465,14 +1705,20 @@ en:
     filter: Filter
     hide_all_artifacts: "Hide All Artifacts"
     import: Import
+    login: Login
     manage_rubrics: "Manage Rubrics"
+    masquerade: "Masquerade as user"
     ok: OK
     refresh: refresh
     save: Save
     save_tool_settings: "Save Tool Settings"
     search: Search
+    send_message: "Send Message"
+    sending: Sending...
+    sent: Sent!
     show_all_artifacts: "Show All Artifacts"
     submit: Submit
+    unmasquerade: "Stop Masquerading"
     update: Update
     view_account_roster: "View Account Roster"
     view_course_roster: "View Course Roster"
@@ -1576,19 +1822,21 @@ en:
       scheduler_explanation_teacher_paragraph_2: "For example, lets say you want to go over the midterm paper assignment with each of the students in your course. You would create a new appointment group, specify the dates and times that you're available, tell it to split that time into 15 minute blocks and only allow one student per time-block."
       scheduler_explanation_teacher_paragraph_3: "Then students would get notified and see that they need to sign up for one of the specified time blocks. They will be shown a calendar with the available time blocks overlaid on top of everything on their other calendars so they can pick a time that works for them."
       scheduler_explanation_teacher_paragraph_4: "* Get started now by clicking the \"Create an appointment group\" button to the right *"
-      x_groups_have_signed_up: "%{signed_up} groups have signed up"
-      x_people_have_signed_up: "%{signed_up} people have signed up"
+      x_groups_have_signed_up: "%{participant_count} groups have signed up"
+      x_people_have_signed_up: "%{participant_count} people have signed up"
     buttons: 
       cancel: Cancel
       send_message: Send
       sending_message: Sending...
     calendar_app: 
+      create_event: "Create New Event"
       links: 
         calendar_month: Month
         calendar_scheduler: Scheduler
         calendar_week: Week
       refresh: Refresh
       use_old_calendar: "Old Calendar"
+    calendar_title: "Calendar:"
     cancel_appointment: "Are you sure you want to cancel your appointment with %{name}?"
     confirm_appointment_group_deletion: "Are you sure you want to delete this appointment group?"
     confirm_deletion: "Confirm Deletion"
@@ -1654,7 +1902,6 @@ en:
       end_time: "End Time"
       event_title: "Event Title"
       start_time: "Start Time"
-      to: to
     edit_event: 
       tabs: 
         assignment: Assignment
@@ -1663,6 +1910,7 @@ en:
     ends_in_past_error: "You cannot create an appointment slot that ends in the past"
     errors: 
       send_message_failed: "There was an error sending your message, please try again"
+    event_assignment_title: "Assignment Title:"
     event_details: 
       attendees: Attendees
       calendar: Calendar
@@ -1675,6 +1923,7 @@ en:
       location: Location
       message_students: "Message students"
       slots_available: "Slots available"
+    event_event_title: "Event Title:"
     event_on_this_day: "There is an event on this day"
     labels: 
       due: due
@@ -1774,7 +2023,7 @@ en:
     ics_description_course: "Calendar events for the course, %{course_name}"
     ics_description_group: "Calendar events for the group, %{group_name}"
     ics_description_user: "Calendar events for the user, %{user_name}"
-    ics_title: "%{course_or_group_name} Calendar (Canvas)"
+    ics_title: "%{course_or_group_name} Calendar (SmartLMS)"
   calendars: 
     assignment_details: "Assignment Details"
     calendar: 
@@ -1869,6 +2118,7 @@ en:
       page_title: Calendar
     show2: 
       calendar_feed: "Calendar Feed"
+      calendar_feed_instructions: "Copy the link below and paste it into any calendar app that takes iCal feeds (Google Calendar, iCal, Outlook, etc.)"
       feed_dialog_title: "Calendar Feed"
       feed_title: "Course Calendar Atom Feed"
       links: 
@@ -1965,13 +2215,13 @@ en:
       cannot_load_collaboration: "Cannot load collaboration"
       create_failed: "Collaboration creation failed"
       no_name: "Please enter a name for this collaboration."
-      not_enabled: "Collaborations have not been enabled for this Canvas site"
+      not_enabled: "Collaborations have not been enabled for this SmartLMS site"
       update_failed: "Collaboration update failed"
     forms: 
       buttons: 
         delete_from_canvas: |-
             Just Delete  
-            from Canvas
+            from SmartLMS
         delete_from_google_docs: |-
             Also Delete From  
             Google Docs
@@ -1989,7 +2239,7 @@ en:
         description: Description
         document_name: "Document name:"
       messages: 
-        delete_google_doc_as_well: "This collaboration is being stored as a Google Doc. Did you want to delete it just from Canvas, or remove it from Google Docs as well?"
+        delete_google_doc_as_well: "This collaboration is being stored as a Google Doc. Did you want to delete it just from SmartLMS, or remove it from Google Docs as well?"
       titles: 
         new: "Start a New Collaboration"
     index: 
@@ -2024,12 +2274,15 @@ en:
       delete: "Delete collaboration?"
   collection_items: 
     new: 
-      pin_to_canvas_network: "Pin to Canvas Network"
+      pin_to_canvas_network: "Pin to SmartLMS Network"
       saved_successfully: "Saved Successfully"
   collection_view: 
     no_items: "No items."
+  comm_messages: 
+    from_beginning: "the beginning"
+    to_now: now
   communication_channel: 
-    body: "Your Canvas verification code is %{verification_code}"
+    body: "Your SmartLMS verification code is %{verification_code}"
     default_facebook_account: "Facebook Account"
     default_twitter_handle: "Twitter Handle"
   communication_channels: 
@@ -2039,7 +2292,7 @@ en:
         back: Back
         continue: Continue
         create_account: "Create My Account"
-        have_account: "I Have a Canvas Account"
+        have_account: "I Have a SmartLMS Account"
         login_as: "Log in as %{invited_user}"
         merge: Combine
         new_account: "No"
@@ -2054,7 +2307,7 @@ en:
             There's a user account already associated with %{email}.
             
               **Are you %{name}?**
-        account_needed: "You've been invited to join **%{course}**. To accept this request you need a Canvas account. Click the link below to create a Canvas account."
+        account_needed: "You've been invited to join **%{course}**. To accept this request you need a SmartLMS account. Click the link below to create a SmartLMS account."
         add_email: "Would you like to add this email address to your current account?"
         choose_login: "Select where you would like to log in at."
         logged_in_other_user: "**%{email}** is a new account, but you are currently logged in as **%{user}**."
@@ -2071,7 +2324,7 @@ en:
         wrong_account: "The invitation for %{course} was sent to **%{invited_user}**, but you are currently logged in as **%{current_user}**"
       labels: 
         password: Password
-        subscribe_to_emails: "I want to receive information, news and tips from Instructure"
+        subscribe_to_emails: "I want to receive information, news and tips from Arrivu"
         time_zone: "Time Zone"
         unique_id: Login
       page_title: "Register %{email}"
@@ -2094,7 +2347,7 @@ en:
       close: "Are you sure you want to end this conference? You will not be able to reopen it"
       delete: "Are you sure you want to delete this conference?"
       quit: "It looks like you are already editing another conference. Do you wish to continue? Any unsaved changes will be lost."
-    disabled_error: "Web conferencing has not been enabled for this Canvas site"
+    disabled_error: "Web conferencing has not been enabled for this SmartLMS site"
     general_error: "There was an error joining the conference"
     inactive_error: "That conference is not currently active"
     index: 
@@ -2159,7 +2412,7 @@ en:
         finished: "Finished %{date_and_time} (%{duration})"
         new: "Hasn't started yet"
         started: "Started %{time}"
-    type_disabled_error: "This type of conference is no longer enabled for this Canvas site"
+    type_disabled_error: "This type of conference is no longer enabled for this SmartLMS site"
   content_exports: 
     buttons: 
       process: "Process Data"
@@ -2309,7 +2562,7 @@ en:
     files: 
       buttons: 
         skip: "Skip this Step"
-      description: "You can upload a zipped collection of files into your course and we'll extract them all out for you. This is an easy way to move files from another system into Canvas."
+      description: "You can upload a zipped collection of files into your course and we'll extract them all out for you. This is an easy way to move files from another system into SmartLMS."
       instructions: 
         webct: 
           ? "1"
@@ -2338,10 +2591,10 @@ en:
         migrations_needing_action: "Migrations Needing Action"
         successful_migrations: "Successful Migrations"
     intro: 
-      description: "If you're moving to Canvas from another course management system, then chances are there are files, quizzes, assignments and things over there that you're going to want moved over here. This wizard should make that process pretty easy."
+      description: "If you're moving to SmartLMS from another course management system, then chances are there are files, quizzes, assignments and things over there that you're going to want moved over here. This wizard should make that process pretty easy."
       if_any: "(if any)"
       links: 
-        copy_course: "Copy content from **another Canvas course**"
+        copy_course: "Copy content from **another SmartLMS course**"
         import_files: "Import Files"
         import_package: "Import content from a **content package** or from **another system**"
         import_quizzes: "Import Quizzes"
@@ -2436,7 +2689,7 @@ en:
         import_more: "Import another QTI file"
       defaults: 
         unnamed_quiz: "Unnamed Quiz"
-      details: "Canvas can import quizzes in the IMS QTI format. Most systems allow you to export your quizzes in this format. You can also use popular quiz tools like Respondus to create and export IMS QTI. Upload the file below and you'll receive an email when the importing is complete."
+      details: "SmartLMS can import quizzes in the IMS QTI format. Most systems allow you to export your quizzes in this format. You can also use popular quiz tools like Respondus to create and export IMS QTI. Upload the file below and you'll receive an email when the importing is complete."
       errors: 
         choose_file: "You must choose a .zip file to upload"
         upload_failed: "Upload Failed, please try again"
@@ -2515,6 +2768,8 @@ en:
     titles: 
       content_is_locked: "Content Is Locked"
   content_migration: 
+    missing_content_links_message: "The following references could not be resolved:"
+    missing_content_links_title: "Missing links found in imported content"
     unknown: Unknown
   content_migrations: 
     no_archive: "There is no archive for this content migration"
@@ -2534,7 +2789,7 @@ en:
     chat: 
       titles: 
         chat: Chat
-    chat_not_enabled: "Chat has not been enabled for this Canvas site"
+    chat_not_enabled: "Chat has not been enabled for this SmartLMS site"
     communication: 
       headings: 
         discussions: Discussions
@@ -2650,7 +2905,7 @@ en:
         user_services: "Registered Web Services"
       help: 
         list_services: "You haven't enabled your list of registered services. Enabling this list will let fellow course and group members more easily link up with you outside of class."
-        services: "You haven't linked your user profile to any external services. You can link your Canvas account to services like Facebook and Twitter. This will make it easier for fellow course and group members to link up with you outside of class."
+        services: "You haven't linked your user profile to any external services. You can link your SmartLMS account to services like Facebook and Twitter. This will make it easier for fellow course and group members to link up with you outside of class."
       labels: 
         public_list_services: "Let fellow course/group members see which services I've linked to my profile"
         user_privileges: Privileges
@@ -2689,9 +2944,9 @@ en:
         registered_services: "Registered Services"
         service_types: "Service Types"
       help: 
-        no_services: "You haven't linked your user profile to any external services. You can link your Canvas account to services like Facebook and Twitter."
-        services_private: "You haven't enabled your list of registered services. Enabling this list will let fellow course and group members see which services you have linked to your Canvas account."
-        user_services: "If other members choose, they can let you see which outside services they've linked to their Canvas account. This can make it easier to coordinate group projects and also link up outside of class."
+        no_services: "You haven't linked your user profile to any external services. You can link your SmartLMS account to services like Facebook and Twitter."
+        services_private: "You haven't enabled your list of registered services. Enabling this list will let fellow course and group members see which services you have linked to your SmartLMS account."
+        user_services: "If other members choose, they can let you see which outside services they've linked to their SmartLMS account. This can make it easier to coordinate group projects and also link up outside of class."
       labels: 
         allow_view_services: "Let fellow course/group members see which services I've linked to my profile"
       links: 
@@ -2793,14 +3048,21 @@ en:
           next: "Next Module/Item"
           outdent: "Outdent Current Item"
           previous: "Previous Module/Item"
+      keycode_descriptions: 
+        next_module_item: "Select next module or module item"
+        previous_module_item: "Select previous module or module item"
+        toggle_module_dragging: "Select item to begin dragging, or drop previously selected item"
       keycodes: 
         delete: d
         edit: e
         indent: i
         new: "n"
         next: j
+        next_module_item: Up
         outdent: o
         previous: k
+        previous_module_item: Down
+        toggle_module_dragging: Space
       labels: 
         indent: Indent
         module_complete_when: "This module is complete when"
@@ -2824,6 +3086,7 @@ en:
       module: module
       module_details: "Modules are shown in sequential order, so only modules that are above %{name} can be set as prerequisites."
       module_name: "Module Name"
+      modules_keyboard_hint: "To change the order of the course modules and module items, first turn the cursor off on your screen reader. Insert-z in JAWS. Press tab to select the first module. Press up and down to choose a module or module item. Press space to select the module or module item to start dragging. Then press up and down to select a destination. Then press space a second time to drop selection after destination."
       must_complete_prerequisites: "They must complete"
       no_preprequisites: "No prerequisites defined"
       no_requirements: "No requirements defined"
@@ -2927,7 +3190,6 @@ en:
       must_view: 
         fulfilled: "viewed the page"
         unfulfilled: "must view the page"
-    multiple_due_dates: "Multiple Due Dates"
     none_in_progress: "none in progress"
     optgroup: 
       assignments: Assignments
@@ -2973,6 +3235,7 @@ en:
     buttons: 
       add_people: "Add People"
       send_message: Send
+    cannot_be_empty: "Message cannot be blank"
     confirm: 
       delete_message: "Are you sure you want to delete your copy of this message? This action cannot be undone."
       delete_messages: "Are you sure you want to delete your copy of these messages? This action cannot be undone."
@@ -2991,7 +3254,7 @@ en:
         unarchive: Unarchive
         unstar: Star
         unsubscribe: Unsubscribe
-      inbox_actions_description: Actions
+      inbox_actions_description: "Message Actions Menu"
       read_more: more...
     conversations_list: 
       no_archived_messages: "You have no archived messages"
@@ -3066,6 +3329,7 @@ en:
       done_sending_message: "Sent *%{message_preview}* to *%{num_people}*"
       error_sending_message: "Error sending message:"
       sending_message: "Sending *%{message_preview}* to *%{num_people}*"
+    no_recipients_choose_another_group: "No recipients are in this group. Please choose another group."
     not_applicable: N/A
     not_scored: "no score"
     notes_to_self: Monologue
@@ -3092,7 +3356,7 @@ en:
   conversations_intro: 
     slide1: 
       paragraph1: "Take a look at your Inbox!"
-      paragraph2: "Conversations—the new Canvas messaging system—has arrived!"
+      paragraph2: "Conversations—the new SmartLMS messaging system—has arrived!"
       paragraph3: "Use Conversations to send a private message to a classmate or use Conversations to talk to an entire group of people."
       paragraph4: "Ready for a short intro? Click the right arrow to get started."
     slide2: 
@@ -3153,7 +3417,7 @@ en:
       sis_in_use: "SIS ID \"%{sis_id}\" is already in use"
     file_copy_error: "Couldn't copy file \"%{name}\""
     grade_export_types: 
-      instructure_csv: "Instructure formatted CSV"
+      instructure_csv: "Arrivu formatted CSV"
     grade_publishing_status: 
       error: Error
       error_with_message: "Error: %{message}"
@@ -3181,7 +3445,7 @@ en:
       assignment_groups: "Failed to export assignment groups"
       assignment_is_locked: "The assignment \"%{title}\" could not be copied because it is locked."
       assignments: "Failed to export some assignments"
-      canvas_meta: "Failed to export canvas-specific meta data"
+      canvas_meta: "Failed to export SmartLMS-specific meta data"
       course_export: "Error running course export."
       course_settings: "Failed to export course settings"
       events: "Failed to export calendar events"
@@ -3280,6 +3544,19 @@ en:
     updating: Updating...
   course_statistics: 
     unknown: unknown
+  course_subscriptions: 
+    already_subscribed: 
+      already_subscribed_message: "Hi, *%{subscriber_name}*, you are already subscribed to *%{course_name}*"
+    logged_in_confirm_form: 
+      logged_in_confirm_message: "Hi, *%{user_name}*, thank you for your interest in *%{course_name}*. Please click subscribe below to receive updates about this course."
+    new: 
+      subscribe: Subscribe
+    show: 
+      thanks: "Thanks, you are now subscribed to *%{course_name}*."
+    subscribe_form: 
+      email: "Email Address"
+      subscribe_form_text: "Thank you for your interest in *%{course_name}*. To receive updates about this course, please provide your full name and email address below."
+      your_name: "Your Name"
   course_users: 
     greater_than_three: "Please enter a search term with three or more characters"
     unknown_error: "Something went wrong with your search, please try again."
@@ -3316,6 +3593,12 @@ en:
         one: "1 needs grading"
         other: "%{count} need grading"
       points_possible: "out of %{points_possible}"
+    canvasnet_instructor: 
+      avatar_url: "Avatar (URL)"
+      biography: Bio
+      instructor_name: Name
+      job_title: Title
+      remove_instructor: "Remove Instructor"
     confirm_action: 
       buttons: 
         conclude_course: "Conclude Course"
@@ -3357,7 +3640,7 @@ en:
               Great, so you've got a course...  Now what?  Well, before you go publishing it to the world, you may want to check and make sure you've got the basics laid out.  Work through the list on the left to ensure that your course is ready to use.
               
               *This course is visible only to teachers until it is published*
-          saved: "Done and done!  Your course, %{course} is now officially created. It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how Canvas works and to make sure you really are ready to teach."
+          saved: "Done and done!  Your course, %{course} is now officially created. It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how SmartLMS works and to make sure you really are ready to teach."
         created: 
           not_saved: |-
               This class has been created, but not claimed.  It'll get deleted if it's not claimed within a week.  In the mean time, tick through the list to the left to make sure you're ready to go.
@@ -3366,21 +3649,21 @@ en:
               
               Please **log in** or ***register*** to claim this course.
           saved: |-
-              Done and done!  Your course, %{course} is now officially created.  It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how Canvas works and to make sure you really are ready to teach.
+              Done and done!  Your course, %{course} is now officially created.  It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how SmartLMS works and to make sure you really are ready to teach.
               
               If you need to leave and come back before then, just save *this link* to get back here later.
               
               Please **log in** or ***register*** to claim this course.
-        files: "The Files tab is the place to share lecture slides, example documents, study helps -- anything your students will want to download. Uploading and organizing your files is easy with Canvas. We'll show you how."
+        files: "The Files tab is the place to share lecture slides, example documents, study helps -- anything your students will want to download. Uploading and organizing your files is easy with SmartLMS. We'll show you how."
         home: "When people visit the course, this is the page they'll see. You can set it to show an activity stream, the list of course modules, a syllabus, or a custom page you write yourself. The default is the course activity stream. To customize this, just click %{change_layout}."
-        import: "If you've been using another course management system, you probably have stuff in there that you're going to want moved over to Canvas. We can walk you through the process of easily migrating your content into Canvas."
+        import: "If you've been using another course management system, you probably have stuff in there that you're going to want moved over to SmartLMS. We can walk you through the process of easily migrating your content into SmartLMS."
         navigation: "By default all links are enabled for a course. Students won't see links to sections that don't have content. For example, if you haven't created any quizzes, they won't see the quizzes link. You can sort and explicitly disable these links if there are areas of the course you don't want your students accessing."
         publish: 
           form: |-
               All finished?  Time to publish your course!  Click the button below to make it official!
               
               Publishing will allow the users to begin participating in the course.
-          not_registered: "This course is claimed and ready, but you'll need to finish the registration process before you can publish the course. You should have received an email from Canvas with a link to finish the process. Be sure to check your spam box."
+          not_registered: "This course is claimed and ready, but you'll need to finish the registration process before you can publish the course. You should have received an email from SmartLMS with a link to finish the process. Be sure to check your spam box."
         students: "You'll definitely want some of these. What's the fun of teaching a course if nobody's even listening?"
         tas: "You may want to assign some TAs to help you with the course. TAs can grade student submissions, help moderate the discussions and even update due dates and assignment details for you."
       headings: 
@@ -3398,6 +3681,40 @@ en:
         tas: "Add TAs to the Course"
         title: 
           bookmark: "Copy or bookmark this link"
+    edit_profile: 
+      about: About
+      about_related_id: "shared identifier used to link related courses/sections together"
+      add_instructor: "Add Instructor"
+      basic_info: "Basic Information"
+      disabled: Closed
+      enabled: Open
+      institution: Institution
+      institution_name: Name
+      instructor_led: Instructor-led
+      instructors: Instructors
+      labels: 
+        description: Description
+        enrollment_fee: "Enrollment Fee"
+        format: Format
+        image: Image
+        path: Path
+        position: Position
+        related_id: "Link ID"
+        self_enrollment: Enrollment
+        self_enrollment_limit: "Enrollment Cap"
+        tags: Tags
+        tentative_start: "Tentative Start"
+        title: Title
+        visibility: Visibility
+      leave_blank_if_free: "leave blank if this is a free course"
+      logo: "Logo (URL)"
+      page_title: "Course Profile"
+      path_syntax: "lower-case letters, numbers and dashes"
+      private: Hidden
+      public: "Listed on SmartLMS.net"
+      save_changes: "Save changes"
+      self_paced: Self-paced
+      when_to_set_tentative_start: "e.g. \"Fall 2013\", if the course doesn't have a definitive start date"
     enrollment_reminders: 
       buttons: 
         accept: "Accept Invitation"
@@ -3479,8 +3796,29 @@ en:
         with_score: "Score: %{score} *out of %{points_possible}*"
         without_score: "out of %{points_possible}"
     roster: 
+      create_users: 
+        add_more_users: "Add More Users"
+        add_these_users: "Add Users"
+        adding: Adding...
+        adding_n_users: "Validated and ready to add %{users.length} users:"
+        can_only_grade_students_in_section: "Can grade students in their section only"
+        close: Done
+        duplicates_removed: "Some duplicates were removed."
+        email: Email
+        example_formats: "Examples: user@example.com, \"First Last\" &lt;user@example.com&gt;, \"Last, First\" &lt;user@example.com&gt;"
+        form_instructions: "Type or paste a list of email addresses below:"
+        go_back: "Start Over"
+        have_been_enrolled: "The following users have been enrolled"
+        name: Name
+        next: Next
+        section: Section
+        user_role: "Role:"
+        validating: Validating...
+        will_not_be_added: "These users had errors and will not be added. Please ensure they are formatted correctly."
       index: 
+        add_people: "Add People"
         all_roles: "All Roles"
+        cannot_add_users: "New users can not be added because this course is concluded"
         role_to_search: "Limit search to role"
         search: Search
         search_people: "Search people"
@@ -3563,6 +3901,7 @@ en:
         language: Language
         license: License
         open_enrollment: "Add a \"Join this Course\" link to the course home page"
+        public_syllabus: "Make the syllabus for this course publicly visible"
         restrict_enrollments_to_course_dates: "Users can only participate in the course between these dates"
         root_account_id: "Root Account"
         self_enrollment: "Let students self-enroll by sharing with them a secret URL or code"
@@ -3607,7 +3946,7 @@ en:
         users: Users
       titles: 
         edit_navigation: "Edit Course Navigation"
-      transifex_message: "Join the [Canvas Translation Community](%{transifex_url})"
+      transifex_message: "Join the [SmartLMS Translation Community](%{transifex_url})"
       turnitin: "these comments will be shown to students when submitting a Turnitin-enabled assignment"
       user_view: 
         links: 
@@ -3755,6 +4094,8 @@ en:
         current_users: "Current Users"
       re_send_all: "or *Re-Send All Unaccepted Invitations*"
       unaccepted_invitations: "%{count} Invitations haven't been accepted. You can click a user's name to re-send their invitation"
+  create_users_view: 
+    required: "Please enter some email addresses"
   crumb: 
     conversations: Conversations
     discussion_replies: "Discussion Replies"
@@ -3772,6 +4113,7 @@ en:
     eportfolio_welcome: "Welcome to Your ePortfolio"
     error_reports: "Error Reports"
     files: Files
+    gradebook: Gradebook
     grades: Grades
     grading_schemes: "Grading Schemes"
     groups: Groups
@@ -3783,6 +4125,8 @@ en:
     people: People
     plugins: Plugins
     prior_users: "Prior Users"
+    question_banks: "Question Banks"
+    quizzes: Quizzes
     registered_services: "Registered Services"
     results: Results
     revisions: Revisions
@@ -3853,6 +4197,7 @@ en:
       long: "%B %d, %Y"
       medium: "%b %-d, %Y"
       medium_month: "%b %Y"
+      medium_with_weekday: "%a %b %-d, %Y"
       short: "%b %-d"
       short_month: "%b"
       short_weekday: "%a"
@@ -3920,6 +4265,21 @@ en:
       month: Month
       second: Seconds
       year: Year
+  demos: 
+    demos_add: 
+      labels: 
+        school_name: "School Name"
+        username: "Email Address"
+    register: 
+      labels: 
+        current_lms: "Current LMS"
+        name: Name
+        organization_size: "Organization Size"
+        organization_type: "Organization type"
+        phone: "Phone number"
+        school_name: "School / organization"
+        school_position: Title
+        username: Email
   developer_key: 
     api_key: "Key: *%{api_key}*"
     created: "Created:"
@@ -4177,6 +4537,9 @@ en:
     multiple_due_dates: "due: Multiple Due Dates"
     no_due_date: "due: No Due Date"
   edit_rubric: 
+    buttons: 
+      create_rubric: "Create Rubric"
+      update_rubric: "Update Rubric"
     errors: 
       load_rubrics_failed: "Loading rubrics failed, please try again"
     messages: 
@@ -4235,7 +4598,7 @@ en:
       formatting: "Formatting, press down to select"
       rte_help: "Rich Text Area. Press ALT F10 for toolbar. Press ALT 0 for help."
   email: 
-    default_from_name: "Instructure Canvas"
+    default_from_name: "Arrivu SmartLMS"
   enrollment: 
     default_course_name: Course
     default_email: "No Email"
@@ -4452,7 +4815,7 @@ en:
       write_only_comments: "Comments for this page are private. You can make comments, but only the portfolio's owner will be able to see them."
     show_me: "show me"
     static_page: 
-      created_with_canvas: "Created with Canvas"
+      created_with_canvas: "Created with SmartLMS"
       headers: 
         page_comments: "Page Comments"
       links: 
@@ -4603,12 +4966,12 @@ en:
       domain: Domain
       email_only: "Email Only"
       external_tools_note: |-
-          External (LTI) Tools are an easy way to add new features to Canvas.
+          External (LTI) Tools are an easy way to add new features to SmartLMS.
             They can be added to individual courses, or to all courses in an account.
             Once configured, you can link to them through course modules and create assignments for
             assessment tools.
           
-            Click [here](%{lti_index_url}) to see some LTI tools that work great with Canvas. You can also check out the Canvas Community topics about LTI tools [here](%{lti_examples_url}).
+            Click [here](%{lti_index_url}) to see some LTI tools that work great with SmartLMS. You can also check out the SmartLMS Community topics about LTI tools [here](%{lti_examples_url}).
       labels: 
         config_type: "Configuration Type"
         config_url: "Configuration URL"
@@ -4646,27 +5009,27 @@ en:
       new_tab_loaded: "This tool was successfully loaded in a new browser window. Reload the page to access the tool again."
   facebook: 
     authorization_required: "Only authorized users can access that page"
-    authorization_success: "Authorization successful!  Canvas and Facebook are now friends."
+    authorization_success: "Authorization successful!  SmartLMS and Facebook are now friends."
     deleted: Deleted
     index: 
       all_set: "You're all set up!"
-      bookmark_notice: "You can see the number of new Canvas notifications from your Facebook home page if you bookmark this application."
-      canvas_messages: "Canvas Messages"
-      configure_notification_preferences_notice: "After you *configure your notification preferences* you should start to see notifications show up here letting you know about things happening in your Canvas account."
-      installation_about: "To install the Canvas Facebook app, go to your profile page in Canvas and click the Facebook button to connect your account to Facebook."
+      bookmark_notice: "You can see the number of new SmartLMS notifications from your Facebook home page if you bookmark this application."
+      canvas_messages: "SmartLMS Messages"
+      configure_notification_preferences_notice: "After you *configure your notification preferences* you should start to see notifications show up here letting you know about things happening in your SmartLMS account."
+      installation_about: "To install the SmartLMS Facebook app, go to your profile page in SmartLMS and click the Facebook button to connect your account to Facebook."
       learn_more: "Learn More at instructure.com"
       more_information: "More information at %{domain_list}"
-      no_messages_notice: "As things happen in the course you'll start seeing notifications show up here letting you know about things happening in your Canvas account."
-      notification_about: "The Canvas Facebook app is here to give you easier access to the interactions going on inside your courses. You can set it to send you notifications when your assignments are graded, when due dates change, etc. Your private data will still stay private at Canvas."
+      no_messages_notice: "As things happen in the course you'll start seeing notifications show up here letting you know about things happening in your SmartLMS account."
+      notification_about: "The SmartLMS Facebook app is here to give you easier access to the interactions going on inside your courses. You can set it to send you notifications when your assignments are graded, when due dates change, etc. Your private data will still stay private at SmartLMS."
       notification_settings: "Notification Settings"
-      notifications_notice: "Below you can see a list of your most recent notifications from Canvas. You can see the number of new Canvas notifications from your Facebook home page if you bookmark this application."
+      notifications_notice: "Below you can see a list of your most recent notifications from SmartLMS. You can see the number of new SmartLMS notifications from your Facebook home page if you bookmark this application."
       welcome: "Welcome back, %{name}!"
-      welcome_message: "Welcome to a new breed of online learning software, courtesy of Instructure. We're here to make it easy for you to use the web to improve learning. Our interface is simple, clean and open, and we work with the tools you and your students are already using -- tools like Facebook -- to provide a more open, collaborative learning experience. We roll it all up into one powerful, open package that does more than just tracks assignments. It encourages interaction and fosters learning."
-      welcome_title: "Welcome to Instructure Canvas"
+      welcome_message: "Welcome to a new breed of online learning software, courtesy of Arrivu. We're here to make it easy for you to use the web to improve learning. Our interface is simple, clean and open, and we work with the tools you and your students are already using -- tools like Facebook -- to provide a more open, collaborative learning experience. We roll it all up into one powerful, open package that does more than just tracks assignments. It encourages interaction and fosters learning."
+      welcome_title: "Welcome to Arrivu SmartLMS"
     index_disabled: 
-      disabled_notice: "This Canvas site is not configured to communicate with Facebook."
+      disabled_notice: "This SmartLMS site is not configured to communicate with Facebook."
       get_help: "Get help at support.instructure.com"
-      instructure_canvas: "Instructure Canvas"
+      instructure_canvas: "Arrivu SmartLMS"
     invalid_signature: "Invalid Facebook signature"
     message: 
       hide: Hide
@@ -4687,9 +5050,9 @@ en:
       weekly: Weekly
     settings: 
       back_to_messages: "Back to Messages"
-      link_needed: "Before you can configure the Canvas Facebook App you need to link it to your Canvas login. Please click \"Welcome\" for more information."
-      notifications_config_notice: "Notifications from Canvas can automatically be sent over to your Facebook account. Below you'll see the types of notifications you can have sent. You can change your notification preferences at any time, either here or in Canvas."
-      settings_title: "Canvas Notification Settings"
+      link_needed: "Before you can configure the SmartLMS Facebook App you need to link it to your SmartLMS login. Please click \"Welcome\" for more information."
+      notifications_config_notice: "Notifications from SmartLMS can automatically be sent over to your Facebook account. Below you'll see the types of notifications you can have sent. You can change your notification preferences at any time, either here or in SmartLMS."
+      settings_title: "SmartLMS Notification Settings"
       updating_preferences: "Updating Preferences..."
   files: 
     alts: 
@@ -5034,6 +5397,7 @@ en:
     section_to_show_menu: 
       choose_a_section_to_show: "Choose a section to show"
     show: 
+      all_sections: "All Sections"
       arrange_columns_by_due_date: "Arrange columns by due date"
       arrange_columns_by_group: "Arrange columns by assignment group"
       download_scores: "Download Scores (.csv)"
@@ -5045,6 +5409,7 @@ en:
       set_group_weights: "Set Group Weights"
       show_attendance_columns: "Show Attendance Columns"
       show_concluded_enrollments: "Show Concluded Enrollments"
+      showing_sections: "Showing: *%{section_being_shown}*"
       upload_scores: "Upload Scores (from .csv)"
       view_grading_history: "View Grading History"
     show_student_names: "Show Student Names"
@@ -5211,6 +5576,7 @@ en:
       not_official: "*NOTE*: This is NOT your official score."
       page_title: "Grades for %{student}"
       percent: Percent
+      print_grades: "Print grades"
       see_rubric_results: "See rubric results"
       see_scoring_details: "See scoring details"
       see_turnitin_results: "See Turnitin results"
@@ -5713,9 +6079,9 @@ en:
     message_will_be_sent_to_all_the_teachers_tas_in_the_course: "Message will be sent to all the Teachers / TA's in the course."
     please_select_one: "Please select one..."
     report_problem: "Report a Problem"
-    report_problem_sub: "If Canvas misbehaves, tell us about it"
-    search_the_canvas_guides: "Search the Canvas Guides"
-    see_if_your_issue_is_addressed_in_the_canvas_guides: "See if your issue is addressed in the *Canvas Guides*."
+    report_problem_sub: "If SmartLMS misbehaves, tell us about it"
+    search_the_canvas_guides: "Search the SmartLMS Guides"
+    see_if_your_issue_is_addressed_in_the_canvas_guides: "See if your issue is addressed in the *SmartLMS Guides*."
     send_message: "Send Message"
     sending: Sending...
     somethings_broken_but_i_can_work_around_it_for_now: "Something's broken but I can work around it for now"
@@ -5745,14 +6111,14 @@ en:
   info: 
     notices: 
       error_reported: "Thanks for your help!  We'll get right on this"
-    styleguide: 
+    old_styleguide: 
       create_collection: "Create a collection"
       start_a_group: "Start a group"
   instructions: 
-    authorize_google_docs: "Before you can collaborate on documents, you need to authorize Canvas to access your Google Docs account:"
+    authorize_google_docs: "Before you can collaborate on documents, you need to authorize SmartLMS to access your Google Docs account:"
   instructure: 
     alerts: 
-      file_previews_disabled: "File previews have been disabled for this Canvas site"
+      file_previews_disabled: "File previews have been disabled for this SmartLMS site"
     browsers: 
       unrecognized: "Unrecognized Browser"
     buttons: 
@@ -5884,7 +6250,7 @@ en:
     wikis: Wikis
   layouts: 
     application: 
-      instructure_description: "Instructure, makers of the open source learning management system Canvas"
+      instructure_description: "Arrivu, makers of the open source learning management system SmartLMS"
       keyboard_navigation: 
         close: "Press comma to close this dialog"
       links: 
@@ -5914,7 +6280,7 @@ en:
         reset_explanation: "Resetting the test student will clear all history for this student, %{line_break}allowing you to view the course as a brand new student."
         warning_title: "You are currently logged into Student View"
     head: 
-      default_page_title: "Canvas LMS"
+      default_page_title: "SmartLMS LMS"
     menu: 
       view_all_accounts: "View all accounts"
       view_all_enrollments: "View all courses"
@@ -5927,6 +6293,9 @@ en:
   learning_outcome_group: 
     no_global_permission: "You're not allowed to manage global outcomes, can't add \"%{title}\""
   lib: 
+    angel: 
+      failed_import_link: "Failed import link"
+      failed_import_link_body: "This link referenced an Angel feature that couldn't be linked to by SmartLMS or that was left out of the export."
     api: 
       attachments: 
         only_one_folder: "Can't set folder path and folder id"
@@ -5950,21 +6319,21 @@ en:
       standard: 
         failed_to_convert_qti: "Failed to import Assessment %{file_identifier}"
     google_docs: 
-      default_document_name: "Instructure Doc"
+      default_document_name: "Arrivu Doc"
     incoming_message_processor: 
       failure_message: 
         body: |-
-            The message titled "%{subject}" could not be delivered.  The message was sent to an unknown mailbox address.  If you are trying to contact someone through Canvas you can try logging in to your account and sending them a message using the Inbox tool.
+            The message titled "%{subject}" could not be delivered.  The message was sent to an unknown mailbox address.  If you are trying to contact someone through SmartLMS you can try logging in to your account and sending them a message using the Inbox tool.
             
                     Thank you,
-                    Canvas Support
+                    SmartLMS Support
         subject: "Message Reply Failed: %{subject}"
       locked_topic: 
         body: |-
-            The message titled "%{subject}" could not be delivered because the discussion topic is locked. If you are trying to contact someone through Canvas you can try logging in to your account and sending them a message using the Inbox tool.
+            The message titled "%{subject}" could not be delivered because the discussion topic is locked. If you are trying to contact someone through SmartLMS you can try logging in to your account and sending them a message using the Inbox tool.
             
                     Thank you,
-                    Canvas Support
+                    SmartLMS Support
         subject: "Message Reply Failed: %{subject}"
     progress_runner: 
       completed_message: 
@@ -6021,7 +6390,7 @@ en:
       relationships: Relationships
   media_comments: 
     alerts: 
-      kaltura_disabled: "Kaltura has been disabled for this Canvas site"
+      kaltura_disabled: "Kaltura has been disabled for this SmartLMS site"
     buttons: 
       submit: "Submit Media File"
     cancel: Cancel
@@ -6059,7 +6428,7 @@ en:
     managed_accounts: "Managed Accounts"
     my_courses: "My Courses"
   message: 
-    default_subject: "Canvas Alert"
+    default_subject: "SmartLMS Alert"
   message_students: 
     buttons: 
       send_message: "Send Message"
@@ -6067,9 +6436,19 @@ en:
       sending_message: "Sending Message..."
     message_student: "Message Students for %{course_name}"
     send_message: "Send Message"
+  message_students_dialog: 
+    for_title: "for %{title}"
+    message_students_who: "Message Students Who.."
   messages: 
+    account_suspended: 
+      email: 
+        body: "%{institution} has been suspended.  Please contact your Site Admin to find out why."
+        subject: "Institution Suspended"
     account_user_notification: 
       email: 
+        html: 
+          subject: "Account Admin Notification"
+          url_info: "Visit the account page"
         subject: "Account Admin Notification"
         url_info: |-
             Visit the account page here:
@@ -6078,31 +6457,44 @@ en:
       email: 
         added_message: "You've been added as an %{role_type} to the account %{account} at %{website}."
         email_info: "Email: %{email}"
+        html: 
+          added_message: "You've been added as an %{role_type} to the account %{account} at %{website}."
+          click_to_finish_registration: "Click here to finish the registration process"
+          email: Email
+          name: Name
+          subject: "SmartLMS Account Admin Invitation"
+          url_info_label: "You'll need to register with SmartLMS before you can participate as an account admin."
+          username: Username
         name_info: "Name: %{name}"
-        subject: "Canvas Account Admin Invitation"
+        subject: "SmartLMS Account Admin Invitation"
         url_info: |-
-            You'll need to register with Canvas before you can participate as an account admin.  You can finish the registration process here:
+            You'll need to register with SmartLMS before you can participate as an account admin.  You can finish the registration process here:
             %{url}
         username_info: "Username: %{username}"
     added_to_conversation: 
       email: 
-        body: "%{user_name} just added you to a conversation in Canvas. To view the conversation, click the link below:"
-        subject: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in SmartLMS. To view the conversation, click the link below:"
+        html: 
+          body: "%{user_name} just added you to a conversation in SmartLMS."
+          link_text: "View Conversation"
+          subject: "%{user_name} just added you to a conversation in SmartLMS."
+          unknown_user: "Unknown User"
+        subject: "%{user_name} just added you to a conversation in SmartLMS."
         unknown_user: "Unknown User"
       facebook: 
-        body: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in SmartLMS."
         link_text: "View Conversation"
         unknown_user: "Unknown User"
       sms: 
-        body: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in SmartLMS."
         more_info: "More info at %{url}"
         unknown_user: "Unknown User"
       summary: 
-        body: "%{user_name} just added you to a conversation in Canvas."
-        subject: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in SmartLMS."
+        subject: "%{user_name} just added you to a conversation in SmartLMS."
         unknown_user: "Unknown User"
       twitter: 
-        tweet: "Canvas Alert - Added to conversation by %{user_name}."
+        tweet: "SmartLMS Alert - Added to conversation by %{user_name}."
         unknown_user: "Unknown User"
     alert: 
       email: 
@@ -6112,6 +6504,19 @@ en:
         body_student: 
           one: "An alert has been triggered for you because the following condition has been met:"
           other: "An alert has been triggered for you because the following conditions have been met:"
+        html: 
+          body: 
+            one: "An alert has been triggered for %{student} because the following condition has been met:"
+            other: "An alert has been triggered for %{student} because the following conditions have been met:"
+          body_student: 
+            one: "An alert has been triggered for you because the following condition has been met:"
+            other: "An alert has been triggered for you because the following conditions have been met:"
+          interaction_description: "No student/teacher interaction for %{count} days"
+          subject: "Alert: %{user_name}"
+          ungraded_count_description: "%{count} or more submissions have not been graded"
+          ungraded_timespan_description: "A submission has been left ungraded for %{count} days"
+          usernote_description: "No faculty journal entries for %{count} days"
+          view_here: "You can view it here"
         interaction_description: "No student/teacher interaction for %{count} days"
         subject: "Alert: %{user_name}"
         ungraded_count_description: "%{count} or more submissions have not been graded"
@@ -6165,6 +6570,19 @@ en:
         body_student: "An alert has been triggered for you"
     appointment_canceled_by_user: 
       email: 
+        html: 
+          attendee: Attendee
+          attendees: Attendees
+          cancel_reason: "Reason for canceling"
+          click_to_see_assignment: "Click here to view the assignment"
+          date_and_time: Date/Time
+          details: "Appointment Details"
+          group: Group
+          message: "%{user} canceled his/her reservation for %{appointment_name}."
+          no_reason_given: "none given"
+          slots_remaining: "Available time slots"
+          subject: "Reservation canceled for %{appointment_name} (%{course})"
+          view_appointment: "View the appointment at the following link"
         instructions: "View the appointment at the following link: %{link}"
         labels: 
           attendee: Attendee
@@ -6195,9 +6613,21 @@ en:
         message: "%{user} canceled his/her reservation for \"%{appointment_name}\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - %{user} canceled his/her reservation for \"%{appointment_name}\"."
+        message: "SmartLMS Alert - %{user} canceled his/her reservation for \"%{appointment_name}\"."
     appointment_deleted_for_user: 
       email: 
+        html: 
+          attendee: Attendee
+          attendees: Attendees
+          cancel_reason: "Reason for canceling"
+          course: Course
+          date_and_time: Date/Time
+          details: "Appointment Details"
+          group: Group
+          link_text: "Click here to sign up for a different time slot"
+          message: "%{user} canceled your time slot for %{appointment_name}."
+          no_reason_given: "none given"
+          subject: "Your time slot for %{appointment_name} has been canceled (%{course})"
         instructions: "Sign up for a different time slot at the following link: %{link}"
         labels: 
           attendee: Attendee
@@ -6226,9 +6656,18 @@ en:
         message: "Your time slot for \"%{appointment_name} was canceled\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - Your time slot for \"%{appointment_name} was canceled\"."
+        message: "SmartLMS Alert - Your time slot for \"%{appointment_name} was canceled\"."
     appointment_group_deleted: 
       email: 
+        html: 
+          cancel_reason: "Reason for canceling"
+          course: Course
+          dates: Date(s)
+          details: "Appointment Details"
+          link_text: "View the appointment"
+          message: "All appointments for %{appointment_name} have been canceled."
+          no_reason_given: "none given"
+          subject: "Appointments for %{appointment_name} have been canceled (%{course})"
         labels: 
           cancel_reason: "Reason for canceling"
           course: Course
@@ -6249,10 +6688,21 @@ en:
         message: "All appointments for \"%{appointment_name} have been canceled\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - All appointments for \"%{appointment_name} have been canceled\"."
+        message: "SmartLMS Alert - All appointments for \"%{appointment_name} have been canceled\"."
     appointment_group_published: 
       email: 
         group_signup: "Group (%{group_category})"
+        html: 
+          course: Course
+          dates: Date(s)
+          details: "Appointment Details"
+          group_signup: "Group (%{group_category})"
+          individual_signup: Individual
+          link_text: "Sign up for a time slot"
+          message: "Time slots for \"%{appointment_name}\" are now available for signup."
+          signup_type: "Signup Type"
+          slots_remaining: "Available time slots"
+          subject: "Appointment \"%{appointment_name}\" is available for signup (%{course})"
         individual_signup: Individual
         instructions: "Sign up for a time slot at the following link: %{link}"
         labels: 
@@ -6281,10 +6731,20 @@ en:
         message: "Time slots for \"%{appointment_name}\" are now available for signup (%{dates})."
         subject: "Appointment \"%{appointment_name}\" is available for signup (%{course})"
       twitter: 
-        message: "Canvas Alert - Signups are open for \"%{appointment_name}\"."
+        message: "SmartLMS Alert - Signups are open for \"%{appointment_name}\"."
     appointment_group_updated: 
       email: 
         group_signup: "Group (%{group_category})"
+        html: 
+          course: Course
+          dates: Date(s)
+          details: "Appointment Details"
+          group_signup: "Group (%{group_category})"
+          individual_signup: Individual
+          link_text: "Sign up for a time slot"
+          message: "Time slots have been added to \"%{appointment_name}\" and are available for signup."
+          slots_remaining: "Available time slots"
+          subject: "Appointment \"%{appointment_name}\" has been updated (%{course})"
         individual_signup: Individual
         instructions: "Sign up for a time slot at the following link: %{link}"
         labels: 
@@ -6313,9 +6773,20 @@ en:
         message: "Time slots have been added to \"%{appointment_name}\" and are available for signup (%{dates})."
         subject: "Appointment \"%{appointment_name}\" has been updated (%{course})"
       twitter: 
-        message: "Canvas Alert - New time slots are available for \"%{appointment_name}\"."
+        message: "SmartLMS Alert - New time slots are available for \"%{appointment_name}\"."
     appointment_reserved_by_user: 
       email: 
+        html: 
+          attendee: Attendee
+          attendees: Attendees
+          course: Course
+          date_and_time: Date/time
+          details: "Appointment Details"
+          group: Group
+          link_text: "View the appointment"
+          message: "%{user} has signed up for \"%{appointment_name}\"."
+          slots_remaining: "Available time slots"
+          subject: "User signed up for \"%{appointment_name}\" (%{course})"
         instructions: "View the appointment at the following link: %{link}"
         labels: 
           attendee: Attendee
@@ -6342,9 +6813,20 @@ en:
         message: "%{user} has signed up for \"%{appointment_name}\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - %{user} has signed up for \"%{appointment_name}\"."
+        message: "SmartLMS Alert - %{user} has signed up for \"%{appointment_name}\"."
     appointment_reserved_for_user: 
       email: 
+        html: 
+          attendee: Attendee
+          attendees: Attendees
+          course: Course
+          date_and_time: Date/time
+          details: "Appointment Details"
+          group: Group
+          link_text: "Sign up for a different time slot"
+          message: "%{user} has signed you up for \"%{appointment_name}\"."
+          slots_remaining: "Available time slots"
+          subject: "You have been signed up for \"%{appointment_name}\""
         instructions: "Sign up for a different time slot at the following link: %{link}"
         labels: 
           attendee: Attendee
@@ -6374,7 +6856,7 @@ en:
         message: "%{user} has signed you up for \"%{appointment_name}\" (%{date_and_time})."
         subject: "You have been signed up for \"%{appointment_name}\" (%{course})"
       twitter: 
-        message: "Canvas Alert - You have been signed up for \"%{appointment_name}\"."
+        message: "SmartLMS Alert - You have been signed up for \"%{appointment_name}\"."
     assignment_changed: 
       email: 
         body: |-
@@ -6382,6 +6864,10 @@ en:
             
             Click here to view the assignment: 
             %{url}
+        html: 
+          body: "The assignment \"%{title}\" for %{course} has changed."
+          link: "Click here to view the assignment"
+          subject: "Assignment Changed: %{title}, %{course}"
         subject: "Assignment Changed: %{title}, %{course}"
       facebook: 
         body: "The assignment %{title_link} for %{course} has changed."
@@ -6393,11 +6879,18 @@ en:
       summary: 
         subject: "Assignment Changed: %{title}, %{course}"
       twitter: 
-        assignment_change: "Canvas Alert - Change: %{assignment_name}, %{course_name}"
+        assignment_change: "SmartLMS Alert - Change: %{assignment_name}, %{course_name}"
     assignment_created: 
       email: 
         assignment_created: "Assignment Created - %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
+        html: 
+          assignment_created: "Assignment Created - %{assignment_name}, %{course_name}"
+          due_at: "Due: %{assignment_due_date_time}"
+          link_text: "View the assignment"
+          multiple_due_dates: "due: Multiple Dates"
+          new_assignment: "A new assignment has been created for your course, %{course_name}"
+          no_due_date: "No Due Date"
         labels: 
           click_to_see_assignment: "Click here to view the assignment"
         multiple_due_dates: "due: Multiple Dates"
@@ -6420,7 +6913,7 @@ en:
         multiple_due_dates: "due: Multiple Dates"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "Canvas Alert - Change: %{assignment_name}, %{course_name}"
+        assignment_change: "SmartLMS Alert - Change: %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
         multiple_due_dates: "due: Multiple Dates"
         no_due_date: "due: No Due Date"
@@ -6428,6 +6921,11 @@ en:
       email: 
         assignment_due_date_changed: "Assignment Due Date Changed: %{assignment_name}, %{course_name}"
         assignment_due_date_changed_sentence: "The due date for the assignment, %{assignment_name}, for the course, %{course_name}, has changed to:"
+        html: 
+          assignment_due_date_changed: "Assignment Due Date Changed: %{assignment_name}, %{course_name}"
+          assignment_due_date_changed_sentence: "The due date for the assignment, %{assignment_name}, for the course, %{course_name}, has changed to:"
+          link_text: "View the assignment"
+          no_due_date: "No Due Date"
         labels: 
           click_to_see_assignment: "Click here to view the assignment"
         no_due_date: "No Due Date"
@@ -6443,13 +6941,18 @@ en:
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "Canvas Alert - Date Change: %{assignment_name}, %{course_name}"
+        assignment_change: "SmartLMS Alert - Date Change: %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
     assignment_due_date_override_changed: 
       email: 
         assignment_due_date_changed: "Assignment Due Date Changed: %{assignment_name}, %{course_name} (%{override})"
         assignment_due_date_changed_sentence: "The due date for the assignment, %{assignment_name}, for the course, %{course_name} (%{override}), has changed to:"
+        html: 
+          assignment_due_date_changed: "Assignment Due Date Changed: %{assignment_name}, %{course_name} (%{override})"
+          assignment_due_date_changed_sentence: "The due date for the assignment, %{assignment_name}, for the course, %{course_name} (%{override}), has changed to:"
+          link_text: "View the assignment"
+          no_due_date: "No Due Date"
         labels: 
           click_to_see_assignment: "Click here to view the assignment"
         no_due_date: "No Due Date"
@@ -6465,12 +6968,16 @@ en:
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "Canvas Alert - Date Change: %{assignment_name}, %{course_name} (%{override})"
+        assignment_change: "SmartLMS Alert - Date Change: %{assignment_name}, %{course_name} (%{override})"
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
     assignment_graded: 
       email: 
         assignment_graded: "Assignment Graded: %{assignment_name}, %{course_name}"
+        html: 
+          assignment_graded: "Assignment Graded: %{assignment_name}, %{course_name}"
+          link_text: "View the assignment"
+          the_assignment_is_graded: "The assignment, %{assignment_name}, has been graded."
         labels: 
           view_here: "You can view it here"
         the_assignment_is_graded: "The assignment, %{assignment_name}, has been graded."
@@ -6483,13 +6990,17 @@ en:
         assignment_graded: "Assignment Graded: %{assignment_name}, %{course_name}"
         the_assignment_is_graded: "The assignment, %{assignment_name}, has been graded."
       twitter: 
-        assignment_graded: "Canvas Alert - Graded: %{assignment_name}, %{course_name}"
+        assignment_graded: "SmartLMS Alert - Graded: %{assignment_name}, %{course_name}"
     assignment_locked: "This assignment is currently locked."
     assignment_locked_at: "This assignment was locked %{at}."
     assignment_locked_module: "This assignment is part of the module *%{module}* and hasn't been unlocked yet."
     assignment_locked_until: "This assignment is locked until %{date}."
     assignment_resubmitted: 
       email: 
+        html: 
+          link_text: "View the submission"
+          user_resubmitted: "Re-Submission: %{user_name}, %{assignment_name}"
+          user_resubmitted_sentence: "%{user_name} has just turned in a re-submission for %{assignment_name} in the course %{course_name}"
         labels: 
           view_submission: "You can view the submission here"
         user_resubmitted: "Re-Submission: %{user_name}, %{assignment_name}"
@@ -6504,9 +7015,13 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_resubmitted: "Re-Submission: %{user_name}, %{assignment_name}"
       twitter: 
-        user_resubmitted: "Canvas Alert - Resubmission: %{user_name}, %{assignment_name}"
+        user_resubmitted: "SmartLMS Alert - Resubmission: %{user_name}, %{assignment_name}"
     assignment_submitted: 
       email: 
+        html: 
+          link_text: "View the submission"
+          user_submitted: "Submission: %{user_name}, %{assignment_name}"
+          user_submitted_sentence: "%{user_name} has just turned in a submission for %{assignment_name} in the course %{course_name}"
         labels: 
           view_submission: "You can view the submission here"
         user_submitted: "Submission: %{user_name}, %{assignment_name}"
@@ -6521,9 +7036,13 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_submitted: "Submission: %{user_name}, %{assignment_name}"
       twitter: 
-        user_submitted: "Canvas Alert - Submission: %{user_name}, %{assignment_name}"
+        user_submitted: "SmartLMS Alert - Submission: %{user_name}, %{assignment_name}"
     assignment_submitted_late: 
       email: 
+        html: 
+          link_text: "View the submission"
+          user_resubmitted_sentence: "%{user_name} has just turned in a late submission for %{assignment_name} in the course %{course_name}"
+          user_submitted: "Late Assignment: %{user_name}, %{assignment_name}"
         labels: 
           view_submission: "You can view the submission here"
         user_resubmitted_sentence: "%{user_name} has just turned in a late submission for %{assignment_name} in the course %{course_name}"
@@ -6538,7 +7057,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_submitted: "Late Assignment: %{user_name}, %{assignment_name}"
       twitter: 
-        user_submitted: "Canvas Alert - Late Submission: %{user_name}, %{assignment_name}"
+        user_submitted: "SmartLMS Alert - Late Submission: %{user_name}, %{assignment_name}"
     assignment_unmuted: 
       email: 
         body: |-
@@ -6546,6 +7065,10 @@ en:
             
             Your can view it here:
             %{url}
+        html: 
+          body: "Your instructor has released grade changes and new comments for %{title}. These changes are now viewable."
+          link: "You can view it here"
+          subject: "Assignment Unmuted: %{title}, %{course}"
         subject: "Assignment Unmuted: %{title}, %{course}"
       sms: 
         body: |-
@@ -6577,6 +7100,12 @@ en:
             
             You can see the details here:
             %{link}
+        html: 
+          body: "You've been invited to collaborate on a document, %{document} for %{course_or_group}. The document was created in %{service} and you were invited using your email address, %{email}."
+          body_with_user: "You've been invited to collaborate on a document, %{document} for %{course_or_group}. The document was created by %{user} in %{service} and you were invited using your email address, %{email}."
+          change_profile_settings: "If that's the wrong email address for this type of collaboration, you'll need to change your profile settings or register with %{service}."
+          link: "You can see the details here"
+          subject: "Collaboration Invitation: %{course_or_group}"
         subject: "Collaboration Invitation: %{course_or_group}"
       facebook: 
         body: "You've been invited to collaborate on a document, %{document} for %{course_or_group}. The document was created in %{service}."
@@ -6597,21 +7126,29 @@ en:
             in %{service} and you were invited using your email address, %{email}.
         subject: "Collaboration Invitation: %{course_or_group}"
       twitter: 
-        body: "Canvas Alert - Collaboration Invite: %{document}, %{course_or_group}"
+        body: "SmartLMS Alert - Collaboration Invite: %{document}, %{course_or_group}"
     confirm_email_communication_channel: 
       email: 
         body: "The email address, %{email} is being registered at %{website} for the user, %{user}."
         details: "To confirm this registration, please visit the following url:"
-        subject: "Confirm Email: Canvas"
+        html: 
+          body: "The email address, %{email} is being registered at %{website} for the user, %{user}."
+          details: "Click here to confirm this registration"
+          subject: "Confirm Email: SmartLMS"
+        subject: "Confirm Email: SmartLMS"
     confirm_registration: 
       email: 
-        body: "Thank you for registering with Canvas!  This email is confirmation that the user %{user} is registering for a new account at %{website}."
+        body: "Thank you for registering with SmartLMS!  This email is confirmation that the user %{user} is registering for a new account at %{website}."
         details: "To finish the registration process, please visit the following url:"
-        subject: "Confirm Registration: Canvas"
+        html: 
+          body: "Thank you for registering with SmartLMS! This email is confirmation that the user %{user} is registering for a new account at %{website}."
+          details: "Click here to finish the registration process"
+          subject: "Confirm Registration: SmartLMS"
+        subject: "Confirm Registration: SmartLMS"
     confirm_sms_communication_channel: 
       sms: 
         body: |-
-            Confirm Canvas registration w/ code:
+            Confirm SmartLMS registration w/ code:
             
             %{confirmation_code}
             
@@ -6621,10 +7158,18 @@ en:
         body: |-
             There was a problem exporting the course "%{course}".
             Please notify your system administrator, and give them the following export identifier: %{id}.
+        html: 
+          body: "There was a problem exporting the course <em>%{course}</em>. Please notify your system administrator, and give them the following export identifier:"
+          link: "Click to view exports"
+          subject: "Course Export Failed: %{course}"
         subject: "Course Export Failed: %{course}"
     content_export_finished: 
       email: 
         body: "Your course export for \"%{course}\" has finished."
+        html: 
+          body: "Your course export for <em>%{course}</em> has finished."
+          link: "Click to view exports"
+          subject: "Course Export Finished: %{course}"
         subject: "Course Export Finished: %{course}"
     content_locked: "This quiz is currently locked."
     content_locked_at: "This content was locked %{at}."
@@ -6635,30 +7180,96 @@ en:
       email: 
         attached_files: "Attached Files:"
         audio_comment: "This message includes media comments. To listen or reply, click the link below:"
-        body: "%{user_name} just sent you a message in Canvas:"
+        body: "%{user_name} just sent you a message in SmartLMS:"
+        html: 
+          attached_files: "Attached Files:"
+          audio_comment: "This message includes media comments. To listen or reply, click the link below:"
+          body: "%{user_name} just sent you a message in SmartLMS:"
+          download: download
+          reply_message: "To reply to this message, click the link below:"
+          subject: "%{user_name} just sent you a message in SmartLMS."
+          unknown_user: "Unknown User"
         reply_message: "To reply to this message, click the link below:"
-        subject: "%{user_name} just sent you a message in Canvas."
+        subject: "%{user_name} just sent you a message in SmartLMS."
         unknown_user: "Unknown User"
       facebook: 
-        body: "%{user_name} just sent you a message in Canvas."
+        body: "%{user_name} just sent you a message in SmartLMS."
         link_text: "View Message"
         unknown_user: "Unknown User"
       sms: 
-        body: "%{user_name} just sent you a message in Canvas:"
+        body: "%{user_name} just sent you a message in SmartLMS:"
         more_info: "More info at %{url}"
         unknown_user: "Unknown User"
       summary: 
-        body: "%{user_name} just sent you a message in Canvas:"
-        subject: "%{user_name} just sent you a message in Canvas."
+        body: "%{user_name} just sent you a message in SmartLMS:"
+        subject: "%{user_name} just sent you a message in SmartLMS."
         unknown_user: "Unknown User"
       twitter: 
-        tweet: "Canvas Alert - Message from %{user_name}."
+        tweet: "SmartLMS Alert - Message from %{user_name}."
         unknown_user: "Unknown User"
+    course_already_started: 
+      email: 
+        body: |-
+            Hi %{user},
+            
+            %{course}, your course on SmartLMS Network, started a couple days ago, and we noticed you haven't logged in yet. We just wanted to send you one last reminder in case you forgot.
+            
+            To log in, go to %{site} and enter your username and password. If you haven't set a password yet, you can set one here: %{password_url}. If you simply can't make this particular course, feel free to browse our course catalog at %{site} to find something else that inspires you. New courses are being added all the time!
+            
+            We hope to see you soon,
+            
+            SmartLMS Network
+        course_already_started: "Your course has already started"
+    course_required_materials: 
+      email: 
+        body: |-
+            Hi %{user},
+            
+            Good news! %{course}, the course you enrolled in on SmartLMS Network, will be starting soon.
+            
+            To help make sure you get the most from your course, you should check for any special instructions or course materials listed by the instructor.  You can look for this on the course details page on SmartLMS Network, or just click the link below.
+            
+            %{url}
+            
+            Keep learning,
+            
+            SmartLMS Network
+        course_required_materials: "Materials and instructions for %{course}"
+    course_started: 
+      email: 
+        body: |-
+            Hello %{user},
+            
+            This is a friendly reminder that %{course}, your course on SmartLMS Network, begins today. You can now log in to %{site} and get started!
+            
+            Don't forget to set up your SmartLMS Network profile, so others in the course know who you are. You can update your profile at %{profile_url}
+            
+            Keep learning,
+            
+            SmartLMS Network
+        course_starts_today: "Your course begins today"
+    course_starts_in_week: 
+      email: 
+        body: |-
+            %{user},
+            
+            It's almost time! %{course}, a course you enrolled in on SmartLMS Network, begins next week. We know how excited you must be, and we're excited too.
+            
+            What can you do to get ready?
+            
+            If you haven't already created your SmartLMS Network profile, you can log in and set it up at SmartLMS.net. Your profile will help other people in the course know who you are. There, you can also set up your notification preferences.
+            
+            Finally, you can review the required materials and any instructions for your course here: %{url}
+            
+            Keep learning,
+            
+            SmartLMS Network
+        course_starts_next_week: "Your course starts next week"
     dialog: 
       title: "Send a reply message"
     email: 
       footer: |-
-          You received this email because you are participating in one or more classes using Canvas.  To change or turn off email notifications, visit:
+          You received this email because you are participating in one or more classes using SmartLMS.  To change or turn off email notifications, visit:
           %{url}
     enrollment_accepted: 
       email: 
@@ -6668,6 +7279,14 @@ en:
         body_ta: "%{user} just accepted their invitation to participate in the course, %{course}, as a TA."
         body_teacher: "%{user} just accepted their invitation to participate in the course, %{course}, as a teacher."
         details: "See the list of current enrollments here:"
+        html: 
+          body_designer: "%{user} just accepted their invitation to participate in the course, %{course}, as a designer."
+          body_observer: "%{user} just accepted their invitation to participate in the course, %{course}, as an observer."
+          body_student: "%{user} just accepted their invitation to participate in the course, %{course}, as a student."
+          body_ta: "%{user} just accepted their invitation to participate in the course, %{course}, as a TA."
+          body_teacher: "%{user} just accepted their invitation to participate in the course, %{course}, as a teacher."
+          details: "See the list of current enrollments"
+          subject: "%{user} accepted the Course Invitation"
         subject: "%{user} accepted the Course Invitation"
       facebook: 
         body_designer: "%{user} just accepted their invitation to participate in the course %{course} as a designer."
@@ -6690,7 +7309,7 @@ en:
         body_teacher: "%{user} just accepted their invitation to participate in the course, %{course}, as a teacher."
         subject: "%{user} accepted the Course Invitation"
       twitter: 
-        body: "Canvas Alert - Accepted: %{user}, %{enrollment_type}, course, %{course}"
+        body: "SmartLMS Alert - Accepted: %{user}, %{enrollment_type}, course, %{course}"
     enrollment_invitation: 
       email: 
         body_designer: "You've been invited to participate in the course, %{course}, as a designer."
@@ -6699,6 +7318,18 @@ en:
         body_ta: "You've been invited to participate in the course, %{course}, as a TA."
         body_teacher: "You've been invited to participate in the course, %{course}, as a teacher."
         details: "Visit the course page here:"
+        html: 
+          body_designer: "You've been invited to participate in the course, %{course}, as a designer."
+          body_observer: "You've been invited to participate in the course, %{course}, as an observer."
+          body_student: "You've been invited to participate in the course, %{course}, as a student."
+          body_ta: "You've been invited to participate in the course, %{course}, as a TA."
+          body_teacher: "You've been invited to participate in the course, %{course}, as a teacher."
+          email: Email
+          link: "Click here to view the course page"
+          name: Name
+          none: none
+          subject: "Course Invitation"
+          username: Username
         labels: 
           email: Email
           name: Name
@@ -6736,7 +7367,7 @@ en:
         body_teacher: "You've been invited to participate in the course, %{course}, as a teacher."
         subject: "Course Invitation"
       twitter: 
-        body: "Canvas Alert - Invited: course as %{enrollment_type}"
+        body: "SmartLMS Alert - Invited: course as %{enrollment_type}"
     enrollment_notification: 
       email: 
         body_designer: "You've been enrolled in the course, %{course}, as a designer."
@@ -6745,6 +7376,18 @@ en:
         body_ta: "You've been enrolled in the course, %{course}, as a TA."
         body_teacher: "You've been enrolled in the course, %{course}, as a teacher."
         details: "Visit the course page here:"
+        html: 
+          body_designer: "You've been enrolled in the course, %{course}, as a designer."
+          body_observer: "You've been enrolled in the course, %{course}, as an observer."
+          body_student: "You've been enrolled in the course, %{course}, as a student."
+          body_ta: "You've been enrolled in the course, %{course}, as a TA."
+          body_teacher: "You've been enrolled in the course, %{course}, as a teacher."
+          complete_registration_link: "Click here to complete registration"
+          email: Email
+          name: Name
+          none: none
+          subject: "Course Enrollment"
+          username: Username
         labels: 
           email: Email
           name: Name
@@ -6783,7 +7426,7 @@ en:
         body_teacher: "You've been enrollment in the course, %{course}, as a teacher."
         subject: "Course Enrollment"
       twitter: 
-        body: "Canvas Alert - Enrolled: course as %{enrollment_type}"
+        body: "SmartLMS Alert - Enrolled: course as %{enrollment_type}"
     enrollment_registration: 
       email: 
         body_designer: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a designer."
@@ -6791,7 +7434,21 @@ en:
         body_student: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a student."
         body_ta: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a TA."
         body_teacher: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a teacher."
-        details: "You'll need to register with Canvas before you can participate in the class.  To get started, visit the course page here:"
+        details: "You'll need to register with SmartLMS before you can participate in the class.  To get started, visit the course page here:"
+        html: 
+          body_designer: "The class is called %{course}, and you've been invited to participate as a designer."
+          body_observer: "The class is called %{course}, and you've been invited to participate as a observer."
+          body_student: "The class is called %{course}, and you've been invited to participate as a student."
+          body_ta: "The class is called %{course}, and you've been invited to participate as a TA."
+          body_teacher: "The class is called %{course}, and you've been invited to participate as a teacher."
+          details: "You'll need to register with SmartLMS before you can participate in the class."
+          email: Email
+          link: "Click here to get started"
+          name: Name
+          none: none
+          participate_in_class: "You've been invited to participate in a class at %{website}"
+          subject: "Course Invitation"
+          username: Username
         labels: 
           email: Email
           name: Name
@@ -6818,11 +7475,17 @@ en:
         body_teacher: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a teacher."
         subject: "Course Invitation"
       twitter: 
-        body: "Canvas Alert - Invited: course as %{enrollment_type}"
+        body: "SmartLMS Alert - Invited: course as %{enrollment_type}"
     event_date_changed: 
       email: 
         email_body: "The event, %{event_title}, for the course, %{course_name}, has changed times. It's now:"
         from_to_time: "from %{start_date_time} to %{end_date_time}"
+        html: 
+          email_body: "The event, %{event_title}, for the course, %{course_name}, has changed times. It's now:"
+          from_to_time: "from %{start_date_time} to %{end_date_time}"
+          no_time_set: "No Time Set"
+          see_details: "You can see details here"
+          subject: "Event Date Changed: %{event_title}, %{course_name}"
         labels: 
           see_details: "You can see details here"
         no_time_set: "No Time Set"
@@ -6843,7 +7506,7 @@ en:
       twitter: 
         from_to_time: "from %{start_date_time} to %{end_date_time}"
         no_time_set: "No Time Set"
-        subject: "Canvas Alert - Changed: %{event_title}, %{course_name}"
+        subject: "SmartLMS Alert - Changed: %{event_title}, %{course_name}"
     file_locked: "This file is currently locked."
     file_locked_at: "This file was locked %{at}."
     file_locked_module: "This file is part of the module *%{module}* and hasn't been unlocked yet."
@@ -6852,19 +7515,37 @@ en:
     forgot_password: 
       email: 
         associated_login: "This address is associated with the login, \"%{login_identifier}\"."
+        html: 
+          associated_login: "This address is associated with the login, \"%{login_identifier}\"."
+          click_to_reset: "Click here to set a new password"
+          labels: 
+            associated_with_accounts: "This address is associated with the following accounts"
+            change_password_at: "change this login's password at"
+          login_at_account: "%{login_email} at %{account_name}"
+          login_managed_by_account: "this login's credentials are managed by %{account_name}"
+          password_from_account: "The password for this login should have been given to you by the system administrators at %{account_name}, and Arrivu doesn't have access to your password. If your password is not working, please contact the system administrators about changing or verifying your password."
+          requested_password_reset: "You requested a confirmation of your password for logging into SmartLMS."
+          subject: "Forgot Password: SmartLMS"
         labels: 
           associated_with_accounts: "This address is associated with the following accounts"
           change_password_at: "change this login's password at"
           click_to_reset: "To set a new password, please click the following link"
         login_at_account: "%{login_email} at %{account_name}"
         login_managed_by_account: "this login's credentials are managed by %{account_name}"
-        password_from_account: "The password for this login should have been given to you by the system administrators at %{account_name}, and Instructure doesn't have access to your password.  If your password is not working, please contact the system administrators about changing or verifying your password."
-        requested_password_reset: "You requested a confirmation of your password for logging into Canvas."
-        subject: "Forgot Password: Canvas"
+        password_from_account: "The password for this login should have been given to you by the system administrators at %{account_name}, and Arrivu doesn't have access to your password.  If your password is not working, please contact the system administrators about changing or verifying your password."
+        requested_password_reset: "You requested a confirmation of your password for logging into SmartLMS."
+        subject: "Forgot Password: SmartLMS"
     grade_weight_changed: 
       email: 
         grade_changed: "The grading policy for the course, %{course_name} has changed."
         grading_based_on_points: "Grading is based on total points for all assignments."
+        html: 
+          grade_changed: "The grading policy for the course, %{course_name} has changed."
+          grading_based_on_points: "Grading is based on total points for all assignments."
+          labels: 
+            grades_based_on_percent: "Grading is based on the weighted total for each assignment group"
+            now_see_here: "You can see details here"
+            subject: "Grade Weight Changed"
         labels: 
           grades_based_on_percent: "Grading is based on the weighted total for each assignment group"
           now_see_here: "You can see details here"
@@ -6884,10 +7565,14 @@ en:
           grades_based_on_percent: "Grading is based on the weighted total for each assignment group"
           subject: "Grade Weight Changed"
       twitter: 
-        grade_changed: "Canvas Alert - Grading Policy Changed: %{course_name}"
+        grade_changed: "SmartLMS Alert - Grading Policy Changed: %{course_name}"
     group_assignment_submitted_late: 
       email: 
         body: "The group %{group_name} has just turned in a late submission for %{assignment_name} in the course %{course_name}."
+        html: 
+          body: "The group %{group_name} has just turned in a late submission for %{assignment_name} in the course %{course_name}."
+          subject: "Late Assignment: %{group_name}, %{assignment_name}"
+          view_submission_here: "You can view the submission here"
         labels: 
           view_submission_here: "You can view the submission here"
         subject: "Late Assignment: %{group_name}, %{assignment_name}"
@@ -6900,12 +7585,18 @@ en:
         body: "The group %{group_name} turned in a late submission for %{assignment_name} in the course %{course_name}."
         subject: "Late Assignment: %{group_name}, %{assignment_name}"
       twitter: 
-        subject: "Canvas Alert - Late Group Submission: %{group_name}, %{assignment_name}"
+        subject: "SmartLMS Alert - Late Group Submission: %{group_name}, %{assignment_name}"
     group_membership_accepted: 
       email: 
         account_group: "Your request to join the group %{group_name} for the account %{account_name} has been accepted."
         course_group: "Your request to join the group %{group_name} for the course %{course_name} has been accepted."
         group_request_accepted: "Group Request Accepted: %{group_name}"
+        html: 
+          account_group: "Your request to join the group %{group_name} for the account %{account_name} has been accepted."
+          course_group: "Your request to join the group %{group_name} for the course %{course_name} has been accepted."
+          group_request_accepted: "Group Request Accepted: %{group_name}"
+          link: "Click to check out the group"
+          subject: "Group Membership Accepted: %{group_name}"
         labels: 
           click_below: "You can check out the group by clicking the link below"
         subject: "Group Membership Accepted: %{group_name}"
@@ -6922,13 +7613,19 @@ en:
         course_group: "Your request to join the group %{group_name} for the course %{course_name} has been accepted."
         subject: "Group Membership Accepted: %{group_name}"
       twitter: 
-        account_group: "Canvas Alert - Group Membership Accepted: %{group_name} for the account %{account_name}."
-        course_group: "Canvas Alert - Group Membership Accepted: %{group_name} for the course %{course_name}."
+        account_group: "SmartLMS Alert - Group Membership Accepted: %{group_name} for the account %{account_name}."
+        course_group: "SmartLMS Alert - Group Membership Accepted: %{group_name} for the course %{course_name}."
     group_membership_rejected: 
       email: 
         account_group: "Your request to join the group %{group_name} for the account %{account_name} has been rejected."
         course_group: "Your request to join the group %{group_name} for the course %{course_name} has been rejected."
         group_request_rejected: "Group Request Rejected: %{group_name}"
+        html: 
+          account_group: "Your request to join the group %{group_name} for the account %{account_name} has been rejected."
+          course_group: "Your request to join the group %{group_name} for the course %{course_name} has been rejected."
+          group_request_rejected: "Group Request Rejected: %{group_name}"
+          link: "Click to view other groups"
+          subject: "Group Membership Rejected: %{group_name}"
         labels: 
           click_below: "You can check out other groups by clicking the link below"
         subject: "Group Membership Rejected: %{group_name}"
@@ -6944,27 +7641,39 @@ en:
         course_group: "Your request to join the group %{group_name} for the course %{course_name} has been rejected."
         subject: "Group Membership Rejected for %{group_name}"
       twitter: 
-        account_group: "Canvas Alert - Group Membership Rejected: %{group_name} for the account %{account_name}."
-        course_group: "Canvas Alert - Group Membership Rejected: %{group_name} for the course %{course_name}."
+        account_group: "SmartLMS Alert - Group Membership Rejected: %{group_name} for the account %{account_name}."
+        course_group: "SmartLMS Alert - Group Membership Rejected: %{group_name} for the course %{course_name}."
+    html_message: 
+      html_not_exist: "The HTML version of this message was not created nor sent"
     index: 
       titles: 
         messages: "Messages for %{name}"
     layout: 
       email: 
         html: 
-          click_to_preferences: "click here to edit your notification preferences"
+          click_to_preferences: "Click here to edit your notification preferences"
     merge_email_communication_channel: 
       email: 
-        body: "An account has been created for you at %{url}, but you already have a Canvas account.  If you would like to merge them together, please visit the following url:"
-        subject: "New Canvas Account"
+        body: "An account has been created for you at %{url}, but you already have a SmartLMS account.  If you would like to merge them together, please visit the following url:"
+        html: 
+          account_created: "An account has been created for you at %{url}, but you already have a SmartLMS account."
+          merge: "If you would like to merge them together, <a href=\"%{link}\">click here</a>"
+          subject: "New SmartLMS Account"
+        subject: "New SmartLMS Account"
     message: 
       actions: 
         reply: Reply
+      meta_data: "Meta Data"
+      plain_text: "Plain Text"
       titles: 
         created_at: "Created at"
+        delay_for: "Delay for"
         from_name: "From Name"
+        notification_name: "Notification Name"
+        path_type: "Path type"
         reply_to: "Reply to"
         sent_at: "Sent at"
+        subject: Subject
         to: To
     messages: 
       failure: "There was an error sending your email. Please reload the page and try again."
@@ -6972,6 +7681,10 @@ en:
     migration_export_ready: 
       email: 
         body: "Your content is ready to be imported into your course."
+        html: 
+          body: "Your content is ready to be imported into your course."
+          link_message: "Click <a href=\"%{link}\">this link</a> to choose which items of your content to import"
+          subject: "Your content for \"%{course_name}\" is ready to be imported"
         link_message: "Click this link to choose which items of your content to import:"
         subject: "Your content for \"%{course_name}\" is ready to be imported"
     migration_import_failed: 
@@ -6979,11 +7692,20 @@ en:
         body: |-
             There was a problem importing some content into your course "%{destination}". 
                 Please notify your system administrator, and point them to your import's info page: %{error_url}
+        html: 
+          body: "There was a problem importing some content into your course %{destination}."
+          notify_admin: "Please notify your system administrator, and point them to your <a href=\"%{link}\">import info page</a>"
+          subject: "Content Import Failed: %{course_name}"
         subject: "Content Import Failed: %{course_name}"
     migration_import_finished: 
       email: 
         body_no_warnings: "Importing %{source} into %{destination} has finished.  Everything you selected should now be imported into your course."
         body_with_warnings: "Importing %{source} into %{destination} has finished, but not everything was imported successfully: %{warnings}"
+        html: 
+          body_no_warnings: "Importing %{source} into %{destination} has finished. Everything you selected should now be imported into your course."
+          body_with_warnings: "Importing %{source} into %{destination} has finished, but not everything was imported successfully:"
+          link: "Click to view the course"
+          subject: "Course Import Finished: %{course_name}"
         subject: "Course Import Finished: %{course_name}"
       summary: 
         body_no_warnings: "Importing %{source} into %{target} has finished.  Everything you selected should now be imported into your course."
@@ -6993,6 +7715,10 @@ en:
       email: 
         body: "New Account Admin for %{account}"
         details: "A new admin, %{user}, has been added for the account %{account}"
+        html: 
+          body: "New Account Admin for %{account}"
+          details: "A new admin, %{user}, has been added for the account %{account}"
+          subject: "New Account User"
         subject: "New Account User"
       facebook: 
         body: "A new admin **%{user}** has been added for the account **%{account}**."
@@ -7004,9 +7730,13 @@ en:
         body: "A new admin, %{user}, has been added for the account %{account}"
         subject: "New Account User"
       twitter: 
-        body: "Canvas Alert - New Admin: %{user}, %{account}"
+        body: "SmartLMS Alert - New Admin: %{user}, %{account}"
     new_announcement: 
       email: 
+        html: 
+          attached_file: "Attached File"
+          download: download
+          link: "View announcement"
         labels: 
           file_included: "File Included"
       facebook: 
@@ -7015,12 +7745,19 @@ en:
         details: "More info at %{url}"
         subject: "New announcement: %{title}, %{course}"
       twitter: 
-        body: "Canvas Alert - Announcement: %{title}, %{course}."
+        body: "SmartLMS Alert - Announcement: %{title}, %{course}."
     new_context_group_membership: 
       email: 
         body_account: "You've been added to a new group for the account %{account}.  The name of the group is %{group_name}."
         body_course: "You've been added to a new group for the course %{course}.  The name of the group is %{group_name}."
         details_account: "You can see which groups you're a part of for this account by clicking the link below:"
+        html: 
+          body_account: "You've been added to a new group for the account %{account}. The name of the group is %{group_name}."
+          body_course: "You've been added to a new group for the course %{course}. The name of the group is %{group_name}."
+          html_details_account: "You can see which groups you're a part of for this account by <a href=\"%{link}\">clicking here</a>"
+          html_details_course: "You can see which groups you're a part of for this course by <a href=\"%{link}\">clicking here</a>"
+          subject: "New Group Membership for %{course_or_account}"
+          title: "New Group Membership: %{group_name}"
         subject: "New Group Membership for %{course_or_account}"
         title: "New Group Membership: %{group_name}"
       facebook: 
@@ -7035,13 +7772,19 @@ en:
         body_course: "You've been added to a new group for the course %{course}.  The name of the group is %{group_name}."
         subject: "New Group Membership for %{course_or_account}"
       twitter: 
-        body_account: "Canvas Alert - New Group: %{group} for the account %{account}"
-        body_course: "Canvas Alert - New Group: %{group} for the course %{course}"
+        body_account: "SmartLMS Alert - New Group: %{group} for the account %{account}"
+        body_course: "SmartLMS Alert - New Group: %{group} for the course %{course}"
     new_context_group_membership_invitation: 
       email: 
         body_account: "You've been invited to join the group %{group} for the account %{account}."
         body_course: "You've been invited to join the group %{group} for the course %{course}."
         details: "You can check out the group by clicking the link below:"
+        html: 
+          body_account: "You've been invited to join the group %{group} for the account %{account}."
+          body_course: "You've been invited to join the group %{group} for the course %{course}."
+          details: "You can check out the group by clicking here"
+          subject: "New Group Membership for %{course_or_account}"
+          title: "New Group Membership: %{group_name}"
         subject: "New Group Membership for %{course_or_account}"
         title: "New Group Membership: %{group_name}"
       facebook: 
@@ -7056,11 +7799,18 @@ en:
         body_course: "You've been invited to join the group %{group} for the course %{course}."
         subject: "New Group Membership for %{course_or_account}"
       twitter: 
-        body_account: "Canvas Alert - Invitation: %{group} for the account %{account}"
-        body_course: "Canvas Alert - Invitation: %{group} for the course %{course}."
+        body_account: "SmartLMS Alert - Invitation: %{group} for the account %{account}"
+        body_course: "SmartLMS Alert - Invitation: %{group} for the course %{course}."
     new_course: 
       email: 
         body: "A course, %{course}, has been added for the account %{account}"
+        html: 
+          body: "A course, %{course}, has been added for the account %{account}"
+          labels: 
+            teachers: Teachers
+          link: "Click here to view the course"
+          subject: "New Course"
+          title: "New Course for %{account}"
         labels: 
           teachers: Teachers
         subject: "New Course"
@@ -7081,11 +7831,15 @@ en:
           teachers: Teachers
         subject: "New Course"
       twitter: 
-        body: "Canvas Alert - New Course: %{course}, %{account}"
+        body: "SmartLMS Alert - New Course: %{course}, %{account}"
     new_discussion_entry: 
       email: 
         body: "%{user} posted a new comment on the thread %{discussion_topic} for %{course}:"
         details: "Join the conversation here:"
+        html: 
+          body: "%{user} posted a new comment on the thread %{discussion_topic} for %{course}:"
+          details: "Click here to join the conversation"
+          subject: "New Comment for %{discussion_topic}: %{course}"
         subject: "New Comment for %{discussion_topic}: %{course}"
       facebook: 
         body: "New Comment for %{discussion_topic}, %{course}"
@@ -7095,11 +7849,17 @@ en:
       summary: 
         subject: "New Comment for %{discussion_topic}: %{course}"
       twitter: 
-        body: "Canvas Alert - Comment: %{discussion_topic}, %{course}."
+        body: "SmartLMS Alert - Comment: %{discussion_topic}, %{course}."
     new_discussion_topic: 
       email: 
         body: "A new discussion has been started that may be interesting to you:"
         details: "Join the conversation here:"
+        html: 
+          attached_file: "Attached File"
+          body: "A new discussion has been started that may be interesting to you:"
+          details: "Join the conversation here"
+          download: download
+          subject: "New Discussion - %{discussion_topic}: %{course}"
         labels: 
           file_included: "File Included"
         subject: "New Discussion - %{discussion_topic}: %{course}"
@@ -7111,11 +7871,17 @@ en:
       summary: 
         subject: "New Discussion - %{discussion_topic}: %{course}"
       twitter: 
-        subject: "Canvas Alert - Topic: %{discussion_topic}, %{course}"
+        subject: "SmartLMS Alert - Topic: %{discussion_topic}, %{course}"
     new_event_created: 
       email: 
         body: "There's a new event scheduled for %{course_name} that you should be aware of:"
         from_to_time: "from %{start_date_time} to %{end_date_time}"
+        html: 
+          body: "There's a new event scheduled for %{course_name} that you should be aware of:"
+          from_to_time: "from %{start_date_time} to %{end_date_time}"
+          no_time_set: "No Time Set"
+          see_details: "You can see details here"
+          subject: "New Event - %{event_title}, %{course_name}"
         labels: 
           see_details: "You can see details here"
         no_time_set: "No Time Set"
@@ -7136,12 +7902,22 @@ en:
       twitter: 
         from_to_time: "from %{start_date_time} to %{end_date_time}"
         no_time_set: "No Time Set"
-        subject: "Canvas Alert - Event: %{event_title}, %{course_name}"
+        subject: "SmartLMS Alert - Event: %{event_title}, %{course_name}"
+    new_file_added: 
+      email: 
+        html: 
+          link: "Click to view"
     new_student_organized_group: 
       email: 
         body_account: "A new student organized group named \"%{group_name}\" was created for the account %{account}. The first member is %{user}."
         body_course: "A new student organized group named \"%{group_name}\" was created for the course %{course}. The first member is %{user}."
         details: "You can see details for this group by clicking the link below:"
+        html: 
+          body_account: "A new student organized group named \"%{group_name}\" was created for the account %{account}. The first member is %{user}."
+          body_course: "A new student organized group named \"%{group_name}\" was created for the course %{course}. The first member is %{user}."
+          details: "Click here to see details for this group"
+          subject: "New Student Group for %{course_or_account}"
+          title: "New Student Group: %{group_name}"
         subject: "New Student Group for %{course_or_account}"
         title: "New Student Group: %{group_name}"
       facebook: 
@@ -7155,11 +7931,19 @@ en:
         body_account: "A new student organized group named \"%{group_name}\" was created for the account %{account}. The first member is %{user}."
         body_course: "A new student organized group named \"%{group_name}\" was created for the course %{course}. The first member is %{user}."
       twitter: 
-        body_account: "Canvas Alert - New Group: %{group_name} for the account %{account}"
-        body_course: "Canvas Alert - New Group: %{group_name} for the course %{course}"
+        body_account: "SmartLMS Alert - New Group: %{group_name} for the account %{account}"
+        body_course: "SmartLMS Alert - New Group: %{group_name} for the course %{course}"
     new_teacher_registration: 
       email: 
         body: "%{user} just registered as a teacher at %{website}."
+        html: 
+          body: "%{user} just registered as a teacher at %{website}."
+          email: Email
+          link: "Click here to view teacher"
+          phone: Phone
+          school_name: "School Name"
+          school_position: "School Position"
+          subject: "New Teacher Registration"
         labels: 
           email: Email
           phone: Phone
@@ -7172,7 +7956,7 @@ en:
       sms: 
         body: "%{user} just registered as a teacher at %{website}."
       summary: 
-        body: "%{user} just registered as a teacher in Canvas."
+        body: "%{user} just registered as a teacher in SmartLMS."
         labels: 
           email: Email
           phone: Phone
@@ -7180,10 +7964,14 @@ en:
           school_position: "School Position"
         subject: "New Teacher Registration"
       twitter: 
-        body: "Canvas Alert - New Teacher: %{user}, %{account}"
+        body: "SmartLMS Alert - New Teacher: %{user}, %{account}"
     new_user: 
       email: 
         body: "A new user, %{user}, has just registered for the account %{account}"
+        html: 
+          body: "A new user, %{user}, has just registered for the account %{account}"
+          link: "Click here to view user"
+          subject: "New User"
         subject: "New User"
         title: "New User for %{account}"
       facebook: 
@@ -7196,7 +7984,7 @@ en:
         body: "A new user, %{user}, has just registered for the account %{account}"
         subject: "New User"
       twitter: 
-        body: "Canvas Alert - New User: %{user}, %{account}"
+        body: "SmartLMS Alert - New User: %{user}, %{account}"
     page_locked: "This page is currently locked."
     page_locked_at: "This page was locked %{at}."
     page_locked_module: "This page is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7204,9 +7992,13 @@ en:
     page_unpublished_module: "This page is part of an unpublished module and is not available yet."
     pseudonym_registration: 
       email: 
-        body: "You have been registered for a Canvas account at %{account}!  Before you can log in and start using Canvas, you'll need to finish the configuration process."
+        body: "You have been registered for a SmartLMS account at %{account}!  Before you can log in and start using SmartLMS, you'll need to finish the configuration process."
+        html: 
+          body: "You have been registered for a SmartLMS account at %{account}! Before you can log in and start using SmartLMS, you'll need to finish the configuration process."
+          link: "Click here to finish the registration process"
+          subject: "Finish Registration: SmartLMS"
         link_message: "To finish the registration process, please visit the following url:"
-        subject: "Finish Registration: Canvas"
+        subject: "Finish Registration: SmartLMS"
     quiz_locked: "This quiz is currently locked."
     quiz_locked_at: "This quiz was locked %{at}."
     quiz_locked_module: "This quiz is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7214,14 +8006,23 @@ en:
     quiz_unpublished_module: "This quiz is part of an unpublished module and is not available yet."
     report_generated: 
       email: 
+        html: 
+          link_message: "Click here to download the report"
+          subject: "Report Generated"
         link_message: "Click here to download the report:"
         subject: "Report Generated"
     report_generation_failed: 
       email: 
+        html: 
+          subject: "Report Generation Failed"
         subject: "Report Generation Failed"
     rubric_assessment_invitation: 
       email: 
         body: "You've been invited by %{user} to assess their submission for %{rubric}:"
+        html: 
+          body: "You've been invited by %{user} to assess their submission for %{rubric}:"
+          link_message: "Click here to review and evaluate the entry"
+          subject: "Assessment Invitation: %{rubric}, %{context}"
         link_message: "You can review and evaluate the entry here:"
         subject: "Assessment Invitation: %{rubric}, %{context}"
       facebook: 
@@ -7233,10 +8034,14 @@ en:
         body: "You've been invited by %{user} to assess their submission for %{rubric}:"
         subject: "Assessment Invitation: %{rubric}, %{context}"
       twitter: 
-        tweet: "Canvas Alert - Invite: assess %{rubric}, %{user}"
+        tweet: "SmartLMS Alert - Invite: assess %{rubric}, %{user}"
     rubric_assessment_submission_reminder: 
       email: 
         body: "You've been reminded to assess: %{rubric}, %{context}:"
+        html: 
+          body: "You've been reminded to assess %{rubric}, %{context}:"
+          link_message: "Click here to review the assessment and submit your entry"
+          subject: "Reminder to Assess: %{rubric}, %{context}"
         link_message: "You can review the assessment and submit your entry here:"
         subject: "Reminder to Assess: %{rubric}, %{context}"
       facebook: 
@@ -7248,10 +8053,14 @@ en:
         body: "You've been reminded to assess: %{rubric}, %{context}:"
         subject: "Reminder to Assess: %{rubric}, %{context}"
       twitter: 
-        tweet: "Canvas Alert - Reminder: assess %{rubric}, %{context}"
+        tweet: "SmartLMS Alert - Reminder: assess %{rubric}, %{context}"
     rubric_association_created: 
       email: 
         body: "A new assessment has been created for %{context}:"
+        html: 
+          body: "A new assessment has been created for %{context}:"
+          link_message: "Click here to review the assessment and submit your entry"
+          subject: "New Assessment: %{title}, %{context}"
         link_message: "You can review the assessment and submit your entry here:"
         subject: "New Assessment: %{title}, %{context}"
       facebook: 
@@ -7263,7 +8072,7 @@ en:
         body: "A new assessment has been created for %{context}:"
         subject: "New Assessment: %{title}, %{context}"
       twitter: 
-        tweet: "Canvas Alert - New Assessment: %{title}, %{context}."
+        tweet: "SmartLMS Alert - New Assessment: %{title}, %{context}."
     send_form: 
       labels: 
         message_body: Message
@@ -7271,6 +8080,11 @@ en:
     submission_comment: 
       email: 
         body: "%{author} just made a new comment on the submission for %{user} for %{assignment}"
+        html: 
+          body: "%{author} just made a new comment on the submission for %{user} for %{assignment}"
+          link_message: "Click here to review the submission details"
+          someone: Someone
+          subject: "Submission Comment: %{user}, %{assignment}, %{context}"
         link_message: "You can review the submission details here:"
         someone: Someone
         subject: "Submission Comment: %{user}, %{assignment}, %{context}"
@@ -7285,10 +8099,15 @@ en:
         someone: Someone
         subject: "Submission Comment: %{user}, %{assignment}, %{context}"
       twitter: 
-        tweet: "Canvas Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
+        tweet: "SmartLMS Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
     submission_comment_for_teacher: 
       email: 
         body: "%{author} just made a new comment on the submission for %{user} for %{assignment}."
+        html: 
+          body: "%{author} just made a new comment on the submission for %{user} for %{assignment}."
+          link_message: "Click here to review the submission details"
+          someone: Someone
+          subject: "Submission Comment: %{user}, %{assignment}, %{context}"
         link_message: "You can review the submission details here:"
         someone: Someone
         subject: "Submission Comment: %{user}, %{assignment}, %{context}"
@@ -7303,10 +8122,19 @@ en:
         someone: Someone
         subject: "Submission Comment: %{user}, %{assignment}, %{context}"
       twitter: 
-        tweet: "Canvas Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
+        tweet: "SmartLMS Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
     submission_grade_changed: 
       email: 
         body: "The grade on your assignment, %{assignment_title} has been changed."
+        html: 
+          body: "The grade on your assignment, %{assignment_title} has been changed."
+          link_message: "You can review the assignment here"
+          no_date_set: "No Date Set"
+          not_applicable: N/A
+          regraded_date: "re-graded: %{date}"
+          score: "score: %{score} out of %{total}"
+          score_pending: "score pending review by the teacher"
+          subject: "Grade Changed: %{assignment}, %{context}"
         link_message: "You can review the assignment here:"
         no_date_set: "No Date Set"
         not_applicable: N/A
@@ -7341,11 +8169,20 @@ en:
         not_applicable: N/A
         score: "score:  %{score} out of %{total}"
         score_pending: "(pending review)"
-        tweet: "Canvas Alert - Grade Change: %{date}"
+        tweet: "SmartLMS Alert - Grade Change: %{date}"
     submission_graded: 
       email: 
         body: "Your assignment, %{assignment}, has been graded."
         graded_date: "graded: %{date}"
+        html: 
+          body: "Your assignment, %{assignment}, has been graded."
+          graded_date: "graded: %{date}"
+          link_message: "You can review the assignment here"
+          no_date_set: "No Date Set"
+          not_applicable: N/A
+          score: "score: %{score} out of %{total}"
+          score_pending_review: "score pending review by the teacher"
+          subject: "Assignment Graded: %{assignment}, %{context}"
         link_message: "You can review the assignment here:"
         no_date_set: "No Date Set"
         not_applicable: N/A
@@ -7379,19 +8216,25 @@ en:
         not_applicable: N/A
         score: "score:  %{score} out of %{total}"
         score_pending_review: "(pending review)"
-        tweet: "Canvas Alert - Graded: %{assignment}, %{context}"
+        tweet: "SmartLMS Alert - Graded: %{assignment}, %{context}"
     summaries: 
       email: 
-        daily_body: "You're signed up to receive a daily report of some notifications from your Canvas account.  Below is the report for %{date}:"
+        daily_body: "You're signed up to receive a daily report of some notifications from your SmartLMS account.  Below is the report for %{date}:"
+        html: 
+          click_to_preferences: "Click here to edit your notification preferences"
+          daily_body: "You're signed up to receive a daily report of some notifications from your SmartLMS account. Below is the report for %{date}:"
+          subject: "Recent SmartLMS Notifications"
+          view: "Click to view"
+          weekly_body: "You're signed up to receive a weekly report of some notifications from your SmartLMS account. Below is the report for the week ending %{date}:"
         notifications_link: "You can change your notification settings by visiting the following page:"
-        subject: "Recent Canvas Notifications"
-        weekly_body: "You're signed up to receive a weekly report of some notifications from your Canvas account.  Below is the report for the week ending %{date}:"
+        subject: "Recent SmartLMS Notifications"
+        weekly_body: "You're signed up to receive a weekly report of some notifications from your SmartLMS account.  Below is the report for the week ending %{date}:"
       facebook: 
-        new_notifications: "You've received *%{notification_count} new notifications* in #Canvas#."
+        new_notifications: "You've received *%{notification_count} new notifications* in #SmartLMS#."
       sms: 
         notifications_sms: "%{notifications_count} new notifications at %{url}"
       twitter: 
-        tweet: "Canvas Alert - %{notification_count} new notifications"
+        tweet: "SmartLMS Alert - %{notification_count} new notifications"
     topic_locked: "This topic is currently locked."
     topic_locked_at: "This topic was locked %{at}."
     topic_locked_module: "This topic is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7400,6 +8243,10 @@ en:
     updated_wiki_page: 
       email: 
         body: "A page has been updated on the wiki for %{title} that may make your life easier."
+        html: 
+          body: "A page has been updated on the wiki for %{title} that may make your life easier."
+          link_message: "Click here to review it"
+          subject: "Updated Wiki Page: %{title}, %{user}"
         link_message: "You can review it here: %{link}"
         subject: "Updated Wiki Page: %{title}, %{user}"
       facebook: 
@@ -7410,12 +8257,16 @@ en:
       summary: 
         subject: "Updated Wiki Page: %{title}, %{user}"
       twitter: 
-        tweet: "Canvas Alert - Page Updated: %{title}, %{user}."
+        tweet: "SmartLMS Alert - Page Updated: %{title}, %{user}."
     visit_modules_page: "*Visit the course modules page for information on how to unlock this content.*"
     web_conference_invitation: 
       email: 
         body: "You've been invited to participate in a web conference, %{title} for %{name}."
         details_link: "You can see the details here: %{link}"
+        html: 
+          body: "You've been invited to participate in a web conference, %{title} for %{name}."
+          details_link: "Click here to see the details"
+          subject: "Web Conference Invitation: %{name}"
         subject: "Web Conference Invitation: %{name}"
       facebook: 
         body: "You've been invited to participate in a web conference, *%{title}* for #%{name}#."
@@ -7426,7 +8277,12 @@ en:
         body: "You've been invited to participate in a web conference, %{title} for %{name}."
         subject: "Web Conference Invitation: %{name}"
       twitter: 
-        tweet: "Canvas Alert - Invite: attend %{title}, %{name}"
+        tweet: "SmartLMS Alert - Invite: attend %{title}, %{name}"
+  migration: 
+    ecollege: 
+      course_not_found: "The ECollege course wasn't found."
+    webct: 
+      course_not_found: "The Blackboard course wasn't found."
   migration_issues: 
     errors: 
       valid_workflow_state: "Must send a valid workflow state"
@@ -7615,6 +8471,9 @@ en:
       other: Other
       parent: "Parent Emails"
       scheduling: Scheduling
+  notifications_search: 
+    cant_be_blank: "SmartLMS User ID can't be blank"
+    cant_come_before_from: "'To Date' can't come before 'From Date'"
   number: 
     currency: 
       format: 
@@ -7707,7 +8566,7 @@ en:
       instructions: 
         main: 
           manage: 
-            description: "*Outcomes are created here to track mastery in a course. To get started, checkout the menu bar along the top. Click on the New button to create a new outcome, or the New Group button to create a new group to organize your outcomes into. The Find button will allow you to use outcomes that have been created by your state or institution. As you create and use outcomes you will be able to use the panel to the left to navigate through your outcomes. You can drag and drop outcomes between the different levels to create structure.* *More importantly, Canvas allows you to add outcomes to your grading rubrics so that you can evaluate mastery as you grade assignments. Once you've set up outcomes, click Manage Rubrics to start using your outcomes for grading.*"
+            description: "*Outcomes are created here to track mastery in a course. To get started, checkout the menu bar along the top. Click on the New button to create a new outcome, or the New Group button to create a new group to organize your outcomes into. The Find button will allow you to use outcomes that have been created by your state or institution. As you create and use outcomes you will be able to use the panel to the left to navigate through your outcomes. You can drag and drop outcomes between the different levels to create structure.* *More importantly, SmartLMS allows you to add outcomes to your grading rubrics so that you can evaluate mastery as you grade assignments. Once you've set up outcomes, click Manage Rubrics to start using your outcomes for grading.*"
             title: "Setting up Outcomes"
     mastery_error: "Must be greater than or equal to 0"
     missing_outcome: "Couldn't find that learning outcome"
@@ -7809,12 +8668,14 @@ en:
     view_more_link: "View More"
   paginated_view: 
     loading_more_results: "Loading more results"
+  paypal: 
+    exception: "We're sorry, an error has occurred, please try again later."
   plugins: 
     academic_benchmark_importer: 
       name: "Academic Benchmark Importer"
       plugins: 
         ab: 
-          description: "This enables importing Academic Benchmark standards into Canvas."
+          description: "This enables importing Academic Benchmark standards into SmartLMS."
     academic_benchmark_settings: 
       api_url_description: "(e.g. %{url})"
       common_core_guid: "(e.g. %{guid})"
@@ -7826,6 +8687,9 @@ en:
     account_reports: 
       description: "Select account reports"
       name: "Account Reports"
+    angel_exporter: 
+      file_description: "Angel export .zip format"
+      name: "Angel Converter"
     assignment_freezer: 
       description: "Freeze Assignment Properties on Copy"
       name: "Assignment Property Freezer"
@@ -7834,6 +8698,10 @@ en:
           This plugin allows admins to check a property on assignments that makes the configured
           properties un-editable once the assignment is copied into another course.
       no_copying_frozen: "Don't allow frozen assignments to be copied."
+    banner_grade_exchange_settings: 
+      labels: 
+        canvas_source_identifier: "Name of your SmartLMS instance"
+        sis_source_identifier: "Name of your Banner instance"
     big_blue_button: 
       description: "Big Blue Button web conferencing support"
       name: "Big Blue Button"
@@ -7844,12 +8712,15 @@ en:
         domain: Domain
         secret: Secret
       secret_description: "This is the %{parameter_name} parameter that can be found in the %{filename} config file."
+    blackboard_exporter: 
+      file_description: "Blackboard 6/7/8/9 export .zip file"
+      name: "Blackboard Exporter"
     buttons: 
       saving: Saving...
     canvas_cartridge_importer: 
-      description: "This enables converting a canvas export to the intermediary json format to be imported"
-      file_description: "Canvas Course Export Package"
-      name: "Canvas Cartridge Importer"
+      description: "This enables converting a SmartLMS export to the intermediary json format to be imported"
+      file_description: "SmartLMS Course Export Package"
+      name: "SmartLMS Cartridge Importer"
     common_cartridge_importer: 
       description: "This enables converting a Common Cartridge packages in the intermediary json format to be imported"
       file_description: "Common Cartridge 1.0/1.1/1.2 Package"
@@ -7861,6 +8732,9 @@ en:
       description: "This plugin integrates with Crocodoc to provide an HTML5 document previewer which provides teachers and students with the ability to annotate documents."
       labels: 
         api_key: "Crocodoc API Key"
+    d2l_exporter: 
+      file_description: "D2L export .zip format"
+      name: "D2L Converter"
     dim_dim: 
       description: "DimDim web conferencing support"
       name: DimDim
@@ -7914,7 +8788,7 @@ en:
       sketchpad: SketchPad
       typewithme: TypeWith.me
     facebook: 
-      description: "Canvas Facebook application"
+      description: "SmartLMS Facebook application"
       name: Facebook
     facebook_settings: 
       description: |-
@@ -7923,23 +8797,23 @@ en:
           works correctly:
           
           * **Web Site -- Site URL:** set to %{site_url}
-          * **Web Site -- Site Domain:** domain of your main Canvas site.  This must match the Site URL setting
-          * **Facebook Integration -- Canvas Page:** make a note of whatever you choose and enter in the form below
-          * **Facebook Integration -- Canvas URL:** set to %{canvas_url}
-          * Make sure **Advanced -- OAuth 2.0 for Canvas** is enabled
+          * **Web Site -- Site Domain:** domain of your main SmartLMS site.  This must match the Site URL setting
+          * **Facebook Integration -- SmartLMS Page:** make a note of whatever you choose and enter in the form below
+          * **Facebook Integration -- SmartLMS URL:** set to %{canvas_url}
+          * Make sure **Advanced -- OAuth 2.0 for SmartLMS** is enabled
           * After you save your app, make a note of the App ID, API Key and App Secret
       domain_name: domain
       headers: 
         domain_settings: "Domain Settings"
       hints: 
-        canvas_domain: "this is the domain specified in \"Canvas URL\""
-        canvas_name: "this is the path specified in \"Canvas Page\""
+        canvas_domain: "this is the domain specified in \"SmartLMS URL\""
+        canvas_name: "this is the path specified in \"SmartLMS Page\""
         disable_ssl: "Use only for local testing"
       labels: 
         api_key: "API Key"
         app_id: "App ID"
-        canvas_domain: "Canvas Domain"
-        canvas_name: "Canvas Name"
+        canvas_domain: "SmartLMS Domain"
+        canvas_name: "SmartLMS Name"
         disable_ssl: "Disable SSL"
         secret: "App Secret"
     google_docs: 
@@ -7961,13 +8835,27 @@ en:
         publish_endpoint: "Endpoint to publish to"
         success_timeout: "Success notification timeout (in seconds)"
         wait_for_success: "Wait for success notifications"
+    ims_es_importer_settings: 
+      labels: 
+        course_long_name_selection: "Course long name selection"
+        course_short_name_selection: "Course short name selection"
+        course_sourcedid_name_prefix: "Course \"sourcedid\" ignored prefix"
+        default_email_domain: "Default email domain"
+        email_preference: "Email preference"
+        lms_delivery_name: "LMS Delivery Name"
+        map_sections_to_courses: "Map IMS sections to SmartLMS Courses"
+        section_end_days_adjustment: "Section end days adjustment"
+        section_name_selection: "Section name selection"
+        section_start_days_adjustment: "Section start days adjustment"
+        term_end_days_adjustment: "Term end days adjustment"
+        term_start_days_adjustment: "Term start days adjustment"
     index: 
       author: Author
       canvas_revision_unknown: Unknown
       description: Description
       name: Name
-      no_plugins: "There are no Canvas plugins installed"
-      page_title: "Canvas Plugins"
+      no_plugins: "There are no SmartLMS plugins installed"
+      page_title: "SmartLMS Plugins"
       tag: Tag
       version: Version
       website: Website
@@ -7981,7 +8869,7 @@ en:
           You will need an account either at [Kaltura.com](%{kaltura_url})
           or with a self-hosted instance of Kaltura.
           
-          **Note:** once you have Kaltura configured within Canvas,
+          **Note:** once you have Kaltura configured within SmartLMS,
           you need to go to the Kaltura Management Console and under "Settings -> 
           Integration Settings" enable server notifications with a 
           Notification URL of:
@@ -7991,7 +8879,7 @@ en:
           Then check the boxes for "Add Entry" and "Delete Entry" in the "Sent by Server" column.
       headers: 
         account_settings: "Account Settings"
-        canvas_settings: "Canvas Settings"
+        canvas_settings: "SmartLMS Settings"
         domain_settings: "Domain Settings"
         ui_conf_ids: "UI Conf IDs"
       hints: 
@@ -8028,6 +8916,10 @@ en:
       labels: 
         api_key: "API Key"
         secret_key: "Secret Key"
+    lockdown_browser: 
+      labels: 
+        download_url: "LockDown Browser Download URL"
+        plugin_enabled: Enabled
     moodle_converter: 
       file_description: "Moodle 1.9 .zip file"
       name: "Moodle Importer"
@@ -8105,6 +8997,19 @@ en:
       labels: 
         api_key: "Consumer Key"
         secret_key: "Consumer Secret"
+    webct_scraper: 
+      file_description: "Blackboard Vista/CE, WebCT 6+ Course"
+      name: "Blackboard Vista/CE (WebCT)"
+    webct_scraper_settings: 
+      description: |-
+          If the institution does not use WebCT's "Learning Modules" (including schools who adopted WebCT
+            prior to version 4.0, when modules were made available), course migrations can be improved by importing the "Course Content"
+            as SmartLMS Modules instead of the "Learning Modules". This page allows one to set the default behavior of the WebCT migrator
+            with respect to content modules. It is important to remember that, while individual course migrations retain the ability
+            to choose, the bulk migrator always utilizes the value configured here and cannot be changed per migration.
+      labels: 
+        allow_outline_selection: "Display option to use Course Content as Modules in the migration wizard"
+        folders_as_outline: "Use WebCT \"Course Content\" for modules as the default"
     wimba: 
       description: "Wimba web conferencing support"
       name: Wimba
@@ -8199,8 +9104,8 @@ en:
       updated_profile: "Settings successfully updated"
     please_select_an_option: "Please select an option"
     profile: 
-      access_token_description: "Access tokens can be used to allow other applications to make API calls on your behalf. You can also generate access tokens and *use the Canvas Open API* to come up with your own integrations."
-      approved_integrations: "These are the third-party applications you have authorized to access the Canvas site on your behalf:"
+      access_token_description: "Access tokens can be used to allow other applications to make API calls on your behalf. You can also generate access tokens and *use the SmartLMS Open API* to come up with your own integrations."
+      approved_integrations: "These are the third-party applications you have authorized to access the SmartLMS site on your behalf:"
       buttons: 
         add_picture_file: "Add File"
         authorize_google_docs: "Authorize Google Docs Access"
@@ -8215,16 +9120,16 @@ en:
         select_image: "Select Image"
         update_settings: "Update Settings"
       confirm_email_instructions: "Before you can edit your profile, you need to verify your email address (%{email}) by clicking the link in the email we sent you. If you don't see it, *click to re-send the email*, and make sure to check your spam box."
-      delicious_description: "Delicious is a tool that lets you store and share your bookmarks with others. Canvas's rich content editor will let you search your Delicious tags to easily link from within Canvas to other resources you find useful."
-      diigo_description: "Diigo is a social bookmarking tool tailored specifically to research and education. Canvas's rich content editor will let you search your Diigo tags to easily link from within Canvas to other resources you find useful."
+      delicious_description: "Delicious is a tool that lets you store and share your bookmarks with others. SmartLMS's rich content editor will let you search your Delicious tags to easily link from within SmartLMS to other resources you find useful."
+      diigo_description: "Diigo is a social bookmarking tool tailored specifically to research and education. SmartLMS's rich content editor will let you search your Diigo tags to easily link from within SmartLMS to other resources you find useful."
       error_loading_token_details: "Error Loading Token Details"
-      facebook_description: "If you have a Facebook account, you can install the Canvas app and receive course notifications on your profile. You can specify which types of notifications you want and how often you'd like them sent."
+      facebook_description: "If you have a Facebook account, you can install the SmartLMS app and receive course notifications on your profile. You can specify which types of notifications you want and how often you'd like them sent."
       full_token_warning: |-
           **Copy this token down now**. Once you leave this page you won't be able to
           retrieve the full token anymore, you'll have to regenerate it to get a new
           value.
       generate_access_token_description: |-
-          Access tokens are what allow third-party applications to access Canvas
+          Access tokens are what allow third-party applications to access SmartLMS
           resources on your behalf. These tokens are normally created automatically for
           applications as needed, but if [you're developing a new or limited
           project](%{documentation_url}) you can just generate the token from here.
@@ -8274,7 +9179,7 @@ en:
         show_user_services: "Let fellow course/group members see which services I've linked to my profile"
         skype_name: "Skype Name"
         sortable_name: "Sortable Name"
-        subscribe_to_emails: "I want to receive information, news and tips from Instructure"
+        subscribe_to_emails: "I want to receive information, news and tips from Arrivu"
         time_zone: "Time Zone"
         token: Token
         token_application: App
@@ -8303,7 +9208,7 @@ en:
         view_facebook_app: "view the Facebook app"
         view_your_profile: "view your profile"
       loading_token_details: "Loading Token Details..."
-      no_approved_integrations: "Third-party applications can request permission to access the Canvas site on your behalf. As you begin authorizing applications you will see them listed here."
+      no_approved_integrations: "Third-party applications can request permission to access the SmartLMS site on your behalf. As you begin authorizing applications you will see them listed here."
       no_language_preference: "System Default (%{language})"
       no_registered_services: "No Registered Services"
       none: None
@@ -8333,7 +9238,7 @@ en:
           These notifications will be sent as direct messages to yourself from
           yourself, and won't appear in your public stream.
       unknown_service: Unknown
-      web_services: "Canvas can make your life a lot easier by tying itself in with the web tools you already use. Click any of the services in \"Other Services\" to see what we mean."
+      web_services: "SmartLMS can make your life a lot easier by tying itself in with the web tools you already use. Click any of the services in \"Other Services\" to see what we mean."
     resending: resending...
     secondary_nav: 
       links: 
@@ -8381,7 +9286,7 @@ en:
         carrier: Carrier
         cell_number: "Cell Number"
         email_address: "Email Address"
-        enable_login_for_email: "I want to log in to Canvas using this email address"
+        enable_login_for_email: "I want to log in to SmartLMS using this email address"
         sms_email: "SMS Email"
       links: 
         add_contact_method: "Add Contact Method"
@@ -8407,15 +9312,18 @@ en:
     notifications: 
       privacy_notice: 
         ok: Ok
-        privacy_notice: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive Canvas course and group information outside of the institutional system."
+        privacy_notice: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive SmartLMS course and group information outside of the institutional system."
         privacy_notice_title: "Privacy Notice"
   pseudonym: 
     errors: 
       bad_credentials: "Invalid username or password"
+      common: "Can't use common passwords (e.g. \"password\")"
       invalid: "May only contain letters, numbers, or the following: %{characters}"
       mismatch: "Doesn't match"
       not_email: "Not a valid email address"
+      repeated: "Can't have the same character more than %{max} times in a row"
       required: Required
+      sequence: "Can't incude a run of more than %{max} characters (e.g. abcdef)"
       taken: "Email already in use"
       too_long: "Can't exceed %{max} characters"
       too_short: "Must be at least %{min} characters"
@@ -8434,13 +9342,13 @@ en:
       invalid_otp: "Invalid verification code, please try again"
       login_error: "There was a problem logging in at %{institution}"
       login_errors: 
-        no_config_for_id: "The Canvas account has no authentication configuration with that id"
+        no_config_for_id: "The SmartLMS account has no authentication configuration with that id"
         no_idp_set: "The institution you logged in from is not configured on this account."
-        unrecognized_idp: "Canvas did not recognize your identity provider"
+        unrecognized_idp: "SmartLMS did not recognize your identity provider"
       logout_errors: 
-        no_idp_found: "Canvas was unable to log you out at your identity provider"
+        no_idp_found: "SmartLMS was unable to log you out at your identity provider"
       max_attempts: "Too many failed login attempts. Please try again later or contact your system administrator."
-      no_matching_user: "Canvas doesn't have an account for user: %{user}"
+      no_matching_user: "SmartLMS doesn't have an account for user: %{user}"
       request_failed: "Request failed. Try again."
       user_deleted: "That user account has been deleted.  Please contact your system administrator to have your account re-activated."
     messages: 
@@ -8451,16 +9359,16 @@ en:
       buttons: 
         request_password: "Request Password"
       dont_know_password: "I don't know my password"
-      log_in_to_canvas: "Log In To Canvas"
+      log_in_to_canvas: "Log In To SmartLMS"
       login: Login
       login_handle: "Enter your %{login_handle_name} and we'll send you a link to change your password."
       password: Password
       sending: Sending...
     new: 
-      details: "Before you can log in you need to finish the registration process. You should have received an email with a confirmation link back to Canvas. Follow that link to complete the process. Make sure to check your spam box."
+      details: "Before you can log in you need to finish the registration process. You should have received an email with a confirmation link back to SmartLMS. Follow that link to complete the process. Make sure to check your spam box."
       links: 
         resend_email: "Re-Send the Email"
-      page_title: "Log In to Canvas"
+      page_title: "Log In to SmartLMS"
       titles: 
         registration_complete: "Registration Incomplete"
     notices: 
@@ -8483,7 +9391,7 @@ en:
       details: 
         mfa_enrollment: |-
             Multi-factor authentication increases security by requiring that you have something in your physical possession,
-            in addition to knowing your password, in order to log in to Canvas. This can be a device that can generate
+            in addition to knowing your password, in order to log in to SmartLMS. This can be a device that can generate
             verification codes, or a phone that can receive text messages. The Google Authenticator app for [iPhone](%{iphone_url}) or
             [Android](%{android_url}) can be configured by scanning the QR Code below. Other tokens can be configured by entering the
             secret key **%{secret_key}**.
@@ -8510,10 +9418,10 @@ en:
       buttons: 
         update_password: "Update Password"
       labels: 
-        login_to_change: "Login to Change"
         new_password: "New Password"
         password: Password
         password_confirmation: "Confirm New Password"
+        which_login_to_change: "Which login to change"
       page_title: "Change Password"
       titles: 
         change_password: "Change login password for %{user}"
@@ -8528,12 +9436,11 @@ en:
       account_registered: "Account registered!"
       account_updated: "Account updated!"
       email_sent: "Confirmation email sent to %{email}, make sure to check your spam box"
-      link_invalid: "The link you used appears to no longer be valid.  If you can't login, try clicking \"Don't Know My Password\" and having a new message sent for you."
+      link_invalid: "The link you used is no longer valid.  If you can't log in, click \"Don't know your password?\" to reset your password."
       password_changed: "Password changed"
-    registration_confirmation_form: 
-      errors: 
-        password_required: "Password required"
-        password_too_short: "Password too short"
+  purchases: 
+    new: 
+      payment_info: "Payment Information"
   question_bank: 
     align_outcomes: "Align Outcomes"
     remove_outcome_from_bank: "Are you sure you want to remove this outcome from the bank?"
@@ -8637,25 +9544,13 @@ en:
       new: "New:"
   quiz: 
     default_question_input: "[ Select ]"
+    default_text_only_question_name: Spacer
     default_title: "Unnamed Quiz"
     errors: 
       invalid_hide_results: "Hide results is not valid"
       invalid_ip_filter: "IP filter is not valid"
       invalid_quiz_type: "Quiz type is not valid"
-    statistics: 
-      csv_columns: 
-        attempt: attempt
-        id: id
-        n_correct: "n correct"
-        n_incorrect: "n incorrect"
-        name: name
-        score: score
-        section: section
-        section_id: section_id
-        section_sis_id: section_sis_id
-        sis_id: sis_id
-        submitted: submitted
-      no_answer: "No Answer"
+    question_name_counter: "Question %{question_number}"
     types: 
       quiz: Quiz
       survey: Survey
@@ -8673,6 +9568,22 @@ en:
     statistics: 
       exact_answer: "%{exact_value} +/- %{margin}"
       inexact_answer: "%{lower_bound} to %{upper_bound}"
+  quiz_statistics: 
+    statistics: 
+      csv_columns: 
+        attempt: attempt
+        id: id
+        n_correct: "n correct"
+        n_incorrect: "n incorrect"
+        name: name
+        score: score
+        section: section
+        section_id: section_id
+        section_sis_id: section_sis_id
+        sis_id: sis_id
+        submitted: submitted
+      no_answer: "No Answer"
+    statistics_filename: "%{title} %{type} Report"
   quiz_submissions: 
     errors: 
       late_quiz: "You submitted this quiz late, and your answers may not have been recorded."
@@ -8723,6 +9634,7 @@ en:
     default_question_name: Question
     default_quiz_title: Quiz
     default_response_to_essay: "Response to show student after they submit an answer"
+    default_response_to_file_upload: "Response to show student after they submit an answer"
     default_title: "New Quiz"
     display_answer: 
       correct_answer: "This was the correct answer."
@@ -8849,6 +9761,7 @@ en:
         calculated: "Enter your question, build a formula, and generate a set of possible answer combinations. Students will see the question with a randomly selected set of variables filled in and have to type the correct numerical answer."
         equations: "You can define variables by typing variable names surrounded by brackets"
         essay: "Students will be given a text field to compose their answer."
+        file_upload: "Students will be able to upload a file for their answer."
         fill_in_multiple_blanks: "Enter your question, specifying where each blank should go. Then define the possible correct answer for each blank. Students must type correct answers into text boxes at each blank."
         formula_definition: "Next you'll need to write the formula or formula's used to compute the correct answer. Just use the same variable names listed above."
         matching: "Build pairs of matching values. Students will see values on the left and have to select the matching value on the right from a dropdown. Multiple rows can have the same answer, and you can add additional distractors to the right side."
@@ -8898,6 +9811,7 @@ en:
       question_type: 
         calculated: "Formula Question"
         essay: "Essay Question"
+        file_upload: "File Upload Question"
         fill_in_multiple_blanks: "Fill In Multiple Blanks"
         matching: Matching
         missing_word: "Missing Word"
@@ -8917,9 +9831,22 @@ en:
     graded_quiz: "Graded Quiz"
     graded_survey: "Graded Survey"
     headers: 
-      unsubmitted_students_count: 
-        one: "1 student hasn't taken the survey"
-        other: "%{count} students haven't taken the survey"
+      submitted_students_quiz_title: 
+        one: "Students who have taken the quiz (%{count})"
+        other: "Students who have taken the quiz (%{count})"
+        zero: "Students who have taken the quiz"
+      submitted_students_survey_title: 
+        one: "Students who have taken the survey (%{count})"
+        other: "Students who have taken the survey (%{count})"
+        zero: "Students who have taken the survey"
+      unsubmitted_students_quiz_title: 
+        one: "Students who haven't taken the quiz (%{count})"
+        other: "Students who haven't taken the quiz (%{count})"
+        zero: "Student who haven't taken the quiz"
+      unsubmitted_students_survey_title: 
+        one: "Students who haven't taken the survey (%{count})"
+        other: "Students who haven't taken the survey (%{count})"
+        zero: "Student who haven't taken the survey"
     helpers: 
       duration_in_minutes: 
         one: "1 minute"
@@ -9027,17 +9954,13 @@ en:
       requires_lockdown: "This quiz requires Respondus LockDown Browser. Please launch Respondus LockDown Browser to take this quiz or view your quiz results."
     managed_quiz_data: 
       anonymous_student: "Student %{n}"
-      headers: 
-        quiz_unsubmitted_students: "Students who haven't taken the quiz"
-        submitted_students_quiz: "Students who have taken the quiz"
-        submitted_students_survey: "Students who have taken the survey"
-        survey_unsubmitted_students: "Students who haven't taken the survey"
-      quiz_all_students_submitted: "All Students have taken the quiz"
-      quiz_no_submissions: "No Students have taken the quiz yet"
-      survey_all_students_submitted: "All Students have taken the survey"
-      survey_no_submissions: "No Students have taken the survey yet"
       titles: 
         submission_needs_review: "This submission needs review"
+    messages: 
+      no_submitted_students_quiz: "No Students have taken the quiz yet"
+      no_submitted_students_survey: "No Students have taken the survey yet"
+      no_unsubmitted_students_quiz: "All Students have taken the quiz"
+      no_unsubmitted_students_survey: "All Students have taken the survey"
     moderate: 
       add_time: "Add Time"
       buttons: 
@@ -9163,14 +10086,17 @@ en:
         one: "1 quiz successfully published!"
         other: "%{count} quizzes successfully published!"
     practice_quiz: "Practice Quiz"
+    question_colon: "Question:"
     question_group: 
       buttons: 
         update: Update
       default_group_name: Group
+      edit_questions_and_points: "Pick *%{num_questions}* questions, #%{num_points}# pts per question"
       labels: 
         question_bank: "Questions will be pulled from the bank"
       links: 
         link_to_a_question_bank: "Link to a Question Bank"
+      show_questions_and_points: "Pick *%{num_questions}* questions, #%{num_points}# pts per question"
       titles: 
         add_question_to_group: "Add Question to this Group"
         collapse_group: "Collapse Group"
@@ -9342,6 +10268,9 @@ en:
         quiz_instructions: "Quiz Instructions"
       links: 
         back_to_quiz_page: "Back to Quiz Page"
+    refresh_quiz_after_popup: 
+      headers: 
+        loading_in_lockdown: "Loading Quiz in Respondus LockDown Browser"
     retrieving_filters: "Retrieving Filters..."
     rubric: 
       loading: Loading...
@@ -9391,6 +10320,8 @@ en:
         show_student_quiz_results: "Show Student Quiz Results"
         show_student_survey_results: "Show Student Survey Results"
         survey_statistics: "Survey Statistics"
+      notices: 
+        message_sent: "Message Sent!"
       only_registered_users: "Only registered, enrolled users can take graded quizzes"
       quiz_in_progress: "You're in the middle of taking this quiz."
       speed_grader: SpeedGrader™
@@ -9439,7 +10370,6 @@ en:
         one: "1 other submission"
         other: "%{count} other submissions"
     statistics_crumb: Statistics
-    statistics_filename: "%{title} %{type} Report"
     take_quiz: 
       buttons: 
         next: Next
@@ -9471,6 +10401,8 @@ en:
       labels: 
         started: Started
         times_up: "Time's Up! Submitting results in"
+      logged_out_of_canvas: "*You have been logged out of SmartLMS.* To continue please log in"
+      login_required: "Login Required"
       minutes_count: 
         one: "1 Minute"
         other: "%{count} Minutes"
@@ -9528,7 +10460,6 @@ en:
       help_with_formulas: "Help with Quiz Question Formulas"
       ip_address_filtering: "IP Address Filtering"
       set_as_correct: "This answer is set as correct"
-    top_level_crumb: Quizzes
     ? "true"
     : "True"
     ungraded_survey: "Ungraded Survey"
@@ -9590,7 +10521,7 @@ en:
       labels: 
         email: Email
         name: Name
-    welcome_to_canvas: "Welcome to Canvas!"
+    welcome_to_canvas: "Welcome to SmartLMS!"
   retrieve_timeout: "could not retrieve configuration, the server response timed out"
   role: 
     roles: 
@@ -9602,6 +10533,7 @@ en:
       become_user: "Become other users"
       change_course_state: "Change course state"
       comment_on_others_submissions: "View all students' submissions and make comments on them"
+      create_accounts: "Create new root accounts"
       create_collaborations: "Create student collaborations"
       create_conferences: "Create web conferences"
       manage_account_memberships: "Add/remove other admins for the account"
@@ -9610,8 +10542,10 @@ en:
       manage_alerts: "Manage global alerts"
       manage_assignments: "Manage (add / edit / delete) assignments and quizzes"
       manage_calendar: "Add, edit and delete events on the course calendar"
+      manage_canvasnet_courses: "Manage SmartLMS Network courses"
       manage_content: "Manage all other course content"
       manage_courses: "Manage ( add / edit / delete ) courses"
+      manage_demos: "Manage demos"
       manage_developer_keys: "Manage developer keys"
       manage_files: "Manage (add / edit / delete) course files"
       manage_frozen_assignment: "Manage (edit / delete) frozen assignments"
@@ -9619,6 +10553,7 @@ en:
       manage_grades: "Edit grades"
       manage_groups: "Manage (create / edit / delete) groups"
       manage_interaction_alerts: "Manage alerts"
+      manage_links: "Manage role and trust links"
       manage_outcomes: "Manage learning outcomes"
       manage_role_overrides: "Manage permissions"
       manage_rubrics: "Create and edit assessing rubrics"
@@ -9642,11 +10577,14 @@ en:
       read_roster: "See the list of users"
       send_messages: "Send messages to individual course members"
       send_messages_all: "Send messages to the entire class"
+      suspend_accounts: "Suspend accounts"
       undelete_courses: "Undelete courses"
       view_all_grades: "View all grades"
+      view_analytics: "View analytics pages"
       view_error_reports: "View error reports"
       view_group_pages: "View the group pages of all student groups"
       view_jobs: "View background jobs"
+      view_notifications: "View notifications"
       view_statistics: "View statistics"
     roles: 
       account_admin: "Account Admin"
@@ -9708,16 +10646,17 @@ en:
       are_you_sure_prompt: "Are you sure you want to delete this assessment?  All results will be lost."
       page_title: Assessments
     index: 
+      account_rubrics: "Account Rubrics"
       are_you_sure_prompt: "Are you sure you want to delete this rubric? Any course currently associated with this rubric will still have access to it, but, no new courses will be able to use it."
       buttons: 
         add_rubric: "Add Rubric"
+      course_rubrics: "Course Rubrics"
       delete_rubric: "Delete Rubric"
       page_title: Rubrics
       points_possible: 
         one: "1 point possible"
         other: "%{count} points possible"
-      titles: 
-        rubrics: Rubrics
+      user_rubrics: "User Rubrics"
     loading: Loading...
     rubric_association: 
       assessment_completed: "Assessment Completed"
@@ -9876,6 +10815,7 @@ en:
     authenticate: 
       buttons: 
         enroll_in_course: "Enroll in Course"
+        next: Next
       getting_started: "You are enrolling in **%{course}**."
       labels: 
         email: Email
@@ -9884,6 +10824,7 @@ en:
     authenticate_or_register: 
       buttons: 
         enroll_in_course: "Enroll in Course"
+        next: Next
       enter_email: "Please enter your email address:"
       existing_user: "I already have a %{institution_name} login"
       getting_started: "You are enrolling in **%{course}**."
@@ -9895,6 +10836,7 @@ en:
     confirm_enrollments: 
       buttons: 
         enroll_in_course: "Enroll in Course"
+        next: Next
       getting_started: "You are enrolling in **%{course}**"
       switch_users: "You are currently signed in as *%{user}*. **Sign in as another user**."
     course_full: 
@@ -9902,7 +10844,6 @@ en:
     enrollment_closed: 
       enrollment_is_closed: "Enrollment is closed for **%{course}**."
     new: 
-      course_enrollment: "Course Enrollment"
       titles: 
         course_enrollment: "Enroll in %{course}"
     notices: 
@@ -10093,6 +11034,8 @@ en:
       titles: 
         mastery_level: "percent above which to set mastery"
         select_and_add_criterion: "Select and Add Criterion"
+    flash_notice: 
+      close: Close
     flash_notices: 
       close: Close
     global_dialogs: 
@@ -10165,7 +11108,7 @@ en:
       log_in: "Log In"
       login_at_account: "Log in at %{school_name}"
       login_handle: "Enter your %{login_handle_name} and we'll send you a link to change your password."
-      register_for_canvas: "*Need a Canvas Account?* **Click Here, It's Free!**"
+      register_for_canvas: "*Need a SmartLMS Account?* **Click Here, It's Free!**"
     menu_assignment: 
       labels: 
         due: due
@@ -10236,9 +11179,9 @@ en:
       links_title: Title
       links_url: URL
       manage_settings: "Manage Registered Services"
-      message_me: "message me in Canvas"
+      message_me: "message me in SmartLMS"
       message_title: Message
-      message_user_canvas: "Message %{user} in Canvas"
+      message_user_canvas: "Message %{user} in SmartLMS"
       name: Name
       no_links: "%{name} hasn't added any links"
       nothing_in_common: "You don't have anything in common"
@@ -10540,7 +11483,7 @@ en:
   sis_batch: 
     errors: 
       unrecorgnized_type: "Unrecognized import type"
-    instructure_csv: "Instructure formatted CSV or zipfile of CSVs"
+    instructure_csv: "Arrivu formatted CSV or zipfile of CSVs"
     upload_filename: "sis_upload_%{id}.zip"
   sis_import: 
     buttons: 
@@ -10579,6 +11522,12 @@ en:
     columns: 
       date: Date
       value: Value
+    institution_suspended: 
+      body: "Your school's SmartLMS account is temporarily suspended. Please contact your SmartLMS administrator."
+      links: 
+        logout: Logout
+        stop_masquerading: "[Stop Masquerading]"
+      page_title: "Institution Suspended"
     links: 
       over_time: "over time"
     status: 
@@ -10795,11 +11744,12 @@ en:
         other: "%{count} Courses"
       labels: 
         designers_can_access_from: "**Designers** can access from"
-        name: "Term Name:"
         sis_id: "SIS ID"
         students_can_access_from: "**Students** can access from"
         tas_can_access_from: "**TAs** can access from"
         teachers_can_access_from: "**Teachers** can access from"
+      name: "Term Name:"
+      sis_source_id: "SIS ID:"
       term_runs_from: "**Term Runs** from"
       titles: 
         term_ends: "Term ends"
@@ -10858,6 +11808,9 @@ en:
     messages: Messages
     outcome_artifacts: "Outcome Artifacts"
     view_in_separate_window: "View in Separate Window"
+  tooltips: 
+    vdd: 
+      more_message: "and %{count} more..."
   turnitin: 
     error_1007: "The uploaded file is too big."
     error_1009: "Invalid file type. (Valid file types are MS Word, Acrobat PDF, Postscript, Text, HTML, WordPerfect (WPD) and Rich Text Format.)"
@@ -10888,6 +11841,7 @@ en:
       too_long: "Can't exceed %{max} characters"
     registration: 
       agree_to_terms: "You agree to the *terms of use*."
+      agree_to_terms_with_code_of_conduct: "You agree to the *terms of use* and the **code of conduct**."
   user_follow: 
     errors: 
       follow_own_collection: "You cannot follow your own collection"
@@ -10926,15 +11880,9 @@ en:
   user_logins: 
     buttons: 
       add_login: "Add Login"
-      save: Save
       update_login: "Update Login"
     confirms: 
       delete_login: "Are you sure you want to delete the login, \"%{login}\"?"
-    errors: 
-      passwords_do_not_match: "passwords do not match"
-      save_failed: "Save Failed"
-    messages: 
-      saving: Saving...
     notices: 
       cant_delete_last_login: "You can't delete the last login for a user"
       mfa_reset: "Multi-factor authentication reset"
@@ -11041,7 +11989,7 @@ en:
     cc_prefs: 
       buttons: 
         configure: "Configure Communication Preferences"
-      comm_preferences_instructions: "Now that you're registered with Canvas, you might want to configure what notifications you'll receive as your courses progress. Canvas is flexible enough to let you choose how and for what events you'd like to be notified. When things happen in your courses you can choose to be emailed or texted to your cell immediately, daily or weekly."
+      comm_preferences_instructions: "Now that you're registered with SmartLMS, you might want to configure what notifications you'll receive as your courses progress. SmartLMS is flexible enough to let you choose how and for what events you'd like to be notified. When things happen in your courses you can choose to be emailed or texted to your cell immediately, daily or weekly."
       titles: 
         configure_com_prefs: "Configure Communication Preferences"
     confirms: 
@@ -11148,9 +12096,6 @@ en:
     masquerade: 
       are_you_sure_start: "Are you sure you want to masquerade as this user?"
       are_you_sure_stop: "Are you sure you want to stop masquerading?"
-      buttons: 
-        masquerade: "Masquerade as user"
-        unmasquerade: "Stop Masquerading"
       details: |-
           Masquerading is essentially logging in as this user without a password.
           You will be able to take any action as if you were this user, and from other users' points of views,
@@ -11197,7 +12142,7 @@ en:
         name_and_email: "Name and Email"
       update_instructions: "You can update some of this user's information, but they can change it back if they choose."
     new: 
-      create_a_canvas_account: "Create a Canvas Account"
+      create_a_canvas_account: "Create a SmartLMS Account"
     no_deleting_sis_user: "You cannot delete a system-generated user"
     no_self_registration: "Self registration has not been enabled for this account"
     oauth_fail: "OAuth Request failed. Couldn't find valid request"
@@ -11217,11 +12162,11 @@ en:
       almost_there: "You're almost there..."
       done_resending: "Done! Message may take a few minutes."
       failed_resending: "Request failed. Try again."
-      invite_to_read: "We invite you to watch this brief overview of Canvas. You may also *read about how Canvas is helping* to bring students in 27 countries closer to lecture halls, instructors and classmates."
+      invite_to_read: "We invite you to watch this brief overview of SmartLMS. You may also *read about how SmartLMS is helping* to bring students in 27 countries closer to lecture halls, instructors and classmates."
       links: 
         download_pdf: "download PDF"
       need_flash: "You need Flash player 8+ and JavaScript enabled to view this video."
-      overview_video: "Overview Video of Canvas"
+      overview_video: "Overview Video of SmartLMS"
       registration_complete: "Registration Complete"
       resending: Re-Sending...
       sent_email_paragraph: "We sent an email to %{email_address}. *Click the link in the email to finish registering*. If you don't see it, **click to re-send the email**, and make sure to check your spam box."
@@ -11284,9 +12229,13 @@ en:
                   those courses are available, you will see information about them here
                   and in the top navigation. In the meantime, feel free to sign up for
                   more courses or set up your profile.
-      welcome_to_happiness: "Welcome to Canvas!"
+      welcome_to_happiness: "Welcome to SmartLMS!"
   validate: 
     is_required: "This field is required"
+  warnings: 
+    test_install: 
+      message: "This SmartLMS installation is only for testing, and will reset every week."
+      title: "SmartLMS Test Installation"
   web_conference: 
     default_name_for_courses: "Course Web Conference"
     default_name_for_groups: "Group Web Conference"
@@ -11296,6 +12245,8 @@ en:
         : "Off"
         ? "true"
         : "On"
+  webct_credentials: 
+    credential_not_found: "Credential not found."
   widget: 
     upload_media_track_form: 
       choose_a_language: "--Choose a Language--"

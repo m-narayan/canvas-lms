@@ -74,7 +74,7 @@ class PseudonymSessionsController < ApplicationController
           else
             logger.warn "Received CAS login for unknown user: #{st.response.user}"
             reset_session
-            session[:delegated_message] = t 'errors.no_matching_user', "Canvas doesn't have an account for user: %{user}", :user => st.response.user
+            session[:delegated_message] = t 'errors.no_matching_user', "SmartLMS doesn't have an account for user: %{user}", :user => st.response.user
             redirect_to(cas_client.logout_url(cas_login_url :no_auto => true))
             return
           end
@@ -92,7 +92,7 @@ class PseudonymSessionsController < ApplicationController
         if aac = @domain_root_account.account_authorization_configs.find_by_id(params[:account_authorization_config_id])
           initiate_saml_login(request.host_with_port, aac)
         else
-          message = t('errors.login_errors.no_config_for_id', "The Canvas account has no authentication configuration with that id")
+          message = t('errors.login_errors.no_config_for_id', "The SmartLMS account has no authentication configuration with that id")
           if @domain_root_account.auth_discovery_url
             redirect_to @domain_root_account.auth_discovery_url + "?message=#{URI.escape message}"
           else
@@ -215,7 +215,7 @@ class PseudonymSessionsController < ApplicationController
         return
       else
         reset_session
-        flash[:message] = t('errors.logout_errors.no_idp_found', "Canvas was unable to log you out at your identity provider")
+        flash[:message] = t('errors.logout_errors.no_idp_found', "SmartLMS was unable to log you out at your identity provider")
       end
     elsif @domain_root_account.cas_authentication? and session[:cas_login]
       reset_session
@@ -263,7 +263,7 @@ class PseudonymSessionsController < ApplicationController
           @pseudonym_session.destroy rescue true
           reset_session
           if @domain_root_account.auth_discovery_url
-            message = t('errors.login_errors.unrecognized_idp', "Canvas did not recognize your identity provider")
+            message = t('errors.login_errors.unrecognized_idp', "SmartLMS did not recognize your identity provider")
             redirect_to @domain_root_account.auth_discovery_url + "?message=#{URI.escape message}"
           else
             flash[:delegated_message] = t 'errors.login_errors.no_idp_set', "The institution you logged in from is not configured on this account."
@@ -337,7 +337,7 @@ class PseudonymSessionsController < ApplicationController
             logger.warn message
             aac.debug_set(:canvas_login_fail_message, message) if debugging
             # the saml message has to survive a couple redirects
-            session[:delegated_message] = t 'errors.no_matching_user', "Canvas doesn't have an account for user: %{user}", :user => unique_id
+            session[:delegated_message] = t 'errors.no_matching_user', "SmartLMS doesn't have an account for user: %{user}", :user => unique_id
             redirect_to :action => :destroy
           end
         elsif response.auth_failure?
@@ -561,6 +561,7 @@ class PseudonymSessionsController < ApplicationController
         end
       end
       format.json do
+        @pseudonym_session ||= @domain_root_account.pseudonym_sessions.new
         @pseudonym_session.errors.add('base', message)
         render :json => @pseudonym_session.errors.to_json, :status => :bad_request
       end
@@ -602,6 +603,7 @@ class PseudonymSessionsController < ApplicationController
 
   def oauth2_accept
     redirect_params = final_oauth2_redirect_params(:remember_access => params[:remember_access])
+    redirect_params[:state] = session[:oauth2][:state] if session[:oauth2][:state]
     final_oauth2_redirect(session[:oauth2][:redirect_uri], redirect_params)
   end
 

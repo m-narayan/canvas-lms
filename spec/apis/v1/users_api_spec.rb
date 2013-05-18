@@ -25,6 +25,8 @@ class TestUserApi
   attr_accessor :services_enabled, :context, :current_user, :params, :request
   def service_enabled?(service); @services_enabled.include? service; end
   def avatar_image_url(*args); "avatar_image_url(#{args.first})"; end
+  def course_student_grades_url(course_id, user_id); ""; end
+  def course_user_url(course_id, user_id); ""; end
   def initialize
     @domain_root_account = Account.default
     @params = {}
@@ -102,6 +104,31 @@ describe Api::V1::User do
         }
     end
 
+    context "computed scores" do
+      before do
+        @enrollment.computed_current_score = 95.0;
+        @enrollment.computed_final_score = 85.0;
+        def @course.grading_standard_enabled?; true; end
+        @student1_enrollment = @enrollment
+        @student2 = course_with_student(:course => @course).user
+      end
+
+      it "should return scores as admin" do
+        json = @test_api.user_json(@student, @admin, {}, [], @course, [@student1_enrollment])
+        json['enrollments'].first['grades'].should == {
+          "html_url" => "",
+          "current_score" => 95.0,
+          "final_score" => 85.0,
+          "current_grade" => "A",
+          "final_grade" => "B",
+        }
+      end
+
+      it "should not return scores as another student" do
+        json = @test_api.user_json(@student, @student2, {}, [], @course, [@student1_enrollment])
+        json['enrollments'].first['grades'].keys.should == ["html_url"]
+      end
+    end
 
     def test_context(mock_context, context_to_pass)
       mock_context.expects(:account).returns(mock_context)
@@ -326,7 +353,7 @@ describe "Users API", :type => :integration do
             :name          => "Test User",
             :short_name    => "Test",
             :sortable_name => "User, T.",
-            :time_zone     => "Mountain Time (United States & Canada)",
+            :time_zone     => "New Delhi",
             :locale        => 'en'
           },
           :pseudonym => {
@@ -343,7 +370,7 @@ describe "Users API", :type => :integration do
       user.name.should eql "Test User"
       user.short_name.should eql "Test"
       user.sortable_name.should eql "User, T."
-      user.time_zone.should eql "Mountain Time (United States & Canada)"
+      user.time_zone.should eql "New Delhi"
       user.locale.should eql 'en'
 
       user.pseudonyms.count.should eql 1

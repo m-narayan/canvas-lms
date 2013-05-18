@@ -1,1 +1,4 @@
-<%= t :message, 'Canvas Alert - All appointments for "%{appointment_name} have been canceled".', :appointment_name => asset.title %>
+<% define_content :link do -%>
+<%= HostUrl.protocol %>://<%= HostUrl.context_host(asset.contexts.first) %>/appointment_groups
+<% end -%>
+<%= t :message, 'SmartLMS Alert - All appointments for "%{appointment_name} have been canceled".', :appointment_name => asset.title %>

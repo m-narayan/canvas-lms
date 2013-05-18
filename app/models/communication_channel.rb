@@ -189,7 +189,7 @@ class CommunicationChannel < ActiveRecord::Base
   def send_otp!(code)
     m = self.messages.new
     m.to = self.path
-    m.body = t :body, "Your Canvas verification code is %{verification_code}", :verification_code => code
+    m.body = t :body, "Your SmartLMS verification code is %{verification_code}", :verification_code => code
     Mailer.deliver_message(m) rescue nil # omg! just ignore delivery failures
   end
 
@@ -259,13 +259,6 @@ class CommunicationChannel < ActiveRecord::Base
   
   def can_notify?
     self.notification_policies.any? { |np| np.frequency == 'never' } ? false : true
-  end
- 
-  def self.ids_with_pending_delayed_messages
-    CommunicationChannel.connection.select_values(
-      "SELECT distinct communication_channel_id
-         FROM delayed_messages
-        WHERE workflow_state = 'pending' AND send_at <= '#{Time.now.to_s(:db)}'")
   end
   
   def move_to_user(user, migrate=true)
