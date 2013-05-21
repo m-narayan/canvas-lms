@@ -1163,5 +1163,5 @@ ActionController::Routing::Routes.draw do |map|
   #   collection.resources :collection_items, :only => [:show, :index]
   # end
 
-  # See how all your routes lay out with "rake routes"
+  # See how all your routes lay out with "rake routes" 
 end
