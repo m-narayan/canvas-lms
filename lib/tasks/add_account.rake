@@ -14,6 +14,7 @@ namespace :db do
           @account.name = name
           puts "Creating Account #{name}... "
           @account.save!
+
           #now add the siteAdmin account admin to this account admin
           site_admin_ac_admin_user = Account.site_admin.account_users.first
           @account.add_user(site_admin_ac_admin_user.user, 'AccountAdmin')
