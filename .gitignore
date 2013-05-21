@@ -45,8 +45,4 @@ tags
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
-<<<<<<< HEAD
-/.idea/*.*
-=======
-/.idea
->>>>>>> customization
+/.idea/
