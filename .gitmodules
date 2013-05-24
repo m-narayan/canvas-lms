@@ -1,8 +1,3 @@
 [submodule "vendor/plugins/canvas-mt"]
 	path = vendor/plugins/canvas-mt
 	url = https://github.com/m-narayan/canvas-mt
-
-[submodule "vendor/plugins/lms_customization"]
-	path = vendor/plugins/lms_customization
-	url = https://github.com/m-narayan/lms_customization.git
-

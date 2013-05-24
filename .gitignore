@@ -48,3 +48,4 @@ tags
 /public/plugins/
 /spec/coffeescripts/plugins/
 /.idea/
+/vendor/plugins/lms_customization
