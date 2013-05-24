@@ -10,7 +10,7 @@ define [
     small: {width: 70, height: 50}
 
   createMediaCommentThumbnail = (elem, size, keepOriginalText) ->
-    return console.log('Kaltura has not been enabled for this account') unless INST.kalturaSettings
+    return console.log('Kaltura has not been enabled for this account') unless 
 
     $link = $(elem)
     dimensions = MEDIA_COMMENT_THUMBNAIL_SIZES[size] ? MEDIA_COMMENT_THUMBNAIL_SIZES.normal
