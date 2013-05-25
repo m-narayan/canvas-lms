@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e13bbdf-7893-44b7-b852-3300185e6af3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/shared/_new_course_form.html.erb" afterPath="$PROJECT_DIR$/app/views/shared/_new_course_form.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/course.rb" afterPath="$PROJECT_DIR$/app/models/course.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/accounts/settings.html.erb" afterPath="$PROJECT_DIR$/app/views/accounts/settings.html.erb" />
-    </list>
+    <list default="true" id="7e13bbdf-7893-44b7-b852-3300185e6af3" name="Default" comment="" />
     <ignored path="canvas-lms.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="7e13bbdf-7893-44b7-b852-3300185e6af3" time="1369453998662" ignored="false" />
@@ -56,7 +52,7 @@
       <file leaf-file-name="course.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/course.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3057" column="34" selection-start="133593" selection-end="133593" vertical-scroll-proportion="4.4623957">
+            <state line="2912" column="85" selection-start="127892" selection-end="127892" vertical-scroll-proportion="0.40947077">
               <folding />
             </state>
           </provider>
@@ -622,7 +618,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/course.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3057" column="34" selection-start="133593" selection-end="133593" vertical-scroll-proportion="4.4623957">
+        <state line="2912" column="85" selection-start="127892" selection-end="127892" vertical-scroll-proportion="0.40947077">
           <folding />
         </state>
       </provider>
