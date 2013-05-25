@@ -457,6 +457,7 @@
             </div>
           </fieldset>
         <% end %>
+        <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
         <% if @account.root_account? && !@account.site_admin? %>
           <fieldset>
             <legend>Course License</legend>
@@ -467,6 +468,7 @@
              </div>
             <% end %>    
           <fieldset>
+        <% end %>
         <% end %>
         <% if @account.root_account? && !@account.site_admin? %>
           <fieldset>
