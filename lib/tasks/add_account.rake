@@ -17,7 +17,7 @@ namespace :db do
           @account.save!
           #now add the siteAdmin account admin to this account admin
           site_admin_ac_admin_user = Account.site_admin.account_users.first
-          @account.add_user(site_admin_ac_admin_user.user, 'AccountAdmin')
+          @account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
           @account.save!
           puts "added the site-admin to the list of account admins"
         else
@@ -54,7 +54,7 @@ namespace :db do
         @account.add_user(user, 'AccountAdmin')
         user
       rescue Exception => e
-        STDERR.puts "Problem creating administrative account, please try again:#{e.mesaage}\n#{e.backtrace} "
+        STDERR.puts "Problem creating administrative account, please try again:{#e.mesaage}\n#{e.backtrace} "
         nil
       end
     end
