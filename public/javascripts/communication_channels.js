@@ -23,6 +23,7 @@ $(document).ready(function() {
         $("#register_sms_number").find(":text:first").focus().select();
       }
     }
+   
   });
   $(".channel_list tr").hover(function() {
     if($(this).hasClass('unconfirmed')) {
@@ -47,11 +48,15 @@ $(document).ready(function() {
       modal: true,
       open: function() {
         $("#communication_channels").triggerHandler('tabsshow');
+
       }
     });
     if($(this).hasClass('add_contact_link')) {
       $("#communication_channels").tabs('select', '#register_sms_number');
       view = "sms";
+       if(document.getElementById('time_zone').value == "New Delhi" || document.getElementById('time_zone').value == "Mumbai" || document.getElementById('time_zone').value == "Kolkata" || document.getElementById('time_zone').value == "Chennai" ){
+      document.getElementById("sms_visible").style.display="none";
+       }
     } else {
       $("#communication_channels").tabs('select', '#register_email_address');
     }
@@ -62,7 +67,11 @@ $(document).ready(function() {
     $form.find(".should_be_10_digits").showIf(sms_number && sms_number.length != 10);
     var email = $form.find(".carrier").val();
     $form.find(".sms_email").attr('disabled', email != 'other');
-    if(email == "other") { return; }
+    if(document.getElementById('time_zone').value == "New Delhi" || document.getElementById('time_zone').value == "Mumbai" || document.getElementById('time_zone').value == "Kolkata" || document.getElementById('time_zone').value == "Chennai" ){
+     email = sms_number;
+      }
+    else
+    {if(email == "other") { return; }}
     email = email.replace("#", sms_number);
     $form.find(".sms_email").val(email);
   });
