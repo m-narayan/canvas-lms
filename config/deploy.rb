@@ -10,7 +10,6 @@ ssh_options[:forward_agent] = true
 set :repository,    "git@github.com:m-narayan/canvas-lms.git"
 set :scm,     :git
 set :deploy_via,  :remote_cache
-set :deploy_to,   "/var/deploy/lms"
 set :use_sudo,    false
 
 set :stages, ["staging", "production"]
@@ -74,6 +73,17 @@ namespace :canvas do
   task :files_symlink do
     folder = 'tmp/files'
     run "ln -s #{smart_lms_data_files} #{latest_release}/#{folder}"
+    run "ln -nfs #{shared_path}/config/amazon_s3.yml #{release_path}/config/amazon_s3.yml"
+    run "ln -nfs #{shared_path}/config/cache_store.yml #{release_path}/config/cache_store.yml"
+    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{shared_path}/config/delayed_jobs.yml #{release_path}/config/delayed_jobs.yml"
+    run "ln -nfs #{shared_path}/config/domain.yml #{release_path}/config/domain.yml"
+    run "ln -nfs #{shared_path}/config/external_migration.yml #{release_path}/config/external_migration.yml"
+    run "ln -nfs #{shared_path}/config/file_store.yml #{release_path}/config/file_store.yml"
+    run "ln -nfs #{shared_path}/config/logging.yml #{release_path}/config/logging.yml"
+    run "ln -nfs #{shared_path}/config/outgoing_mail.yml #{release_path}/config/outgoing_mail.yml"
+    run "ln -nfs #{shared_path}/config/redis.yml #{release_path}/config/redis.yml"
+    run "ln -nfs #{shared_path}/config/security.yml #{release_path}/config/security.yml"   
   end
 
   desc "Compile static assets"
@@ -82,7 +92,6 @@ namespace :canvas do
     run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets --quiet"
     run "cd #{latest_release} && chown -R canvas:canvas ."
   end
-
 
   # Updates only
   desc "Post-update commands"
@@ -122,70 +131,20 @@ namespace :canvas do
   end
 end 
 
+#before(:deploy, "canvas:check_user")
 before "deploy", "deploy:check_revision"
 after(:deploy, "deploy:cleanup")
-#before(:deploy, "canvas:check_user")
 before("deploy:restart", "canvas:files_symlink")
 before("deploy:restart", "canvas:compile_assets")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-########################################
-# require 'bundler/capistrano'
-# require 'capistrano/ext/multistage'
-
-# set :application, "Myapp"
-
-# set :scm, :git
-# set :repository, "git@github.com:m-narayan/beacon.git"
-# set :branch, "capistrano"
-# set :deploy_via, :remote_cache
-# set :scm_passphrase, "deployadmin123$"
-
-# set :user, "sysadmin"
-# set :use_sudo, false
-
-# set :stages, ["staging", "production"]
-# set :default_stage, "staging"
-
-# default_run_options[:pty] = true
-# ssh_options[:forward_agent] = true
-
-# #set :bundle_flags, "--quiet"
-
-# namespace :deploy do
-#   task :start do; end
-#   task :stop do; end
-#   desc "Tell Passenger to restart the app."
-#   task :restart do
-#     run "touch #{current_path}/tmp/restart.txt"
-#   end
-  
-#   task :symlink_config, roles: :app do
-#     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-#   end
-#   after "deploy:finalize_update", "deploy:symlink_config"
-
-#   desc "Make sure local git is in sync with remote."
-#   task :check_revision, roles: :web do
-#     unless `git rev-parse HEAD` == `git rev-parse origin/#{branch}`
-#       puts "WARNING: HEAD is not the same as origin/#{branch}"
-#       puts "Run `git push` to sync changes."
-#       exit
-#     end
-#   end
-#   before "deploy", "deploy:check_revision"
-# end
-
-# after 'deploy:update_code', 'deploy:migrate'
+# amazon_s3.yml
+# cache_store.yml
+# database.yml
+# delayed_jobs.yml
+# domain.yml
+# external_migration.yml
+# file_store.yml
+# logging.yml
+# outgoing_mail.yml
+# redis.yml
+# security.yml

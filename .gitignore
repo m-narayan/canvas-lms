@@ -49,3 +49,4 @@ tags
 /spec/coffeescripts/plugins/
 .idea/
 /vendor/plugins/lms_customization
+.idea/*
