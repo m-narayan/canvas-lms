@@ -36,6 +36,8 @@
 .rvmrc
 tags
 /vendor/plugins/rails_upgrade
+.rvmrc
+tags
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
@@ -46,3 +48,4 @@ tags
 /public/plugins/
 /spec/coffeescripts/plugins/
 .idea/
+/vendor/plugins/lms_customization

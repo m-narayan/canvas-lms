@@ -151,13 +151,13 @@ class AccountsController < ApplicationController
   #     -X PUT \ 
   #     -H 'Authorization: Bearer <token>' \ 
   #     -d 'account[name]=New account name' \ 
-  #     -d 'account[default_time_zone]=Mountain Time (US & Canada)'
+  #     -d 'account[default_time_zone]=New Delhi'
   #
   # @example_response
   #   {
   #     "id": "1",
   #     "name": "New account name",
-  #     "default_time_zone": "Mountain Time (US & Canada)",
+  #     "default_time_zone": "New Delhi",
   #     "parent_account_id": null,
   #     "root_account_id": null
   #   }
