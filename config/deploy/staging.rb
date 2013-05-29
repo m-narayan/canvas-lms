@@ -5,3 +5,4 @@ set :branch,    "develop"
 set :scm_passphrase, "deployadmin123$"
 #set :smart_lms_data_files "/var/capistrano/beacon/lms_staging/data/files"
 set :smart_lms_data_files, "#{deploy_to}/data/files"
+

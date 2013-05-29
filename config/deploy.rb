@@ -15,6 +15,8 @@ set :use_sudo,    false
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
 
+set :rake, "#{rake} --trace"
+
 task :uname do
   run 'uname -a'
 end
@@ -72,7 +74,7 @@ namespace :canvas do
   desc "Create symlink for files folder to mount point"
   task :files_symlink do
     folder = 'tmp/files'
-    run "ln -s #{smart_lms_data_files} #{latest_release}/#{folder}"
+    run "ln -nfs #{smart_lms_data_files} #{latest_release}/#{folder}"
     run "ln -nfs #{shared_path}/config/amazon_s3.yml #{release_path}/config/amazon_s3.yml"
     run "ln -nfs #{shared_path}/config/cache_store.yml #{release_path}/config/cache_store.yml"
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
@@ -90,7 +92,7 @@ namespace :canvas do
   task :compile_assets, :on_error => :continue do
     # On remote: bundle exec rake canvas:compile_assets
     run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets --quiet"
-    run "cd #{latest_release} && chown -R canvas:canvas ."
+    run "cd #{latest_release} && chown -R #{user}:#{user} ."
   end
 
   # Updates only
@@ -130,6 +132,20 @@ namespace :canvas do
     run_locally "[ `whoami` == #{user} ]"
   end
 end 
+
+# Monit tasks
+# namespace :monit do
+#   task :start do
+#     run 'monit'
+#   end
+#   task :stop do
+#     run 'monit quit'
+#   end
+# end
+
+# # Stop Monit during restart
+# before 'deploy:restart', 'monit:stop'
+# after 'deploy:restart', 'monit:start'
 
 #before(:deploy, "canvas:check_user")
 before "deploy", "deploy:check_revision"
