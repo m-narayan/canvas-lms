@@ -17,6 +17,8 @@ set :default_stage, "staging"
 
 set :rake, "#{rake} --trace"
 
+set :bundle_without, [:development, :test]
+
 task :uname do
   run 'uname -a'
 end
@@ -164,3 +166,39 @@ before("deploy:restart", "canvas:compile_assets")
 # outgoing_mail.yml
 # redis.yml
 # security.yml
+
+
+# cap bundle:install            # Install the current Bundler environment.
+# cap canvas:check_user         # Make sure that only the deploy user can run certain tasks
+# cap canvas:compile_assets     # Compile static assets
+# cap canvas:do_check_user      # Make sure that only the deploy user can run certain tasks
+# cap canvas:files_symlink      # Create symlink for files folder to mount point
+# cap canvas:load_notifications # Load new notification types
+# cap canvas:restart_jobs       # Restarted delayed jobs workers
+# cap canvas:update             # Update the deploy branch of the local repo
+# cap canvas:update_gems        # Install new gems from bundle and push updates
+# cap canvas:update_remote      # Post-update commands
+# cap deploy                    # Deploys your project.
+# cap deploy:check              # Test deployment dependencies.
+# cap deploy:check_revision     # Make sure local git is in sync with remote.
+# cap deploy:cleanup            # Clean up old releases.
+# cap deploy:cold               # Deploys and starts a `cold' application.
+# cap deploy:create_symlink     # Updates the symlink to the most recently deployed version.
+# cap deploy:migrate            # Run the migrate rake task.
+# cap deploy:migrations         # Deploy and run pending migrations.
+# cap deploy:pending            # Displays the commits since your last deploy.
+# cap deploy:pending:diff       # Displays the `diff' since your last deploy.
+# cap deploy:rollback           # Rolls back to a previous version and restarts.
+# cap deploy:rollback:code      # Rolls back to the previously deployed version.
+# cap deploy:setup              # Prepares one or more servers for deployment.
+# cap deploy:symlink            # Deprecated API.
+# cap deploy:update             # Copies your project and updates the symlink.
+# cap deploy:update_code        # Copies your project to the remote servers.
+# cap deploy:upload             # Copy files to the currently deployed version.
+# cap deploy:web:disable        # Present a maintenance page to visitors.
+# cap deploy:web:enable         # Makes the application web-accessible again.
+# cap invoke                    # Invoke a single command on the remote servers.
+# cap multistage:prepare        # Stub out the staging config files.
+# cap production                # Set the target stage to `production'.
+# cap shell                     # Begin an interactive Capistrano session.
+# cap staging                   # Set the target stage to `staging'.

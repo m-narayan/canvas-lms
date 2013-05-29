@@ -155,7 +155,7 @@ end
 group :development, :test do
   gem 'coffee-script'
   gem 'coffee-script-source',  '1.6.2' #pinned so everyone's compiled output matches
-  gem 'parallel',     '0.5.16'
+  #gem 'parallel',     '0.5.16'
 end
 
 group :i18n_tools do
@@ -182,6 +182,8 @@ group :statsd do
 end
 
 gem 'subdomain-fu'
+
+gem 'parallel', '0.5.16'
 
 # Non-standard Canvas extension to Bundler behavior -- load the Gemfiles from
 # plugins.
