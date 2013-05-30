@@ -424,9 +424,11 @@ module ApplicationHelper
           else
             path = send(tab[:href], @context)
           end
-          hide = tab[:hidden] || tab[:hidden_unused]
+          hide = tab[:hidden] || tab[:hidden_unused] 
           class_name = tab[:css_class].to_css_class
           class_name += ' active' if @active_tab == tab[:css_class]
+          tab[:href] =nil if (tab[:label] == "Grades" and !!!@domain_root_account.settings[:smartlms_grade_enable]) || (tab[:label] == "Outcomes" and !!!@domain_root_account.settings[:smartlms_outcomes_enable])
+          tab[:href] =nil if (tab[:label] == "ePortfolios" and !!!@domain_root_account.settings[:smartlms_eportfolios_enable])
           html << "<li class='section #{"section-tab-hidden" if hide }'>" + link_to(tab[:label], path, :class => class_name) + "</li>" if tab[:href]
         end
         html << "</ul></nav>"
