@@ -49,6 +49,7 @@ class ApplicationController < ActionController::Base
   before_filter :init_body_classes
   after_filter :set_response_headers
   after_filter :update_enrollment_last_activity_at
+  before_filter :tester
 
   add_crumb(proc { %Q{<i title="#{I18n.t('links.dashboard', "My Dashboard")}" class="icon-home standalone-icon"></i>}.html_safe }, :root_path, :class => "home")
 
@@ -75,6 +76,28 @@ class ApplicationController < ActionController::Base
   #     require ['ENV'], (ENV) ->
   #       ENV.FOO_BAR #> [1,2,3]
   #
+  def tester
+    jss_env :RUBY_COFFEE => "my coffee test"
+  end
+
+  def jss_env(hashs ={})
+    unless @jss_env
+
+          @jss_env[:RUBY_TEST] = "test"
+    end
+    hashs.each do |k,v|
+      if @jss_env[k]
+        raise "js_env key #{k} is already taken"
+      else
+        @jss_env[k] = v
+      end
+    end
+
+    @jss_env
+   end
+  helper_method :jss_env
+
+
   def js_env(hash = {})
     # set some defaults
     unless @js_env

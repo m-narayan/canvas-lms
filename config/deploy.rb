@@ -17,7 +17,7 @@ set :default_stage, "staging"
 
 set :rake, "#{rake} --trace"
 
-set :bundle_without, [:development, :test]
+#set :bundle_without, [:development, :test]
 
 task :uname do
   run 'uname -a'

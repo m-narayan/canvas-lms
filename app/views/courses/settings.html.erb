@@ -204,10 +204,10 @@
         <th scope="row"><%= f.blabel :license, :en => "License" %></th>
         <td colspan="3">
           <span class="course_form">
-          <% if @domain_root_account.settings[:private_license_enable] %>
-          <%= f.select :license, (Course.private_licenses.merge(Course.licenses)).map { |id, attrs| [attrs[:readable_license], id] }  %>
+        <% if @domain_root_account.settings[:private_license_enable] %>
+          <%= f.select :license, (Course.licenses).map { |id, attrs| [attrs[:readable_license], id] }  %>
           <% else %>
-          <%= f.select :license, Course.licenses.map { |id, attrs| [attrs[:readable_license], id] }  %>
+          <%= f.select :license, Course.public_licenses.map { |id, attrs| [attrs[:readable_license], id] }  %>
           <% end %>
          <%= license_help_link %>
           </span>
