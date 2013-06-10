@@ -8,19 +8,57 @@ namespace :db do
 
       if !Rails.env.test?
         name = ask("Enter  Account name > ") { |q| q.echo = true }
-        #name = "beacon"
-        @account = Account.find_by_name(name)
-        unless @account
-          @account = Account.new
-          @account.name = name
+        option = ask("You want to Disable Kaltura ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          kultura_flag = true
+        else
+          kultura_flag = false
+        end
+        option = ask("You want to Disable Big Blue Button ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          bbb_flag = true
+        else
+          bbb_flag = false
+        end
+        option = ask("You want to Disable Grade ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          grade_flag = true
+        else
+          grade_flag = false
+        end
+        option = ask("You want to Disable Outcomes ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          outcome_flag = true
+        else
+          outcome_flag = false
+        end
+        option = ask("You want to Disable course content import ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          course_import_flag = true
+        else
+          course_import_flag = false
+        end
+        option = ask("You want to Disable course content export ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          course_export_flag = true
+        else
+          course_export_flag = false
+        end
+          @account.settings[:smartlms_kaltura_disable]= kultura_flag
+          @account.settings[:smartlms_bbb_disable]= bbb_flag
+          @account.settings[:smartlms_grade_disable]= grade_flag
+          @account.settings[:smartlms_outcomes_disable]= outcome_flag
+          @account.settings[:smartlms_course_import_disable]= course_import_flag
+          @account.settings[:smartlms_course_export_disable]= course_export_flag
           puts "Creating Account #{name}... "
           @account.save!
 
           #now add the siteAdmin account admin to this account admin
           site_admin_ac_admin_user = Account.site_admin.account_users.first
-          @account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
-          @account.save!
-          puts "added the site-admin to the list of account admins"
+          #@account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
+          #@account.save!
+          #
+          #puts "added the site-admin to the list of account admins"
         else
           puts "Account Already Exists"
         end
@@ -40,7 +78,7 @@ namespace :db do
           # don't pass the password in the create call, because that way is extra
           # picky. the admin should know what they're doing, and we'd rather not
           # fail here.
-          puts "#{email}"
+         # puts "#{email}"
           pseudonym = user.pseudonyms.create!(:unique_id => email,
                                               :password => "validpassword", :password_confirmation => "validpassword",
                                               :account => @account )
@@ -88,7 +126,43 @@ namespace :db do
 
       create_admin_user(email, password)
       puts "Successfully created admin user with email: #{email}, password: #{password} for account: #{@account.name}"
-    end
- end
+      end
+  end
 
+  task remove_account: :environment do
+    require 'highline/import'
+    puts "This task will remove the account user from the root account"
+    puts "------------------------------------------------------------"
+    name = ask("Enter  Account name to remove > ") { |q| q.echo = true }
+    @account = Account.find_by_name(name)
+    if @account == nil
+     puts "The entered account is invalid"
+    else
+      puts "Removing..."
+      site_admin_ac_admin_user = Account.site_admin.account_users.first
+      AccountUser.where("account_id = ? and user_id = ?" ,@account.id ,site_admin_ac_admin_user.id).destroy_all
+      UserAccountAssociation.where("account_id = ? and user_id = ?" ,@account.id ,site_admin_ac_admin_user.id).destroy_all
+       puts "Account #{name} removed from root account "
+
+    end
+
+  end
+
+  task update_account: :environment do
+    require 'highline/import'
+    puts "This task will merge the account user from the root account"
+    puts "------------------------------------------------------------"
+    name = ask("Enter  Account name to merge > ") { |q| q.echo = true }
+    @account = Account.find_by_name(name)
+    if @account == nil
+      puts "The entered account is invalid"
+    else
+      puts "Merging..."
+      site_admin_ac_admin_user = Account.site_admin.account_users.first
+      @account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
+      puts "Account #{name} merged to root account "
+
+    end
+
+  end
 end

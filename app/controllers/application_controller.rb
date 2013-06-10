@@ -1176,9 +1176,9 @@ class ApplicationController < ActionController::Base
       elsif feature == :etherpad
         !!EtherpadCollaboration.config
       elsif feature == :kaltura
-        !!Kaltura::ClientV3.config and !!@domain_root_account.settings[:smartlms_kaltura_enable]
+        !!Kaltura::ClientV3.config and !!!@domain_root_account.settings[:smartlms_kaltura_disable]
       elsif feature == :web_conferences
-        !!WebConference.config and !!@domain_root_account.settings[:smartlms_bbb_enable]
+        !!WebConference.config and !!!@domain_root_account.settings[:smartlms_bbb_disable]
       elsif feature == :tinychat
         !!Tinychat.config
       elsif feature == :scribd
