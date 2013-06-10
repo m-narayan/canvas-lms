@@ -91,7 +91,7 @@
                  aria-controls="podcast_has_student_posts_container">
           {{#t "enable_podcast_feed"}}Enable podcast feed{{/t}}
         </label>
-  
+
         <label id="podcast_has_student_posts_container"
                style="{{hiddenUnless podcast_url}}"
                class="checkbox">
@@ -100,6 +100,7 @@
         </label>
       {{/if}}
       {{#if showAssignment}}
+      {{#unless isGRADE_ACTIVE}}
         <label class="checkbox">
           <input name="assignment[set_assignment]" type="hidden" value="0" />
           <input type="checkbox"
@@ -111,6 +112,7 @@
                  value="1">
           {{#t "use_for_grading"}}Use for grading{{/t}}
         </label>
+        {{/unless}}
       {{/if}}
     </div>
   </div>
