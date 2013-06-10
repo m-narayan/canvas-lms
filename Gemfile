@@ -180,9 +180,6 @@ end
 group :statsd do
   gem 'statsd-ruby', '1.0.0', :require => 'statsd'
 end
-
-gem 'subdomain-fu'
-
 gem 'parallel', '0.5.16'
 
 # Non-standard Canvas extension to Bundler behavior -- load the Gemfiles from

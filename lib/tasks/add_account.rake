@@ -44,6 +44,11 @@ namespace :db do
         else
           course_export_flag = false
         end
+        #name = "beacon"
+        @account = Account.find_by_name(name)
+        unless @account
+          @account = Account.new
+          @account.name = name
           @account.settings[:smartlms_kaltura_disable]= kultura_flag
           @account.settings[:smartlms_bbb_disable]= bbb_flag
           @account.settings[:smartlms_grade_disable]= grade_flag
@@ -78,7 +83,7 @@ namespace :db do
           # don't pass the password in the create call, because that way is extra
           # picky. the admin should know what they're doing, and we'd rather not
           # fail here.
-         # puts "#{email}"
+          # puts "#{email}"
           pseudonym = user.pseudonyms.create!(:unique_id => email,
                                               :password => "validpassword", :password_confirmation => "validpassword",
                                               :account => @account )
@@ -126,7 +131,7 @@ namespace :db do
 
       create_admin_user(email, password)
       puts "Successfully created admin user with email: #{email}, password: #{password} for account: #{@account.name}"
-      end
+    end
   end
 
   task remove_account: :environment do
@@ -136,13 +141,13 @@ namespace :db do
     name = ask("Enter  Account name to remove > ") { |q| q.echo = true }
     @account = Account.find_by_name(name)
     if @account == nil
-     puts "The entered account is invalid"
+      puts "The entered account is invalid"
     else
       puts "Removing..."
       site_admin_ac_admin_user = Account.site_admin.account_users.first
       AccountUser.where("account_id = ? and user_id = ?" ,@account.id ,site_admin_ac_admin_user.id).destroy_all
       UserAccountAssociation.where("account_id = ? and user_id = ?" ,@account.id ,site_admin_ac_admin_user.id).destroy_all
-       puts "Account #{name} removed from root account "
+      puts "Account #{name} removed from root account "
 
     end
 
