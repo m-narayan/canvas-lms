@@ -3,47 +3,47 @@
   <head>
     <meta charset="utf-8" />
     <title>Tinychat</title>
-
     <style>
       html,body { height: 100%; }
     </style>
   </head>
   <body>
-    <div id="client"></div>
-
+    <div id="client">
+      <iframe src="<%= PluginSetting.find_by_name("kandan_chat").settings["kandan_url"] %>?username=<%= @current_pseudonym.unique_id %>&email=<%= @current_user.name  %>&channel_name=<%= @context.name %>-<%= @context.id  %>&api_key=<%= PluginSetting.find_by_name("kandan_chat").settings["api_key"] %>" width="1000" height="500" border="0"></iframe>
+    </div>
     <script src="/javascripts/vendor/tinychat.js"></script>
     <script>
-      (function() {
-        var queryStringParams, initTinychat, data;
+      // (function() {
+      //   var queryStringParams, initTinychat, data;
 
-        queryStringParams = function() {
-          var vars   = [],
-              hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'),
-              hash;
+      //   queryStringParams = function() {
+      //     var vars   = [],
+      //         hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&'),
+      //         hash;
 
-          for (var _i=0; _i < hashes.length; _i++) {
-            hash = hashes[_i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-          }
+      //     for (var _i=0; _i < hashes.length; _i++) {
+      //       hash = hashes[_i].split('=');
+      //       vars.push(hash[0]);
+      //       vars[hash[0]] = hash[1];
+      //     }
 
-          return vars;
-        };
+      //     return vars;
+      //   };
 
-        initTinychat = function() {
-          var queryString = queryStringParams();
-          queryString['target'] = 'client';
-          queryString['desktop'] = true;
+      //   initTinychat = function() {
+      //     var queryString = queryStringParams();
+      //     queryString['target'] = 'client';
+      //     queryString['desktop'] = true;
 
-          tinychat(queryString);
-        };
+      //     tinychat(queryString);
+      //   };
 
-        if (window.addEventListener) {
-          window.addEventListener('load', initTinychat, false);
-        } else if (window.attachEvent) {
-          window.attachEvent('onload', initTinychat);
-        }
-      })();
+      //   if (window.addEventListener) {
+      //     window.addEventListener('load', initTinychat, false);
+      //   } else if (window.attachEvent) {
+      //     window.attachEvent('onload', initTinychat);
+      //   }
+      // })();
     </script>
   </body>
 </html>
