@@ -44,6 +44,10 @@ namespace :db do
         else
           course_export_flag = false
         end
+        @account = Account.find_by_name(name)
+        unless @account
+          @account = Account.new
+          @account.name = name
           @account.settings[:smartlms_kaltura_disable]= kultura_flag
           @account.settings[:smartlms_bbb_disable]= bbb_flag
           @account.settings[:smartlms_grade_disable]= grade_flag
