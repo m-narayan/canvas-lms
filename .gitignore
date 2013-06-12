@@ -47,6 +47,5 @@ tags
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
-.idea/
 /vendor/plugins/lms_customization
-.idea/*
+/.idea/
