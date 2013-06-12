@@ -79,14 +79,20 @@ class ApplicationController < ActionController::Base
     # set some defaults
     unless @js_env
       @js_env = {
-        :current_user_id => @current_user.try(:id),
-        :current_user => user_display_json(@current_user, :profile),
-        :current_user_roles => @current_user.try(:roles),
-        :context_asset_string => @context.try(:asset_string),
-        :AUTHENTICITY_TOKEN => form_authenticity_token,
-        :files_domain => HostUrl.file_host(@domain_root_account || Account.default, request.host_with_port)
+          :current_user_id => @current_user.try(:id),
+          :current_user => user_display_json(@current_user, :profile),
+          :current_user_roles => @current_user.try(:roles),
+          :context_asset_string => @context.try(:asset_string),
+          :AUTHENTICITY_TOKEN => form_authenticity_token,
+          :files_domain => HostUrl.file_host(@domain_root_account || Account.default, request.host_with_port)
       }
       @js_env[:IS_LARGE_ROSTER] = true if @context.respond_to?(:large_roster?) && @context.large_roster?
+      #add this line for enable/disable gradable in discussion_topics/new
+      if @domain_root_account
+        @js_env[:GRADE_ACTIVE] = @domain_root_account.settings[:smartlms_grade_disable]
+      else
+        @js_env[:GRADE_ACTIVE] =false
+      end
     end
 
     hash.each do |k,v|

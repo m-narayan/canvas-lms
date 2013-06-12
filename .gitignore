@@ -20,7 +20,7 @@
 /db/*.sqlite*
 /db/*sql
 /exports/
-#/Gemfile.lock
+/Gemfile.lock
 /log/
 /public/app/
 /public/assets/
@@ -49,4 +49,4 @@ tags
 /spec/coffeescripts/plugins/
 .idea/
 /vendor/plugins/lms_customization
-.idea/*
+/.idea

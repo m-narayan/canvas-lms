@@ -187,4 +187,5 @@ gem 'parallel', '0.5.16'
 Dir[File.join(File.dirname(__FILE__),'vendor/plugins/*/Gemfile')].each do |g|
   eval(File.read(g))
 end
- gem 'subdomain-fu'
+
+gem 'subdomain-fu', '0.5.4'
