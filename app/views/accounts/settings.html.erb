@@ -42,10 +42,9 @@
     <% if can_do(@context, @current_user, :manage_account_settings) %>
       <li><a href="#tab-sms" id="tab-tools-link">SMS Settings</a></li>
     <% end %>
-    <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
+    
     <% if can_do(@context, @current_user, :manage_account_settings) %>
       <li><a href="#tab-plugins" id="tab-tools-link">Plugins</a></li>
-    <% end %>
     <% end %>
 
     <% if @context.root_account.settings[:enable_alerts] && can_do(@context, @current_user, :manage_interaction_alerts) %>
@@ -457,7 +456,17 @@
             </div>
           </fieldset>
         <% end %>
-
+        <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>      
+          <fieldset>
+            <legend>Course License</legend>
+            <% f.fields_for :settings do |settings| %>
+            <div>
+                <%= settings.check_box :private_license_enable, :checked => @account.settings[:private_license_enable] %>
+                <%= settings.label :private_license_enable, :en => "Enable private license" %>
+             </div>
+            <% end %>    
+          <fieldset>
+        <% end %>
         <% if @account.root_account? && !@account.site_admin? %>
           <fieldset>
             <legend><%= t(:create_courses_title, "Who Can Create New Courses") %></legend>
@@ -792,5 +801,5 @@
       </div>
   <% end %>
   <%= render :partial => 'accounts/sms_settings' %>
-  <%= render :partial => 'accounts/plugin_settings' %>
+  <%= render :partial => 'accounts/plugin_settings' %> 
 </div>

@@ -1,4 +1,4 @@
-source 'https://rubygems.org/'
+source 'http://rubygems.org/'
 
 if RUBY_VERSION < "1.9.3" || RUBY_VERSION >= "2.0"
   raise "Canvas requires Ruby 1.9.3"
@@ -100,18 +100,18 @@ group :assets do
   gem 'dress_code', '1.0.2'
 end
 
-group :mysql do
-  gem 'mysql',        '2.8.1'
-  gem 'mysql2',       '0.2.18'
-end
+#group :mysql do
+#  gem 'mysql',        '2.8.1'
+#  gem 'mysql2',       '0.2.18'
+#end
 
 group :postgres do
   gem 'pg',           '0.15.0'
 end
 
-group :sqlite do
-  gem 'sqlite3-ruby', '1.3.2'
-end
+#group :sqlite do
+#  gem 'sqlite3-ruby', '1.3.2'
+#end
 
 group :test do
   gem 'bluecloth',    '2.0.10' # for generating api docs
@@ -155,7 +155,7 @@ end
 group :development, :test do
   gem 'coffee-script'
   gem 'coffee-script-source',  '1.6.2' #pinned so everyone's compiled output matches
-  gem 'parallel',     '0.5.16'
+  #gem 'parallel',     '0.5.16'
 end
 
 group :i18n_tools do
@@ -181,8 +181,13 @@ group :statsd do
   gem 'statsd-ruby', '1.0.0', :require => 'statsd'
 end
 
+gem 'subdomain-fu'
+
+gem 'parallel', '0.5.16'
+
 # Non-standard Canvas extension to Bundler behavior -- load the Gemfiles from
 # plugins.
 Dir[File.join(File.dirname(__FILE__),'vendor/plugins/*/Gemfile')].each do |g|
   eval(File.read(g))
 end
+ gem 'subdomain-fu'
