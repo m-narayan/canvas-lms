@@ -233,3 +233,12 @@ Canvas::Plugin.register('account_reports', nil, {
   :settings => nil,
   :validator => 'AccountReportsValidator'
 })
+Canvas::Plugin.register('kandan_chat', nil, {
+  :name => lambda{ t :name, 'Kandan Chat' },
+  :description => lambda{ t :description, 'Kandan chat room'},
+  :website => 'http://www.kandanappp.com',
+  :author => 'Arrivu Infotech',
+  :author_website => 'http://www.arrivusystems.com',
+  :version => '1.0.0',
+  :settings_partial => 'plugins/kandan_settings'
+})

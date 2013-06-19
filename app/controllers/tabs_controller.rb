@@ -72,7 +72,7 @@ class TabsController < ApplicationController
       tabs = @context.tabs_available(@current_user, :include_external => includes.include?('external'))
       tabs = tabs.select do |tab|
         if (tab[:id] == @context.class::TAB_CHAT rescue false)
-          tab[:href] && tab[:label] && feature_enabled?(:tinychat)
+          tab[:href] && tab[:label] && feature_enabled?(:kandan_chat)
         elsif (tab[:id] == @context.class::TAB_COLLABORATIONS rescue false)
           tab[:href] && tab[:label] && Collaboration.any_collaborations_configured?
         elsif (tab[:id] == @context.class::TAB_CONFERENCES rescue false)

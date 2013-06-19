@@ -1170,6 +1170,8 @@ class ApplicationController < ActionController::Base
         !!Canvas::Crocodoc.config
       elsif feature == :lockdown_browser
         Canvas::Plugin.all_for_tag(:lockdown_browser).any? { |p| p.settings[:enabled] }
+      elsif feature == :kandan_chat
+        !!Kandanchat.config
       else
         false
       end

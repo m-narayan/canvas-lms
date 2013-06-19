@@ -44,7 +44,7 @@ namespace :db do
         else
           course_export_flag = false
         end
-        #name = "beacon"
+
         @account = Account.find_by_name(name)
         unless @account
           @account = Account.new
