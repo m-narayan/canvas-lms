@@ -107,7 +107,13 @@ describe PseudonymsController do
       end
 
       it "should send password-change email for users with pseudonyms in a different account" do
-        user_with_pseudonym(:account => Account.site_admin)
+        @controller = PseudonymsController.new
+        account = Account.create! ({:name => "Account for password reset"})
+        @controller.instance_variable_set(:@domain_root_account, account)
+        user_with_pseudonym ({:account => account})
+        account1 = Account.create! ({:name => "Account for password reset1"})
+        user_with_pseudonym({:account =>  account1, :user => @user})
+
         get 'forgot_password', :pseudonym_session => {:unique_id_forgot => @pseudonym.unique_id}
         response.should be_redirect
         assigns[:ccs].should include(@cc)
@@ -251,7 +257,7 @@ describe PseudonymsController do
 
     context "without site admin permissions" do
       before :each do
-        @account = Account.create!
+        @account = Account.create! ({:name => "without site admin permissions"})
         user_with_pseudonym(:active_all => true, :account => @account)
         LoadAccount.stubs(:default_domain_root_account).returns(@account)
         @account.add_user(@user)
@@ -259,6 +265,9 @@ describe PseudonymsController do
       end
 
       it "should ignore use the domain_root_account" do
+        #@controller = PseudonymsController.new
+        #@controller.instance_variable_set(:@domain_root_account, @account)
+        controller.request.env['canvas.domain_root_account'] = @account
         post 'create', :format => 'json', :user_id => @user.id, :pseudonym => { :unique_id => 'unique1' }
         response.should be_success
         @user.pseudonyms.size.should == 2
@@ -266,6 +275,9 @@ describe PseudonymsController do
       end
 
       it "should ignore account id in params and use the domain_root_account" do
+        #@controller = PseudonymsController.new
+        #@controller.instance_variable_set(:@domain_root_account, @account)
+        controller.request.env['canvas.domain_root_account'] = @account
         @account2 = Account.create!
         post 'create', :format => 'json', :user_id => @user.id, :pseudonym => { :account_id => @account2.id, :unique_id => 'unique1' }
         response.should be_success

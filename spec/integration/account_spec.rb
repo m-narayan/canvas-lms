@@ -27,6 +27,7 @@ describe AccountsController do
               :tech_contact_email => nil
       })
       @account = Account.create!(:name => "test")
+
     end
 
     it 'should render for non SAML configured accounts' do
@@ -38,11 +39,10 @@ describe AccountsController do
     it "should use the correct entity_id" do
       HostUrl.stubs(:default_host).returns('bob.cody.instructure.com')
       @aac = @account.account_authorization_configs.create!(:auth_type => "saml")
-      
       get "/saml_meta_data"
       response.should be_success
       doc = Nokogiri::XML(response.body)
-      doc.at_css("EntityDescriptor")['entityID'].should == "http://bob.cody.instructure.com/saml2"
+      doc.at_css("EntityDescriptor")['entityID'].should == "http://Default Account.bob.cody.instructure.com/saml2"
     end
 
   end

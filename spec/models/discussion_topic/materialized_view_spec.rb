@@ -72,7 +72,7 @@ describe DiscussionTopic::MaterializedView do
     deleted['deleted'].should == true
     deleted['user_id'].should be_nil
     deleted['message'].should be_nil
-    json[0]['replies'][1]['replies'][0]['attachment']['url'].should == "http://localhost/files/#{@attachment.id}/download?download_frd=1&verifier=#{@attachment.uuid}"
+    json[0]['replies'][1]['replies'][0]['attachment']['url'].should == "http://Default Account.localhost/files/#{@attachment.id}/download?download_frd=1&verifier=#{@attachment.uuid}"
     # verify the api_user_content functionality in a non-request context
     html_message = json[0]['replies'][1]['message']
     html = Nokogiri::HTML::DocumentFragment.parse(html_message)

@@ -22,7 +22,8 @@ describe CommunicationChannelsController do
   describe "POST 'create'" do
     it "should create a new CC unconfirmed" do
       user_model
-      user_session(@user)
+      pseudonym_with_no_cc(@user)
+      user_session(@user, @pseudonym)
       post 'create', :user_id => @user.id, :communication_channel => { :address => 'jt@instructure.com', :type => 'email'  }
       response.should be_success
       @user.communication_channels.length.should == 1
@@ -34,7 +35,8 @@ describe CommunicationChannelsController do
       u = User.create!
       cc = u.communication_channels.create!(:path => 'jt@instructure.com', :path_type => 'email') { |cc| cc.workflow_state = 'active' }
       user_model
-      user_session(@user)
+      pseudonym_with_no_cc(@user)
+      user_session(@user, @pseudonym)
       post 'create', :user_id => @user.id, :communication_channel => { :address => 'jt@instructure.com', :type => 'email' }
       response.should be_success
       @user.communication_channels.length.should == 1
@@ -45,8 +47,9 @@ describe CommunicationChannelsController do
 
     it "should resurrect retired CCs" do
       user_model
+      pseudonym_with_no_cc(@user)
+      user_session(@user, @pseudonym)
       cc = @user.communication_channels.create!(:path => 'jt@instructure.com', :path_type => 'email') { |cc| cc.workflow_state = 'retired' }
-      user_session(@user)
       post 'create', :user_id => @user.id, :communication_channel => { :address => 'jt@instructure.com', :type => 'email' }
       response.should be_success
       @user.communication_channels.length.should == 1

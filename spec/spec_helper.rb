@@ -188,7 +188,7 @@ Spec::Runner.configure do |config|
 
   def account_with_cas(opts={})
     @account = opts[:account]
-    @account ||= Account.create!
+    @account ||= Account.create! ({:name => "Account with CAS"})
     config = AccountAuthorizationConfig.new
     cas_url = opts[:cas_url] || "https://localhost/cas"
     config.auth_type = "cas"
@@ -200,7 +200,7 @@ Spec::Runner.configure do |config|
 
   def account_with_saml(opts={})
     @account = opts[:account]
-    @account ||= Account.create!
+    @account ||= Account.create! ({:name => "Account with SAML"})
     config = AccountAuthorizationConfig.new
     config.auth_type = "saml"
     config.log_in_url = opts[:saml_log_in_url] if opts[:saml_log_in_url]
@@ -1053,6 +1053,25 @@ Spec::Runner.configure do |config|
     mock.stubs(:base).returns(nil)
     mock
   end
+
+  def user_with_pseudonym_with_no_cc(opts={})
+    user(opts) unless opts[:user]
+    user = opts[:user] || @user
+    @pseudonym = pseudonym_with_no_cc(user, opts)
+    user
+  end
+
+  def pseudonym_with_no_cc(user, opts={})
+    @spec_pseudonym_count ||= 0
+    username = opts[:username] || (@spec_pseudonym_count > 0 ? "nobody+#{@spec_pseudonym_count}@example.com" : "nobody@example.com")
+    opts[:username] ||= username
+    @spec_pseudonym_count += 1 if username =~ /nobody(\+\d+)?@example.com/
+    password = opts[:password] || "asdfasdf"
+    password = nil if password == :autogenerate
+    @pseudonym = user.pseudonyms.create!(:account => opts[:account] || Account.default, :unique_id => username, :password => password, :password_confirmation => password)
+    @pseudonym
+  end
+
 end
 
 Dir[Rails.root+'vendor/plugins/*/spec_canvas/spec_helper.rb'].each do |f|
