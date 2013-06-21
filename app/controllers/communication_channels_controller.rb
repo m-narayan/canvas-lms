@@ -48,7 +48,8 @@
 #       // "unconfirmed" or "active".
 #       "workflow_state": "active"
 #     }
-class CommunicationChannelsController < ApplicationController
+class
+CommunicationChannelsController < ApplicationController
   before_filter :require_user, :only => [:create, :destroy]
   before_filter :reject_student_view_student
 

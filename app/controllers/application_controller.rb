@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # retrieves the root account for the given domain
+  #retrieves the root account for the given domain
   def load_account
     @domain_root_account = request.env['canvas.domain_root_account'] || LoadAccount.default_domain_root_account
     @files_domain = request.host_with_port != HostUrl.context_host(@domain_root_account) && HostUrl.is_file_host?(request.host_with_port)

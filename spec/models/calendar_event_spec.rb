@@ -40,7 +40,7 @@ describe CalendarEvent do
       @event = calendar_event_model(
           :start_at => @original_start_at,
           :end_at => @original_end_at,
-          :time_zone_edited => "New Delhi"
+          :time_zone_edited => "Mountain Time (US & Canada)"
       )
     end
 
@@ -73,13 +73,13 @@ describe CalendarEvent do
     it "should populate all day flag" do
       midnight = Time.at(1361862000) # 2013-02-26 00:00:00
 
-      event_1 = calendar_event_model(:time_zone_edited => "New Delhi")
+      event_1 = calendar_event_model(:time_zone_edited => "Mountain Time (US & Canada)")
       event_1.start_at = event_1.end_at = midnight
       event_1.send(:populate_all_day_flag)
       event_1.all_day?.should be_true
       event_1.all_day_date.strftime("%Y-%m-%d").should == "2013-02-26"
 
-      event_2 = calendar_event_model(:time_zone_edited => "New Delhi")
+      event_2 = calendar_event_model(:time_zone_edited => "Mountain Time (US & Canada)")
       event_2.start_at = @original_start_at
       event_2.end_at = @original_end_at
       event_2.send(:populate_all_day_flag)
@@ -88,7 +88,7 @@ describe CalendarEvent do
       event_3 = calendar_event_model(
           :start_at => midnight,
           :end_at => midnight + 1.hour,
-          :time_zone_edited => "New Delhi"
+          :time_zone_edited => "Mountain Time (US & Canada)"
       )
       event_3.start_at = midnight
       event_3.end_at = midnight + 30.minutes

@@ -218,13 +218,16 @@ describe AccountsController do
   context "special account ids" do
     before do
       account_with_admin_logged_in(:account => Account.site_admin)
-      @account = Account.create!
+      @account = Account.create! ({:name => "special account ids"})
       LoadAccount.stubs(:default_domain_root_account).returns(@account)
     end
 
     it "should allow self" do
+      @account1 = Account.create!({:name => "should allow self"})
+      @account1.add_user(@user)
+      controller.request.env['canvas.domain_root_account'] = @account1
       get 'show', :id => 'self', :format => 'html'
-      assigns[:account].should == @account
+      assigns[:account].should == @account1
     end
 
     it "should allow default" do

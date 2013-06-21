@@ -22,14 +22,14 @@ describe "security" do
 
   describe "session fixation" do
     it "should change the cookie session id after logging in" do
-    
+
       u = user_with_pseudonym :active_user => true,
                               :username => "nobody@example.com",
                               :password => "asdfasdf"
       u.save!
-    
+
       https!
-      
+
       get_via_redirect "/login"
       assert_response :success
       cookie = cookies['_normandy_session']

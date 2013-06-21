@@ -60,7 +60,7 @@ describe "communication_channels/confirm.html.erb" do
       page.css('#register.btn').first.should_not be_nil
       merge_button = page.css('#merge.btn').first
       merge_button.should_not be_nil
-      merge_button['href'].should == login_url(:host => HostUrl.default_host, :confirm => @communication_channel.confirmation_code, :enrollment => @enrollment.try(:uuid), :pseudonym_session => {:unique_id => @pseudonym.unique_id}, :expected_user_id => @pseudonym.user_id)
+      merge_button['href'].should == login_url(:host => HostUrl.context_host(assigns[:root_account]), :confirm => @communication_channel.confirmation_code, :enrollment => @enrollment.try(:uuid), :pseudonym_session => {:unique_id => @pseudonym.unique_id}, :expected_user_id => @pseudonym.user_id)
       page.css('#back.btn').first.should_not be_nil
     end
 
@@ -103,7 +103,7 @@ describe "communication_channels/confirm.html.erb" do
 
     it "should follow the mostly-simple-path for not-logged in with multiple pseudonyms" do
       user_with_pseudonym(:active_all => 1)
-      account2 = Account.create!
+      account2 = Account.create!({:name => "should follow the mostly-simple-path"})
       assigns[:merge_opportunities] = [[@user, [@user.pseudonym, @user.pseudonyms.create!(:unique_id => 'johndoe', :account => account2)]]]
       render
       page = Nokogiri::HTML('<document>' + response.body + '</document>')
@@ -114,7 +114,7 @@ describe "communication_channels/confirm.html.erb" do
       page.css('#register.btn').first.should_not be_nil
       merge_button = page.css('#merge.btn').first
       merge_button.should_not be_nil
-      merge_button['href'].should == login_url(:host => HostUrl.default_host, :confirm => @communication_channel.confirmation_code, :enrollment => @enrollment.try(:uuid), :pseudonym_session => {:unique_id => @pseudonym.unique_id}, :expected_user_id => @pseudonym.user_id)
+      merge_button['href'].should == login_url(:host => HostUrl.context_host(assigns[:root_account]), :confirm => @communication_channel.confirmation_code, :enrollment => @enrollment.try(:uuid), :pseudonym_session => {:unique_id => @pseudonym.unique_id}, :expected_user_id => @pseudonym.user_id)
       page.css('#back.btn').first.should_not be_nil
     end
 
@@ -122,7 +122,7 @@ describe "communication_channels/confirm.html.erb" do
       @user1 = user_with_pseudonym(:active_all => 1)
       @user2 = user_with_pseudonym(:active_all => 1, :username => 'janedoe@example.com')
       @user3 = user_with_pseudonym(:active_all => 1, :username => 'freddoe@example.com')
-      account2 = Account.create!
+      account2 = Account.create! ({:name => "should render for multiple merge opportunities"})
       @user3.pseudonyms.create!(:unique_id => 'johndoe', :account => account2)
       @user4 = user_with_pseudonym(:active_all => 1, :username => 'georgedoe@example.com', :account => account2)
       assigns[:merge_opportunities] = [
@@ -201,7 +201,7 @@ describe "communication_channels/confirm.html.erb" do
     end
 
     it "should render to merge with the current user that doesn't have a pseudonym in the default account" do
-      account = Account.create!
+      account = Account.create! ({:name => "should follow the mostly-simple-path"})
       user_with_pseudonym(:active_all => 1, :account => account)
       assigns[:current_user] = @user
       assigns[:merge_opportunities] = [[@user, [@pseudonym]]]
@@ -231,7 +231,7 @@ describe "communication_channels/confirm.html.erb" do
       merge_button = page.css('#merge.btn').first
       merge_button.should_not be_nil
       merge_button.text.should == 'Continue'
-      merge_button['href'].should == login_url(:host => HostUrl.default_host, :confirm => @communication_channel.confirmation_code, :pseudonym_session => {:unique_id => @pseudonym1.unique_id}, :expected_user_id => @pseudonym1.user_id)
+      merge_button['href'].should == login_url(:host => HostUrl.context_host(assigns[:root_account]), :confirm => @communication_channel.confirmation_code, :pseudonym_session => {:unique_id => @pseudonym1.unique_id}, :expected_user_id => @pseudonym1.user_id)
     end
   end
 
