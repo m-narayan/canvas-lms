@@ -17,8 +17,7 @@ require [
 
     frame     = document.createElement('iframe')
     context   = ENV.context_asset_string.split('_')
-    frame.src = "#{ENV.kandanchat.kandan_url}?#{queryString}"
-
+    frame.src = "#{ENV.kandanchat.scheme}://#{ENV.kandanchat.host}:#{ENV.kandanchat.port}#{ENV.kandanchat.path}?#{queryString}"
     frame.style.width  = '100%'
     frame.style.height = '100%'
     frame.style.border = 0
