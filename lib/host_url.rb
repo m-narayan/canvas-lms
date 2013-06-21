@@ -55,7 +55,7 @@ class HostUrl
     end
 
     def context_host(context=nil, current_host=nil)
-      default_host
+        default_host
     end
 
     def context_hosts(context=nil, current_host=nil)
