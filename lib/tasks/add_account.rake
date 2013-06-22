@@ -44,6 +44,12 @@ namespace :db do
         else
           course_export_flag = false
         end
+        option = ask("You want to Enable Private Course licence ? (y/n) > ") { |q| q.echo = true }
+        if option == "y"
+          private_course_flag = true
+        else
+          private_course_flag = false
+        end
 
         @account = Account.find_by_name(name)
         unless @account
@@ -55,6 +61,7 @@ namespace :db do
           @account.settings[:smartlms_outcomes_disable]= outcome_flag
           @account.settings[:smartlms_course_import_disable]= course_import_flag
           @account.settings[:smartlms_course_export_disable]= course_export_flag
+          @account.settings[:private_license_enable]= course_export_flag
           puts "Creating Account #{name}... "
           @account.save!
 
