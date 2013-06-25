@@ -37,10 +37,6 @@ htmlEscape, DiscussionTopic, Assignment, $, preventDefault, MissingDateDialog) -
     )
 
     @optionProperty 'permissions'
-
-    alert ENV.RUBY_COFFEE
-    alert ENV
-
     initialize: (options) ->
       @assignment = @model.get("assignment")
       @dueDateOverrideView = options.views['js-assignment-overrides']
