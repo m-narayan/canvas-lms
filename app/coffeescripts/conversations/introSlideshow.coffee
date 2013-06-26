@@ -47,13 +47,7 @@ define [
       slide.addParagraph(I18n.t('slide8.paragraph1', 'You can select one or more messages by clicking the checkbox on the right hand side.'))
       slide.addParagraph(I18n.t('slide8.paragraph2', 'Once selected, you can forward them to someone else, or delete them.'))
 
-    introSlideshow.addSlide I18n.t('titles.slide9', 'Slide 9'), (slide) ->
-      slide.addImage('/images/conversations/intro/image9.png', 'screenshot', 'http://www.youtube.com/watch?v=NWqIaEyVWZM')
-      slide.addParagraph(I18n.t('slide9.paragraph1', 'We think you\'ll find Conversations simple and easy to use.'))
-      slide.addParagraph(I18n.t('slide9.paragraph2', 'Check out this short introduction video to see Conversations in action.'))
-      slide.addParagraph(I18n.t('slide9.paragraph3', 'Your old messages have been organized into Conversations for you. So what are you waiting for? Get started!'))
-
-    introSlideshow.dom.bind 'dialogclose', ->
+     introSlideshow.dom.bind 'dialogclose', ->
       $.ajaxJSON '/conversations/watched_intro', 'POST', {}
 
     introSlideshow.start()
