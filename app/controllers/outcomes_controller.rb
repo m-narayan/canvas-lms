@@ -18,10 +18,19 @@
 
 class OutcomesController < ApplicationController
   include Api::V1::Outcome
+  before_filter :check_outcomes_enable
   before_filter :require_context, :except => [:build_outcomes]
   add_crumb(proc { t "#crumbs.outcomes", "Outcomes" }, :except => [:destroy, :build_outcomes]) { |c| c.send :named_context_url, c.instance_variable_get("@context"), :context_outcomes_path }
   before_filter { |c| c.active_tab = "outcomes" }
-  
+
+  def check_outcomes_enable
+    if @domain_root_account.settings[:smartlms_outcomes_disable]
+      if @domain_root_account
+        new_feature_wish_path
+      end
+    end
+  end
+
   def index
     if authorized_action(@context, @current_user, :read)
       return unless tab_enabled?(@context.class::TAB_OUTCOMES)
