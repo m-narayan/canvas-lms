@@ -2,21 +2,39 @@ require "bundler/capistrano"
 require "capistrano/ext/multistage"
 
 set :application,   "smart-lms"
-set :user,    "sysadmin"
+set :user,    "canvasuser"
+
+set :stages, ["testing","staging", "production"]
+set :default_stage, "testing"
 set :use_sudo, false
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
 
 set :repository,    "git@github.com:m-narayan/canvas-lms.git"
 set :scm,     :git
 set :deploy_via,  :remote_cache
-set :use_sudo,    false
+set :branch,        "deploy"
+set :deploy_to,     "/var/rails/canvas"
+set :use_sudo,      false
+set :deploy_env,    "production"
+#set :bundle_dir,    "/var/data/gems"
+set :bundle_without, []
+#set me for future
+#set :stats_server,  "stats.beaconlearning.in"
+set :data_dir, "/var/data"
 
-set :stages, ["staging", "production"]
-set :default_stage, "staging"
+set :server_base_url, "beaconlearning.in"
+
+def is_hotfix?
+  ENV.has_key?('hotfix') && ENV['hotfix'].downcase == "true"
+end
+
+disable_log_formatters;
+
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+#ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_rsa_canvas")]
 
 set :rake, "#{rake} --trace"
-
+set :bundle_without, []
 #set :bundle_without, [:development, :test]
 
 task :uname do
@@ -30,6 +48,22 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
+  namespace :web do
+    task :disable, :roles => :app do
+      on_rollback { rm "#{shared_path}/system/maintenance.html" }
+
+      run "cp /usr/local/canvas/maintenance.html #{shared_path}/system/maintenance.html && chmod 0644 #{shared_path}/system/maintenance.html"
+    end
+    
+    task :enable, :roles => :app do
+      run "rm #{shared_path}/system/maintenance.html"
+    end
+  end   
+end
+
+# Canavs-specific task after a deploy
+namespace :canvas do
+
   desc "Make sure local git is in sync with remote."
   task :check_revision, roles: :web do
     unless `git rev-parse HEAD` == `git rev-parse origin/#{branch}`
@@ -37,29 +71,23 @@ namespace :deploy do
       puts "Run `git push` to sync changes."
       exit
     end
-  end  
-end
-
-# Canavs-specific task after a deploy
-namespace :canvas do
-  
+  end
+ 
   # LOCAL COMMANDS
   desc "Update the deploy branch of the local repo"
   task :update do
-    check_user
     stashResponse = run_locally "git stash"
     puts stashResponse
     puts run_locally "git checkout vendor"
     puts run_locally "git fetch"
-    puts run_locally "git merge upstream/stable"
-    puts run_locally "git checkout master"
+    #puts run_locally "git merge upstream/stable"
+    puts run_locally "git checkout develop"
     puts run_locally "git stash pop" unless stashResponse == "No local changes to save\n"
     puts "\x1b[42m\x1b[1;37m Update successful. You should now run 'git merge vendor' then 'cap canvas:update_gems' \x1b[0m"
   end
   
   desc "Install new gems from bundle and push updates"
   task :update_gems do
-    check_user
     stashResponse = run_locally "git stash"
     puts stashResponse
     puts run_locally "bundle install"  #--path path=~/gems"
@@ -72,9 +100,15 @@ namespace :canvas do
 
   # REMOTE COMMANDS
 
+  desc "Create symlink for files folder to mount point"
+  task :symlink_canvasfiles do
+      target = "mnt/data"
+      run "mkdir -p #{latest_release}/#{target} && ln -s #{data_dir}/canvasfiles #{latest_release}/#{target}/canvasfiles"
+  end 
+
   # On every deploy
   desc "Create symlink for files folder to mount point"
-  task :files_symlink do
+  task :copy_config do
     folder = 'tmp/files'
     run "ln -nfs #{smart_lms_data_files} #{latest_release}/#{folder}"
     run "ln -nfs #{shared_path}/config/amazon_s3.yml #{release_path}/config/amazon_s3.yml"
@@ -90,20 +124,16 @@ namespace :canvas do
     run "ln -nfs #{shared_path}/config/security.yml #{release_path}/config/security.yml"   
   end
 
+  desc "Clone QTIMigrationTool"
+  task :clone_qtimigrationtool do
+    run "cd #{latest_release}/vendor && git clone https://github.com/instructure/QTIMigrationTool.git QTIMigrationTool && chmod +x QTIMigrationTool/migrate.py"
+  end
+
   desc "Compile static assets"
   task :compile_assets, :on_error => :continue do
     # On remote: bundle exec rake canvas:compile_assets
-    run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets --quiet"
+    run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets[false] --quiet"
     run "cd #{latest_release} && chown -R #{user}:#{user} ."
-  end
-
-  # Updates only
-  desc "Post-update commands"
-  task :update_remote do
-    deploy.migrate
-    load_notifications
-    restart_jobs
-    puts "\x1b[42m\x1b[1;37m Deploy complete!  \x1b[0m"
   end
 
   desc "Load new notification types"
@@ -117,23 +147,54 @@ namespace :canvas do
     # On remote: /etc/init.d/canvas_init restart
     run "/etc/init.d/canvas_init restart"
   end
-  
-  # UTILITY TASKS
-  desc "Make sure that only the deploy user can run certain tasks"
-  task :check_user do
-    transaction do 
-      do_check_user
-    end
+
+  desc "Tasks that run before create_symlink"
+  task :before_create_symlink do
+    clone_qtimigrationtool
+    symlink_canvasfiles
+    compile_assets
   end
 
-  desc "Make sure that only the deploy user can run certain tasks"
-  task :do_check_user do
-    on_rollback do
-      puts "\x1b[41m\x1b[1;37m Please run this command as '#{user}' user \x1b[0m"
-    end
-    run_locally "[ `whoami` == #{user} ]"
+  desc "Tasks that run after create_symlink"
+  task :after_create_symlink do
+    copy_config
+    deploy.migrate unless is_hotfix?
+    load_notifications unless is_hotfix?
   end
+
+  desc "Tasks that run after the deploy completes"
+  task :after_deploy do
+    restart_jobs
+    puts "\x1b[42m\x1b[1;37m Deploy complete!  \x1b[0m"
+  end
+
 end 
+
+before(:deploy, "canvas:check_revision")
+before(:deploy, "deploy:web:disable") unless is_hotfix?
+before("deploy:create_symlink", "canvas:before_create_symlink")
+after("deploy:create_symlink", "canvas:after_create_symlink")
+after(:deploy, "canvas:after_deploy")
+after(:deploy, "deploy:cleanup")
+after(:deploy, "deploy:web:enable") unless is_hotfix?
+
+#before(:deploy, "canvas:check_user")
+  # # UTILITY TASKS
+  # desc "Make sure that only the deploy user can run certain tasks"
+  # task :check_user do
+  #   transaction do 
+  #     do_check_user
+  #   end
+  # end
+
+  # desc "Make sure that only the deploy user can run certain tasks"
+  # task :do_check_user do
+  #   on_rollback do
+  #     puts "\x1b[41m\x1b[1;37m Please run this command as '#{user}' user \x1b[0m"
+  #   end
+  #   run_locally "[ `whoami` == #{user} ]"
+  # end
+
 
 # Monit tasks
 # namespace :monit do
@@ -149,11 +210,8 @@ end
 # before 'deploy:restart', 'monit:stop'
 # after 'deploy:restart', 'monit:start'
 
-#before(:deploy, "canvas:check_user")
-before "deploy", "deploy:check_revision"
-after(:deploy, "deploy:cleanup")
-before("deploy:restart", "canvas:files_symlink")
-before("deploy:restart", "canvas:compile_assets")
+
+
 
 # amazon_s3.yml
 # cache_store.yml
