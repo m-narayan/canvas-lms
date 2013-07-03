@@ -46,4 +46,5 @@ tags
 /public/plugins/
 /spec/coffeescripts/plugins/
 /vendor/plugins/lms_customization
+/vendor/plugins/canvas-mt
 /.idea
