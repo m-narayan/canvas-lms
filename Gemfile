@@ -144,11 +144,11 @@ group :development do
   # The ruby debug gems conflict with the IDE-based debugger gem.
   # Set this option in your dev environment to disable.
   unless ENV['DISABLE_RUBY_DEBUGGING']
-   if ONE_NINE
-     gem 'debugger',     '1.1.3'
-   else
-     gem 'ruby-debug',   '0.10.4'
-   end
+   # if ONE_NINE
+   #   gem 'debugger',     '1.1.3'
+   # else
+   #   gem 'ruby-debug',   '0.10.4'
+   # end
   end
 end
 
