@@ -1163,5 +1163,10 @@ ActionController::Routing::Routes.draw do |map|
   #   collection.resources :collection_items, :only => [:show, :index]
   # end
 
-  # See how all your routes lay out with "rake routes" 
+  # See how all your routes lay out with "rake routes"
+  map.resources :demo
+#  map.demo "demo", :controller => "demo", :action => "new"
+
+  #map.newdemo '/demo/', :controller => :demo, :action => :new, :conditions => { :method => :get }
+  #map.createdemo '/demo/', :controller => :demo, :action => :create, :conditions => { :method => :post }
 end
