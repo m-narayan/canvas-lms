@@ -5,4 +5,8 @@ class FeatureWishController < ApplicationController
                                       :clicked_at => Time.now)
     @feature_wish.save!
   end
+
+  def update
+    @feature_wish = FeatureWish.find
+  end
 end
