@@ -26,8 +26,12 @@ class OutcomesController < ApplicationController
   def check_outcomes_enable
     if @domain_root_account.settings[:smartlms_outcomes_disable]
       if @domain_root_account
-        new_feature_wish_path
+        @feature = FeatureWish.create(:account_name => @domain_root_account.name,:user_name => @current_user.name,
+                           :unique_id => @current_user.pseudonym.unique_id,:feature_clicked => params[:controller],
+                           :clicked_at => Time.now)
+        @feature.save!
       end
+
     end
   end
 

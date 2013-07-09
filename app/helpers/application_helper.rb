@@ -431,7 +431,7 @@ module ApplicationHelper
           tab[:href] ="locked_by_admin" if (tab[:label] == "Grades" and !!@domain_root_account.settings[:smartlms_grade_disable]) || (tab[:label] == "Outcomes" and !!@domain_root_account.settings[:smartlms_outcomes_disable])
           tab[:href] ="locked_by_admin" if (tab[:label] == "Grading Schemes" and !!@domain_root_account.settings[:smartlms_grade_disable])
            if tab[:href] == "locked_by_admin"
-             html << "<li class='section #{"section-tab-hidden" if hide }'>" +  image_tag("lock.png",:style=>"float:left;margin-top: 5px;")+ link_to(tab[:label], path, :class => class_name) + "</li>"
+             html << "<li class='user_link'>" +  image_tag("lock.png",:style=>"float:left;margin-top: 5px;")+ link_to(tab[:label], path, :class => class_name) + "</li>"
            else
              html << "<li class='section #{"section-tab-hidden" if hide }'>" + link_to(tab[:label], path, :class => class_name) + "</li>"
           end
