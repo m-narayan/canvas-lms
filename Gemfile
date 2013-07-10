@@ -100,18 +100,18 @@ group :assets do
   gem 'dress_code', '1.0.2'
 end
 
-group :mysql do
-  gem 'mysql',        '2.8.1'
-  gem 'mysql2',       '0.2.18'
-end
+# group :mysql do
+#   gem 'mysql',        '2.8.1'
+#   gem 'mysql2',       '0.2.18'
+# end
 
 group :postgres do
   gem 'pg',           '0.15.0'
 end
 
-group :sqlite do
-  gem 'sqlite3-ruby', '1.3.2'
-end
+# group :sqlite do
+#   gem 'sqlite3-ruby', '1.3.2'
+# end
 
 group :test do
   gem 'bluecloth',    '2.0.10' # for generating api docs
@@ -143,13 +143,13 @@ group :development do
   # Option to DISABLE_RUBY_DEBUGGING is helpful IDE-based debugging.
   # The ruby debug gems conflict with the IDE-based debugger gem.
   # Set this option in your dev environment to disable.
-  unless ENV['DISABLE_RUBY_DEBUGGING']
-    if ONE_NINE
-      gem 'debugger',     '1.1.3'
-    else
-      gem 'ruby-debug',   '0.10.4'
-    end
-  end
+  # unless ENV['DISABLE_RUBY_DEBUGGING']
+  #   if ONE_NINE
+  #     gem 'debugger',     '1.1.3'
+  #   else
+  #     gem 'ruby-debug',   '0.10.4'
+  #   end
+  # end
 end
 
 group :development, :test do
