@@ -48,7 +48,8 @@
 #       // "unconfirmed" or "active".
 #       "workflow_state": "active"
 #     }
-class CommunicationChannelsController < ApplicationController
+class
+CommunicationChannelsController < ApplicationController
   before_filter :require_user, :only => [:create, :destroy]
   before_filter :reject_student_view_student
 
@@ -124,7 +125,7 @@ class CommunicationChannelsController < ApplicationController
       @cc.errors.add(:path, 'unique!')
       return render :json => @cc.errors.as_json, :status => :bad_request
     end
-
+    @cc.pseudonym = @current_pseudonym
     @cc.user = @user
     @cc.workflow_state = skip_confirmation ? 'active' : 'unconfirmed'
     @cc.build_pseudonym_on_confirm = params[:build_pseudonym].to_i > 0

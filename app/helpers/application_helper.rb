@@ -400,7 +400,7 @@ module ApplicationHelper
           if @context.respond_to?(:tabs_available) && !(tabs = @context.tabs_available(@current_user, :session => session, :root_account => @domain_root_account)).empty?
             tabs.select do |tab|
               if (tab[:id] == @context.class::TAB_CHAT rescue false)
-                tab[:href] && tab[:label] && feature_enabled?(:tinychat)
+                tab[:href] && tab[:label] && feature_enabled?(:kandan_chat)
               elsif (tab[:id] == @context.class::TAB_COLLABORATIONS rescue false)
                 tab[:href] && tab[:label] && Collaboration.any_collaborations_configured?
               elsif (tab[:id] == @context.class::TAB_CONFERENCES rescue false)
@@ -424,10 +424,17 @@ module ApplicationHelper
           else
             path = send(tab[:href], @context)
           end
-          hide = tab[:hidden] || tab[:hidden_unused]
+          hide = tab[:hidden] || tab[:hidden_unused] 
           class_name = tab[:css_class].to_css_class
           class_name += ' active' if @active_tab == tab[:css_class]
-          html << "<li class='section #{"section-tab-hidden" if hide }'>" + link_to(tab[:label], path, :class => class_name) + "</li>" if tab[:href]
+          tab[:href] ="locked_by_admin" if (tab[:label] == "Sub-Accounts" and !!@domain_root_account.settings[:smartlms_sub_account_disable])
+          tab[:href] ="locked_by_admin" if (tab[:label] == "Grades" and !!@domain_root_account.settings[:smartlms_grade_disable]) || (tab[:label] == "Outcomes" and !!@domain_root_account.settings[:smartlms_outcomes_disable])
+          tab[:href] ="locked_by_admin" if (tab[:label] == "Grading Schemes" and !!@domain_root_account.settings[:smartlms_grade_disable])
+           if tab[:href] == "locked_by_admin"
+             html << "<li class='section #{"section-tab-hidden" if hide }'>" +  image_tag("lock.png",:style=>"float:left;margin-top: 5px;")+ link_to(tab[:label], path, :class => class_name) + "</li>"
+           else
+             html << "<li class='section #{"section-tab-hidden" if hide }'>" + link_to(tab[:label], path, :class => class_name) + "</li>"
+          end
         end
         html << "</ul></nav>"
         html.join("")

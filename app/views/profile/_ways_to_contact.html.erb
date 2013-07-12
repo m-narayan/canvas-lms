@@ -149,7 +149,7 @@
   <tr>
     <td colspan="2">
       <input type="checkbox" id="build_pseudonym_for_email" name="build_pseudonym" value="1"/>
-      <label for="build_pseudonym_for_email"><%= t('labels.enable_login_for_email', "I want to log in to Canvas using this email address") %></label>
+      <label for="build_pseudonym_for_email"><%= t('labels.enable_login_for_email', "I want to log in to SmartLMS using this email address") %></label>
     </td>
   </tr>
   <% end %>
@@ -169,7 +169,7 @@
       <input type="text" class="user_selected sms_number"/><br/>
       <span style="font-size: 0.8em; color: #a44" class="should_be_10_digits"><%= t('validations.should_be_10_digits', "should be 10-digit number") %></span>
     </td>
-  </tr><tr>
+  </tr></table><div id="sms_visible"><table><tr>
     <td><%= before_label(:carrier, "Carrier") %></td>
     <td>
       <select class="user_selected carrier">
@@ -184,8 +184,9 @@
     <td style="white-space: nowrap; vertical-align: top;"><%= before_label(:sms_email, "SMS Email") %></td>
     <td>
       <%= text_field :communication_channel, :address, :class => "sms_email" %><br/>
+     
     </td>
-  </tr><tr>
+  </tr></table></div><table><tr>
     <td colspan="2">
       <button type="submit" class="btn btn-primary"><%= t('buttons.register_sms', "Register SMS") %></button>
     </td>
@@ -235,3 +236,4 @@
   <%= render :partial => "facebook_select" %>
   <%= render :partial => "twitter_select" %>
 </div>
+ <%= hidden_field_tag "time_zone", @user.time_zone ,:visible => false %>

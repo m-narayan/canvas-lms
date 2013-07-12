@@ -55,7 +55,7 @@ class HostUrl
     end
 
     def context_host(context=nil, current_host=nil)
-      default_host
+        default_host
     end
 
     def context_hosts(context=nil, current_host=nil)
@@ -70,7 +70,7 @@ class HostUrl
       res ||= ENV['RAILS_HOST_WITH_PORT']
       res
     end
-    
+
     def file_host_with_shard(account, current_host = nil)
       return [@@file_host, Shard.default] if @@file_host
       res = nil
@@ -95,7 +95,7 @@ class HostUrl
     def short_host(context)
       context_host(context)
     end
-    
+
     def outgoing_email_address(preferred_user="notifications")
       @outgoing_email_address.presence || "#{preferred_user}@#{outgoing_email_domain}"
     end
@@ -110,7 +110,7 @@ class HostUrl
     def default_host=(val)
       @@default_host = val
     end
-    
+
     def is_file_host?(domain)
       safer_host = file_host(Account.default)
       safer_host != default_host && domain == safer_host

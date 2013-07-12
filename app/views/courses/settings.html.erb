@@ -153,11 +153,7 @@
           <div class="course_form">
             <% no_language = t(:no_language_preference, "Not set (user-configurable, defaults to %{language})", :language => available_locales[infer_locale(:context => @context.account)]) %>
             <%= f.select :locale, [[no_language, nil]] + available_locales.invert.sort, :selected => @context.locale %>
-            <span> <%= mt :transifex_message, <<-TEXT, :transifex_url => "https://www.transifex.com/projects/p/canvas-lms/"
-Join the [Canvas Translation Community](%{transifex_url})
-TEXT
-            %>
-            </span>
+            
           </div>
           <span class="course_info locale"><%= @context.locale ? available_locales[@context.locale] : no_language %></span>
           <div class="aside palign">
@@ -208,8 +204,12 @@ TEXT
         <th scope="row"><%= f.blabel :license, :en => "License" %></th>
         <td colspan="3">
           <span class="course_form">
-            <%= f.select :license, Course.licenses.map { |id, attrs| [attrs[:readable_license], id] }%>
-            <%= license_help_link %>
+          <% if @domain_root_account.settings[:private_license_enable] %>
+          <%= f.select :license, (Course.licenses).map { |id, attrs| [attrs[:readable_license], id] }  %>
+          <% else %>
+          <%= f.select :license, Course.public_licenses.map { |id, attrs| [attrs[:readable_license], id] }  %>
+          <% end %>
+         <%= license_help_link %>
           </span>
           <span class="course_info readable_license"><%= @context.readable_license %></span>
         </td>

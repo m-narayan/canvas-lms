@@ -33,6 +33,8 @@
 /RAILS3
 /spec/javascripts/
 /tmp/
+.rvmrc
+tags
 /vendor/plugins/rails_upgrade
 
 # generated plugin stuff
@@ -43,4 +45,6 @@
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
-/.idea/*.*
+/vendor/plugins/lms_customization
+/vendor/plugins/canvas-mt
+/.idea

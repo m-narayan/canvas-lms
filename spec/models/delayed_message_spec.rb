@@ -167,6 +167,7 @@ describe DelayedMessage do
       @mountain = ActiveSupport::TimeZone.us_zones.find{ |zone| zone.name == 'Mountain Time (US & Canada)' }
       @central = ActiveSupport::TimeZone.us_zones.find{ |zone| zone.name == 'Central Time (US & Canada)' }
       @eastern = ActiveSupport::TimeZone.us_zones.find{ |zone| zone.name == 'Eastern Time (US & Canada)' }
+      @delhi = ActiveSupport::TimeZone.all.find{ |zone| zone.name == 'New Delhi' }
 
       # set up user in central time (different than the specific time zones
       # referenced in set_send_at)
@@ -204,10 +205,10 @@ describe DelayedMessage do
       @user.time_zone = nil
       @user.save
 
-      force_now @mountain.now.change(:hour => 12)
+      force_now @delhi.now.change(:hour => 12)
       @dm.frequency = 'daily'
       @dm.send(:set_send_at)
-      @dm.send_at.should == @mountain.now.change(:hour => 18)
+      @dm.send_at.should == @delhi.now.change(:hour => 18)
     end
 
     it "should set to 6pm the next day for non-weekly messages created after 6pm" do

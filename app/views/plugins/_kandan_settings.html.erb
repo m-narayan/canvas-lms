@@ -1,0 +1,23 @@
+<% fields_for :settings, OpenObject.new(settings) do |f| %>
+  <table style="width: 500px;" class="formtable">
+    
+    <tr>
+      <td><%= f.blabel :api_key, :en => "Public Key" %></td>
+      <td>
+        <%= f.text_field :api_key %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.blabel :secret_key, :en => "Secret Key" %></td>
+      <td>
+        <%= f.text_field :secret_key %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.blabel :kandan_url, :en => "Kandan URL" %></td>
+      <td>
+        <%= f.text_field :kandan_url %>
+      </td>
+    </tr>
+  </table>
+<% end %>

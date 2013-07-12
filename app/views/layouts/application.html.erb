@@ -222,5 +222,7 @@
 <% cache('global_dialogs_render') do %>
   <%= render :partial => "shared/global_dialogs" %>
 <% end %>
+<%= debug(params) %>
 <div id='aria_alerts' aria-live="assertive" class='hide-text affix'></div>
+<%= debug(params) if Rails.env.development? %>
 <%= render :partial => 'layouts/foot', :locals => { :include_common_bundle => true } %>

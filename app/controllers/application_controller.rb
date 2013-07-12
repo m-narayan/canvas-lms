@@ -79,14 +79,20 @@ class ApplicationController < ActionController::Base
     # set some defaults
     unless @js_env
       @js_env = {
-        :current_user_id => @current_user.try(:id),
-        :current_user => user_display_json(@current_user, :profile),
-        :current_user_roles => @current_user.try(:roles),
-        :context_asset_string => @context.try(:asset_string),
-        :AUTHENTICITY_TOKEN => form_authenticity_token,
-        :files_domain => HostUrl.file_host(@domain_root_account || Account.default, request.host_with_port)
+          :current_user_id => @current_user.try(:id),
+          :current_user => user_display_json(@current_user, :profile),
+          :current_user_roles => @current_user.try(:roles),
+          :context_asset_string => @context.try(:asset_string),
+          :AUTHENTICITY_TOKEN => form_authenticity_token,
+          :files_domain => HostUrl.file_host(@domain_root_account || Account.default, request.host_with_port)
       }
       @js_env[:IS_LARGE_ROSTER] = true if @context.respond_to?(:large_roster?) && @context.large_roster?
+      #add this line for enable/disable gradable in discussion_topics/new
+      if @domain_root_account
+        @js_env[:GRADE_ACTIVE] = @domain_root_account.settings[:smartlms_grade_disable]
+      else
+        @js_env[:GRADE_ACTIVE] =false
+      end
     end
 
     hash.each do |k,v|
@@ -146,7 +152,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # retrieves the root account for the given domain
+  #retrieves the root account for the given domain
   def load_account
     @domain_root_account = request.env['canvas.domain_root_account'] || LoadAccount.default_domain_root_account
     @files_domain = request.host_with_port != HostUrl.context_host(@domain_root_account) && HostUrl.is_file_host?(request.host_with_port)
@@ -1153,9 +1159,9 @@ class ApplicationController < ActionController::Base
       elsif feature == :etherpad
         !!EtherpadCollaboration.config
       elsif feature == :kaltura
-        !!Kaltura::ClientV3.config
+        !!Kaltura::ClientV3.config and !!!@domain_root_account.settings[:smartlms_kaltura_disable]
       elsif feature == :web_conferences
-        !!WebConference.config
+        !!WebConference.config and !!!@domain_root_account.settings[:smartlms_bbb_disable]
       elsif feature == :tinychat
         !!Tinychat.config
       elsif feature == :scribd
@@ -1164,6 +1170,8 @@ class ApplicationController < ActionController::Base
         !!Canvas::Crocodoc.config
       elsif feature == :lockdown_browser
         Canvas::Plugin.all_for_tag(:lockdown_browser).any? { |p| p.settings[:enabled] }
+      elsif feature == :kandan_chat
+        !!Kandanchat.config
       else
         false
       end

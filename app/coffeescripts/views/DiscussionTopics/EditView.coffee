@@ -37,7 +37,6 @@ htmlEscape, DiscussionTopic, Assignment, $, preventDefault, MissingDateDialog) -
     )
 
     @optionProperty 'permissions'
-
     initialize: (options) ->
       @assignment = @model.get("assignment")
       @dueDateOverrideView = options.views['js-assignment-overrides']
@@ -55,6 +54,7 @@ htmlEscape, DiscussionTopic, Assignment, $, preventDefault, MissingDateDialog) -
         canAttach: @permissions.CAN_ATTACH
         canModerate: @permissions.CAN_MODERATE
         isLargeRoster: ENV?.IS_LARGE_ROSTER || false
+        isGRADE_ACTIVE: ENV.GRADE_ACTIVE
       json.assignment = json.assignment.toView()
       json
 

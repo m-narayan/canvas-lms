@@ -416,7 +416,7 @@ describe UsersController do
       it "should notify the user if a merge opportunity arises" do
         notification = Notification.create(:name => 'Merge Email Communication Channel', :category => 'Registration')
 
-        account = Account.create!
+        account = Account.create!({:name => 'Merge Email Communication Channel'})
         user_with_pseudonym(:account => account)
         account.add_user(@user)
         user_session(@user, @pseudonym)
