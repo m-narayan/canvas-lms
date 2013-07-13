@@ -38,13 +38,22 @@ class DemoController < ApplicationController
             @pseudonym_session = @account.pseudonym_sessions.new(login)
             @pseudonym_session.remote_ip = request.remote_ip
             @pseudonym_session.save
+
+
+            m=Message.new
+            m.subject="Your SmartLMS demo account information"
+            m.to = params[:demo][:email]
+            body = "Hi #{params[:demo][:name]}<br>"
+            body=body+"Your username is #{params[:demo][:email]}<br>"
+            body=body+"Your password is #{password}<br>"
+            body=body+"<a href=\"http://#{params[:demo][:organization]}.#{current_domain}\">Please visit your demo here</a><br>"
+            m.html_body=body
+            Mailer.deliver_message(m)
+
+
             format.html{ redirect_to dashboard_url}
 
-            cc=CommunicationChannel.new
-            m=cc.messages.new
-            m.to = "params[:demo][:email]"
-            m.body = "hello"
-            Mailer.deliver_message(m) rescue nil
+
           else
             format.html {render :action => "new"}
           end
