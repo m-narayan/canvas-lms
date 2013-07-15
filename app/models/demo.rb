@@ -8,5 +8,4 @@ class Demo < ActiveRecord::Base
                       :message => "Invalid Email"
   validates_length_of :organization, :minimum => 3
   validates_length_of :organization,:maximum => 20
-
 end
