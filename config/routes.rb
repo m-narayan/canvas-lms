@@ -1169,4 +1169,5 @@ ActionController::Routing::Routes.draw do |map|
 
   #map.newdemo '/demo/', :controller => :demo, :action => :new, :conditions => { :method => :get }
   #map.createdemo '/demo/', :controller => :demo, :action => :create, :conditions => { :method => :post }
+  map.resources :feature_wishs
 end
