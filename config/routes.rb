@@ -1170,4 +1170,6 @@ ActionController::Routing::Routes.draw do |map|
   #map.newdemo '/demo/', :controller => :demo, :action => :new, :conditions => { :method => :get }
   #map.createdemo '/demo/', :controller => :demo, :action => :create, :conditions => { :method => :post }
   map.resources :feature_wishs
+  map.demo_expired '/demo_expired', :controller => 'demo', :action => 'demo_expired'
+  map.demo_expired_email '/demo_expired_email', :controller => 'demo', :action => 'demo_expired_email',:conditions => { :method => :post }
 end
