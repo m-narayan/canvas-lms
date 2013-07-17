@@ -14,6 +14,6 @@ class FeatureWishsController < ApplicationController
   def update
     @feature_wish = FeatureWish.find(params[:id])
     @feature_wish.update_attributes(params[:feature_wish])
-    redirect_to root_path
+    redirect_to :back
   end
 end
