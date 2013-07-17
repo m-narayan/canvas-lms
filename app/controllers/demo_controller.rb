@@ -1,5 +1,22 @@
 class DemoController < ApplicationController
 
+  def demo_expired_email
+    dm=DemoMessage.new
+    dm.organization=@domain_root_account.name
+    dm.message=params[:message]
+    dm.save
+    m=Message.new
+    m.subject="#{@domain_root_account.name} demo has expired"
+    #m.to = Account.site_admin.pseudonyms.first.unique_id
+    m.to = DemoConfig.find(1).email
+    body = params[:message]
+    m.html_body=body
+    Mailer.deliver_message(m)
+    flash[:notice] = "We will be in touch with you very soon!!!"
+    respond_to do |format|
+      format.html {render :action => DemoConfig.find(1).redirect_url }
+    end
+  end
   def new
     return redirect_to(root_url) if @current_user
     @demo=Demo.new
@@ -24,7 +41,7 @@ class DemoController < ApplicationController
             @account.name = organization
             @account.settings[:demo_account]= true
             @account.save
-            demo_settings=DemoSettings.new
+            demo_settings=DemoAccountSettings.new
             demo_settings.account_id=@account.id
             demo_settings.remarks="Initial Trial"
             demo_settings.start_at=Time.now

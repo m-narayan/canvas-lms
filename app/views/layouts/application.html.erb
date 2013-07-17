@@ -225,7 +225,5 @@
 <%= debug(params) %>
 <div id='aria_alerts' aria-live="assertive" class='hide-text affix'></div>
 <%= debug(params) if Rails.env.development? %>
-<% if !!@domain_root_account.settings[:demo_account]  %>
 <%= render :partial => 'accounts/demo_bottom', :locals => { :include_common_bundle => true } %>
-<% end  %>
 <%= render :partial => 'layouts/foot', :locals => { :include_common_bundle => true } %>
