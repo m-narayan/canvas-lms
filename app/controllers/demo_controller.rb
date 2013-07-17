@@ -73,7 +73,7 @@ class DemoController < ApplicationController
             body=body+"<a href=\"http://#{organization}.#{current_domain}\">Please visit your demo here</a><br>"
             m.html_body=body
             Mailer.deliver_message(m)
-            format.html{ redirect_to dashboard_url}
+            format.html{ redirect_to request.url.sub(current_subdomain, organization)}
           else
             format.html {render :action => "new"}
           end
