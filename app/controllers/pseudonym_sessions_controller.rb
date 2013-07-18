@@ -180,9 +180,17 @@ class PseudonymSessionsController < ApplicationController
 
     # If the user is registered and logged in, redirect them to their dashboard page
     if found
-      # Call for some cleanups that should be run when a user logs in
-      @user = @pseudonym.login_assertions_for_user
-      successful_login(@user, @pseudonym)
+      if !!@domain_root_account.settings[:demo_account] && ((DemoAccountSettings.where(account_id: @domain_root_account.id).maximum(:end_at)-Time.now)/1.day).ceil <=0
+        reset_session_for_login
+        respond_to do |format|
+          format.html{ redirect_to demo_expired_url}
+        end
+        return
+      else
+        # Call for some cleanups that should be run when a user logs in
+        @user = @pseudonym.login_assertions_for_user
+        successful_login(@user, @pseudonym)
+      end
     # Otherwise re-render the login page to show the error
     else
       unsuccessful_login t('errors.invalid_credentials', "Incorrect username and/or password")
