@@ -13,7 +13,12 @@ class FeatureWishsController < ApplicationController
 
   def update
     @feature_wish = FeatureWish.find(params[:id])
-    @feature_wish.update_attributes(params[:feature_wish])
-    redirect_to :back
+   if @feature_wish.update_attributes(params[:feature_wish])
+     flash[:notice] = "Your request was sent to admin,The administrator will contact you soon"
+     redirect_to :back
+   else
+     flash[:error] = "The last request didn't work "
+   end
+    
   end
 end
