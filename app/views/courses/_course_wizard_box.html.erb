@@ -34,7 +34,7 @@ $(document).ready(function() {
     <h3><%= t('headings.next_steps', %{Next Steps}) %></h3>
     <ul class="wizard_options_list">
       <% if can_do @context, @current_user, :manage_content %>
-          <% if !@domain_root_account.settings[:smartlms_course_import_disable]  %>
+          <% if !@domain_root_account.smartlms_course_import_disable?  %>
         <li class="option download_step <%= 'completed' unless @context.attachments.active.first.nil? %>">
           <a href="<%= context_url(@context, :context_imports_url) %>" class="header icon-download"><%= t('links.import', %{Import Content}) %></a>
           <div class="details" style="display: none;">
@@ -51,7 +51,7 @@ $(document).ready(function() {
           </div>
         </li>
       <% end %>
-      <% if can_do @context, @current_user, :manage_students %>
+      <% if can_do @context, @current_user, :manage_students && !@domain_root_account.smartlms_add_user_disable?%>
         <li class="option students_step <%=  'completed' unless @context.students.first.nil? %>">
           <a href="<%= context_url(@context, :context_details_url, :wizard => 1) %>#add_students" class="header icon-group-new"><%= t('links.students', %{Add Students to the Course}) %></a>
           <div class="details" style="display: none;">
@@ -91,7 +91,7 @@ $(document).ready(function() {
           </div>
         </li>
       <% end %>
-      <% if can_do @context, @current_user, :manage_admin_users %>
+      <% if can_do @context, @current_user, :manage_admin_users && !@domain_root_account.smartlms_add_user_disable?%>
         <li class="option ta_step <%= 'completed' unless @context.tas.empty? %>">
           <a href="<%= context_url(@context, :context_details_url, :wizard => 1) %>#add_tas" class="header icon-user-add"><%= t('links.tas', %{Add TAs to the Course}) %></a>
           <div class="details" style="display: none;">
