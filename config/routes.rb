@@ -1164,12 +1164,8 @@ ActionController::Routing::Routes.draw do |map|
   # end
 
   # See how all your routes lay out with "rake routes"
-  map.resources :demo
-#  map.demo "demo", :controller => "demo", :action => "new"
-
-  #map.newdemo '/demo/', :controller => :demo, :action => :new, :conditions => { :method => :get }
-  #map.createdemo '/demo/', :controller => :demo, :action => :create, :conditions => { :method => :post }
   map.resources :feature_wishs
-  map.demo_expired '/demo_expired', :controller => 'demo', :action => 'demo_expired'
-  map.demo_expired_email '/demo_expired_email', :controller => 'demo', :action => 'demo_expired_email',:conditions => { :method => :post }
+  map.resources :subscription
+  map.subscription_expired '/subscription_expired', :controller => 'subscription', :action => 'subscription_expired'
+  map.subscription_expired_email '/subscription_expired_email', :controller => 'subscription', :action => 'subscription_expired_email',:conditions => { :method => :post }
 end

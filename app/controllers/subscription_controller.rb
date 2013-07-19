@@ -1,65 +1,71 @@
-class DemoController < ApplicationController
+class SubscriptionController < ApplicationController
 
-  def demo_expired_email
-    dm=DemoMessage.new
-    dm.organization=@domain_root_account.name
-    dm.message=params[:message]
-    dm.save
+  def subscription_expired
+    @subscription_id=Subscription.find_by_account_id(@domain_root_account.id).id
+  end
+
+  def subscription_expired_email
+    sm=SubscriptionMessage.new
+    sm.subscription_id=params[:subscription_id]
+    @subscription_id=params[:subscription_id]
+    sm.message=params[:message]
+    sm.save
     m=Message.new
     m.subject="#{@domain_root_account.name} demo has expired"
     #m.to = Account.site_admin.pseudonyms.first.unique_id
-    m.to = DemoConfig.find(1).email
+    m.to = SubscriptionConfig.find(1).email
     body = params[:message]
     m.html_body=body
     Mailer.deliver_message(m)
     flash[:notice] = "We will be in touch with you very soon!!!"
     respond_to do |format|
-      format.html {render :action => DemoConfig.find(1).redirect_url }
+      format.html {render :action => SubscriptionConfig.find(1).redirect_url }
     end
   end
 
   def new
     return redirect_to(root_url) if @current_user
-    @demo=Demo.new
+    @subscription=Subscription.new
   end
 
   def create
-    @demo = Demo.new(params[:demo])
-    organization=params[:demo][:organization].downcase.gsub(' ','')
-    @demo.organization=organization
+    @subscription = Subscription.new(params[:subscription])
+    @subscription.subdomain=params[:subscription][:subdomain].downcase.gsub(' ','')
     recap = Canvas::Plugin.find('registration_form_recaptcha')
     captcha_valid=true
     if recap && !recap.settings[:public_key].blank? && !recap.settings[:private_key].blank?
       captcha_valid=verify_recaptcha(:model => @demo, :private_key => recap.settings[:private_key])
     end
     if captcha_valid
-      @account = Account.find_by_name(organization)
+      @account = Account.find_by_name(@subscription.subdomain)
       unless @account
-        if @demo.save
+        if @subscription.save
           password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @account = Account.new
-          @account.name = organization
+          @account.name = @subscription.subdomain
           @account.settings[:demo_account]= true
           @account.save
-          save_demo_account_settings
-          pseudonym = @account.pseudonyms.active.custom_find_by_unique_id(params[:demo][:email])
-          user = pseudonym ? pseudonym.user : User.create!(:name => params[:demo][:email],
-                                                           :sortable_name => params[:demo][:email])
+          @subscription.account_id=@account.id
+          @subscription.save
+          save_subscription_account_settings
+          pseudonym = @account.pseudonyms.active.custom_find_by_unique_id(params[:subscription][:email])
+          user = pseudonym ? pseudonym.user : User.create!(:name => params[:subscription][:email],
+                                                           :sortable_name => params[:subscription][:email])
           user.register! unless user.registered?
           unless pseudonym
-            pseudonym = user.pseudonyms.create!(:unique_id => params[:demo][:email],
+            pseudonym = user.pseudonyms.create!(:unique_id => params[:subscription][:email],
                                                 :password => password, :password_confirmation => password,
                                                 :account => @account )
-            user.communication_channels.create!(:path => params[:demo][:email]) { |cc| cc.workflow_state = 'active' }
+            user.communication_channels.create!(:path => params[:subscription][:email]) { |cc| cc.workflow_state = 'active' }
           end
           pseudonym.save
           @account.add_user(user, 'AccountAdmin')
           reset_session_for_login
-          login={:unique_id =>params[:demo][:email],:password=>password,:remember_me=>"0"}
+          login={:unique_id =>params[:subscription][:email],:password=>password,:remember_me=>"0"}
           @pseudonym_session = @account.pseudonym_sessions.new(login)
           @pseudonym_session.remote_ip = request.remote_ip
           @pseudonym_session.save
-          send_email(params[:demo][:email],params[:demo][:name],password,organization)
+          send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
           respond_to do |format|
             flash[:notice] = "Please check your email to use SmartLMS account"
             format.html{ redirect_to dashboard_url}
@@ -73,7 +79,7 @@ class DemoController < ApplicationController
         end
       else
         respond_to do |format|
-          flash[:error] = "Organization Name Already Exists.Please choose a different name"
+          flash[:error] = "Domain Name Already Exists.Please choose a different name"
           format.html {render :action => "new"}
         end
       end
@@ -86,24 +92,24 @@ class DemoController < ApplicationController
   end
 
   private
-  def send_email(to,name,password,organization)
+  def send_email(to,name,password,subdomain)
     m=Message.new
-    m.subject="Your SmartLMS demo account information"
+    m.subject="Your SmartLMS free subscription details"
     m.to = to
     body = "Hi #{name}<br>"
     body=body+"Your username is #{to}<br>"
     body=body+"Your password is #{password}<br>"
-    body=body+"<a href=\"#{request.protocol}://#{organization}.#{current_domain}\">Please visit your demo here</a><br>"
+    body=body+"<a href=\"#{request.protocol}://#{subdomain}.#{current_domain}\">Please visit your demo here</a><br>"
     m.html_body=body
     Mailer.deliver_message(m)
   end
 
-  def save_demo_account_settings
-    demo_settings=DemoAccountSettings.new
-    demo_settings.account_id=@account.id
-    demo_settings.remarks="Initial Trial"
-    demo_settings.start_at=Time.now
-    demo_settings.end_at=Time.now+30.days
-    demo_settings.save
+  def save_subscription_account_settings
+    @subscription_settings =SubscriptionAccountSetting.new
+    @subscription_settings.subscription_id =@subscription.id
+    @subscription_settings.remarks="Free Subscription"
+    @subscription_settings.start_at=Time.now
+    @subscription_settings.end_at=Time.now+365.days
+    @subscription_settings.save
   end
 end

@@ -180,10 +180,10 @@ class PseudonymSessionsController < ApplicationController
 
     # If the user is registered and logged in, redirect them to their dashboard page
     if found
-      if !!@domain_root_account.settings[:demo_account] && ((DemoAccountSettings.where(account_id: @domain_root_account.id).maximum(:end_at)-Time.now)/1.day).ceil <=0
+      if !!@domain_root_account.settings[:demo_account] && ((Subscription.find_by_account_id(@domain_root_account.id).subscription_account_settings.maximum(:end_at)-Time.now)/1.day).ceil <=0
         reset_session_for_login
         respond_to do |format|
-          format.html{ redirect_to demo_expired_url}
+          format.html{ redirect_to subscription_expired_url}
         end
         return
       else

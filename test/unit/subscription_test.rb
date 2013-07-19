@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DemoConfigTest < ActiveSupport::TestCase
+class SubscriptionTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
