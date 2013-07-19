@@ -106,9 +106,11 @@
         <%- end -%>
       <% end %>
       </li>
+      <% if !!@domain_root_account.smartlms_grade_disable? && !@domain_root_account.smartlms_show_lock_menu?  %>
       <li id="grades_menu_item" class="menu-item">
         <%= link_to(t('menu.grades', 'Grades'), :grades, :class=>"menu-item-no-drop") %>
       </li>
+      <% end  %>
       <li id="calendar_menu_item" class="menu-item">
         <a href="<%= calendar_path %>" class="menu-item-no-drop"><%= t('menu.calendar', 'Calendar') %></a>
       </li>
