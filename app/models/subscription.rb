@@ -1,6 +1,6 @@
 class Subscription < ActiveRecord::Base
-  attr_accessible :name,:organization,:subdomain,:title,:email,:phone,:organization_type,:organization_size,:current_lms
-  validates_presence_of :name ,:email,:organization,:subdomain
+  attr_accessible :name,:organization,:subdomain,:title,:email,:phone,:organization_type,:organization_size,:current_lms,:agree
+  validates_presence_of :name ,:email,:organization,:subdomain,:agree
   validates_length_of :name, :maximum => 30
   validates_uniqueness_of :email, :case_sensitive => false
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -13,7 +13,8 @@ class Subscription < ActiveRecord::Base
   has_many :subscription_messages
 
   HUMANIZED_ATTRIBUTES = {
-      :subdomain => "Domain"
+      :subdomain => "Domain",
+      :agree     => "You must comply to the Terms of Service"
   }
 
   def self.human_attribute_name(attr, options={})
