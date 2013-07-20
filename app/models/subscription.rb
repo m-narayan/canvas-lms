@@ -1,5 +1,5 @@
 class Subscription < ActiveRecord::Base
-  attr_accessible :name,:organization,:subdomain,:title,:email,:phone,:organization_type,:organization_size,:current_lms
+  attr_accessible :name,:organization,:subdomain,:title,:email,:phone,:organization_type,:organization_size,:current_lms,:agree
   validates_presence_of :name ,:email,:organization,:subdomain
   validates_acceptance_of :agree, :allow_nil => false
   validates_length_of :name, :maximum => 30
