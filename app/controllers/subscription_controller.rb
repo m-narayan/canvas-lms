@@ -1,5 +1,5 @@
 class SubscriptionController < ApplicationController
-
+  #layout false
   def subscription_expired
     @subscription_id=Subscription.find_by_account_id(@domain_root_account.id).id
   end
