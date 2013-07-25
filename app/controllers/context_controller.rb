@@ -215,7 +215,7 @@ class ContextController < ApplicationController
   
   def chat
     if !Tinychat.config
-      flash[:error] = t(:chat_not_enabled, "Chat has not been enabled for this SmartLMS site")
+      flash[:error] = t(:chat_not_enabled, "Chat has not been enabled for this OpenLMS site")
       redirect_to named_context_url(@context, :context_url)
       return
     end
@@ -312,7 +312,7 @@ class ContextController < ApplicationController
         :permissions => {
           :manage_students => (manage_students = @context.grants_right?(@current_user, session, :manage_students)),
           :manage_admin_users => (manage_admins = @context.grants_right?(@current_user, session, :manage_admin_users)),
-          :add_users => (manage_students || manage_admins) && !@domain_root_account.smartlms_add_user_disable?
+          :add_users => (manage_students || manage_admins) && !@domain_root_account.OpenLMS_add_user_disable?
         },
         :course => {
           :completed => (completed = @context.completed?),

@@ -18,18 +18,18 @@ en:
   accont: 
     feedback_pricing_sub: "Get the numbers for your institution"
   account: 
-    ask_canvas_network: "Ask the SmartLMS Network Community"
+    ask_canvas_network: "Ask the OpenLMS Network Community"
     default_account_name: "Default Account"
     default_site_administrator_account_name: "Site Admin"
     default_term_name: "Default Term"
     errors: 
       invalid_discovery_url: "The discovery URL is not valid"
     feedback_coach: "Ask the Community"
-    feedback_coach_sub: "Get help from a SmartLMS expert"
+    feedback_coach_sub: "Get help from a OpenLMS expert"
     feedback_feature_request: "Request a Feature"
-    feedback_feature_request_canvas_net: "Request a Feature in SmartLMS Network"
-    feedback_feature_request_sub: "Have an idea to improve SmartLMS?"
-    feedback_pricing: "SmartLMS Pricing Information"
+    feedback_feature_request_canvas_net: "Request a Feature in OpenLMS Network"
+    feedback_feature_request_sub: "Have an idea to improve OpenLMS?"
+    feedback_pricing: "OpenLMS Pricing Information"
     manually_created_courses: "Manually-Created Courses"
     root_account_cant_have_sis_id: "SIS IDs cannot be set on root accounts"
     sis_id_in_use: "SIS ID \"%{sis_id}\" is already in use"
@@ -79,13 +79,13 @@ en:
       canvas_login_tip: |-
           If you configure settings that cause you to not be able to log in you can add
           *%{url1}* to the end of your login url. This will let you login
-          using the normal SmartLMS login procedure. For this account the url would be %{url2}
+          using the normal OpenLMS login procedure. For this account the url would be %{url2}
       choose_auth_type_option: "Choose an authentication service"
       current_settings_title: "Current Integration"
       delete_auth_confirmation: "Are you sure? Users may not be able to log in if this is removed."
       delete_auth_link: "Remove Authentication"
       edit_auth_link: "Edit Details"
-      ip_address_list_description: "If you are using an authentication service that requires the SmartLMS servers to contact your servers directly, such as LDAP, you'll need to make sure that your servers can accept connections from these IP addresses:"
+      ip_address_list_description: "If you are using an authentication service that requires the OpenLMS servers to contact your servers directly, such as LDAP, you'll need to make sure that your servers can accept connections from these IP addresses:"
       no_auth_type_description: "This account does not currently integrate with an identity provider."
       page_title: "Authentication Settings"
       profile_page_link_example: "For example, here is your profile page: [%{friendlyname}](%{url})"
@@ -96,7 +96,7 @@ en:
     ldap_settings: 
       add_secondary_ldap_server_link: "Add Secondary LDAP Server"
       auth_type_label: Type
-      change_password_url_help: "Leave blank for default SmartLMS behavior"
+      change_password_url_help: "Leave blank for default OpenLMS behavior"
       change_password_url_not_specified: "None specified"
       labels: 
         change_password_url: "Forgot Password URL"
@@ -109,7 +109,7 @@ en:
     ldap_settings_fields: 
       auth_filter_description: "Use *%{placeholder}* as a placeholder for the username supplied by the user. For example: *(sAMAccountName=%{placeholder})*"
       auth_password_description: "Leave blank to continue using the current password."
-      identifer_format_description: "The LDAP attribute to use to look up the SmartLMS login. Leave blank to use the username supplied by the user."
+      identifer_format_description: "The LDAP attribute to use to look up the OpenLMS login. Leave blank to use the username supplied by the user."
       labels: 
         auth_base: Base
         auth_filter: Filter
@@ -132,14 +132,14 @@ en:
       ldap_test_login_button: "Test Login"
       test_ldap_bind_help_body: "Your LDAP server server rejected the bind attempt. Things to consider:"
       test_ldap_bind_help_fixes_1: "Verify the provided filter string (i.e. '(sAMAccountName={{login}})')."
-      test_ldap_bind_help_fixes_2: "Does the username require more scoping information? (i.e. 'cn=SmartLMS,ou=people,dc=example,dc=com')."
-      test_ldap_bind_help_header: "SmartLMS can't bind (login) to your LDAP server"
+      test_ldap_bind_help_fixes_2: "Does the username require more scoping information? (i.e. 'cn=OpenLMS,ou=people,dc=example,dc=com')."
+      test_ldap_bind_help_header: "OpenLMS can't bind (login) to your LDAP server"
       test_ldap_bind_label: "Testing LDAP bind..."
       test_ldap_connection_help_body: "The connection either timed out or was refused. Things to consider:"
-      test_ldap_connection_help_fixes_1: "SmartLMS is connecting to %{ips}"
+      test_ldap_connection_help_fixes_1: "OpenLMS is connecting to %{ips}"
       test_ldap_connection_help_fixes_2: "This was only a connection test. SSL certificates were not validated."
-      test_ldap_connection_help_fixes_3: "Check your firewall settings. Are all SmartLMS IP address allowed to access your server?"
-      test_ldap_connection_help_header: "SmartLMS can't connect to your LDAP server"
+      test_ldap_connection_help_fixes_3: "Check your firewall settings. Are all OpenLMS IP address allowed to access your server?"
+      test_ldap_connection_help_header: "OpenLMS can't connect to your LDAP server"
       test_ldap_connection_label: "Testing connection..."
       test_ldap_dialog_close: Close
       test_ldap_dialog_page_title: "Testing Your LDAP Configuration"
@@ -150,11 +150,11 @@ en:
       test_ldap_search_help_fixes_1: "Verify the provided filter string (i.e. '(sAMAccountName={{login}})')."
       test_ldap_search_help_fixes_2: "Verify the provided search base (i.e. 'ou=people,dc=example,dc=com')."
       test_ldap_search_help_fixes_3: "Verify that the user object in LDAP has search privileges for the provided search base."
-      test_ldap_search_help_header: "SmartLMS can't search your LDAP instance"
+      test_ldap_search_help_header: "OpenLMS can't search your LDAP instance"
       test_ldap_search_label: "Testing LDAP search..."
     ldap_timeout_error: 
       last_ldap_timeout_failure: "Last timeout failure"
-      ldap_timeout_failure_help: "If SmartLMS times out communicating with the LDAP server, it will block further login attempts from using that LDAP server for %{time}."
+      ldap_timeout_failure_help: "If OpenLMS times out communicating with the LDAP server, it will block further login attempts from using that LDAP server for %{time}."
     login_required: "must be supplied"
     no_auth_mixing: "Can not mix authentication types"
     no_changing_auth_types: "Can not change type of authorization config, please delete and create new config."
@@ -169,7 +169,7 @@ en:
       certificate_fingerprint: "Certificate Fingerprint"
       change_password_url: "Change Password Link"
       discovery_url: "Discovery URL:"
-      discovery_url_description: "If a discovery url is set, SmartLMS will forward all users to that URL when they need to be authenticated. That page will need to then help the user figure out where they need to go to log in. If no discovery url is configured, the first SAML configuration will be used to attempt to authenticate the user."
+      discovery_url_description: "If a discovery url is set, OpenLMS will forward all users to that URL when they need to be authenticated. That page will need to then help the user figure out where they need to go to log in. If no discovery url is configured, the first SAML configuration will be used to attempt to authenticate the user."
       identifier_format: "Identifier Format"
       idp_entity_id: "IdP Entity ID"
       labels: 
@@ -201,7 +201,7 @@ en:
       auth_request_to_idp: "AuthnRequest sent to IdP"
       auth_response_from_idp: "AuthnResponse from IdP"
       labels: 
-        canvas_login_fail_message: "SmartLMS Login failure message"
+        canvas_login_fail_message: "OpenLMS Login failure message"
         fingerprint_from_idp: "IdP certificate fingerprint"
         idp_in_response_to: "IdP inResponseTo"
         idp_login_destination: "IdP LoginResponse destination"
@@ -212,10 +212,10 @@ en:
         idp_response_encoded: "IdP LoginResponse encoded"
         idp_response_xml_decrypted: "IdP LoginResponse Decrypted"
         idp_response_xml_encrypted: "IdP LoginResponse Encrypted"
-        is_valid_login_response: "SmartLMS thinks response is valid"
+        is_valid_login_response: "OpenLMS thinks response is valid"
         logged_in_user_id: "Logged in user id"
         login_response_validation_error: "Validation Error"
-        login_to_canvas_success: "User successfully logged into SmartLMS"
+        login_to_canvas_success: "User successfully logged into OpenLMS"
         logout_request_id: "Logout request id"
         logout_to_idp_url: "LogoutRequest encoded URL"
         logout_to_idp_xml: "LogoutRequest XML sent to IdP"
@@ -315,10 +315,10 @@ en:
         sent_at: "Sent at"
         to: To
       comm_messages_content_pane: 
-        search_info: "To view all notifications sent to a SmartLMS user, enter their SmartLMS user ID and date range for your search."
+        search_info: "To view all notifications sent to a OpenLMS user, enter their OpenLMS user ID and date range for your search."
         view_notifications: "View Notifications"
       comm_messages_search_form: 
-        canvas_user_id: "SmartLMS User ID"
+        canvas_user_id: "OpenLMS User ID"
         find: Find
         message_date_from: "From Date"
         message_date_to: "To Date"
@@ -467,7 +467,7 @@ en:
       account_reports: 
         sis_export: 
           description: 
-            text: "This report will export all the needed information that relates to provisioning SmartLMS in its respective categories."
+            text: "This report will export all the needed information that relates to provisioning OpenLMS in its respective categories."
     quiz_data_csv_description: 
       account_reports: 
         ace: 
@@ -486,7 +486,7 @@ en:
         name: "Account Name"
     settings: 
       about_google_docs: |-
-          In order to make it easier for users, rather than forcing them to download things like Word docs, PDFs, Excel spreadsheets, and open office documents (In addition to requiring that those programs be installed on their on their computer), in many areas throughout SmartLMS, it will allow you an inline preview of the document.
+          In order to make it easier for users, rather than forcing them to download things like Word docs, PDFs, Excel spreadsheets, and open office documents (In addition to requiring that those programs be installed on their on their computer), in many areas throughout OpenLMS, it will allow you an inline preview of the document.
           
           If Scribd has been enabled for this account, it will try to use it to show the preview. But because Scribd uses flash paper to display the documents, and many users (namely those using an iPad/iPhone) do not have Flash Player installed, that preview will not work.  By leaving Google Docs Previews enabled, when a browser does not have Flash enabled, or if Scribd is not enabled, it will use preview powered by Google Docs. Using this service is subject to Google's viewer [terms of service](%{terms_url})
       about_google_docs_tooltip: "About Google Docs Previews"
@@ -515,7 +515,7 @@ en:
       default_language_description: "This will override any browser/OS language settings. Preferred languages can still be set at the course/user level."
       delete: delete
       delete_announcement_tooltip: "Delete this Announcement"
-      email_notification_from_description: "This setting allows the Admin to brand or label the 'From' text on all notifications sent from SmartLMS for this Account."
+      email_notification_from_description: "This setting allows the Admin to brand or label the 'From' text on all notifications sent from OpenLMS for this Account."
       email_notification_from_settings: "E-mail Notification \"From\" Settings"
       enabled_web_serices_title: "Enabled Web Services"
       equall_endpoint_help: "This is the URL to your equella service. It will probably look something like \"%{sample_url}\"."
@@ -543,7 +543,7 @@ en:
         allow_invitation_previews: "Invitation Previews"
         allow_sending_scores_in_emails: "Students can opt-in to receiving scores in email notifications"
         allow_sis_import: "SIS imports"
-        canvas_authentication: "SmartLMS Authentication"
+        canvas_authentication: "OpenLMS Authentication"
         default_course_storage_quota: "Default Course File Quota"
         default_language: "Default Language"
         default_time_zone: "Default Time Zone"
@@ -572,7 +572,7 @@ en:
         no_enrollments_can_create_courses: "Users with no enrollments"
         open_registration: "Open Registration"
         outgoing_email_default_name_option_custom: "Custom \"From\" Name"
-        outgoing_email_default_name_option_default: "Default SmartLMS Setting"
+        outgoing_email_default_name_option_default: "Default OpenLMS Setting"
         prevent_course_renaming_by_teachers: "Don't let teachers rename their courses"
         restrict_student_future_view: "Restrict students from viewing courses before start date"
         self_enrollment: "Allow Self-Enrollment"
@@ -598,14 +598,14 @@ en:
       never_allow_self_enrollment_option: Never
       no_language_preference: "Not set (defaults to %{language})"
       notifications: 
-        custom_name_description: "If selected, this will replace all other branding sent in SmartLMS notifications."
+        custom_name_description: "If selected, this will replace all other branding sent in OpenLMS notifications."
         email_date: Date
         email_reply_to: Reply-To
         email_to: To
         example: "Example:"
         external_services: "Notifications Sent to External Services"
         external_services_label: "Display one time pop-up warning on Notification Preferences page."
-        external_services_warning: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive SmartLMS course and group information outside of the institutional system."
+        external_services_warning: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive OpenLMS course and group information outside of the institutional system."
         external_services_warning_label: "Pop-up Message Content:"
         from: From
         sample_subject: "Grade Changed: Check In Survey, Testing Course"
@@ -638,7 +638,7 @@ en:
       tab_notifications: Notifications
       tab_reports: Reports
       tab_settings: Settings
-      transifex_message: "Join the [SmartLMS Translation Community](%{transifex_url})"
+      transifex_message: "Join the [OpenLMS Translation Community](%{transifex_url})"
       turnitin_comments_help: "these comments will be shown to students when submitting a Turnitin-enabled assignment"
       turnitin_pledge_help: "students must check a box acknowledging that they agree with this pledge"
       turnitin_settings_title: "Turnitin Settings"
@@ -795,7 +795,7 @@ en:
           login: 
             check_box: "Include users that have never logged in?"
           parameters: 
-            note: "This report does not reflect the last activity in SmartLMS rather the last time that the user logged in."
+            note: "This report does not reflect the last activity in OpenLMS rather the last time that the user logged in."
     student_submissions_csv_description: 
       account_reports: 
         vilas: 
@@ -1001,11 +1001,11 @@ en:
       page_disabled_for_group: "That page has been disabled for this group"
     warnings: 
       details: 
-        suspended: "This institution's SmartLMS account has been suspended. Only Account Administrators may log in to correct any problems."
+        suspended: "This institution's OpenLMS account has been suspended. Only Account Administrators may log in to correct any problems."
       please_log_in: "For security purposes, please enter your password to continue"
       titles: 
         suspended: "Institution Suspended"
-      unsupported_browser: "Your browser does not meet the minimum requirements for SmartLMS. Please visit the *SmartLMS Guides* for a complete list of supported browsers."
+      unsupported_browser: "Your browser does not meet the minimum requirements for OpenLMS. Please visit the *OpenLMS Guides* for a complete list of supported browsers."
     wiki_front_page_default_content_course: "Welcome to your new course wiki!"
     wiki_front_page_default_content_group: "Welcome to your new group wiki!"
   appointment_group: 
@@ -1510,16 +1510,16 @@ en:
           website: "Website URL"
       loading_tools: "Loading tools..."
       messages: 
-        google_docs_auth_required: "Before you can submit assignments directly from Google Docs you need to authorize SmartLMS to access your Google Docs account:"
+        google_docs_auth_required: "Before you can submit assignments directly from Google Docs you need to authorize OpenLMS to access your Google Docs account:"
         media_recording_ready: "Ready to Submit! Click 'Submit Assignment' button to finish."
-        media_recordings_disabled: "Media recordings are not enabled for this SmartLMS site, and you will not be able to submit these types of assignments. Please contact your instructor about changing the settings for this assignment, or your system administrator about enabling media recordings."
+        media_recordings_disabled: "Media recordings are not enabled for this OpenLMS site, and you will not be able to submit these types of assignments. Please contact your instructor about changing the settings for this assignment, or your system administrator about enabling media recordings."
         submitting: Submitting...
         uploading: "Retrieving a copy of your Google Doc to submit for this assignment. This may take a little while, depending on the size of the file..."
       no_files: "No Files"
       no_submission: "No Submission Selected"
       submission_url: "Submission:"
       titles: 
-        media_recordings_disabled: "Media recordings are not enabled for this SmartLMS site"
+        media_recordings_disabled: "Media recordings are not enabled for this OpenLMS site"
       upload_or_choose_file: "Upload a file, or choose a file you've already uploaded."
     syllabus: 
       page_title: "Syllabus for %{course}"
@@ -1637,9 +1637,9 @@ en:
     export_failed: "There was an error exporting the course with bb_lcid %{id} from Blackboard"
     export_failed_no_id: "There was an error importing a course"
     export_failed_not_found: "The course with bb_lcid %{id} could not be found in Blackboard with user %{user_name}"
-    export_failed_with_id: "There was an error importing the course with bb_lcid %{id} into SmartLMS"
+    export_failed_with_id: "There was an error importing the course with bb_lcid %{id} into OpenLMS"
     no_course_found: "No course was found with %{id_type} of %{id}"
-    no_course_id_given: "No SmartLMS course was identified for bb_lcid %{id}"
+    no_course_id_given: "No OpenLMS course was identified for bb_lcid %{id}"
     no_credentials_found: "No credentials were found for the user name %{user_name}"
     no_credentials_given: "No user name was given for the course %{course_identifier}"
     no_lcid_found: "No bb_lcid was specified for a row"
@@ -1649,7 +1649,7 @@ en:
       exporting: "Exporting from Blackboard"
       failed: Failed
       finished: Finished
-      importing: "Importing into SmartLMS"
+      importing: "Importing into OpenLMS"
       migration_cancelled_on: "Cancelled on %{date}"
       migration_failed_on: "Failed on %{date}"
       migration_finished_on: "Finished on %{date}"
@@ -1659,7 +1659,7 @@ en:
       see_results: "See results"
       show_warnings: "Show warnings"
       waiting_to_export: "Waiting to export from Blackboard"
-      waiting_to_import: "Waiting to import into SmartLMS"
+      waiting_to_import: "Waiting to import into OpenLMS"
     index: 
       available_courses: "Available Courses"
       bulk_description: "These are the headers expected in the CSV:"
@@ -1667,8 +1667,8 @@ en:
         add_credentials: "Add Credentials"
         migrate_courses: "Migrate Courses"
       column_name: "Column Name"
-      course_id_description: "The SmartLMS id of the course to import into."
-      credential_description: "This tool will help you migrate multiple courses at the same time from a Blackboard Vista/CE system. Add a set of credentials for your Blackboard system then add SmartLMS course identifiers to the provided CSV template to migrate your courses."
+      course_id_description: "The OpenLMS id of the course to import into."
+      credential_description: "This tool will help you migrate multiple courses at the same time from a Blackboard Vista/CE system. Add a set of credentials for your Blackboard system then add OpenLMS course identifiers to the provided CSV template to migrate your courses."
       csv_description: "Any other columns can be added but they will be ignored. Here is an example of a simple CSV for 3 courses in the account for a user name of \"greg\":"
       csv_template: "CSV Template"
       current_migration_batch: "Current Migration Batch"
@@ -1686,7 +1686,7 @@ en:
       previous_migration_batches: "Previous Migration Batches"
       school: School
       school_not_supported: "Please have your administrator contact Arrivu to help get your school supported."
-      sis_id_description: "The SIS ID of the SmartLMS course to import into."
+      sis_id_description: "The SIS ID of the OpenLMS course to import into."
       upload_migration_csv: "Upload a Migration CSV"
       user_name: "User Name"
       user_name_description: "The user name of the user that has teacher/designer access to the course for the row. This must match one of the user name's listed in the Blackboard login credentials above."
@@ -2023,7 +2023,7 @@ en:
     ics_description_course: "Calendar events for the course, %{course_name}"
     ics_description_group: "Calendar events for the group, %{group_name}"
     ics_description_user: "Calendar events for the user, %{user_name}"
-    ics_title: "%{course_or_group_name} Calendar (SmartLMS)"
+    ics_title: "%{course_or_group_name} Calendar (OpenLMS)"
   calendars: 
     assignment_details: "Assignment Details"
     calendar: 
@@ -2215,13 +2215,13 @@ en:
       cannot_load_collaboration: "Cannot load collaboration"
       create_failed: "Collaboration creation failed"
       no_name: "Please enter a name for this collaboration."
-      not_enabled: "Collaborations have not been enabled for this SmartLMS site"
+      not_enabled: "Collaborations have not been enabled for this OpenLMS site"
       update_failed: "Collaboration update failed"
     forms: 
       buttons: 
         delete_from_canvas: |-
             Just Delete  
-            from SmartLMS
+            from OpenLMS
         delete_from_google_docs: |-
             Also Delete From  
             Google Docs
@@ -2239,7 +2239,7 @@ en:
         description: Description
         document_name: "Document name:"
       messages: 
-        delete_google_doc_as_well: "This collaboration is being stored as a Google Doc. Did you want to delete it just from SmartLMS, or remove it from Google Docs as well?"
+        delete_google_doc_as_well: "This collaboration is being stored as a Google Doc. Did you want to delete it just from OpenLMS, or remove it from Google Docs as well?"
       titles: 
         new: "Start a New Collaboration"
     index: 
@@ -2274,7 +2274,7 @@ en:
       delete: "Delete collaboration?"
   collection_items: 
     new: 
-      pin_to_canvas_network: "Pin to SmartLMS Network"
+      pin_to_canvas_network: "Pin to OpenLMS Network"
       saved_successfully: "Saved Successfully"
   collection_view: 
     no_items: "No items."
@@ -2282,7 +2282,7 @@ en:
     from_beginning: "the beginning"
     to_now: now
   communication_channel: 
-    body: "Your SmartLMS verification code is %{verification_code}"
+    body: "Your OpenLMS verification code is %{verification_code}"
     default_facebook_account: "Facebook Account"
     default_twitter_handle: "Twitter Handle"
   communication_channels: 
@@ -2292,7 +2292,7 @@ en:
         back: Back
         continue: Continue
         create_account: "Create My Account"
-        have_account: "I Have a SmartLMS Account"
+        have_account: "I Have a OpenLMS Account"
         login_as: "Log in as %{invited_user}"
         merge: Combine
         new_account: "No"
@@ -2307,7 +2307,7 @@ en:
             There's a user account already associated with %{email}.
             
               **Are you %{name}?**
-        account_needed: "You've been invited to join **%{course}**. To accept this request you need a SmartLMS account. Click the link below to create a SmartLMS account."
+        account_needed: "You've been invited to join **%{course}**. To accept this request you need a OpenLMS account. Click the link below to create a OpenLMS account."
         add_email: "Would you like to add this email address to your current account?"
         choose_login: "Select where you would like to log in at."
         logged_in_other_user: "**%{email}** is a new account, but you are currently logged in as **%{user}**."
@@ -2347,7 +2347,7 @@ en:
       close: "Are you sure you want to end this conference? You will not be able to reopen it"
       delete: "Are you sure you want to delete this conference?"
       quit: "It looks like you are already editing another conference. Do you wish to continue? Any unsaved changes will be lost."
-    disabled_error: "Web conferencing has not been enabled for this SmartLMS site"
+    disabled_error: "Web conferencing has not been enabled for this OpenLMS site"
     general_error: "There was an error joining the conference"
     inactive_error: "That conference is not currently active"
     index: 
@@ -2412,7 +2412,7 @@ en:
         finished: "Finished %{date_and_time} (%{duration})"
         new: "Hasn't started yet"
         started: "Started %{time}"
-    type_disabled_error: "This type of conference is no longer enabled for this SmartLMS site"
+    type_disabled_error: "This type of conference is no longer enabled for this OpenLMS site"
   content_exports: 
     buttons: 
       process: "Process Data"
@@ -2562,7 +2562,7 @@ en:
     files: 
       buttons: 
         skip: "Skip this Step"
-      description: "You can upload a zipped collection of files into your course and we'll extract them all out for you. This is an easy way to move files from another system into SmartLMS."
+      description: "You can upload a zipped collection of files into your course and we'll extract them all out for you. This is an easy way to move files from another system into OpenLMS."
       instructions: 
         webct: 
           ? "1"
@@ -2591,10 +2591,10 @@ en:
         migrations_needing_action: "Migrations Needing Action"
         successful_migrations: "Successful Migrations"
     intro: 
-      description: "If you're moving to SmartLMS from another course management system, then chances are there are files, quizzes, assignments and things over there that you're going to want moved over here. This wizard should make that process pretty easy."
+      description: "If you're moving to OpenLMS from another course management system, then chances are there are files, quizzes, assignments and things over there that you're going to want moved over here. This wizard should make that process pretty easy."
       if_any: "(if any)"
       links: 
-        copy_course: "Copy content from **another SmartLMS course**"
+        copy_course: "Copy content from **another OpenLMS course**"
         import_files: "Import Files"
         import_package: "Import content from a **content package** or from **another system**"
         import_quizzes: "Import Quizzes"
@@ -2689,7 +2689,7 @@ en:
         import_more: "Import another QTI file"
       defaults: 
         unnamed_quiz: "Unnamed Quiz"
-      details: "SmartLMS can import quizzes in the IMS QTI format. Most systems allow you to export your quizzes in this format. You can also use popular quiz tools like Respondus to create and export IMS QTI. Upload the file below and you'll receive an email when the importing is complete."
+      details: "OpenLMS can import quizzes in the IMS QTI format. Most systems allow you to export your quizzes in this format. You can also use popular quiz tools like Respondus to create and export IMS QTI. Upload the file below and you'll receive an email when the importing is complete."
       errors: 
         choose_file: "You must choose a .zip file to upload"
         upload_failed: "Upload Failed, please try again"
@@ -2789,7 +2789,7 @@ en:
     chat: 
       titles: 
         chat: Chat
-    chat_not_enabled: "Chat has not been enabled for this SmartLMS site"
+    chat_not_enabled: "Chat has not been enabled for this OpenLMS site"
     communication: 
       headings: 
         discussions: Discussions
@@ -2905,7 +2905,7 @@ en:
         user_services: "Registered Web Services"
       help: 
         list_services: "You haven't enabled your list of registered services. Enabling this list will let fellow course and group members more easily link up with you outside of class."
-        services: "You haven't linked your user profile to any external services. You can link your SmartLMS account to services like Facebook and Twitter. This will make it easier for fellow course and group members to link up with you outside of class."
+        services: "You haven't linked your user profile to any external services. You can link your OpenLMS account to services like Facebook and Twitter. This will make it easier for fellow course and group members to link up with you outside of class."
       labels: 
         public_list_services: "Let fellow course/group members see which services I've linked to my profile"
         user_privileges: Privileges
@@ -2944,9 +2944,9 @@ en:
         registered_services: "Registered Services"
         service_types: "Service Types"
       help: 
-        no_services: "You haven't linked your user profile to any external services. You can link your SmartLMS account to services like Facebook and Twitter."
-        services_private: "You haven't enabled your list of registered services. Enabling this list will let fellow course and group members see which services you have linked to your SmartLMS account."
-        user_services: "If other members choose, they can let you see which outside services they've linked to their SmartLMS account. This can make it easier to coordinate group projects and also link up outside of class."
+        no_services: "You haven't linked your user profile to any external services. You can link your OpenLMS account to services like Facebook and Twitter."
+        services_private: "You haven't enabled your list of registered services. Enabling this list will let fellow course and group members see which services you have linked to your OpenLMS account."
+        user_services: "If other members choose, they can let you see which outside services they've linked to their OpenLMS account. This can make it easier to coordinate group projects and also link up outside of class."
       labels: 
         allow_view_services: "Let fellow course/group members see which services I've linked to my profile"
       links: 
@@ -3356,7 +3356,7 @@ en:
   conversations_intro: 
     slide1: 
       paragraph1: "Take a look at your Inbox!"
-      paragraph2: "Conversations—the new SmartLMS messaging system—has arrived!"
+      paragraph2: "Conversations—the new OpenLMS messaging system—has arrived!"
       paragraph3: "Use Conversations to send a private message to a classmate or use Conversations to talk to an entire group of people."
       paragraph4: "Ready for a short intro? Click the right arrow to get started."
     slide2: 
@@ -3445,7 +3445,7 @@ en:
       assignment_groups: "Failed to export assignment groups"
       assignment_is_locked: "The assignment \"%{title}\" could not be copied because it is locked."
       assignments: "Failed to export some assignments"
-      canvas_meta: "Failed to export SmartLMS-specific meta data"
+      canvas_meta: "Failed to export OpenLMS-specific meta data"
       course_export: "Error running course export."
       course_settings: "Failed to export course settings"
       events: "Failed to export calendar events"
@@ -3640,7 +3640,7 @@ en:
               Great, so you've got a course...  Now what?  Well, before you go publishing it to the world, you may want to check and make sure you've got the basics laid out.  Work through the list on the left to ensure that your course is ready to use.
               
               *This course is visible only to teachers until it is published*
-          saved: "Done and done!  Your course, %{course} is now officially created. It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how SmartLMS works and to make sure you really are ready to teach."
+          saved: "Done and done!  Your course, %{course} is now officially created. It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how OpenLMS works and to make sure you really are ready to teach."
         created: 
           not_saved: |-
               This class has been created, but not claimed.  It'll get deleted if it's not claimed within a week.  In the mean time, tick through the list to the left to make sure you're ready to go.
@@ -3649,21 +3649,21 @@ en:
               
               Please **log in** or ***register*** to claim this course.
           saved: |-
-              Done and done!  Your course, %{course} is now officially created.  It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how SmartLMS works and to make sure you really are ready to teach.
+              Done and done!  Your course, %{course} is now officially created.  It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how OpenLMS works and to make sure you really are ready to teach.
               
               If you need to leave and come back before then, just save *this link* to get back here later.
               
               Please **log in** or ***register*** to claim this course.
-        files: "The Files tab is the place to share lecture slides, example documents, study helps -- anything your students will want to download. Uploading and organizing your files is easy with SmartLMS. We'll show you how."
+        files: "The Files tab is the place to share lecture slides, example documents, study helps -- anything your students will want to download. Uploading and organizing your files is easy with OpenLMS. We'll show you how."
         home: "When people visit the course, this is the page they'll see. You can set it to show an activity stream, the list of course modules, a syllabus, or a custom page you write yourself. The default is the course activity stream. To customize this, just click %{change_layout}."
-        import: "If you've been using another course management system, you probably have stuff in there that you're going to want moved over to SmartLMS. We can walk you through the process of easily migrating your content into SmartLMS."
+        import: "If you've been using another course management system, you probably have stuff in there that you're going to want moved over to OpenLMS. We can walk you through the process of easily migrating your content into OpenLMS."
         navigation: "By default all links are enabled for a course. Students won't see links to sections that don't have content. For example, if you haven't created any quizzes, they won't see the quizzes link. You can sort and explicitly disable these links if there are areas of the course you don't want your students accessing."
         publish: 
           form: |-
               All finished?  Time to publish your course!  Click the button below to make it official!
               
               Publishing will allow the users to begin participating in the course.
-          not_registered: "This course is claimed and ready, but you'll need to finish the registration process before you can publish the course. You should have received an email from SmartLMS with a link to finish the process. Be sure to check your spam box."
+          not_registered: "This course is claimed and ready, but you'll need to finish the registration process before you can publish the course. You should have received an email from OpenLMS with a link to finish the process. Be sure to check your spam box."
         students: "You'll definitely want some of these. What's the fun of teaching a course if nobody's even listening?"
         tas: "You may want to assign some TAs to help you with the course. TAs can grade student submissions, help moderate the discussions and even update due dates and assignment details for you."
       headings: 
@@ -3711,7 +3711,7 @@ en:
       page_title: "Course Profile"
       path_syntax: "lower-case letters, numbers and dashes"
       private: Hidden
-      public: "Listed on SmartLMS.net"
+      public: "Listed on OpenLMS.net"
       save_changes: "Save changes"
       self_paced: Self-paced
       when_to_set_tentative_start: "e.g. \"Fall 2013\", if the course doesn't have a definitive start date"
@@ -3946,7 +3946,7 @@ en:
         users: Users
       titles: 
         edit_navigation: "Edit Course Navigation"
-      transifex_message: "Join the [SmartLMS Translation Community](%{transifex_url})"
+      transifex_message: "Join the [OpenLMS Translation Community](%{transifex_url})"
       turnitin: "these comments will be shown to students when submitting a Turnitin-enabled assignment"
       user_view: 
         links: 
@@ -4598,7 +4598,7 @@ en:
       formatting: "Formatting, press down to select"
       rte_help: "Rich Text Area. Press ALT F10 for toolbar. Press ALT 0 for help."
   email: 
-    default_from_name: "Arrivu SmartLMS"
+    default_from_name: "Arrivu OpenLMS"
   enrollment: 
     default_course_name: Course
     default_email: "No Email"
@@ -4815,7 +4815,7 @@ en:
       write_only_comments: "Comments for this page are private. You can make comments, but only the portfolio's owner will be able to see them."
     show_me: "show me"
     static_page: 
-      created_with_canvas: "Created with SmartLMS"
+      created_with_canvas: "Created with OpenLMS"
       headers: 
         page_comments: "Page Comments"
       links: 
@@ -4966,12 +4966,12 @@ en:
       domain: Domain
       email_only: "Email Only"
       external_tools_note: |-
-          External (LTI) Tools are an easy way to add new features to SmartLMS.
+          External (LTI) Tools are an easy way to add new features to OpenLMS.
             They can be added to individual courses, or to all courses in an account.
             Once configured, you can link to them through course modules and create assignments for
             assessment tools.
           
-            Click [here](%{lti_index_url}) to see some LTI tools that work great with SmartLMS. You can also check out the SmartLMS Community topics about LTI tools [here](%{lti_examples_url}).
+            Click [here](%{lti_index_url}) to see some LTI tools that work great with OpenLMS. You can also check out the OpenLMS Community topics about LTI tools [here](%{lti_examples_url}).
       labels: 
         config_type: "Configuration Type"
         config_url: "Configuration URL"
@@ -5009,27 +5009,27 @@ en:
       new_tab_loaded: "This tool was successfully loaded in a new browser window. Reload the page to access the tool again."
   facebook: 
     authorization_required: "Only authorized users can access that page"
-    authorization_success: "Authorization successful!  SmartLMS and Facebook are now friends."
+    authorization_success: "Authorization successful!  OpenLMS and Facebook are now friends."
     deleted: Deleted
     index: 
       all_set: "You're all set up!"
-      bookmark_notice: "You can see the number of new SmartLMS notifications from your Facebook home page if you bookmark this application."
-      canvas_messages: "SmartLMS Messages"
-      configure_notification_preferences_notice: "After you *configure your notification preferences* you should start to see notifications show up here letting you know about things happening in your SmartLMS account."
-      installation_about: "To install the SmartLMS Facebook app, go to your profile page in SmartLMS and click the Facebook button to connect your account to Facebook."
+      bookmark_notice: "You can see the number of new OpenLMS notifications from your Facebook home page if you bookmark this application."
+      canvas_messages: "OpenLMS Messages"
+      configure_notification_preferences_notice: "After you *configure your notification preferences* you should start to see notifications show up here letting you know about things happening in your OpenLMS account."
+      installation_about: "To install the OpenLMS Facebook app, go to your profile page in OpenLMS and click the Facebook button to connect your account to Facebook."
       learn_more: "Learn More at instructure.com"
       more_information: "More information at %{domain_list}"
-      no_messages_notice: "As things happen in the course you'll start seeing notifications show up here letting you know about things happening in your SmartLMS account."
-      notification_about: "The SmartLMS Facebook app is here to give you easier access to the interactions going on inside your courses. You can set it to send you notifications when your assignments are graded, when due dates change, etc. Your private data will still stay private at SmartLMS."
+      no_messages_notice: "As things happen in the course you'll start seeing notifications show up here letting you know about things happening in your OpenLMS account."
+      notification_about: "The OpenLMS Facebook app is here to give you easier access to the interactions going on inside your courses. You can set it to send you notifications when your assignments are graded, when due dates change, etc. Your private data will still stay private at OpenLMS."
       notification_settings: "Notification Settings"
-      notifications_notice: "Below you can see a list of your most recent notifications from SmartLMS. You can see the number of new SmartLMS notifications from your Facebook home page if you bookmark this application."
+      notifications_notice: "Below you can see a list of your most recent notifications from OpenLMS. You can see the number of new OpenLMS notifications from your Facebook home page if you bookmark this application."
       welcome: "Welcome back, %{name}!"
       welcome_message: "Welcome to a new breed of online learning software, courtesy of Arrivu. We're here to make it easy for you to use the web to improve learning. Our interface is simple, clean and open, and we work with the tools you and your students are already using -- tools like Facebook -- to provide a more open, collaborative learning experience. We roll it all up into one powerful, open package that does more than just tracks assignments. It encourages interaction and fosters learning."
-      welcome_title: "Welcome to Arrivu SmartLMS"
+      welcome_title: "Welcome to Arrivu OpenLMS"
     index_disabled: 
-      disabled_notice: "This SmartLMS site is not configured to communicate with Facebook."
+      disabled_notice: "This OpenLMS site is not configured to communicate with Facebook."
       get_help: "Get help at support.instructure.com"
-      instructure_canvas: "Arrivu SmartLMS"
+      instructure_canvas: "Arrivu OpenLMS"
     invalid_signature: "Invalid Facebook signature"
     message: 
       hide: Hide
@@ -5050,9 +5050,9 @@ en:
       weekly: Weekly
     settings: 
       back_to_messages: "Back to Messages"
-      link_needed: "Before you can configure the SmartLMS Facebook App you need to link it to your SmartLMS login. Please click \"Welcome\" for more information."
-      notifications_config_notice: "Notifications from SmartLMS can automatically be sent over to your Facebook account. Below you'll see the types of notifications you can have sent. You can change your notification preferences at any time, either here or in SmartLMS."
-      settings_title: "SmartLMS Notification Settings"
+      link_needed: "Before you can configure the OpenLMS Facebook App you need to link it to your OpenLMS login. Please click \"Welcome\" for more information."
+      notifications_config_notice: "Notifications from OpenLMS can automatically be sent over to your Facebook account. Below you'll see the types of notifications you can have sent. You can change your notification preferences at any time, either here or in OpenLMS."
+      settings_title: "OpenLMS Notification Settings"
       updating_preferences: "Updating Preferences..."
   files: 
     alts: 
@@ -6079,9 +6079,9 @@ en:
     message_will_be_sent_to_all_the_teachers_tas_in_the_course: "Message will be sent to all the Teachers / TA's in the course."
     please_select_one: "Please select one..."
     report_problem: "Report a Problem"
-    report_problem_sub: "If SmartLMS misbehaves, tell us about it"
-    search_the_canvas_guides: "Search the SmartLMS Guides"
-    see_if_your_issue_is_addressed_in_the_canvas_guides: "See if your issue is addressed in the *SmartLMS Guides*."
+    report_problem_sub: "If OpenLMS misbehaves, tell us about it"
+    search_the_canvas_guides: "Search the OpenLMS Guides"
+    see_if_your_issue_is_addressed_in_the_canvas_guides: "See if your issue is addressed in the *OpenLMS Guides*."
     send_message: "Send Message"
     sending: Sending...
     somethings_broken_but_i_can_work_around_it_for_now: "Something's broken but I can work around it for now"
@@ -6115,10 +6115,10 @@ en:
       create_collection: "Create a collection"
       start_a_group: "Start a group"
   instructions: 
-    authorize_google_docs: "Before you can collaborate on documents, you need to authorize SmartLMS to access your Google Docs account:"
+    authorize_google_docs: "Before you can collaborate on documents, you need to authorize OpenLMS to access your Google Docs account:"
   instructure: 
     alerts: 
-      file_previews_disabled: "File previews have been disabled for this SmartLMS site"
+      file_previews_disabled: "File previews have been disabled for this OpenLMS site"
     browsers: 
       unrecognized: "Unrecognized Browser"
     buttons: 
@@ -6250,7 +6250,7 @@ en:
     wikis: Wikis
   layouts: 
     application: 
-      instructure_description: "Arrivu, makers of the open source learning management system SmartLMS"
+      instructure_description: "Arrivu, makers of the open source learning management system OpenLMS"
       keyboard_navigation: 
         close: "Press comma to close this dialog"
       links: 
@@ -6280,7 +6280,7 @@ en:
         reset_explanation: "Resetting the test student will clear all history for this student, %{line_break}allowing you to view the course as a brand new student."
         warning_title: "You are currently logged into Student View"
     head: 
-      default_page_title: "SmartLMS LMS"
+      default_page_title: "OpenLMS LMS"
     menu: 
       view_all_accounts: "View all accounts"
       view_all_enrollments: "View all courses"
@@ -6295,7 +6295,7 @@ en:
   lib: 
     angel: 
       failed_import_link: "Failed import link"
-      failed_import_link_body: "This link referenced an Angel feature that couldn't be linked to by SmartLMS or that was left out of the export."
+      failed_import_link_body: "This link referenced an Angel feature that couldn't be linked to by OpenLMS or that was left out of the export."
     api: 
       attachments: 
         only_one_folder: "Can't set folder path and folder id"
@@ -6323,17 +6323,17 @@ en:
     incoming_message_processor: 
       failure_message: 
         body: |-
-            The message titled "%{subject}" could not be delivered.  The message was sent to an unknown mailbox address.  If you are trying to contact someone through SmartLMS you can try logging in to your account and sending them a message using the Inbox tool.
+            The message titled "%{subject}" could not be delivered.  The message was sent to an unknown mailbox address.  If you are trying to contact someone through OpenLMS you can try logging in to your account and sending them a message using the Inbox tool.
             
                     Thank you,
-                    SmartLMS Support
+                    OpenLMS Support
         subject: "Message Reply Failed: %{subject}"
       locked_topic: 
         body: |-
-            The message titled "%{subject}" could not be delivered because the discussion topic is locked. If you are trying to contact someone through SmartLMS you can try logging in to your account and sending them a message using the Inbox tool.
+            The message titled "%{subject}" could not be delivered because the discussion topic is locked. If you are trying to contact someone through OpenLMS you can try logging in to your account and sending them a message using the Inbox tool.
             
                     Thank you,
-                    SmartLMS Support
+                    OpenLMS Support
         subject: "Message Reply Failed: %{subject}"
     progress_runner: 
       completed_message: 
@@ -6390,7 +6390,7 @@ en:
       relationships: Relationships
   media_comments: 
     alerts: 
-      kaltura_disabled: "Kaltura has been disabled for this SmartLMS site"
+      kaltura_disabled: "Kaltura has been disabled for this OpenLMS site"
     buttons: 
       submit: "Submit Media File"
     cancel: Cancel
@@ -6428,7 +6428,7 @@ en:
     managed_accounts: "Managed Accounts"
     my_courses: "My Courses"
   message: 
-    default_subject: "SmartLMS Alert"
+    default_subject: "OpenLMS Alert"
   message_students: 
     buttons: 
       send_message: "Send Message"
@@ -6462,39 +6462,39 @@ en:
           click_to_finish_registration: "Click here to finish the registration process"
           email: Email
           name: Name
-          subject: "SmartLMS Account Admin Invitation"
-          url_info_label: "You'll need to register with SmartLMS before you can participate as an account admin."
+          subject: "OpenLMS Account Admin Invitation"
+          url_info_label: "You'll need to register with OpenLMS before you can participate as an account admin."
           username: Username
         name_info: "Name: %{name}"
-        subject: "SmartLMS Account Admin Invitation"
+        subject: "OpenLMS Account Admin Invitation"
         url_info: |-
-            You'll need to register with SmartLMS before you can participate as an account admin.  You can finish the registration process here:
+            You'll need to register with OpenLMS before you can participate as an account admin.  You can finish the registration process here:
             %{url}
         username_info: "Username: %{username}"
     added_to_conversation: 
       email: 
-        body: "%{user_name} just added you to a conversation in SmartLMS. To view the conversation, click the link below:"
+        body: "%{user_name} just added you to a conversation in OpenLMS. To view the conversation, click the link below:"
         html: 
-          body: "%{user_name} just added you to a conversation in SmartLMS."
+          body: "%{user_name} just added you to a conversation in OpenLMS."
           link_text: "View Conversation"
-          subject: "%{user_name} just added you to a conversation in SmartLMS."
+          subject: "%{user_name} just added you to a conversation in OpenLMS."
           unknown_user: "Unknown User"
-        subject: "%{user_name} just added you to a conversation in SmartLMS."
+        subject: "%{user_name} just added you to a conversation in OpenLMS."
         unknown_user: "Unknown User"
       facebook: 
-        body: "%{user_name} just added you to a conversation in SmartLMS."
+        body: "%{user_name} just added you to a conversation in OpenLMS."
         link_text: "View Conversation"
         unknown_user: "Unknown User"
       sms: 
-        body: "%{user_name} just added you to a conversation in SmartLMS."
+        body: "%{user_name} just added you to a conversation in OpenLMS."
         more_info: "More info at %{url}"
         unknown_user: "Unknown User"
       summary: 
-        body: "%{user_name} just added you to a conversation in SmartLMS."
-        subject: "%{user_name} just added you to a conversation in SmartLMS."
+        body: "%{user_name} just added you to a conversation in OpenLMS."
+        subject: "%{user_name} just added you to a conversation in OpenLMS."
         unknown_user: "Unknown User"
       twitter: 
-        tweet: "SmartLMS Alert - Added to conversation by %{user_name}."
+        tweet: "OpenLMS Alert - Added to conversation by %{user_name}."
         unknown_user: "Unknown User"
     alert: 
       email: 
@@ -6613,7 +6613,7 @@ en:
         message: "%{user} canceled his/her reservation for \"%{appointment_name}\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "SmartLMS Alert - %{user} canceled his/her reservation for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - %{user} canceled his/her reservation for \"%{appointment_name}\"."
     appointment_deleted_for_user: 
       email: 
         html: 
@@ -6656,7 +6656,7 @@ en:
         message: "Your time slot for \"%{appointment_name} was canceled\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "SmartLMS Alert - Your time slot for \"%{appointment_name} was canceled\"."
+        message: "OpenLMS Alert - Your time slot for \"%{appointment_name} was canceled\"."
     appointment_group_deleted: 
       email: 
         html: 
@@ -6688,7 +6688,7 @@ en:
         message: "All appointments for \"%{appointment_name} have been canceled\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "SmartLMS Alert - All appointments for \"%{appointment_name} have been canceled\"."
+        message: "OpenLMS Alert - All appointments for \"%{appointment_name} have been canceled\"."
     appointment_group_published: 
       email: 
         group_signup: "Group (%{group_category})"
@@ -6731,7 +6731,7 @@ en:
         message: "Time slots for \"%{appointment_name}\" are now available for signup (%{dates})."
         subject: "Appointment \"%{appointment_name}\" is available for signup (%{course})"
       twitter: 
-        message: "SmartLMS Alert - Signups are open for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - Signups are open for \"%{appointment_name}\"."
     appointment_group_updated: 
       email: 
         group_signup: "Group (%{group_category})"
@@ -6773,7 +6773,7 @@ en:
         message: "Time slots have been added to \"%{appointment_name}\" and are available for signup (%{dates})."
         subject: "Appointment \"%{appointment_name}\" has been updated (%{course})"
       twitter: 
-        message: "SmartLMS Alert - New time slots are available for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - New time slots are available for \"%{appointment_name}\"."
     appointment_reserved_by_user: 
       email: 
         html: 
@@ -6813,7 +6813,7 @@ en:
         message: "%{user} has signed up for \"%{appointment_name}\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "SmartLMS Alert - %{user} has signed up for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - %{user} has signed up for \"%{appointment_name}\"."
     appointment_reserved_for_user: 
       email: 
         html: 
@@ -6856,7 +6856,7 @@ en:
         message: "%{user} has signed you up for \"%{appointment_name}\" (%{date_and_time})."
         subject: "You have been signed up for \"%{appointment_name}\" (%{course})"
       twitter: 
-        message: "SmartLMS Alert - You have been signed up for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - You have been signed up for \"%{appointment_name}\"."
     assignment_changed: 
       email: 
         body: |-
@@ -6879,7 +6879,7 @@ en:
       summary: 
         subject: "Assignment Changed: %{title}, %{course}"
       twitter: 
-        assignment_change: "SmartLMS Alert - Change: %{assignment_name}, %{course_name}"
+        assignment_change: "OpenLMS Alert - Change: %{assignment_name}, %{course_name}"
     assignment_created: 
       email: 
         assignment_created: "Assignment Created - %{assignment_name}, %{course_name}"
@@ -6913,7 +6913,7 @@ en:
         multiple_due_dates: "due: Multiple Dates"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "SmartLMS Alert - Change: %{assignment_name}, %{course_name}"
+        assignment_change: "OpenLMS Alert - Change: %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
         multiple_due_dates: "due: Multiple Dates"
         no_due_date: "due: No Due Date"
@@ -6941,7 +6941,7 @@ en:
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "SmartLMS Alert - Date Change: %{assignment_name}, %{course_name}"
+        assignment_change: "OpenLMS Alert - Date Change: %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
     assignment_due_date_override_changed: 
@@ -6968,7 +6968,7 @@ en:
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "SmartLMS Alert - Date Change: %{assignment_name}, %{course_name} (%{override})"
+        assignment_change: "OpenLMS Alert - Date Change: %{assignment_name}, %{course_name} (%{override})"
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
     assignment_graded: 
@@ -6990,7 +6990,7 @@ en:
         assignment_graded: "Assignment Graded: %{assignment_name}, %{course_name}"
         the_assignment_is_graded: "The assignment, %{assignment_name}, has been graded."
       twitter: 
-        assignment_graded: "SmartLMS Alert - Graded: %{assignment_name}, %{course_name}"
+        assignment_graded: "OpenLMS Alert - Graded: %{assignment_name}, %{course_name}"
     assignment_locked: "This assignment is currently locked."
     assignment_locked_at: "This assignment was locked %{at}."
     assignment_locked_module: "This assignment is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7015,7 +7015,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_resubmitted: "Re-Submission: %{user_name}, %{assignment_name}"
       twitter: 
-        user_resubmitted: "SmartLMS Alert - Resubmission: %{user_name}, %{assignment_name}"
+        user_resubmitted: "OpenLMS Alert - Resubmission: %{user_name}, %{assignment_name}"
     assignment_submitted: 
       email: 
         html: 
@@ -7036,7 +7036,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_submitted: "Submission: %{user_name}, %{assignment_name}"
       twitter: 
-        user_submitted: "SmartLMS Alert - Submission: %{user_name}, %{assignment_name}"
+        user_submitted: "OpenLMS Alert - Submission: %{user_name}, %{assignment_name}"
     assignment_submitted_late: 
       email: 
         html: 
@@ -7057,7 +7057,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_submitted: "Late Assignment: %{user_name}, %{assignment_name}"
       twitter: 
-        user_submitted: "SmartLMS Alert - Late Submission: %{user_name}, %{assignment_name}"
+        user_submitted: "OpenLMS Alert - Late Submission: %{user_name}, %{assignment_name}"
     assignment_unmuted: 
       email: 
         body: |-
@@ -7126,7 +7126,7 @@ en:
             in %{service} and you were invited using your email address, %{email}.
         subject: "Collaboration Invitation: %{course_or_group}"
       twitter: 
-        body: "SmartLMS Alert - Collaboration Invite: %{document}, %{course_or_group}"
+        body: "OpenLMS Alert - Collaboration Invite: %{document}, %{course_or_group}"
     confirm_email_communication_channel: 
       email: 
         body: "The email address, %{email} is being registered at %{website} for the user, %{user}."
@@ -7134,21 +7134,21 @@ en:
         html: 
           body: "The email address, %{email} is being registered at %{website} for the user, %{user}."
           details: "Click here to confirm this registration"
-          subject: "Confirm Email: SmartLMS"
-        subject: "Confirm Email: SmartLMS"
+          subject: "Confirm Email: OpenLMS"
+        subject: "Confirm Email: OpenLMS"
     confirm_registration: 
       email: 
-        body: "Thank you for registering with SmartLMS!  This email is confirmation that the user %{user} is registering for a new account at %{website}."
+        body: "Thank you for registering with OpenLMS!  This email is confirmation that the user %{user} is registering for a new account at %{website}."
         details: "To finish the registration process, please visit the following url:"
         html: 
-          body: "Thank you for registering with SmartLMS! This email is confirmation that the user %{user} is registering for a new account at %{website}."
+          body: "Thank you for registering with OpenLMS! This email is confirmation that the user %{user} is registering for a new account at %{website}."
           details: "Click here to finish the registration process"
-          subject: "Confirm Registration: SmartLMS"
-        subject: "Confirm Registration: SmartLMS"
+          subject: "Confirm Registration: OpenLMS"
+        subject: "Confirm Registration: OpenLMS"
     confirm_sms_communication_channel: 
       sms: 
         body: |-
-            Confirm SmartLMS registration w/ code:
+            Confirm OpenLMS registration w/ code:
             
             %{confirmation_code}
             
@@ -7180,96 +7180,96 @@ en:
       email: 
         attached_files: "Attached Files:"
         audio_comment: "This message includes media comments. To listen or reply, click the link below:"
-        body: "%{user_name} just sent you a message in SmartLMS:"
+        body: "%{user_name} just sent you a message in OpenLMS:"
         html: 
           attached_files: "Attached Files:"
           audio_comment: "This message includes media comments. To listen or reply, click the link below:"
-          body: "%{user_name} just sent you a message in SmartLMS:"
+          body: "%{user_name} just sent you a message in OpenLMS:"
           download: download
           reply_message: "To reply to this message, click the link below:"
-          subject: "%{user_name} just sent you a message in SmartLMS."
+          subject: "%{user_name} just sent you a message in OpenLMS."
           unknown_user: "Unknown User"
         reply_message: "To reply to this message, click the link below:"
-        subject: "%{user_name} just sent you a message in SmartLMS."
+        subject: "%{user_name} just sent you a message in OpenLMS."
         unknown_user: "Unknown User"
       facebook: 
-        body: "%{user_name} just sent you a message in SmartLMS."
+        body: "%{user_name} just sent you a message in OpenLMS."
         link_text: "View Message"
         unknown_user: "Unknown User"
       sms: 
-        body: "%{user_name} just sent you a message in SmartLMS:"
+        body: "%{user_name} just sent you a message in OpenLMS:"
         more_info: "More info at %{url}"
         unknown_user: "Unknown User"
       summary: 
-        body: "%{user_name} just sent you a message in SmartLMS:"
-        subject: "%{user_name} just sent you a message in SmartLMS."
+        body: "%{user_name} just sent you a message in OpenLMS:"
+        subject: "%{user_name} just sent you a message in OpenLMS."
         unknown_user: "Unknown User"
       twitter: 
-        tweet: "SmartLMS Alert - Message from %{user_name}."
+        tweet: "OpenLMS Alert - Message from %{user_name}."
         unknown_user: "Unknown User"
     course_already_started: 
       email: 
         body: |-
             Hi %{user},
             
-            %{course}, your course on SmartLMS Network, started a couple days ago, and we noticed you haven't logged in yet. We just wanted to send you one last reminder in case you forgot.
+            %{course}, your course on OpenLMS Network, started a couple days ago, and we noticed you haven't logged in yet. We just wanted to send you one last reminder in case you forgot.
             
             To log in, go to %{site} and enter your username and password. If you haven't set a password yet, you can set one here: %{password_url}. If you simply can't make this particular course, feel free to browse our course catalog at %{site} to find something else that inspires you. New courses are being added all the time!
             
             We hope to see you soon,
             
-            SmartLMS Network
+            OpenLMS Network
         course_already_started: "Your course has already started"
     course_required_materials: 
       email: 
         body: |-
             Hi %{user},
             
-            Good news! %{course}, the course you enrolled in on SmartLMS Network, will be starting soon.
+            Good news! %{course}, the course you enrolled in on OpenLMS Network, will be starting soon.
             
-            To help make sure you get the most from your course, you should check for any special instructions or course materials listed by the instructor.  You can look for this on the course details page on SmartLMS Network, or just click the link below.
+            To help make sure you get the most from your course, you should check for any special instructions or course materials listed by the instructor.  You can look for this on the course details page on OpenLMS Network, or just click the link below.
             
             %{url}
             
             Keep learning,
             
-            SmartLMS Network
+            OpenLMS Network
         course_required_materials: "Materials and instructions for %{course}"
     course_started: 
       email: 
         body: |-
             Hello %{user},
             
-            This is a friendly reminder that %{course}, your course on SmartLMS Network, begins today. You can now log in to %{site} and get started!
+            This is a friendly reminder that %{course}, your course on OpenLMS Network, begins today. You can now log in to %{site} and get started!
             
-            Don't forget to set up your SmartLMS Network profile, so others in the course know who you are. You can update your profile at %{profile_url}
+            Don't forget to set up your OpenLMS Network profile, so others in the course know who you are. You can update your profile at %{profile_url}
             
             Keep learning,
             
-            SmartLMS Network
+            OpenLMS Network
         course_starts_today: "Your course begins today"
     course_starts_in_week: 
       email: 
         body: |-
             %{user},
             
-            It's almost time! %{course}, a course you enrolled in on SmartLMS Network, begins next week. We know how excited you must be, and we're excited too.
+            It's almost time! %{course}, a course you enrolled in on OpenLMS Network, begins next week. We know how excited you must be, and we're excited too.
             
             What can you do to get ready?
             
-            If you haven't already created your SmartLMS Network profile, you can log in and set it up at SmartLMS.net. Your profile will help other people in the course know who you are. There, you can also set up your notification preferences.
+            If you haven't already created your OpenLMS Network profile, you can log in and set it up at OpenLMS.net. Your profile will help other people in the course know who you are. There, you can also set up your notification preferences.
             
             Finally, you can review the required materials and any instructions for your course here: %{url}
             
             Keep learning,
             
-            SmartLMS Network
+            OpenLMS Network
         course_starts_next_week: "Your course starts next week"
     dialog: 
       title: "Send a reply message"
     email: 
       footer: |-
-          You received this email because you are participating in one or more classes using SmartLMS.  To change or turn off email notifications, visit:
+          You received this email because you are participating in one or more classes using OpenLMS.  To change or turn off email notifications, visit:
           %{url}
     enrollment_accepted: 
       email: 
@@ -7309,7 +7309,7 @@ en:
         body_teacher: "%{user} just accepted their invitation to participate in the course, %{course}, as a teacher."
         subject: "%{user} accepted the Course Invitation"
       twitter: 
-        body: "SmartLMS Alert - Accepted: %{user}, %{enrollment_type}, course, %{course}"
+        body: "OpenLMS Alert - Accepted: %{user}, %{enrollment_type}, course, %{course}"
     enrollment_invitation: 
       email: 
         body_designer: "You've been invited to participate in the course, %{course}, as a designer."
@@ -7367,7 +7367,7 @@ en:
         body_teacher: "You've been invited to participate in the course, %{course}, as a teacher."
         subject: "Course Invitation"
       twitter: 
-        body: "SmartLMS Alert - Invited: course as %{enrollment_type}"
+        body: "OpenLMS Alert - Invited: course as %{enrollment_type}"
     enrollment_notification: 
       email: 
         body_designer: "You've been enrolled in the course, %{course}, as a designer."
@@ -7426,7 +7426,7 @@ en:
         body_teacher: "You've been enrollment in the course, %{course}, as a teacher."
         subject: "Course Enrollment"
       twitter: 
-        body: "SmartLMS Alert - Enrolled: course as %{enrollment_type}"
+        body: "OpenLMS Alert - Enrolled: course as %{enrollment_type}"
     enrollment_registration: 
       email: 
         body_designer: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a designer."
@@ -7434,14 +7434,14 @@ en:
         body_student: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a student."
         body_ta: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a TA."
         body_teacher: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a teacher."
-        details: "You'll need to register with SmartLMS before you can participate in the class.  To get started, visit the course page here:"
+        details: "You'll need to register with OpenLMS before you can participate in the class.  To get started, visit the course page here:"
         html: 
           body_designer: "The class is called %{course}, and you've been invited to participate as a designer."
           body_observer: "The class is called %{course}, and you've been invited to participate as a observer."
           body_student: "The class is called %{course}, and you've been invited to participate as a student."
           body_ta: "The class is called %{course}, and you've been invited to participate as a TA."
           body_teacher: "The class is called %{course}, and you've been invited to participate as a teacher."
-          details: "You'll need to register with SmartLMS before you can participate in the class."
+          details: "You'll need to register with OpenLMS before you can participate in the class."
           email: Email
           link: "Click here to get started"
           name: Name
@@ -7475,7 +7475,7 @@ en:
         body_teacher: "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a teacher."
         subject: "Course Invitation"
       twitter: 
-        body: "SmartLMS Alert - Invited: course as %{enrollment_type}"
+        body: "OpenLMS Alert - Invited: course as %{enrollment_type}"
     event_date_changed: 
       email: 
         email_body: "The event, %{event_title}, for the course, %{course_name}, has changed times. It's now:"
@@ -7506,7 +7506,7 @@ en:
       twitter: 
         from_to_time: "from %{start_date_time} to %{end_date_time}"
         no_time_set: "No Time Set"
-        subject: "SmartLMS Alert - Changed: %{event_title}, %{course_name}"
+        subject: "OpenLMS Alert - Changed: %{event_title}, %{course_name}"
     file_locked: "This file is currently locked."
     file_locked_at: "This file was locked %{at}."
     file_locked_module: "This file is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7524,8 +7524,8 @@ en:
           login_at_account: "%{login_email} at %{account_name}"
           login_managed_by_account: "this login's credentials are managed by %{account_name}"
           password_from_account: "The password for this login should have been given to you by the system administrators at %{account_name}, and Arrivu doesn't have access to your password. If your password is not working, please contact the system administrators about changing or verifying your password."
-          requested_password_reset: "You requested a confirmation of your password for logging into SmartLMS."
-          subject: "Forgot Password: SmartLMS"
+          requested_password_reset: "You requested a confirmation of your password for logging into OpenLMS."
+          subject: "Forgot Password: OpenLMS"
         labels: 
           associated_with_accounts: "This address is associated with the following accounts"
           change_password_at: "change this login's password at"
@@ -7533,8 +7533,8 @@ en:
         login_at_account: "%{login_email} at %{account_name}"
         login_managed_by_account: "this login's credentials are managed by %{account_name}"
         password_from_account: "The password for this login should have been given to you by the system administrators at %{account_name}, and Arrivu doesn't have access to your password.  If your password is not working, please contact the system administrators about changing or verifying your password."
-        requested_password_reset: "You requested a confirmation of your password for logging into SmartLMS."
-        subject: "Forgot Password: SmartLMS"
+        requested_password_reset: "You requested a confirmation of your password for logging into OpenLMS."
+        subject: "Forgot Password: OpenLMS"
     grade_weight_changed: 
       email: 
         grade_changed: "The grading policy for the course, %{course_name} has changed."
@@ -7565,7 +7565,7 @@ en:
           grades_based_on_percent: "Grading is based on the weighted total for each assignment group"
           subject: "Grade Weight Changed"
       twitter: 
-        grade_changed: "SmartLMS Alert - Grading Policy Changed: %{course_name}"
+        grade_changed: "OpenLMS Alert - Grading Policy Changed: %{course_name}"
     group_assignment_submitted_late: 
       email: 
         body: "The group %{group_name} has just turned in a late submission for %{assignment_name} in the course %{course_name}."
@@ -7585,7 +7585,7 @@ en:
         body: "The group %{group_name} turned in a late submission for %{assignment_name} in the course %{course_name}."
         subject: "Late Assignment: %{group_name}, %{assignment_name}"
       twitter: 
-        subject: "SmartLMS Alert - Late Group Submission: %{group_name}, %{assignment_name}"
+        subject: "OpenLMS Alert - Late Group Submission: %{group_name}, %{assignment_name}"
     group_membership_accepted: 
       email: 
         account_group: "Your request to join the group %{group_name} for the account %{account_name} has been accepted."
@@ -7613,8 +7613,8 @@ en:
         course_group: "Your request to join the group %{group_name} for the course %{course_name} has been accepted."
         subject: "Group Membership Accepted: %{group_name}"
       twitter: 
-        account_group: "SmartLMS Alert - Group Membership Accepted: %{group_name} for the account %{account_name}."
-        course_group: "SmartLMS Alert - Group Membership Accepted: %{group_name} for the course %{course_name}."
+        account_group: "OpenLMS Alert - Group Membership Accepted: %{group_name} for the account %{account_name}."
+        course_group: "OpenLMS Alert - Group Membership Accepted: %{group_name} for the course %{course_name}."
     group_membership_rejected: 
       email: 
         account_group: "Your request to join the group %{group_name} for the account %{account_name} has been rejected."
@@ -7641,8 +7641,8 @@ en:
         course_group: "Your request to join the group %{group_name} for the course %{course_name} has been rejected."
         subject: "Group Membership Rejected for %{group_name}"
       twitter: 
-        account_group: "SmartLMS Alert - Group Membership Rejected: %{group_name} for the account %{account_name}."
-        course_group: "SmartLMS Alert - Group Membership Rejected: %{group_name} for the course %{course_name}."
+        account_group: "OpenLMS Alert - Group Membership Rejected: %{group_name} for the account %{account_name}."
+        course_group: "OpenLMS Alert - Group Membership Rejected: %{group_name} for the course %{course_name}."
     html_message: 
       html_not_exist: "The HTML version of this message was not created nor sent"
     index: 
@@ -7654,12 +7654,12 @@ en:
           click_to_preferences: "Click here to edit your notification preferences"
     merge_email_communication_channel: 
       email: 
-        body: "An account has been created for you at %{url}, but you already have a SmartLMS account.  If you would like to merge them together, please visit the following url:"
+        body: "An account has been created for you at %{url}, but you already have a OpenLMS account.  If you would like to merge them together, please visit the following url:"
         html: 
-          account_created: "An account has been created for you at %{url}, but you already have a SmartLMS account."
+          account_created: "An account has been created for you at %{url}, but you already have a OpenLMS account."
           merge: "If you would like to merge them together, <a href=\"%{link}\">click here</a>"
-          subject: "New SmartLMS Account"
-        subject: "New SmartLMS Account"
+          subject: "New OpenLMS Account"
+        subject: "New OpenLMS Account"
     message: 
       actions: 
         reply: Reply
@@ -7730,7 +7730,7 @@ en:
         body: "A new admin, %{user}, has been added for the account %{account}"
         subject: "New Account User"
       twitter: 
-        body: "SmartLMS Alert - New Admin: %{user}, %{account}"
+        body: "OpenLMS Alert - New Admin: %{user}, %{account}"
     new_announcement: 
       email: 
         html: 
@@ -7745,7 +7745,7 @@ en:
         details: "More info at %{url}"
         subject: "New announcement: %{title}, %{course}"
       twitter: 
-        body: "SmartLMS Alert - Announcement: %{title}, %{course}."
+        body: "OpenLMS Alert - Announcement: %{title}, %{course}."
     new_context_group_membership: 
       email: 
         body_account: "You've been added to a new group for the account %{account}.  The name of the group is %{group_name}."
@@ -7772,8 +7772,8 @@ en:
         body_course: "You've been added to a new group for the course %{course}.  The name of the group is %{group_name}."
         subject: "New Group Membership for %{course_or_account}"
       twitter: 
-        body_account: "SmartLMS Alert - New Group: %{group} for the account %{account}"
-        body_course: "SmartLMS Alert - New Group: %{group} for the course %{course}"
+        body_account: "OpenLMS Alert - New Group: %{group} for the account %{account}"
+        body_course: "OpenLMS Alert - New Group: %{group} for the course %{course}"
     new_context_group_membership_invitation: 
       email: 
         body_account: "You've been invited to join the group %{group} for the account %{account}."
@@ -7799,8 +7799,8 @@ en:
         body_course: "You've been invited to join the group %{group} for the course %{course}."
         subject: "New Group Membership for %{course_or_account}"
       twitter: 
-        body_account: "SmartLMS Alert - Invitation: %{group} for the account %{account}"
-        body_course: "SmartLMS Alert - Invitation: %{group} for the course %{course}."
+        body_account: "OpenLMS Alert - Invitation: %{group} for the account %{account}"
+        body_course: "OpenLMS Alert - Invitation: %{group} for the course %{course}."
     new_course: 
       email: 
         body: "A course, %{course}, has been added for the account %{account}"
@@ -7831,7 +7831,7 @@ en:
           teachers: Teachers
         subject: "New Course"
       twitter: 
-        body: "SmartLMS Alert - New Course: %{course}, %{account}"
+        body: "OpenLMS Alert - New Course: %{course}, %{account}"
     new_discussion_entry: 
       email: 
         body: "%{user} posted a new comment on the thread %{discussion_topic} for %{course}:"
@@ -7849,7 +7849,7 @@ en:
       summary: 
         subject: "New Comment for %{discussion_topic}: %{course}"
       twitter: 
-        body: "SmartLMS Alert - Comment: %{discussion_topic}, %{course}."
+        body: "OpenLMS Alert - Comment: %{discussion_topic}, %{course}."
     new_discussion_topic: 
       email: 
         body: "A new discussion has been started that may be interesting to you:"
@@ -7871,7 +7871,7 @@ en:
       summary: 
         subject: "New Discussion - %{discussion_topic}: %{course}"
       twitter: 
-        subject: "SmartLMS Alert - Topic: %{discussion_topic}, %{course}"
+        subject: "OpenLMS Alert - Topic: %{discussion_topic}, %{course}"
     new_event_created: 
       email: 
         body: "There's a new event scheduled for %{course_name} that you should be aware of:"
@@ -7902,7 +7902,7 @@ en:
       twitter: 
         from_to_time: "from %{start_date_time} to %{end_date_time}"
         no_time_set: "No Time Set"
-        subject: "SmartLMS Alert - Event: %{event_title}, %{course_name}"
+        subject: "OpenLMS Alert - Event: %{event_title}, %{course_name}"
     new_file_added: 
       email: 
         html: 
@@ -7931,8 +7931,8 @@ en:
         body_account: "A new student organized group named \"%{group_name}\" was created for the account %{account}. The first member is %{user}."
         body_course: "A new student organized group named \"%{group_name}\" was created for the course %{course}. The first member is %{user}."
       twitter: 
-        body_account: "SmartLMS Alert - New Group: %{group_name} for the account %{account}"
-        body_course: "SmartLMS Alert - New Group: %{group_name} for the course %{course}"
+        body_account: "OpenLMS Alert - New Group: %{group_name} for the account %{account}"
+        body_course: "OpenLMS Alert - New Group: %{group_name} for the course %{course}"
     new_teacher_registration: 
       email: 
         body: "%{user} just registered as a teacher at %{website}."
@@ -7956,7 +7956,7 @@ en:
       sms: 
         body: "%{user} just registered as a teacher at %{website}."
       summary: 
-        body: "%{user} just registered as a teacher in SmartLMS."
+        body: "%{user} just registered as a teacher in OpenLMS."
         labels: 
           email: Email
           phone: Phone
@@ -7964,7 +7964,7 @@ en:
           school_position: "School Position"
         subject: "New Teacher Registration"
       twitter: 
-        body: "SmartLMS Alert - New Teacher: %{user}, %{account}"
+        body: "OpenLMS Alert - New Teacher: %{user}, %{account}"
     new_user: 
       email: 
         body: "A new user, %{user}, has just registered for the account %{account}"
@@ -7984,7 +7984,7 @@ en:
         body: "A new user, %{user}, has just registered for the account %{account}"
         subject: "New User"
       twitter: 
-        body: "SmartLMS Alert - New User: %{user}, %{account}"
+        body: "OpenLMS Alert - New User: %{user}, %{account}"
     page_locked: "This page is currently locked."
     page_locked_at: "This page was locked %{at}."
     page_locked_module: "This page is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7992,13 +7992,13 @@ en:
     page_unpublished_module: "This page is part of an unpublished module and is not available yet."
     pseudonym_registration: 
       email: 
-        body: "You have been registered for a SmartLMS account at %{account}!  Before you can log in and start using SmartLMS, you'll need to finish the configuration process."
+        body: "You have been registered for a OpenLMS account at %{account}!  Before you can log in and start using OpenLMS, you'll need to finish the configuration process."
         html: 
-          body: "You have been registered for a SmartLMS account at %{account}! Before you can log in and start using SmartLMS, you'll need to finish the configuration process."
+          body: "You have been registered for a OpenLMS account at %{account}! Before you can log in and start using OpenLMS, you'll need to finish the configuration process."
           link: "Click here to finish the registration process"
-          subject: "Finish Registration: SmartLMS"
+          subject: "Finish Registration: OpenLMS"
         link_message: "To finish the registration process, please visit the following url:"
-        subject: "Finish Registration: SmartLMS"
+        subject: "Finish Registration: OpenLMS"
     quiz_locked: "This quiz is currently locked."
     quiz_locked_at: "This quiz was locked %{at}."
     quiz_locked_module: "This quiz is part of the module *%{module}* and hasn't been unlocked yet."
@@ -8034,7 +8034,7 @@ en:
         body: "You've been invited by %{user} to assess their submission for %{rubric}:"
         subject: "Assessment Invitation: %{rubric}, %{context}"
       twitter: 
-        tweet: "SmartLMS Alert - Invite: assess %{rubric}, %{user}"
+        tweet: "OpenLMS Alert - Invite: assess %{rubric}, %{user}"
     rubric_assessment_submission_reminder: 
       email: 
         body: "You've been reminded to assess: %{rubric}, %{context}:"
@@ -8053,7 +8053,7 @@ en:
         body: "You've been reminded to assess: %{rubric}, %{context}:"
         subject: "Reminder to Assess: %{rubric}, %{context}"
       twitter: 
-        tweet: "SmartLMS Alert - Reminder: assess %{rubric}, %{context}"
+        tweet: "OpenLMS Alert - Reminder: assess %{rubric}, %{context}"
     rubric_association_created: 
       email: 
         body: "A new assessment has been created for %{context}:"
@@ -8072,7 +8072,7 @@ en:
         body: "A new assessment has been created for %{context}:"
         subject: "New Assessment: %{title}, %{context}"
       twitter: 
-        tweet: "SmartLMS Alert - New Assessment: %{title}, %{context}."
+        tweet: "OpenLMS Alert - New Assessment: %{title}, %{context}."
     send_form: 
       labels: 
         message_body: Message
@@ -8099,7 +8099,7 @@ en:
         someone: Someone
         subject: "Submission Comment: %{user}, %{assignment}, %{context}"
       twitter: 
-        tweet: "SmartLMS Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
+        tweet: "OpenLMS Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
     submission_comment_for_teacher: 
       email: 
         body: "%{author} just made a new comment on the submission for %{user} for %{assignment}."
@@ -8122,7 +8122,7 @@ en:
         someone: Someone
         subject: "Submission Comment: %{user}, %{assignment}, %{context}"
       twitter: 
-        tweet: "SmartLMS Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
+        tweet: "OpenLMS Alert - Comment: %{author} for %{assignment}, %{user}, %{context}."
     submission_grade_changed: 
       email: 
         body: "The grade on your assignment, %{assignment_title} has been changed."
@@ -8169,7 +8169,7 @@ en:
         not_applicable: N/A
         score: "score:  %{score} out of %{total}"
         score_pending: "(pending review)"
-        tweet: "SmartLMS Alert - Grade Change: %{date}"
+        tweet: "OpenLMS Alert - Grade Change: %{date}"
     submission_graded: 
       email: 
         body: "Your assignment, %{assignment}, has been graded."
@@ -8216,25 +8216,25 @@ en:
         not_applicable: N/A
         score: "score:  %{score} out of %{total}"
         score_pending_review: "(pending review)"
-        tweet: "SmartLMS Alert - Graded: %{assignment}, %{context}"
+        tweet: "OpenLMS Alert - Graded: %{assignment}, %{context}"
     summaries: 
       email: 
-        daily_body: "You're signed up to receive a daily report of some notifications from your SmartLMS account.  Below is the report for %{date}:"
+        daily_body: "You're signed up to receive a daily report of some notifications from your OpenLMS account.  Below is the report for %{date}:"
         html: 
           click_to_preferences: "Click here to edit your notification preferences"
-          daily_body: "You're signed up to receive a daily report of some notifications from your SmartLMS account. Below is the report for %{date}:"
-          subject: "Recent SmartLMS Notifications"
+          daily_body: "You're signed up to receive a daily report of some notifications from your OpenLMS account. Below is the report for %{date}:"
+          subject: "Recent OpenLMS Notifications"
           view: "Click to view"
-          weekly_body: "You're signed up to receive a weekly report of some notifications from your SmartLMS account. Below is the report for the week ending %{date}:"
+          weekly_body: "You're signed up to receive a weekly report of some notifications from your OpenLMS account. Below is the report for the week ending %{date}:"
         notifications_link: "You can change your notification settings by visiting the following page:"
-        subject: "Recent SmartLMS Notifications"
-        weekly_body: "You're signed up to receive a weekly report of some notifications from your SmartLMS account.  Below is the report for the week ending %{date}:"
+        subject: "Recent OpenLMS Notifications"
+        weekly_body: "You're signed up to receive a weekly report of some notifications from your OpenLMS account.  Below is the report for the week ending %{date}:"
       facebook: 
-        new_notifications: "You've received *%{notification_count} new notifications* in #SmartLMS#."
+        new_notifications: "You've received *%{notification_count} new notifications* in #OpenLMS#."
       sms: 
         notifications_sms: "%{notifications_count} new notifications at %{url}"
       twitter: 
-        tweet: "SmartLMS Alert - %{notification_count} new notifications"
+        tweet: "OpenLMS Alert - %{notification_count} new notifications"
     topic_locked: "This topic is currently locked."
     topic_locked_at: "This topic was locked %{at}."
     topic_locked_module: "This topic is part of the module *%{module}* and hasn't been unlocked yet."
@@ -8257,7 +8257,7 @@ en:
       summary: 
         subject: "Updated Wiki Page: %{title}, %{user}"
       twitter: 
-        tweet: "SmartLMS Alert - Page Updated: %{title}, %{user}."
+        tweet: "OpenLMS Alert - Page Updated: %{title}, %{user}."
     visit_modules_page: "*Visit the course modules page for information on how to unlock this content.*"
     web_conference_invitation: 
       email: 
@@ -8277,7 +8277,7 @@ en:
         body: "You've been invited to participate in a web conference, %{title} for %{name}."
         subject: "Web Conference Invitation: %{name}"
       twitter: 
-        tweet: "SmartLMS Alert - Invite: attend %{title}, %{name}"
+        tweet: "OpenLMS Alert - Invite: attend %{title}, %{name}"
   migration: 
     ecollege: 
       course_not_found: "The ECollege course wasn't found."
@@ -8472,7 +8472,7 @@ en:
       parent: "Parent Emails"
       scheduling: Scheduling
   notifications_search: 
-    cant_be_blank: "SmartLMS User ID can't be blank"
+    cant_be_blank: "OpenLMS User ID can't be blank"
     cant_come_before_from: "'To Date' can't come before 'From Date'"
   number: 
     currency: 
@@ -8566,7 +8566,7 @@ en:
       instructions: 
         main: 
           manage: 
-            description: "*Outcomes are created here to track mastery in a course. To get started, checkout the menu bar along the top. Click on the New button to create a new outcome, or the New Group button to create a new group to organize your outcomes into. The Find button will allow you to use outcomes that have been created by your state or institution. As you create and use outcomes you will be able to use the panel to the left to navigate through your outcomes. You can drag and drop outcomes between the different levels to create structure.* *More importantly, SmartLMS allows you to add outcomes to your grading rubrics so that you can evaluate mastery as you grade assignments. Once you've set up outcomes, click Manage Rubrics to start using your outcomes for grading.*"
+            description: "*Outcomes are created here to track mastery in a course. To get started, checkout the menu bar along the top. Click on the New button to create a new outcome, or the New Group button to create a new group to organize your outcomes into. The Find button will allow you to use outcomes that have been created by your state or institution. As you create and use outcomes you will be able to use the panel to the left to navigate through your outcomes. You can drag and drop outcomes between the different levels to create structure.* *More importantly, OpenLMS allows you to add outcomes to your grading rubrics so that you can evaluate mastery as you grade assignments. Once you've set up outcomes, click Manage Rubrics to start using your outcomes for grading.*"
             title: "Setting up Outcomes"
     mastery_error: "Must be greater than or equal to 0"
     missing_outcome: "Couldn't find that learning outcome"
@@ -8675,7 +8675,7 @@ en:
       name: "Academic Benchmark Importer"
       plugins: 
         ab: 
-          description: "This enables importing Academic Benchmark standards into SmartLMS."
+          description: "This enables importing Academic Benchmark standards into OpenLMS."
     academic_benchmark_settings: 
       api_url_description: "(e.g. %{url})"
       common_core_guid: "(e.g. %{guid})"
@@ -8700,7 +8700,7 @@ en:
       no_copying_frozen: "Don't allow frozen assignments to be copied."
     banner_grade_exchange_settings: 
       labels: 
-        canvas_source_identifier: "Name of your SmartLMS instance"
+        canvas_source_identifier: "Name of your OpenLMS instance"
         sis_source_identifier: "Name of your Banner instance"
     big_blue_button: 
       description: "Big Blue Button web conferencing support"
@@ -8718,9 +8718,9 @@ en:
     buttons: 
       saving: Saving...
     canvas_cartridge_importer: 
-      description: "This enables converting a SmartLMS export to the intermediary json format to be imported"
-      file_description: "SmartLMS Course Export Package"
-      name: "SmartLMS Cartridge Importer"
+      description: "This enables converting a OpenLMS export to the intermediary json format to be imported"
+      file_description: "OpenLMS Course Export Package"
+      name: "OpenLMS Cartridge Importer"
     common_cartridge_importer: 
       description: "This enables converting a Common Cartridge packages in the intermediary json format to be imported"
       file_description: "Common Cartridge 1.0/1.1/1.2 Package"
@@ -8788,7 +8788,7 @@ en:
       sketchpad: SketchPad
       typewithme: TypeWith.me
     facebook: 
-      description: "SmartLMS Facebook application"
+      description: "OpenLMS Facebook application"
       name: Facebook
     facebook_settings: 
       description: |-
@@ -8797,23 +8797,23 @@ en:
           works correctly:
           
           * **Web Site -- Site URL:** set to %{site_url}
-          * **Web Site -- Site Domain:** domain of your main SmartLMS site.  This must match the Site URL setting
-          * **Facebook Integration -- SmartLMS Page:** make a note of whatever you choose and enter in the form below
-          * **Facebook Integration -- SmartLMS URL:** set to %{canvas_url}
-          * Make sure **Advanced -- OAuth 2.0 for SmartLMS** is enabled
+          * **Web Site -- Site Domain:** domain of your main OpenLMS site.  This must match the Site URL setting
+          * **Facebook Integration -- OpenLMS Page:** make a note of whatever you choose and enter in the form below
+          * **Facebook Integration -- OpenLMS URL:** set to %{canvas_url}
+          * Make sure **Advanced -- OAuth 2.0 for OpenLMS** is enabled
           * After you save your app, make a note of the App ID, API Key and App Secret
       domain_name: domain
       headers: 
         domain_settings: "Domain Settings"
       hints: 
-        canvas_domain: "this is the domain specified in \"SmartLMS URL\""
-        canvas_name: "this is the path specified in \"SmartLMS Page\""
+        canvas_domain: "this is the domain specified in \"OpenLMS URL\""
+        canvas_name: "this is the path specified in \"OpenLMS Page\""
         disable_ssl: "Use only for local testing"
       labels: 
         api_key: "API Key"
         app_id: "App ID"
-        canvas_domain: "SmartLMS Domain"
-        canvas_name: "SmartLMS Name"
+        canvas_domain: "OpenLMS Domain"
+        canvas_name: "OpenLMS Name"
         disable_ssl: "Disable SSL"
         secret: "App Secret"
     google_docs: 
@@ -8843,7 +8843,7 @@ en:
         default_email_domain: "Default email domain"
         email_preference: "Email preference"
         lms_delivery_name: "LMS Delivery Name"
-        map_sections_to_courses: "Map IMS sections to SmartLMS Courses"
+        map_sections_to_courses: "Map IMS sections to OpenLMS Courses"
         section_end_days_adjustment: "Section end days adjustment"
         section_name_selection: "Section name selection"
         section_start_days_adjustment: "Section start days adjustment"
@@ -8854,8 +8854,8 @@ en:
       canvas_revision_unknown: Unknown
       description: Description
       name: Name
-      no_plugins: "There are no SmartLMS plugins installed"
-      page_title: "SmartLMS Plugins"
+      no_plugins: "There are no OpenLMS plugins installed"
+      page_title: "OpenLMS Plugins"
       tag: Tag
       version: Version
       website: Website
@@ -8869,7 +8869,7 @@ en:
           You will need an account either at [Kaltura.com](%{kaltura_url})
           or with a self-hosted instance of Kaltura.
           
-          **Note:** once you have Kaltura configured within SmartLMS,
+          **Note:** once you have Kaltura configured within OpenLMS,
           you need to go to the Kaltura Management Console and under "Settings -> 
           Integration Settings" enable server notifications with a 
           Notification URL of:
@@ -8879,7 +8879,7 @@ en:
           Then check the boxes for "Add Entry" and "Delete Entry" in the "Sent by Server" column.
       headers: 
         account_settings: "Account Settings"
-        canvas_settings: "SmartLMS Settings"
+        canvas_settings: "OpenLMS Settings"
         domain_settings: "Domain Settings"
         ui_conf_ids: "UI Conf IDs"
       hints: 
@@ -9004,7 +9004,7 @@ en:
       description: |-
           If the institution does not use WebCT's "Learning Modules" (including schools who adopted WebCT
             prior to version 4.0, when modules were made available), course migrations can be improved by importing the "Course Content"
-            as SmartLMS Modules instead of the "Learning Modules". This page allows one to set the default behavior of the WebCT migrator
+            as OpenLMS Modules instead of the "Learning Modules". This page allows one to set the default behavior of the WebCT migrator
             with respect to content modules. It is important to remember that, while individual course migrations retain the ability
             to choose, the bulk migrator always utilizes the value configured here and cannot be changed per migration.
       labels: 
@@ -9104,8 +9104,8 @@ en:
       updated_profile: "Settings successfully updated"
     please_select_an_option: "Please select an option"
     profile: 
-      access_token_description: "Access tokens can be used to allow other applications to make API calls on your behalf. You can also generate access tokens and *use the SmartLMS Open API* to come up with your own integrations."
-      approved_integrations: "These are the third-party applications you have authorized to access the SmartLMS site on your behalf:"
+      access_token_description: "Access tokens can be used to allow other applications to make API calls on your behalf. You can also generate access tokens and *use the OpenLMS Open API* to come up with your own integrations."
+      approved_integrations: "These are the third-party applications you have authorized to access the OpenLMS site on your behalf:"
       buttons: 
         add_picture_file: "Add File"
         authorize_google_docs: "Authorize Google Docs Access"
@@ -9120,16 +9120,16 @@ en:
         select_image: "Select Image"
         update_settings: "Update Settings"
       confirm_email_instructions: "Before you can edit your profile, you need to verify your email address (%{email}) by clicking the link in the email we sent you. If you don't see it, *click to re-send the email*, and make sure to check your spam box."
-      delicious_description: "Delicious is a tool that lets you store and share your bookmarks with others. SmartLMS's rich content editor will let you search your Delicious tags to easily link from within SmartLMS to other resources you find useful."
-      diigo_description: "Diigo is a social bookmarking tool tailored specifically to research and education. SmartLMS's rich content editor will let you search your Diigo tags to easily link from within SmartLMS to other resources you find useful."
+      delicious_description: "Delicious is a tool that lets you store and share your bookmarks with others. OpenLMS's rich content editor will let you search your Delicious tags to easily link from within OpenLMS to other resources you find useful."
+      diigo_description: "Diigo is a social bookmarking tool tailored specifically to research and education. OpenLMS's rich content editor will let you search your Diigo tags to easily link from within OpenLMS to other resources you find useful."
       error_loading_token_details: "Error Loading Token Details"
-      facebook_description: "If you have a Facebook account, you can install the SmartLMS app and receive course notifications on your profile. You can specify which types of notifications you want and how often you'd like them sent."
+      facebook_description: "If you have a Facebook account, you can install the OpenLMS app and receive course notifications on your profile. You can specify which types of notifications you want and how often you'd like them sent."
       full_token_warning: |-
           **Copy this token down now**. Once you leave this page you won't be able to
           retrieve the full token anymore, you'll have to regenerate it to get a new
           value.
       generate_access_token_description: |-
-          Access tokens are what allow third-party applications to access SmartLMS
+          Access tokens are what allow third-party applications to access OpenLMS
           resources on your behalf. These tokens are normally created automatically for
           applications as needed, but if [you're developing a new or limited
           project](%{documentation_url}) you can just generate the token from here.
@@ -9208,7 +9208,7 @@ en:
         view_facebook_app: "view the Facebook app"
         view_your_profile: "view your profile"
       loading_token_details: "Loading Token Details..."
-      no_approved_integrations: "Third-party applications can request permission to access the SmartLMS site on your behalf. As you begin authorizing applications you will see them listed here."
+      no_approved_integrations: "Third-party applications can request permission to access the OpenLMS site on your behalf. As you begin authorizing applications you will see them listed here."
       no_language_preference: "System Default (%{language})"
       no_registered_services: "No Registered Services"
       none: None
@@ -9238,7 +9238,7 @@ en:
           These notifications will be sent as direct messages to yourself from
           yourself, and won't appear in your public stream.
       unknown_service: Unknown
-      web_services: "SmartLMS can make your life a lot easier by tying itself in with the web tools you already use. Click any of the services in \"Other Services\" to see what we mean."
+      web_services: "OpenLMS can make your life a lot easier by tying itself in with the web tools you already use. Click any of the services in \"Other Services\" to see what we mean."
     resending: resending...
     secondary_nav: 
       links: 
@@ -9286,7 +9286,7 @@ en:
         carrier: Carrier
         cell_number: "Cell Number"
         email_address: "Email Address"
-        enable_login_for_email: "I want to log in to SmartLMS using this email address"
+        enable_login_for_email: "I want to log in to OpenLMS using this email address"
         sms_email: "SMS Email"
       links: 
         add_contact_method: "Add Contact Method"
@@ -9312,7 +9312,7 @@ en:
     notifications: 
       privacy_notice: 
         ok: Ok
-        privacy_notice: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive SmartLMS course and group information outside of the institutional system."
+        privacy_notice: "Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive OpenLMS course and group information outside of the institutional system."
         privacy_notice_title: "Privacy Notice"
   pseudonym: 
     errors: 
@@ -9342,13 +9342,13 @@ en:
       invalid_otp: "Invalid verification code, please try again"
       login_error: "There was a problem logging in at %{institution}"
       login_errors: 
-        no_config_for_id: "The SmartLMS account has no authentication configuration with that id"
+        no_config_for_id: "The OpenLMS account has no authentication configuration with that id"
         no_idp_set: "The institution you logged in from is not configured on this account."
-        unrecognized_idp: "SmartLMS did not recognize your identity provider"
+        unrecognized_idp: "OpenLMS did not recognize your identity provider"
       logout_errors: 
-        no_idp_found: "SmartLMS was unable to log you out at your identity provider"
+        no_idp_found: "OpenLMS was unable to log you out at your identity provider"
       max_attempts: "Too many failed login attempts. Please try again later or contact your system administrator."
-      no_matching_user: "SmartLMS doesn't have an account for user: %{user}"
+      no_matching_user: "OpenLMS doesn't have an account for user: %{user}"
       request_failed: "Request failed. Try again."
       user_deleted: "That user account has been deleted.  Please contact your system administrator to have your account re-activated."
     messages: 
@@ -9359,16 +9359,16 @@ en:
       buttons: 
         request_password: "Request Password"
       dont_know_password: "I don't know my password"
-      log_in_to_canvas: "Log In To SmartLMS"
+      log_in_to_canvas: "Log In To OpenLMS"
       login: Login
       login_handle: "Enter your %{login_handle_name} and we'll send you a link to change your password."
       password: Password
       sending: Sending...
     new: 
-      details: "Before you can log in you need to finish the registration process. You should have received an email with a confirmation link back to SmartLMS. Follow that link to complete the process. Make sure to check your spam box."
+      details: "Before you can log in you need to finish the registration process. You should have received an email with a confirmation link back to OpenLMS. Follow that link to complete the process. Make sure to check your spam box."
       links: 
         resend_email: "Re-Send the Email"
-      page_title: "Log In to SmartLMS"
+      page_title: "Log In to OpenLMS"
       titles: 
         registration_complete: "Registration Incomplete"
     notices: 
@@ -9391,7 +9391,7 @@ en:
       details: 
         mfa_enrollment: |-
             Multi-factor authentication increases security by requiring that you have something in your physical possession,
-            in addition to knowing your password, in order to log in to SmartLMS. This can be a device that can generate
+            in addition to knowing your password, in order to log in to OpenLMS. This can be a device that can generate
             verification codes, or a phone that can receive text messages. The Google Authenticator app for [iPhone](%{iphone_url}) or
             [Android](%{android_url}) can be configured by scanning the QR Code below. Other tokens can be configured by entering the
             secret key **%{secret_key}**.
@@ -10401,7 +10401,7 @@ en:
       labels: 
         started: Started
         times_up: "Time's Up! Submitting results in"
-      logged_out_of_canvas: "*You have been logged out of SmartLMS.* To continue please log in"
+      logged_out_of_canvas: "*You have been logged out of OpenLMS.* To continue please log in"
       login_required: "Login Required"
       minutes_count: 
         one: "1 Minute"
@@ -10521,7 +10521,7 @@ en:
       labels: 
         email: Email
         name: Name
-    welcome_to_canvas: "Welcome to SmartLMS!"
+    welcome_to_canvas: "Welcome to OpenLMS!"
   retrieve_timeout: "could not retrieve configuration, the server response timed out"
   role: 
     roles: 
@@ -10542,7 +10542,7 @@ en:
       manage_alerts: "Manage global alerts"
       manage_assignments: "Manage (add / edit / delete) assignments and quizzes"
       manage_calendar: "Add, edit and delete events on the course calendar"
-      manage_canvasnet_courses: "Manage SmartLMS Network courses"
+      manage_canvasnet_courses: "Manage OpenLMS Network courses"
       manage_content: "Manage all other course content"
       manage_courses: "Manage ( add / edit / delete ) courses"
       manage_demos: "Manage demos"
@@ -11108,7 +11108,7 @@ en:
       log_in: "Log In"
       login_at_account: "Log in at %{school_name}"
       login_handle: "Enter your %{login_handle_name} and we'll send you a link to change your password."
-      register_for_canvas: "*Need a SmartLMS Account?* **Click Here, It's Free!**"
+      register_for_canvas: "*Need a OpenLMS Account?* **Click Here, It's Free!**"
     menu_assignment: 
       labels: 
         due: due
@@ -11179,9 +11179,9 @@ en:
       links_title: Title
       links_url: URL
       manage_settings: "Manage Registered Services"
-      message_me: "message me in SmartLMS"
+      message_me: "message me in OpenLMS"
       message_title: Message
-      message_user_canvas: "Message %{user} in SmartLMS"
+      message_user_canvas: "Message %{user} in OpenLMS"
       name: Name
       no_links: "%{name} hasn't added any links"
       nothing_in_common: "You don't have anything in common"
@@ -11523,7 +11523,7 @@ en:
       date: Date
       value: Value
     institution_suspended: 
-      body: "Your school's SmartLMS account is temporarily suspended. Please contact your SmartLMS administrator."
+      body: "Your school's OpenLMS account is temporarily suspended. Please contact your OpenLMS administrator."
       links: 
         logout: Logout
         stop_masquerading: "[Stop Masquerading]"
@@ -11989,7 +11989,7 @@ en:
     cc_prefs: 
       buttons: 
         configure: "Configure Communication Preferences"
-      comm_preferences_instructions: "Now that you're registered with SmartLMS, you might want to configure what notifications you'll receive as your courses progress. SmartLMS is flexible enough to let you choose how and for what events you'd like to be notified. When things happen in your courses you can choose to be emailed or texted to your cell immediately, daily or weekly."
+      comm_preferences_instructions: "Now that you're registered with OpenLMS, you might want to configure what notifications you'll receive as your courses progress. OpenLMS is flexible enough to let you choose how and for what events you'd like to be notified. When things happen in your courses you can choose to be emailed or texted to your cell immediately, daily or weekly."
       titles: 
         configure_com_prefs: "Configure Communication Preferences"
     confirms: 
@@ -12142,7 +12142,7 @@ en:
         name_and_email: "Name and Email"
       update_instructions: "You can update some of this user's information, but they can change it back if they choose."
     new: 
-      create_a_canvas_account: "Create a SmartLMS Account"
+      create_a_canvas_account: "Create a OpenLMS Account"
     no_deleting_sis_user: "You cannot delete a system-generated user"
     no_self_registration: "Self registration has not been enabled for this account"
     oauth_fail: "OAuth Request failed. Couldn't find valid request"
@@ -12162,11 +12162,11 @@ en:
       almost_there: "You're almost there..."
       done_resending: "Done! Message may take a few minutes."
       failed_resending: "Request failed. Try again."
-      invite_to_read: "We invite you to watch this brief overview of SmartLMS. You may also *read about how SmartLMS is helping* to bring students in 27 countries closer to lecture halls, instructors and classmates."
+      invite_to_read: "We invite you to watch this brief overview of OpenLMS. You may also *read about how OpenLMS is helping* to bring students in 27 countries closer to lecture halls, instructors and classmates."
       links: 
         download_pdf: "download PDF"
       need_flash: "You need Flash player 8+ and JavaScript enabled to view this video."
-      overview_video: "Overview Video of SmartLMS"
+      overview_video: "Overview Video of OpenLMS"
       registration_complete: "Registration Complete"
       resending: Re-Sending...
       sent_email_paragraph: "We sent an email to %{email_address}. *Click the link in the email to finish registering*. If you don't see it, **click to re-send the email**, and make sure to check your spam box."
@@ -12229,13 +12229,13 @@ en:
                   those courses are available, you will see information about them here
                   and in the top navigation. In the meantime, feel free to sign up for
                   more courses or set up your profile.
-      welcome_to_happiness: "Welcome to SmartLMS!"
+      welcome_to_happiness: "Welcome to OpenLMS!"
   validate: 
     is_required: "This field is required"
   warnings: 
     test_install: 
-      message: "This SmartLMS installation is only for testing, and will reset every week."
-      title: "SmartLMS Test Installation"
+      message: "This OpenLMS installation is only for testing, and will reset every week."
+      title: "OpenLMS Test Installation"
   web_conference: 
     default_name_for_courses: "Course Web Conference"
     default_name_for_groups: "Group Web Conference"

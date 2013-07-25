@@ -89,7 +89,7 @@ class ApplicationController < ActionController::Base
       @js_env[:IS_LARGE_ROSTER] = true if @context.respond_to?(:large_roster?) && @context.large_roster?
       #add this line for enable/disable gradable in discussion_topics/new
       if @domain_root_account
-        @js_env[:GRADE_ACTIVE] = @domain_root_account.settings[:smartlms_grade_disable]
+        @js_env[:GRADE_ACTIVE] = @domain_root_account.settings[:OpenLMS_grade_disable]
       else
         @js_env[:GRADE_ACTIVE] =false
       end
@@ -1154,24 +1154,24 @@ class ApplicationController < ActionController::Base
         !!Facebook.config
       elsif feature == :linked_in
         !!LinkedIn.config
-      elsif feature == :google_docs  and !!!@domain_root_account.smartlms_google_docs_disable?
+      elsif feature == :google_docs  and !!!@domain_root_account.OpenLMS_google_docs_disable?
         !!GoogleDocs.config
       elsif feature == :etherpad
         !!EtherpadCollaboration.config
       elsif feature == :kaltura
-        !!Kaltura::ClientV3.config and !!!@domain_root_account.smartlms_kaltura_disable?
+        !!Kaltura::ClientV3.config and !!!@domain_root_account.OpenLMS_kaltura_disable?
       elsif feature == :web_conferences
-        !!WebConference.config and !!!@domain_root_account.smartlms_bbb_disable?
+        !!WebConference.config and !!!@domain_root_account.OpenLMS_bbb_disable?
       elsif feature == :tinychat
         !!Tinychat.config
       elsif feature == :scribd
         !!ScribdAPI.config
-      elsif feature == :crocodoc and !!!@domain_root_account.smartlms_Crocodoc_disable?
+      elsif feature == :crocodoc and !!!@domain_root_account.OpenLMS_Crocodoc_disable?
         !!Canvas::Crocodoc.config
       elsif feature == :lockdown_browser
         Canvas::Plugin.all_for_tag(:lockdown_browser).any? { |p| p.settings[:enabled] }
       elsif feature == :kandan_chat
-        !!Kandanchat.config   and !!!@domain_root_account.smartlms_kandan_chat_disable?
+        !!Kandanchat.config   and !!!@domain_root_account.OpenLMS_kandan_chat_disable?
       else
         false
       end

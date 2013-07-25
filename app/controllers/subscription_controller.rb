@@ -67,7 +67,7 @@ class SubscriptionController < ApplicationController
           @pseudonym_session.save
           send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
           respond_to do |format|
-            flash[:notice] = "Please check your email to use SmartLMS account"
+            flash[:notice] = "Please check your email to use OpenLMS account"
             format.html{ redirect_to dashboard_url}
             #format.html{ redirect_to request.url.sub(current_subdomain, organization)}
             #format.html{ redirect_to request.server_name.sub(current_subdomain, organization)}
@@ -94,7 +94,7 @@ class SubscriptionController < ApplicationController
   private
   def send_email(to,name,password,subdomain)
     m=Message.new
-    m.subject="Your SmartLMS free subscription details"
+    m.subject="Your OpenLMS free subscription details"
     m.to = to
     body = "Hi #{name}<br>"
     body=body+"Your username is #{to}<br>"
