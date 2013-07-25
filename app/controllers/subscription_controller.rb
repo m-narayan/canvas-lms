@@ -91,7 +91,21 @@ class SubscriptionController < ApplicationController
     end
   end
 
+  def validate
+    if params[:field].blank? || params[:value].blank?
+      render :nothing => true
+    else
+      @valid = Account.validate_field(params[:field], params[:value])
+      render :json => @valid
+    end
+  end
+
+
+
+
+
   private
+
   def send_email(to,name,password,subdomain)
     m=Message.new
     m.subject="Your OpenLMS free subscription details"
@@ -112,4 +126,7 @@ class SubscriptionController < ApplicationController
     @subscription_settings.end_at=Time.now+365.days
     @subscription_settings.save
   end
+
+
+
 end

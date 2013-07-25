@@ -1165,7 +1165,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
   map.resources :feature_wishs
-  map.resources :subscription
+  map.resources :subscription #, :member => {:validate => :post}
   map.subscription_expired '/subscription_expired', :controller => 'subscription', :action => 'subscription_expired'
   map.subscription_expired_email '/subscription_expired_email', :controller => 'subscription', :action => 'subscription_expired_email',:conditions => { :method => :post }
+  map.subscription_validate '/subscription_validate', :controller => 'subscription', :action => 'validate',:conditions => { :method => :post }
 end
