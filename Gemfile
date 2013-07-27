@@ -98,6 +98,7 @@ gem 'crocodoc-ruby',  '0.0.1', :require => 'crocodoc'
 group :assets do
   gem 'compass-rails', '1.0.3'
   gem 'dress_code', '1.0.2'
+  
 end
 
 #group :mysql do
@@ -143,14 +144,13 @@ group :development do
   # Option to DISABLE_RUBY_DEBUGGING is helpful IDE-based debugging.
   # The ruby debug gems conflict with the IDE-based debugger gem.
   # Set this option in your dev environment to disable.
-  unless ENV['DISABLE_RUBY_DEBUGGING']
-  if ONE_NINE
-     gem 'debugger',     '1.1.3'
-  else
-     gem 'ruby-debug',   '0.10.4'
-  end
-  end
-
+ # unless ENV['DISABLE_RUBY_DEBUGGING']
+  # if ONE_NINE
+    # gem 'debugger',     '1.1.3'
+  # else
+    # gem 'ruby-debug',   '0.10.4'
+  # end
+ # end
 end
 
 group :development, :test do
@@ -190,3 +190,4 @@ Dir[File.join(File.dirname(__FILE__),'vendor/plugins/*/Gemfile')].each do |g|
 end
 
 gem 'subdomain-fu', '0.5.4'
+gem 'execjs'
