@@ -18,8 +18,8 @@ define [
     $node = $nodes[id] ?= $('<div />')
     $node.html templates[id](
       hiddenFields: ENV.HIDDEN_FIELDS || []
-      terms_url: "http://www.instructure.com/terms-of-use"
-      privacy_url: "http://www.instructure.com/privacy-policy"
+      terms_url: "http://arrivuapps.com/terms-of-use"
+      privacy_url: "http://arrivuapps.com/privacy-policy"
     )
     $node.find('.date-field').datetime_field()
 
