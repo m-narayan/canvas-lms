@@ -44,3 +44,4 @@
 /public/plugins/
 /spec/coffeescripts/plugins/
 /.idea/*.*
+.idea/
