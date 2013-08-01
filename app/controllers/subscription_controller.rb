@@ -113,7 +113,7 @@ class SubscriptionController < ApplicationController
     body = "Hi #{name}<br>"
     body=body+"Your username is #{to}<br>"
     body=body+"Your password is #{password}<br>"
-    body=body+"<a href=\"#{request.protocol}://#{subdomain}.#{current_domain}\">Please visit your demo here</a><br>"
+    body=body+"<a href=\"#{request.protocol}#{subdomain}.#{current_domain}\">Please visit your demo here</a><br>"
     m.html_body=body
     Mailer.deliver_message(m)
   end
