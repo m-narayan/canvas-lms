@@ -1,11 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/common')
+require File.expand_path(File.dirname(__FILE__) + '/common_mt')
 
 describe "login logout test" do
   it_should_behave_like "in-process server selenium tests"
 
   def should_show_message(message_text, selector)
     fj(selector).should include_text(message_text)
-    # the text isn't visible on the paapp_hostge so the webdriver .text method doesn't return it
+    # the text isn't visible on the page so the webdriver .text method doesn't return it
     driver.execute_script("return $('#aria_alerts div:last').text()").should == message_text
   end
 
@@ -77,4 +77,5 @@ describe "login logout test" do
     f('.login_link').click
     f('#login_form').should be_displayed
   end
+
 end
