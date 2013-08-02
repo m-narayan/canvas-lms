@@ -100,10 +100,6 @@ class SubscriptionController < ApplicationController
     end
   end
 
-
-
-
-
   private
 
   def send_email(to,name,password,subdomain)
