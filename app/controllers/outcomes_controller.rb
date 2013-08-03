@@ -18,11 +18,12 @@
 
 class OutcomesController < ApplicationController
   include Api::V1::Outcome
+
   before_filter :require_context, :except => [:build_outcomes]
   add_crumb(proc { t "#crumbs.outcomes", "Outcomes" }, :except => [:destroy, :build_outcomes]) { |c| c.send :named_context_url, c.instance_variable_get("@context"), :context_outcomes_path }
   before_filter { |c| c.active_tab = "outcomes" }
-  
-  def index
+
+def index
     if authorized_action(@context, @current_user, :read)
       return unless tab_enabled?(@context.class::TAB_OUTCOMES)
       @root_outcome_group = @context.root_outcome_group

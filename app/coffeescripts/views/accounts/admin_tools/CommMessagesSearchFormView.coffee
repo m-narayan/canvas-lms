@@ -38,7 +38,7 @@ define [
           [
             {
             type: 'required'
-            message: I18n.t('cant_be_blank', "SmartLMS User ID can't be blank")
+            message: I18n.t('cant_be_blank', "OpenLMS User ID can't be blank")
             }
           ]
       # If have both start and end, check for va lues to make sense together.

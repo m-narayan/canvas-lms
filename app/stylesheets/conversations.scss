@@ -11,7 +11,6 @@ body {
 
 #inbox {
   margin: -1em;
-  overflow: hidden;
   background: #a3a3a3 url(/images/messages/messages-background.png) 0 0 repeat;
   min-height: 425px;
   a {
@@ -427,6 +426,14 @@ ul.messages {
     img.avatar {
       top: 14px;
       left: 14px;
+    }
+    .send_private_message { opacity: 0; }
+    .send_private_message:focus { opacity: 1; }
+    &:hover {
+      .send_private_message { opacity: 1; }
+    }
+    &.self {
+      .send_private_message { display: none; }
     }
   }
   .date {

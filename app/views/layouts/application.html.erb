@@ -106,9 +106,11 @@
         <%- end -%>
       <% end %>
       </li>
+      <% if !!@domain_root_account.OpenLMS_grade_disable? && !@domain_root_account.OpenLMS_show_lock_menu?  %>
       <li id="grades_menu_item" class="menu-item">
         <%= link_to(t('menu.grades', 'Grades'), :grades, :class=>"menu-item-no-drop") %>
       </li>
+      <% end  %>
       <li id="calendar_menu_item" class="menu-item">
         <a href="<%= calendar_path %>" class="menu-item-no-drop"><%= t('menu.calendar', 'Calendar') %></a>
       </li>
@@ -121,6 +123,8 @@
   <iframe id="instructure_ajax_error_result" src="about:blank" style="border: 0;"></iframe>
 </div>
 
+<%= yield :leading_content %>
+
 <div id="wrapper-container">
   <div id="wrapper">
     <% if @show_left_side %>
@@ -130,14 +134,14 @@
         <%= left_side %>
       <% else %>
         <% if @context.try(:short_name) %>
-          <h1 id="section-tabs-header">
+          <div class='h1' id="section-tabs-header">
             <%= @context.short_name %>
             <% if @context && @context.respond_to?(:context)  %>
               <a href="<%= url_for(@context.context) %>" id="section-tabs-header-subtitle" class="ellipsis"><%= @context.context.name %></a>
             <% elsif @context && @context.respond_to?(:enrollment_term) && !@context.enrollment_term.default_term? %>
               <span id="section-tabs-header-subtitle" class="ellipsis"><%= @context.enrollment_term.name %></span>
             <% end %>
-          </h1>
+          </div>
         <% end %>
         <%= section_tabs %>
       <% end %>
@@ -222,7 +226,8 @@
 <% cache('global_dialogs_render') do %>
   <%= render :partial => "shared/global_dialogs" %>
 <% end %>
-<%= debug(params) %>
 <div id='aria_alerts' aria-live="assertive" class='hide-text affix'></div>
 <%= debug(params) if Rails.env.development? %>
+<%= render :partial => 'accounts/demo_bottom', :locals => { :include_common_bundle => true } %>
 <%= render :partial => 'layouts/foot', :locals => { :include_common_bundle => true } %>
+

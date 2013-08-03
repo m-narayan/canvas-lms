@@ -2,12 +2,14 @@
    has_multiple_sections = @context.course_sections.active.count > 1
 %>
 
+<% if !@domain_root_account.OpenLMS_add_user_disable?  %>
 <% if can_do(@context, @current_user, :manage_students) || can_do(@context, @current_user, :manage_admin_users) %>
   <% if @context.completed? || @context.soft_concluded? %>
     <%= t('cannot_add_users_to_concluded_course', %{You cannot add users to a concluded course.}) %>
   <% else %>
     <a href="#" class="add_users_link btn btn-primary"><i class="icon-group-new"></i> <%= t('links.add_users', %{Add Users}) %></a>
   <% end %>
+<% end %>
 <% end %>
 
 <% form_tag course_enroll_users_url(@context), {:id => "enroll_users_form", :class => "form-inline", :style => "display: none;"} do  %>

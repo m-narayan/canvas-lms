@@ -86,7 +86,10 @@ define [
       $.flashMessage addedMsg
 
     failure: (data) ->
-      $.flashError I18n.t("users_adding_failed", "Failed to enroll users")
+       if data.course_limit
+         $.flashError ("Your OpenLMS User creation limit is exceeded. Please contact your account admin ")
+       else
+         $.flashError I18n.t("users_adding_failed", "Failed to enroll users")
 
     showTextarea: ->
       $form.find(".add_users_button, .go_back_button, #user_list_parsed").hide()

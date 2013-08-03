@@ -207,7 +207,7 @@ module ApplicationHelper
   # context_url(@context, :controller => :assignments, :action => :show)
   def context_url(context, *opts)
     @context_url_lookup ||= {}
-    context_name = (context ? context.class.base_ar_class : context.class).name.underscore
+    context_name = url_helper_context_from_object(context)
     lookup = [context ? context.id : nil, context_name, *opts]
     return @context_url_lookup[lookup] if @context_url_lookup[lookup]
     res = nil
@@ -229,6 +229,10 @@ module ApplicationHelper
       res = context_name.to_s + opts.to_json.to_s
     end
     @context_url_lookup[lookup] = res
+  end
+
+  def url_helper_context_from_object(context)
+    (context ? context.class.base_ar_class : context.class).name.underscore
   end
 
   def message_user_path(user)
@@ -427,12 +431,27 @@ module ApplicationHelper
           hide = tab[:hidden] || tab[:hidden_unused] 
           class_name = tab[:css_class].to_css_class
           class_name += ' active' if @active_tab == tab[:css_class]
-          tab[:href] ="locked_by_admin" if (tab[:label] == "Sub-Accounts" and !!@domain_root_account.settings[:smartlms_sub_account_disable])
-          tab[:href] ="locked_by_admin" if (tab[:label] == "Grades" and !!@domain_root_account.settings[:smartlms_grade_disable]) || (tab[:label] == "Outcomes" and !!@domain_root_account.settings[:smartlms_outcomes_disable])
-          tab[:href] ="locked_by_admin" if (tab[:label] == "Grading Schemes" and !!@domain_root_account.settings[:smartlms_grade_disable])
-           if tab[:href] == "locked_by_admin"
-             html << "<li class='section #{"section-tab-hidden" if hide }'>" +  image_tag("lock.png",:style=>"float:left;margin-top: 5px;")+ link_to(tab[:label], path, :class => class_name) + "</li>"
-           else
+          if (tab[:label] == "Sub-Accounts" and @domain_root_account.OpenLMS_show_lock_menu?)
+            tab[:href] ="hide_menu"
+          elsif (tab[:label] == "Sub-Accounts" and !!@domain_root_account.OpenLMS_sub_account_disable?)
+            tab[:href] ="locked_by_admin"
+          end
+
+          if (tab[:label] == "Grades" and @domain_root_account.OpenLMS_show_lock_menu?) || (tab[:label] == "Outcomes" and @domain_root_account.OpenLMS_show_lock_menu?)
+            tab[:href] ="hide_menu"
+          elsif (tab[:label] == "Grades" and !!@domain_root_account.OpenLMS_grade_disable?) || (tab[:label] == "Outcomes" and !!@domain_root_account.OpenLMS_outcomes_disable?)
+            tab[:href] ="locked_by_admin"
+          end
+
+          if (tab[:label] == "Grading Schemes" and @domain_root_account.OpenLMS_show_lock_menu?)
+            tab[:href] ="hide_menu"
+          elsif (tab[:label] == "Grading Schemes" and !!@domain_root_account.OpenLMS_grade_disable?)
+            tab[:href] ="locked_by_admin"
+          end
+
+          if tab[:href] == "locked_by_admin"
+            html << "<li class='section #{"section-tab-hidden" if hide }'>" +  image_tag("lock.png",:style=>"float:left;margin-top: 5px;")+ link_to(tab[:label], path, :class => class_name) + "</li>"
+           elsif tab[:href] != "hide_menu"
              html << "<li class='section #{"section-tab-hidden" if hide }'>" + link_to(tab[:label], path, :class => class_name) + "</li>"
           end
         end
@@ -542,10 +561,10 @@ module ApplicationHelper
         {
           :name => tool.label_for(:editor_button, nil),
           :id => tool.id,
-          :url => tool.settings[:editor_button][:url] || tool.url,
-          :icon_url => tool.settings[:editor_button][:icon_url] || tool.settings[:icon_url],
-          :width => tool.settings[:editor_button][:selection_width],
-          :height => tool.settings[:editor_button][:selection_height]
+          :url => tool.editor_button(:url),
+          :icon_url => tool.editor_button(:icon_url),
+          :width => tool.editor_button(:selection_width),
+          :height => tool.editor_button(:selection_height)
         }
       end
     end
@@ -602,12 +621,12 @@ module ApplicationHelper
     opts[:options_so_far] ||= []
     folders.each do |folder|
       opts[:options_so_far] << %{<option value="#{folder.id}" #{'selected' if opts[:selected_folder_id] == folder.id}>#{"&nbsp;" * opts[:indent_width] * opts[:depth]}#{"- " if opts[:depth] > 0}#{html_escape folder.name}</option>}
-      child_folders = if opts[:all_folders]
-                        opts[:all_folders].select {|f| f.parent_folder_id == folder.id }
-                      else
-                        folder.active_sub_folders.by_position
-                      end
       if opts[:max_depth].nil? || opts[:depth] < opts[:max_depth]
+        child_folders = if opts[:all_folders]
+                          opts[:all_folders].select {|f| f.parent_folder_id == folder.id }
+                        else
+                          folder.active_sub_folders.by_position
+                        end
         folders_as_options(child_folders, opts.merge({:depth => opts[:depth] + 1}))
       end
     end
@@ -859,6 +878,6 @@ module ApplicationHelper
     @agree_to_terms ||
     t("#user.registration.agree_to_terms",
       "You agree to the *terms of use*.",
-      :wrapper => link_to('\1', "http://www.instructure.com/terms-of-use", :target => "_new"))
+      :wrapper => link_to('\1', "http://www.arrivuapps.com/terms-of-use", :target => "_new"))
   end
 end
