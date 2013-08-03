@@ -1113,7 +1113,10 @@ Spec::Runner.configure do |config|
     #subaccount = Account.create!(:name => account_name, :parent_account => @account.id)
     sub_account=Account.create!(:name => account_name, :parent_account => @parent_account)
     #let(:account) { Account.create(:name => account_name, :parent_account => @account) }
-    puts "creating subaccount #{sub_account.inspect}"
+    #puts "creating subaccount #{sub_account.inspect}"
+    #@sub_account = @parent_account.sub_accounts.build(account_name)
+    #@sub_account.root_account = @parent_account.root_account
+    #@sub_account.save
 
   end
 
@@ -1125,23 +1128,23 @@ Spec::Runner.configure do |config|
     @account = Account.find_by_name(account_name)
     user=User.create!(:name => email,:sortable_name => email)
     pseudonym = user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
-    account=@account.add_user(user, 'AccountAdmin')
-    puts "Creating Admin user #{account_name} "
+    @account=@account.add_user(user, 'AccountAdmin')
+    #puts "Creating Admin user #{account_name} "
     #user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
 
-    puts "User details ------------------------------------------------------------"
-    puts "#{user.inspect}"
-    puts "account details ------------------------------------------------------------"
-    puts "#{@account.inspect}"
-    puts "pseudonym details ------------------------------------------------------------"
-    puts "#{pseudonym.inspect}"
-    puts "Account user details ------------------------------------------------------------"
-    puts "#{account.inspect}"
-    puts "-------------------------------------------------------------------------------"
-    puts "#{user.id},#{user.name} = #{pseudonym.unique_id}"
-    puts "#{@account.id},#{@account.name}"
-    puts "#{account.account_id},#{account.user_id}"
-    puts "-------------------------------------------------------------------------------"
+    #puts "User details ------------------------------------------------------------"
+    #puts "#{user.inspect}"
+    #puts "account details ------------------------------------------------------------"
+    #puts "#{@account.inspect}"
+    #puts "pseudonym details ------------------------------------------------------------"
+    #puts "#{pseudonym.inspect}"
+    #puts "Account user details ------------------------------------------------------------"
+    #puts "#{account.inspect}"
+    #puts "-------------------------------------------------------------------------------"
+    #puts "#{user.id},#{user.name} = #{pseudonym.unique_id}"
+    #puts "#{@account.id},#{@account.name}"
+    #puts "#{account.account_id},#{account.user_id}"
+    #puts "-------------------------------------------------------------------------------"
   end
 
   def add_user(account_name,email,password)
@@ -1159,6 +1162,15 @@ Spec::Runner.configure do |config|
 
 
   def course_assign_to_user(user_type,user)
+
+  end
+
+  def create_siteadmin_user_mt(account_name, email,password)
+    @account=add_mt_account(accout_name)
+    @user=add_mt_account_admin_users(account_name,email,password)
+    site_admin_ac_admin_user = Account.site_admin.account_users.first
+    @account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
+    #Account.site_admin.add_user(@user, opts[:membership_type] || 'AccountAdmin')
 
   end
 
