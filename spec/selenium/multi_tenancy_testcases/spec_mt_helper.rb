@@ -1104,13 +1104,12 @@ Spec::Runner.configure do |config|
     @account.settings[:private_license_enable]= false
     puts "Creating Account #{account_name}... "
     @account.save!
-    #def add_mt_account(account_name,server_port)
-    #account = account_with_cas_mt({:account => account_name, :cas_url => "http://#{name}.lvh.me:#{server_port}"})
+    @account
   end
 
   def add_sub_account_mt(account_name,parent_account)
+    add_mt_account(account_name)
     @parent_account= Account.find_by_name(parent_account)
-    #subaccount = Account.create!(:name => account_name, :parent_account => @account.id)
     sub_account=Account.create!(:name => account_name, :parent_account => @parent_account)
     #let(:account) { Account.create(:name => account_name, :parent_account => @account) }
     #puts "creating subaccount #{sub_account.inspect}"
@@ -1122,16 +1121,15 @@ Spec::Runner.configure do |config|
 
 
   def add_mt_account_admin_users(account_name,email,password)
-    # puts "account_name : #{account_name}"
-    # puts "email : #{email}"
-    # puts "password : #{password}"
-    @account = Account.find_by_name(account_name)
-    user=User.create!(:name => email,:sortable_name => email)
-    pseudonym = user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
-    @account=@account.add_user(user, 'AccountAdmin')
-    #puts "Creating Admin user #{account_name} "
-    #user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
 
+    @account = Account.find_by_name(account_name)
+    @user=User.create!(:name => email,:sortable_name => email)
+    pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
+    @account=@account.add_user(@user, 'AccountAdmin')
+    @user
+
+    #user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+    #puts "Creating Admin user #{account_name} "
     #puts "User details ------------------------------------------------------------"
     #puts "#{user.inspect}"
     #puts "account details ------------------------------------------------------------"
@@ -1165,12 +1163,42 @@ Spec::Runner.configure do |config|
 
   end
 
-  def create_siteadmin_user_mt(account_name, email,password)
-    @account=add_mt_account(accout_name)
-    @user=add_mt_account_admin_users(account_name,email,password)
-    site_admin_ac_admin_user = Account.site_admin.account_users.first
-    @account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
-    #Account.site_admin.add_user(@user, opts[:membership_type] || 'AccountAdmin')
+  #def create_site_admin_user_mt(account_name, email,password)
+  #  #@account=add_mt_account(account_name)
+  #  @user=add_mt_account_admin_users(account_name,email,password)
+  #  Account.site_admin.add_user(@user, 'AccountAdmin')
+  #  Account.default.add_user(@user, 'AccountAdmin')
+  #
+  #
+  #  return @account
+  #end
+
+
+  def create_site_admin(account_name,email, password)
+      pseudonym = Account.site_admin.pseudonyms.active.custom_find_by_unique_id(email)
+      pseudonym ||= Account.default.pseudonyms.active.custom_find_by_unique_id(email)
+      user = pseudonym ? pseudonym.user : User.create!
+      user.register! unless user.registered?
+      unless pseudonym
+        pseudonym = user.pseudonyms.create!(:unique_id => email,
+                                            :password => password, :password_confirmation => password, :account => Account.site_admin)
+        user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+      end
+
+      pseudonym.password = pseudonym.password_confirmation = password
+      unless pseudonym.save
+        raise pseudonym.errors.first.join " " if pseudonym.errors.size > 0
+        raise "unknown error saving password"
+      end
+      account = Account.default
+      account.name = account_name
+      account.save!
+      #@account_id=account.id
+      Account.site_admin.add_user(user, 'AccountAdmin')
+      Account.default.add_user(user, 'AccountAdmin')
+      #@account_id
+      account.id
+      #user
 
   end
 
