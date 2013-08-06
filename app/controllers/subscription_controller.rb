@@ -1,6 +1,5 @@
 class SubscriptionController < ApplicationController
-  before_filter :clear_cached_contexts
-  #layout false
+
   def subscription_expired
     @subscription_id=Subscription.find_by_account_id(@domain_root_account.id).id
   end
@@ -40,7 +39,6 @@ class SubscriptionController < ApplicationController
     if captcha_valid
       @account = Account.find_by_name(@subscription.subdomain)
       unless @account
-        reset_session_for_login
         if @subscription.save
           password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @account = Account.new
@@ -65,11 +63,11 @@ class SubscriptionController < ApplicationController
           end
           res = @pseudonym.save!
           @account.add_user(@user, 'AccountAdmin')
-
-           #send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
-          cross_domain_login_token = AutoHandle.generate(nil, 64)
-          flash[:notice] = "Please check your email to use OpenLMS account"
-           redirect_to url_for(:controller => "users", :action => "user_dashboard", :subdomain => @account.name)
+          send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
+          reset_session_for_login
+          cross_domain_login_token = AutoHandle.generate(nil, 150)
+          create_subscription_authentication(@account.name,@pseudonym.unique_id,password,cross_domain_login_token)
+           redirect_to url_for(:controller => "subscription", :action => "authenticate", :subdomain => @account.name,:cross_domain_login_token => cross_domain_login_token)
            else
           respond_to do |format|
             format.html {render :action => "new"}
@@ -81,7 +79,7 @@ class SubscriptionController < ApplicationController
           format.html {render :action => "new"}
         end
       end
-    else
+      else
         respond_to do |format|
           flash[:error] = "Invalid Captcha"
           format.html {render :action => "new"}
@@ -98,11 +96,38 @@ class SubscriptionController < ApplicationController
     end
   end
 
-  def successful_login(user, pseudonym)
-    @current_user = user
+  def successful_login( pseudonym)
     @current_pseudonym = pseudonym
+    flash[:notice] = "Please check your email to use OpenLMS account"
+    redirect_to root_url
+  end
+
+  def create_subscription_authentication(account_name,unique_id,password,token)
+    authenticate_subscription=AuthenticateSubscription.new
+    authenticate_subscription.account_name = account_name
+    authenticate_subscription.unique_id = unique_id
+    authenticate_subscription.password = password
+    authenticate_subscription.token =token
+    authenticate_subscription.save!
 
   end
+
+  def authenticate
+    unless params[:cross_domain_login_token].nil?
+      if authenticate_subscription = AuthenticateSubscription.find_by_token(params[:cross_domain_login_token]) && AuthenticateSubscription.find_by_account_name(current_subdomain)
+          reset_session_for_login
+          login={:unique_id => authenticate_subscription.unique_id,:password=> authenticate_subscription.password,:remember_me=>"0"}
+          @pseudonym_session = @domain_root_account.pseudonym_sessions.new(login)
+          @pseudonym_session.remote_ip = request.remote_ip
+          @pseudonym_session.save!
+          @pseudonym = @pseudonym_session && @pseudonym_session.record
+          authenticate_subscription.destroy
+          successful_login(@pseudonym)
+      end
+    end
+  end
+
+
   private
 
   def send_email(to,name,password,subdomain)

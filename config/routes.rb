@@ -1259,4 +1259,5 @@ ActionController::Routing::Routes.draw do |map|
   map.subscription_expired '/subscription_expired', :controller => 'subscription', :action => 'subscription_expired'
   map.subscription_expired_email '/subscription_expired_email', :controller => 'subscription', :action => 'subscription_expired_email',:conditions => { :method => :post }
   map.subscription_validate '/subscription_validate', :controller => 'subscription', :action => 'validate',:conditions => { :method => :post }
+  map.authenticate '/authenticate', :controller => 'subscription', :action => 'authenticate'
 end
