@@ -1,4 +1,5 @@
 class SubscriptionController < ApplicationController
+  before_filter :clear_cached_contexts
   #layout false
   def subscription_expired
     @subscription_id=Subscription.find_by_account_id(@domain_root_account.id).id
@@ -39,40 +40,37 @@ class SubscriptionController < ApplicationController
     if captcha_valid
       @account = Account.find_by_name(@subscription.subdomain)
       unless @account
+        reset_session_for_login
         if @subscription.save
           password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @account = Account.new
           @account.name = @subscription.subdomain
           @account.settings[:demo_account]= true
           @account.save
+          @domain_root_account=@account
           @subscription.account_id=@account.id
           @subscription.save
           save_subscription_account_settings
-          pseudonym = @account.pseudonyms.active.custom_find_by_unique_id(params[:subscription][:email])
-          user = pseudonym ? pseudonym.user : User.create!(:name => params[:subscription][:email],
+          @pseudonym = @account.pseudonyms.active.custom_find_by_unique_id(params[:subscription][:email])
+          @user = @pseudonym  ? @pseudonym .user : User.create!(:name => params[:subscription][:email],
                                                            :sortable_name => params[:subscription][:email])
-          user.register! unless user.registered?
-          unless pseudonym
-            pseudonym = user.pseudonyms.create!(:unique_id => params[:subscription][:email],
+          @user.register! unless @user.registered?
+          unless @pseudonym
+            @pseudonym = @user.pseudonyms.create!(:unique_id => params[:subscription][:email],
                                                 :password => password, :password_confirmation => password,
                                                 :account => @account )
-            user.communication_channels.create!(:path => params[:subscription][:email]) { |cc| cc.workflow_state = 'active' }
+            @user.communication_channels.create!(:path => params[:subscription][:email]) { |cc| cc.workflow_state = 'active' }
+            @user.save!
+
           end
-          pseudonym.save
-          @account.add_user(user, 'AccountAdmin')
-          reset_session_for_login
-          login={:unique_id =>params[:subscription][:email],:password=>password,:remember_me=>"0"}
-          @pseudonym_session = @account.pseudonym_sessions.new(login)
-          @pseudonym_session.remote_ip = request.remote_ip
-          @pseudonym_session.save
-          send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
-          respond_to do |format|
-            flash[:notice] = "Please check your email to use OpenLMS account"
-            format.html{ redirect_to dashboard_url}
-            #format.html{ redirect_to request.url.sub(current_subdomain, organization)}
-            #format.html{ redirect_to request.server_name.sub(current_subdomain, organization)}
-          end
-        else
+          res = @pseudonym.save!
+          @account.add_user(@user, 'AccountAdmin')
+
+           #send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
+          cross_domain_login_token = AutoHandle.generate(nil, 64)
+          flash[:notice] = "Please check your email to use OpenLMS account"
+           redirect_to url_for(:controller => "users", :action => "user_dashboard", :subdomain => @account.name)
+           else
           respond_to do |format|
             format.html {render :action => "new"}
           end
@@ -100,6 +98,11 @@ class SubscriptionController < ApplicationController
     end
   end
 
+  def successful_login(user, pseudonym)
+    @current_user = user
+    @current_pseudonym = pseudonym
+
+  end
   private
 
   def send_email(to,name,password,subdomain)
@@ -119,9 +122,10 @@ class SubscriptionController < ApplicationController
     @subscription_settings.subscription_id =@subscription.id
     @subscription_settings.remarks="Free Subscription"
     @subscription_settings.start_at=Time.now
-    @subscription_settings.end_at=Time.now+365.days
+    @subscription_settings.end_at=Time.now + 365.days
     @subscription_settings.save
   end
+
 
 
 
