@@ -50,7 +50,7 @@ namespace :deploy do
     task :disable, :roles => :app do
       on_rollback { rm "#{shared_path}/system/maintenance.html" }
 
-      run "cp /usr/local/canvas/maintenance.html #{shared_path}/system/maintenance.html && chmod 0644 #{shared_path}/system/maintenance.html"
+      run "cp /usr/local/deployment/maintenance.html #{shared_path}/system/maintenance.html && chmod 0644 #{shared_path}/system/maintenance.html"
     end
     
     task :enable, :roles => :app do
@@ -114,7 +114,6 @@ namespace :canvas do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/delayed_jobs.yml #{release_path}/config/delayed_jobs.yml"
     run "ln -nfs #{shared_path}/config/domain.yml #{release_path}/config/domain.yml"
-    run "ln -nfs #{shared_path}/config/external_migration.yml #{release_path}/config/external_migration.yml"
     run "ln -nfs #{shared_path}/config/file_store.yml #{release_path}/config/file_store.yml"
     run "ln -nfs #{shared_path}/config/logging.yml #{release_path}/config/logging.yml"
     run "ln -nfs #{shared_path}/config/outgoing_mail.yml #{release_path}/config/outgoing_mail.yml"
