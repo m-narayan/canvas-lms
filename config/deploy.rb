@@ -178,7 +178,7 @@ namespace :canvas do
   end
 end
 
-Monit tasks
+#Monit tasks
 namespace :monit do
   task :start do
     run 'monit '
