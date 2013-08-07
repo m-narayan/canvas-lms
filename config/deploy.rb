@@ -2,7 +2,8 @@ require "bundler/capistrano"
 require "capistrano/ext/multistage"
 
 set :application,   "smart-lms"
-set :user,    "canvasuser"
+set :user,    "sysadmin"
+set :passenger_user,"canvasuser"
 
 set :stages, ["testing","staging", "production"]
 set :default_stage, "testing"
@@ -128,19 +129,19 @@ namespace :canvas do
 
   desc "Clone canvas-mt"
   task :clone_canvas_mt do
-    run "cd #{latest_release}/vendor && git clone -b #{branch} https://github.com/m-narayan/canvas-mt.git canvas_mt"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/canvas-mt.git canvas_mt"
   end
 
   desc "Clone lms_customization"
   task :clone_lms_customization do
-    run "cd #{latest_release}/vendor && git clone -b #{branch} https://github.com/m-narayan/lms_customization.git lms_customization"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/lms_customization.git lms_customization"
   end
 
   desc "Compile static assets"
   task :compile_assets, :on_error => :continue do
     # On remote: bundle exec rake canvas:compile_assets
     run "cd #{latest_release} && bundle exec #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets[false]"
-    run "cd #{latest_release} && chown -R #{user}:#{user} ."
+    run "cd #{latest_release} && chown -R #{passenger_user}:#{passenger_user} ."
   end
 
   desc "Load new notification types"
@@ -148,10 +149,12 @@ namespace :canvas do
     # On remote: RAILS_ENV=production bundle exec rake db:load_notifications
     run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} db:load_notifications --quiet"
   end
+
+
   
   desc "Restarted delayed jobs workers"
   task :restart_jobs, :on_error => :continue do
-    run "touch #{ current_path }/tmp/restart.txt"
+    run "touch #{current_path}/tmp/restart.txt"
     # On remote: /etc/init.d/canvas_init restart
     run "/etc/init.d/canvas_init restart"
   end
@@ -163,7 +166,15 @@ namespace :canvas do
     clone_lms_customization
     copy_config
     compile_assets
+    canvasuser_permission
   end
+
+  desc "change permission to canvasuser "
+  task :canvasuser_permission, :on_error => :continue do
+    run "#{try_sudo} mkdir -p #{current_path}/log #{current_path}/tmp/pids #{current_path}/public/assets #{current_path}/public/stylesheets/compiled"
+    run "#{try_sudo} touch Gemfile.lock"
+    run "#{try_sudo} chown -R canvasuser #{current_path}/config/environment.rb #{current_path}/log #{current_path}/tmp #{current_path}/public/assets #{current_path}/public/stylesheets/compiled #{current_path}/Gemfile.lock #{current_path}/config.ru"
+ end
 
   desc "Tasks that run after create_symlink"
   task :after_create_symlink do
