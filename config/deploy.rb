@@ -2,7 +2,8 @@ require "bundler/capistrano"
 require "capistrano/ext/multistage"
 
 set :application,   "smart-lms"
-set :user,    "canvasuser"
+set :user,    "sysadmin"
+set :passenger_user,"canvasuser"
 
 set :stages, ["testing","staging", "production"]
 set :default_stage, "testing"
@@ -12,16 +13,13 @@ set :repository,    "git@github.com:m-narayan/canvas-lms.git"
 set :scm,     :git
 set :deploy_via,  :remote_cache
 set :branch,        "deploy"
-set :deploy_to,     "/var/rails/canvas"
+set :deploy_to,     "/var/capistrano/deploy/lms"
 set :use_sudo,      false
-set :deploy_env,    "production"
+set :deploy_env,    "deploy"
 #set :bundle_dir,    "/var/data/gems"
 set :bundle_without, []
 #set me for future
-#set :stats_server,  "stats.beaconlearning.in"
-set :data_dir, "/var/data"
-
-set :server_base_url, "beaconlearning.in"
+set :ping_url, "https://www.arrivuapps.com/login"
 
 def is_hotfix?
   ENV.has_key?('hotfix') && ENV['hotfix'].downcase == "true"
@@ -52,7 +50,7 @@ namespace :deploy do
     task :disable, :roles => :app do
       on_rollback { rm "#{shared_path}/system/maintenance.html" }
 
-      run "cp /usr/local/canvas/maintenance.html #{shared_path}/system/maintenance.html && chmod 0644 #{shared_path}/system/maintenance.html"
+      run "cp /usr/local/deployment/maintenance.html #{shared_path}/system/maintenance.html && chmod 0644 #{shared_path}/system/maintenance.html"
     end
     
     task :enable, :roles => :app do
@@ -100,11 +98,11 @@ namespace :canvas do
 
   # REMOTE COMMANDS
 
-  desc "Create symlink for files folder to mount point"
-  task :symlink_canvasfiles do
-      target = "mnt/data"
-      run "mkdir -p #{latest_release}/#{target} && ln -s #{data_dir}/canvasfiles #{latest_release}/#{target}/canvasfiles"
-  end 
+  #desc "Create symlink for files folder to mount point"
+  #task :symlink_canvasfiles do
+  #    target = "mnt/data"
+  #    run "mkdir -p #{latest_release}/#{target} && ln -s #{data_dir}/canvasfiles #{latest_release}/#{target}/canvasfiles"
+  #end
 
   # On every deploy
   desc "Create symlink for files folder to mount point"
@@ -116,7 +114,6 @@ namespace :canvas do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/delayed_jobs.yml #{release_path}/config/delayed_jobs.yml"
     run "ln -nfs #{shared_path}/config/domain.yml #{release_path}/config/domain.yml"
-    run "ln -nfs #{shared_path}/config/external_migration.yml #{release_path}/config/external_migration.yml"
     run "ln -nfs #{shared_path}/config/file_store.yml #{release_path}/config/file_store.yml"
     run "ln -nfs #{shared_path}/config/logging.yml #{release_path}/config/logging.yml"
     run "ln -nfs #{shared_path}/config/outgoing_mail.yml #{release_path}/config/outgoing_mail.yml"
@@ -129,11 +126,21 @@ namespace :canvas do
     run "cd #{latest_release}/vendor && git clone https://github.com/instructure/QTIMigrationTool.git QTIMigrationTool && chmod +x QTIMigrationTool/migrate.py"
   end
 
+  desc "Clone canvas-mt"
+  task :clone_canvas_mt do
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/canvas-mt.git canvas_mt"
+  end
+
+  desc "Clone lms_customization"
+  task :clone_lms_customization do
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/lms_customization.git lms_customization"
+  end
+
   desc "Compile static assets"
   task :compile_assets, :on_error => :continue do
     # On remote: bundle exec rake canvas:compile_assets
-    run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets[false] --quiet"
-    run "cd #{latest_release} && chown -R #{user}:#{user} ."
+    run "cd #{latest_release} && bundle exec #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets[false]"
+    run "cd #{latest_release} && chown -R #{passenger_user}:#{passenger_user} ."
   end
 
   desc "Load new notification types"
@@ -141,9 +148,12 @@ namespace :canvas do
     # On remote: RAILS_ENV=production bundle exec rake db:load_notifications
     run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} db:load_notifications --quiet"
   end
+
+
   
   desc "Restarted delayed jobs workers"
   task :restart_jobs, :on_error => :continue do
+    run "touch #{current_path}/tmp/restart.txt"
     # On remote: /etc/init.d/canvas_init restart
     run "/etc/init.d/canvas_init restart"
   end
@@ -151,13 +161,22 @@ namespace :canvas do
   desc "Tasks that run before create_symlink"
   task :before_create_symlink do
     clone_qtimigrationtool
-    symlink_canvasfiles
+    clone_canvas_mt
+    clone_lms_customization
+    copy_config
     compile_assets
+    canvasuser_permission
   end
+
+  desc "change permission to canvasuser "
+  task :canvasuser_permission, :on_error => :continue do
+    run "#{try_sudo} mkdir -p #{current_path}/log #{current_path}/tmp/pids #{current_path}/public/assets #{current_path}/public/stylesheets/compiled"
+    run "#{try_sudo} touch Gemfile.lock"
+    run "#{try_sudo} chown -R canvasuser #{current_path}/config/environment.rb #{current_path}/log #{current_path}/tmp #{current_path}/public/assets #{current_path}/public/stylesheets/compiled #{current_path}/Gemfile.lock #{current_path}/config.ru"
+ end
 
   desc "Tasks that run after create_symlink"
   task :after_create_symlink do
-    copy_config
     deploy.migrate unless is_hotfix?
     load_notifications unless is_hotfix?
   end
@@ -167,8 +186,24 @@ namespace :canvas do
     restart_jobs
     puts "\x1b[42m\x1b[1;37m Deploy complete!  \x1b[0m"
   end
+end
 
-end 
+#Monit tasks
+namespace :monit do
+  task :start do
+    run 'monit '
+  end
+  task :stop do
+    run 'monit quit'
+  end
+end
+
+# Add this to add the `deploy:ping` task:
+namespace :deploy do
+  task :ping do
+    system "curl --silent #{fetch(:ping_url)}"
+  end
+end
 
 before(:deploy, "canvas:check_revision")
 before(:deploy, "deploy:web:disable") unless is_hotfix?
@@ -177,6 +212,14 @@ after("deploy:create_symlink", "canvas:after_create_symlink")
 after(:deploy, "canvas:after_deploy")
 after(:deploy, "deploy:cleanup")
 after(:deploy, "deploy:web:enable") unless is_hotfix?
+
+# Stop Monit during restart
+before 'deploy:restart', 'monit:stop'
+after 'deploy:restart', 'monit:start'
+
+# Add this to automatically ping the server after a restart:
+after "deploy:restart", "deploy:ping"
+
 
 #before(:deploy, "canvas:check_user")
   # # UTILITY TASKS
@@ -196,19 +239,7 @@ after(:deploy, "deploy:web:enable") unless is_hotfix?
   # end
 
 
-# Monit tasks
-# namespace :monit do
-#   task :start do
-#     run 'monit'
-#   end
-#   task :stop do
-#     run 'monit quit'
-#   end
-# end
 
-# # Stop Monit during restart
-# before 'deploy:restart', 'monit:stop'
-# after 'deploy:restart', 'monit:start'
 
 
 

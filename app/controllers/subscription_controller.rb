@@ -1,5 +1,5 @@
 class SubscriptionController < ApplicationController
-  #layout false
+
   def subscription_expired
     @subscription_id=Subscription.find_by_account_id(@domain_root_account.id).id
   end
@@ -45,34 +45,30 @@ class SubscriptionController < ApplicationController
           @account.name = @subscription.subdomain
           @account.settings[:demo_account]= true
           @account.save
+          @domain_root_account=@account
           @subscription.account_id=@account.id
           @subscription.save
           save_subscription_account_settings
-          pseudonym = @account.pseudonyms.active.custom_find_by_unique_id(params[:subscription][:email])
-          user = pseudonym ? pseudonym.user : User.create!(:name => params[:subscription][:email],
+          @pseudonym = @account.pseudonyms.active.custom_find_by_unique_id(params[:subscription][:email])
+          @user = @pseudonym  ? @pseudonym .user : User.create!(:name => params[:subscription][:email],
                                                            :sortable_name => params[:subscription][:email])
-          user.register! unless user.registered?
-          unless pseudonym
-            pseudonym = user.pseudonyms.create!(:unique_id => params[:subscription][:email],
+          @user.register! unless @user.registered?
+          unless @pseudonym
+            @pseudonym = @user.pseudonyms.create!(:unique_id => params[:subscription][:email],
                                                 :password => password, :password_confirmation => password,
                                                 :account => @account )
-            user.communication_channels.create!(:path => params[:subscription][:email]) { |cc| cc.workflow_state = 'active' }
+            @user.communication_channels.create!(:path => params[:subscription][:email]) { |cc| cc.workflow_state = 'active' }
+            @user.save!
+
           end
-          pseudonym.save
-          @account.add_user(user, 'AccountAdmin')
-          reset_session_for_login
-          login={:unique_id =>params[:subscription][:email],:password=>password,:remember_me=>"0"}
-          @pseudonym_session = @account.pseudonym_sessions.new(login)
-          @pseudonym_session.remote_ip = request.remote_ip
-          @pseudonym_session.save
+          res = @pseudonym.save!
+          @account.add_user(@user, 'AccountAdmin')
           send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
-          respond_to do |format|
-            flash[:notice] = "Please check your email to use OpenLMS account"
-            format.html{ redirect_to dashboard_url}
-            #format.html{ redirect_to request.url.sub(current_subdomain, organization)}
-            #format.html{ redirect_to request.server_name.sub(current_subdomain, organization)}
-          end
-        else
+          reset_session_for_login
+          cross_domain_login_token = AutoHandle.generate(nil, 150)
+          create_subscription_authentication(@account.name,@pseudonym.unique_id,password,cross_domain_login_token)
+           redirect_to url_for(:controller => "subscription", :action => "authenticate", :subdomain => @account.name,:cross_domain_login_token => cross_domain_login_token)
+           else
           respond_to do |format|
             format.html {render :action => "new"}
           end
@@ -83,7 +79,7 @@ class SubscriptionController < ApplicationController
           format.html {render :action => "new"}
         end
       end
-    else
+      else
         respond_to do |format|
           flash[:error] = "Invalid Captcha"
           format.html {render :action => "new"}
@@ -99,6 +95,38 @@ class SubscriptionController < ApplicationController
       render :json => @valid
     end
   end
+
+  def successful_login( pseudonym)
+    @current_pseudonym = pseudonym
+    flash[:notice] = "Please check your email to use OpenLMS account"
+    redirect_to root_url
+  end
+
+  def create_subscription_authentication(account_name,unique_id,password,token)
+    authenticate_subscription=AuthenticateSubscription.new
+    authenticate_subscription.account_name = account_name
+    authenticate_subscription.unique_id = unique_id
+    authenticate_subscription.password = password
+    authenticate_subscription.token =token
+    authenticate_subscription.save!
+
+  end
+
+  def authenticate
+    unless params[:cross_domain_login_token].nil?
+      if authenticate_subscription = AuthenticateSubscription.find_by_token(params[:cross_domain_login_token]) && AuthenticateSubscription.find_by_account_name(current_subdomain)
+          reset_session_for_login
+          login={:unique_id => authenticate_subscription.unique_id,:password=> authenticate_subscription.password,:remember_me=>"0"}
+          @pseudonym_session = @domain_root_account.pseudonym_sessions.new(login)
+          @pseudonym_session.remote_ip = request.remote_ip
+          @pseudonym_session.save!
+          @pseudonym = @pseudonym_session && @pseudonym_session.record
+          authenticate_subscription.destroy
+          successful_login(@pseudonym)
+      end
+    end
+  end
+
 
   private
 
@@ -119,9 +147,10 @@ class SubscriptionController < ApplicationController
     @subscription_settings.subscription_id =@subscription.id
     @subscription_settings.remarks="Free Subscription"
     @subscription_settings.start_at=Time.now
-    @subscription_settings.end_at=Time.now+365.days
+    @subscription_settings.end_at=Time.now + 365.days
     @subscription_settings.save
   end
+
 
 
 
