@@ -1171,7 +1171,7 @@ class ApplicationController < ActionController::Base
         !!Tinychat.config
       elsif feature == :scribd
         !!ScribdAPI.config
-      elsif feature == :crocodoc #and !!!@domain_root_account.OpenLMS_Crocodoc_disable?
+      elsif feature == :crocodoc
         if @domain_root_account
         !!Canvas::Crocodoc.config unless @domain_root_account.OpenLMS_Crocodoc_disable?
         end
