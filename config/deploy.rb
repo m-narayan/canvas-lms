@@ -9,7 +9,7 @@ set :stages, ["testing","staging", "production"]
 set :default_stage, "testing"
 set :use_sudo, false
 
-set :repository,    "git@github.com:m-narayan/canvas-lms.git"
+set :repository,    "https://github.com:m-narayan/canvas-lms.git"
 set :scm,     :git
 set :deploy_via,  :remote_cache
 set :branch,        "deploy"
