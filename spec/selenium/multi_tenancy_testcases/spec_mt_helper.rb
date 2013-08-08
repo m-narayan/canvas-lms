@@ -1095,13 +1095,6 @@ Spec::Runner.configure do |config|
   def add_mt_account(account_name)
     @account = Account.new
     @account.name = account_name
-    @account.settings[:smartlms_kaltura_disable]= false
-    @account.settings[:smartlms_bbb_disable]= false
-    @account.settings[:smartlms_grade_disable]= false
-    @account.settings[:smartlms_outcomes_disable]= false
-    @account.settings[:smartlms_course_import_disable]= false
-    @account.settings[:smartlms_course_export_disable]= false
-    @account.settings[:private_license_enable]= false
     puts "Creating Account #{account_name}... "
     @account.save!
     @account
@@ -1175,31 +1168,17 @@ Spec::Runner.configure do |config|
 
 
   def create_site_admin(account_name,email, password)
-      pseudonym = Account.site_admin.pseudonyms.active.custom_find_by_unique_id(email)
-      pseudonym ||= Account.default.pseudonyms.active.custom_find_by_unique_id(email)
-      user = pseudonym ? pseudonym.user : User.create!
-      user.register! unless user.registered?
-      unless pseudonym
-        pseudonym = user.pseudonyms.create!(:unique_id => email,
-                                            :password => password, :password_confirmation => password, :account => Account.site_admin)
-        user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
-      end
 
-      pseudonym.password = pseudonym.password_confirmation = password
-      unless pseudonym.save
-        raise pseudonym.errors.first.join " " if pseudonym.errors.size > 0
-        raise "unknown error saving password"
-      end
-      account = Account.default
-      account.name = account_name
-      account.save!
-      #@account_id=account.id
-      Account.site_admin.add_user(user, 'AccountAdmin')
-      Account.default.add_user(user, 'AccountAdmin')
-      #@account_id
-      account.id
-      #user
-
+    user=User.create!(:name => email,:sortable_name => email)
+    user.register! unless user.registered?
+    user.pseudonyms.create!(:unique_id => email, :password => password, :password_confirmation => password, :account => Account.site_admin)
+    user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+    account = Account.default
+    account.name = account_name
+    account.save!
+    Account.site_admin.add_user(user, 'AccountAdmin')
+    Account.default.add_user(user, 'AccountAdmin')
+    account
   end
 
 
