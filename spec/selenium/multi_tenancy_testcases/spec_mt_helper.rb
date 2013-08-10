@@ -1101,14 +1101,11 @@ Spec::Runner.configure do |config|
   end
 
   def add_sub_account_mt(account_name,parent_account)
-    add_mt_account(account_name)
+    #add_mt_account(account_name)
     @parent_account= Account.find_by_name(parent_account)
     sub_account=Account.create!(:name => account_name, :parent_account => @parent_account)
-    #let(:account) { Account.create(:name => account_name, :parent_account => @account) }
-    #puts "creating subaccount #{sub_account.inspect}"
-    #@sub_account = @parent_account.sub_accounts.build(account_name)
-    #@sub_account.root_account = @parent_account.root_account
-    #@sub_account.save
+    sub_account
+
 
   end
 
@@ -1146,9 +1143,10 @@ Spec::Runner.configure do |config|
     user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
   end
 
-  def create_course(course_name,account_name)
+  def create_course(course_name,course_code,account_name)
     account= Account.find_by_name(account_name)
-    @course = Course.create!(:name => course_name, :account => account)
+    @course = Course.create!(:name => course_name, :course_code => course_code, :account => account)
+    @course
   end
 
 
@@ -1168,7 +1166,6 @@ Spec::Runner.configure do |config|
 
 
   def create_site_admin(account_name,email, password)
-
     user=User.create!(:name => email,:sortable_name => email)
     user.register! unless user.registered?
     user.pseudonyms.create!(:unique_id => email, :password => password, :password_confirmation => password, :account => Account.site_admin)
