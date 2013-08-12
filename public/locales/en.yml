@@ -5267,8 +5267,8 @@ en:
     index_view: 
       add_new_tool: "Add New App"
       app_headder: "External Apps"
-      external_tools_note: "Apps are an easy way to add new features to Canvas. They can be added to individual courses, or to all courses in an account. Once configured, you can link to them through course modules and create assignments for assessment tools."
-      external_tools_references: "Click *here* to see some LTI tools that work great with Canvas. You can also check out the Canvas Community topics about LTI tools **here**"
+      external_tools_note: "Apps are an easy way to add new features to OpenLMS. They can be added to individual courses, or to all courses in an account. Once configured, you can link to them through course modules and create assignments for assessment tools."
+      external_tools_references: "Click *here* to see some LTI tools that work great with OpenLMS. You can also check out the OpenLMS Community topics about LTI tools **here**"
       search_filter: "Filter by name"
       view_app_center: "View App Center"
       view_installed_tools: "View Installed Apps"
@@ -5293,27 +5293,27 @@ en:
     user_navigation_configured: "User navigation configured"
   facebook: 
     authorization_required: "Only authorized users can access that page"
-    authorization_success: "Authorization successful!  Canvas and Facebook are now friends."
+    authorization_success: "Authorization successful!  OpenLMS and Facebook are now friends."
     deleted: Deleted
     index: 
       all_set: "You're all set up!"
-      bookmark_notice: "You can see the number of new Canvas notifications from your Facebook home page if you bookmark this application."
-      canvas_messages: "Canvas Messages"
-      configure_notification_preferences_notice: "After you *configure your notification preferences* you should start to see notifications show up here letting you know about things happening in your Canvas account."
-      installation_about: "To install the Canvas Facebook app, go to your profile page in Canvas and click the Facebook button to connect your account to Facebook."
+      bookmark_notice: "You can see the number of new OpenLMS notifications from your Facebook home page if you bookmark this application."
+      canvas_messages: "OpenLMS Messages"
+      configure_notification_preferences_notice: "After you *configure your notification preferences* you should start to see notifications show up here letting you know about things happening in your OpenLMS account."
+      installation_about: "To install the OpenLMS Facebook app, go to your profile page in OpenLMS and click the Facebook button to connect your account to Facebook."
       learn_more: "Learn More at instructure.com"
       more_information: "More information at %{domain_list}"
-      no_messages_notice: "As things happen in the course you'll start seeing notifications show up here letting you know about things happening in your Canvas account."
-      notification_about: "The Canvas Facebook app is here to give you easier access to the interactions going on inside your courses. You can set it to send you notifications when your assignments are graded, when due dates change, etc. Your private data will still stay private at Canvas."
+      no_messages_notice: "As things happen in the course you'll start seeing notifications show up here letting you know about things happening in your OpenLMS account."
+      notification_about: "The OpenLMS Facebook app is here to give you easier access to the interactions going on inside your courses. You can set it to send you notifications when your assignments are graded, when due dates change, etc. Your private data will still stay private at OpenLMS."
       notification_settings: "Notification Settings"
-      notifications_notice: "Below you can see a list of your most recent notifications from Canvas. You can see the number of new Canvas notifications from your Facebook home page if you bookmark this application."
+      notifications_notice: "Below you can see a list of your most recent notifications from OpenLMS. You can see the number of new OpenLMS notifications from your Facebook home page if you bookmark this application."
       welcome: "Welcome back, %{name}!"
       welcome_message: "Welcome to a new breed of online learning software, courtesy of Instructure. We're here to make it easy for you to use the web to improve learning. Our interface is simple, clean and open, and we work with the tools you and your students are already using -- tools like Facebook -- to provide a more open, collaborative learning experience. We roll it all up into one powerful, open package that does more than just tracks assignments. It encourages interaction and fosters learning."
-      welcome_title: "Welcome to Instructure Canvas"
+      welcome_title: "Welcome to Instructure OpenLMS"
     index_disabled: 
-      disabled_notice: "This Canvas site is not configured to communicate with Facebook."
+      disabled_notice: "This OpenLMS site is not configured to communicate with Facebook."
       get_help: "Get help at support.instructure.com"
-      instructure_canvas: "Instructure Canvas"
+      instructure_canvas: "Instructure OpenLMS"
     invalid_signature: "Invalid Facebook signature"
     message: 
       hide: Hide
@@ -5334,9 +5334,9 @@ en:
       weekly: Weekly
     settings: 
       back_to_messages: "Back to Messages"
-      link_needed: "Before you can configure the Canvas Facebook App you need to link it to your Canvas login. Please click \"Welcome\" for more information."
-      notifications_config_notice: "Notifications from Canvas can automatically be sent over to your Facebook account. Below you'll see the types of notifications you can have sent. You can change your notification preferences at any time, either here or in Canvas."
-      settings_title: "Canvas Notification Settings"
+      link_needed: "Before you can configure the OpenLMS Facebook App you need to link it to your OpenLMS login. Please click \"Welcome\" for more information."
+      notifications_config_notice: "Notifications from OpenLMS can automatically be sent over to your Facebook account. Below you'll see the types of notifications you can have sent. You can change your notification preferences at any time, either here or in OpenLMS."
+      settings_title: "OpenLMS Notification Settings"
       updating_preferences: "Updating Preferences..."
   filebrowserview: 
     course_files: "Course files"
@@ -6398,9 +6398,9 @@ en:
     message_will_be_sent_to_all_the_teachers_tas_in_the_course: "Message will be sent to all the Teachers / TA's in the course."
     please_select_one: "Please select one..."
     report_problem: "Report a Problem"
-    report_problem_sub: "If Canvas misbehaves, tell us about it"
-    search_the_canvas_guides: "Search the Canvas Guides"
-    see_if_your_issue_is_addressed_in_the_canvas_guides: "See if your issue is addressed in the *Canvas Guides*."
+    report_problem_sub: "If OpenLMS misbehaves, tell us about it"
+    search_the_canvas_guides: "Search the OpenLMS Guides"
+    see_if_your_issue_is_addressed_in_the_canvas_guides: "See if your issue is addressed in the *OpenLMS Guides*."
     send_message: "Send Message"
     sending: Sending...
     somethings_broken_but_i_can_work_around_it_for_now: "Something's broken but I can work around it for now"
@@ -6434,10 +6434,10 @@ en:
       create_collection: "Create a collection"
       start_a_group: "Start a group"
   instructions: 
-    authorize_google_docs: "Before you can collaborate on documents, you need to authorize Canvas to access your Google Docs account:"
+    authorize_google_docs: "Before you can collaborate on documents, you need to authorize OpenLMS to access your Google Docs account:"
   instructure: 
     alerts: 
-      file_previews_disabled: "File previews have been disabled for this Canvas site"
+      file_previews_disabled: "File previews have been disabled for this OpenLMS site"
     browsers: 
       unrecognized: "Unrecognized Browser"
     buttons: 
@@ -6569,7 +6569,7 @@ en:
     wikis: Wikis
   layouts: 
     application: 
-      instructure_description: "Instructure, makers of the open source learning management system Canvas"
+      instructure_description: "Instructure, makers of the open source learning management system OpenLMS"
       keyboard_navigation: 
         close: "Press comma to close this dialog"
       links: 
@@ -6599,13 +6599,13 @@ en:
         reset_explanation: "Resetting the test student will clear all history for this student, %{line_break}allowing you to view the course as a brand new student."
         warning_title: "You are currently logged into Student View"
     head: 
-      default_page_title: "Canvas LMS"
+      default_page_title: "Open LMS"
     menu: 
       view_all_accounts: "View all accounts"
       view_all_enrollments: "View all courses"
       view_all_groups: "View all groups"
     mobile_auth: 
-      log_in_to_canvas: "Log In To Canvas"
+      log_in_to_canvas: "Log In To OpenLMS"
   learning_outcome: 
     no_comment: "No Comment"
     no_context_found: "The external Learning Outcome couldn't be found for \"%{title}\", creating a copy."
@@ -6616,7 +6616,7 @@ en:
   lib: 
     angel: 
       failed_import_link: "Failed import link"
-      failed_import_link_body: "This link referenced an Angel feature that couldn't be linked to by Canvas or that was left out of the export."
+      failed_import_link_body: "This link referenced an Angel feature that couldn't be linked to by OpenLMS or that was left out of the export."
     api: 
       attachments: 
         only_one_folder: "Can't set folder path and folder id"
@@ -6662,17 +6662,17 @@ en:
     incoming_message_processor: 
       failure_message: 
         body: |-
-            The message titled "%{subject}" could not be delivered.  The message was sent to an unknown mailbox address.  If you are trying to contact someone through Canvas you can try logging in to your account and sending them a message using the Inbox tool.
+            The message titled "%{subject}" could not be delivered.  The message was sent to an unknown mailbox address.  If you are trying to contact someone through OpenLMS you can try logging in to your account and sending them a message using the Inbox tool.
             
                       Thank you,
-                      Canvas Support
+                      OpenLMS Support
         subject: "Message Reply Failed: %{subject}"
       locked_topic: 
         body: |-
-            The message titled "%{subject}" could not be delivered because the discussion topic is locked. If you are trying to contact someone through Canvas you can try logging in to your account and sending them a message using the Inbox tool.
+            The message titled "%{subject}" could not be delivered because the discussion topic is locked. If you are trying to contact someone through OpenLMS you can try logging in to your account and sending them a message using the Inbox tool.
             
                       Thank you,
-                      Canvas Support
+                      OpenLMS Support
         subject: "Message Reply Failed: %{subject}"
     progress_runner: 
       completed_message: 
@@ -6731,7 +6731,7 @@ en:
       relationships: Relationships
   media_comments: 
     alerts: 
-      kaltura_disabled: "Kaltura has been disabled for this Canvas site"
+      kaltura_disabled: "Kaltura has been disabled for this OpenLMS site"
     buttons: 
       submit: "Submit Media File"
     cancel: Cancel
@@ -6769,7 +6769,7 @@ en:
     managed_accounts: "Managed Accounts"
     my_courses: "My Courses"
   message: 
-    default_subject: "Canvas Alert"
+    default_subject: "OpenLMS Alert"
   message_students: 
     buttons: 
       send_message: "Send Message"
@@ -6802,39 +6802,39 @@ en:
           click_to_finish_registration: "Click here to finish the registration process"
           email: Email
           name: Name
-          subject: "Canvas Account Admin Invitation"
-          url_info_label: "You'll need to register with Canvas before you can participate as an account admin."
+          subject: "OpenLMS Account Admin Invitation"
+          url_info_label: "You'll need to register with OpenLMS before you can participate as an account admin."
           username: Username
         name_info: "Name: %{name}"
-        subject: "Canvas Account Admin Invitation"
+        subject: "OpenLMS Account Admin Invitation"
         url_info: |-
-            You'll need to register with Canvas before you can participate as an account admin.  You can finish the registration process here:
+            You'll need to register with OpenLMS before you can participate as an account admin.  You can finish the registration process here:
             %{url}
         username_info: "Username: %{username}"
     added_to_conversation: 
       email: 
-        body: "%{user_name} just added you to a conversation in Canvas. To view the conversation, click the link below:"
+        body: "%{user_name} just added you to a conversation in OpenLMS. To view the conversation, click the link below:"
         html: 
-          body: "%{user_name} just added you to a conversation in Canvas."
+          body: "%{user_name} just added you to a conversation in OpenLMS."
           link_text: "View Conversation"
-          subject: "%{user_name} just added you to a conversation in Canvas."
+          subject: "%{user_name} just added you to a conversation in OpenLMS."
           unknown_user: "Unknown User"
-        subject: "%{user_name} just added you to a conversation in Canvas."
+        subject: "%{user_name} just added you to a conversation in OpenLMS."
         unknown_user: "Unknown User"
       facebook: 
-        body: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in OpenLMS."
         link_text: "View Conversation"
         unknown_user: "Unknown User"
       sms: 
-        body: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in OpenLMS."
         more_info: "More info at %{url}"
         unknown_user: "Unknown User"
       summary: 
-        body: "%{user_name} just added you to a conversation in Canvas."
-        subject: "%{user_name} just added you to a conversation in Canvas."
+        body: "%{user_name} just added you to a conversation in OpenLMS."
+        subject: "%{user_name} just added you to a conversation in OpenLMS."
         unknown_user: "Unknown User"
       twitter: 
-        tweet: "Canvas Alert - Added to conversation by %{user_name}."
+        tweet: "OpenLMS Alert - Added to conversation by %{user_name}."
         unknown_user: "Unknown User"
     alert: 
       email: 
@@ -6953,7 +6953,7 @@ en:
         message: "%{user} canceled his/her reservation for \"%{appointment_name}\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - %{user} canceled his/her reservation for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - %{user} canceled his/her reservation for \"%{appointment_name}\"."
     appointment_deleted_for_user: 
       email: 
         html: 
@@ -6996,7 +6996,7 @@ en:
         message: "Your time slot for \"%{appointment_name} was canceled\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - Your time slot for \"%{appointment_name} was canceled\"."
+        message: "OpenLMS Alert - Your time slot for \"%{appointment_name} was canceled\"."
     appointment_group_deleted: 
       email: 
         html: 
@@ -7028,7 +7028,7 @@ en:
         message: "All appointments for \"%{appointment_name} have been canceled\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - All appointments for \"%{appointment_name} have been canceled\"."
+        message: "OpenLMS Alert - All appointments for \"%{appointment_name} have been canceled\"."
     appointment_group_published: 
       email: 
         group_signup: "Group (%{group_category})"
@@ -7071,7 +7071,7 @@ en:
         message: "Time slots for \"%{appointment_name}\" are now available for signup (%{dates})."
         subject: "Appointment \"%{appointment_name}\" is available for signup (%{course})"
       twitter: 
-        message: "Canvas Alert - Signups are open for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - Signups are open for \"%{appointment_name}\"."
     appointment_group_updated: 
       email: 
         group_signup: "Group (%{group_category})"
@@ -7113,7 +7113,7 @@ en:
         message: "Time slots have been added to \"%{appointment_name}\" and are available for signup (%{dates})."
         subject: "Appointment \"%{appointment_name}\" has been updated (%{course})"
       twitter: 
-        message: "Canvas Alert - New time slots are available for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - New time slots are available for \"%{appointment_name}\"."
     appointment_reserved_by_user: 
       email: 
         html: 
@@ -7153,7 +7153,7 @@ en:
         message: "%{user} has signed up for \"%{appointment_name}\"."
         more_info: "More info at %{url}"
       twitter: 
-        message: "Canvas Alert - %{user} has signed up for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - %{user} has signed up for \"%{appointment_name}\"."
     appointment_reserved_for_user: 
       email: 
         html: 
@@ -7196,7 +7196,7 @@ en:
         message: "%{user} has signed you up for \"%{appointment_name}\" (%{date_and_time})."
         subject: "You have been signed up for \"%{appointment_name}\" (%{course})"
       twitter: 
-        message: "Canvas Alert - You have been signed up for \"%{appointment_name}\"."
+        message: "OpenLMS Alert - You have been signed up for \"%{appointment_name}\"."
     assignment_changed: 
       email: 
         body: |-
@@ -7219,7 +7219,7 @@ en:
       summary: 
         subject: "Assignment Changed: %{title}, %{course}"
       twitter: 
-        assignment_change: "Canvas Alert - Change: %{assignment_name}, %{course_name}"
+        assignment_change: "OpenLMS Alert - Change: %{assignment_name}, %{course_name}"
     assignment_created: 
       email: 
         assignment_created: "Assignment Created - %{assignment_name}, %{course_name}"
@@ -7253,7 +7253,7 @@ en:
         multiple_due_dates: "due: Multiple Dates"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "Canvas Alert - Change: %{assignment_name}, %{course_name}"
+        assignment_change: "OpenLMS Alert - Change: %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
         multiple_due_dates: "due: Multiple Dates"
         no_due_date: "due: No Due Date"
@@ -7281,7 +7281,7 @@ en:
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "Canvas Alert - Date Change: %{assignment_name}, %{course_name}"
+        assignment_change: "OpenLMS Alert - Date Change: %{assignment_name}, %{course_name}"
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
     assignment_due_date_override_changed: 
@@ -7308,7 +7308,7 @@ en:
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
       twitter: 
-        assignment_change: "Canvas Alert - Date Change: %{assignment_name}, %{course_name} (%{override})"
+        assignment_change: "OpenLMS Alert - Date Change: %{assignment_name}, %{course_name} (%{override})"
         due_at: "due: %{assignment_due_date_time}"
         no_due_date: "due: No Due Date"
     assignment_graded: 
@@ -7330,7 +7330,7 @@ en:
         assignment_graded: "Assignment Graded: %{assignment_name}, %{course_name}"
         the_assignment_is_graded: "The assignment, %{assignment_name}, has been graded."
       twitter: 
-        assignment_graded: "Canvas Alert - Graded: %{assignment_name}, %{course_name}"
+        assignment_graded: "OpenLMS Alert - Graded: %{assignment_name}, %{course_name}"
     assignment_locked: "This assignment is currently locked."
     assignment_locked_at: "This assignment was locked %{at}."
     assignment_locked_module: "This assignment is part of the module *%{module}* and hasn't been unlocked yet."
@@ -7355,7 +7355,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_resubmitted: "Re-Submission: %{user_name}, %{assignment_name}"
       twitter: 
-        user_resubmitted: "Canvas Alert - Resubmission: %{user_name}, %{assignment_name}"
+        user_resubmitted: "OpenLMS Alert - Resubmission: %{user_name}, %{assignment_name}"
     assignment_submitted: 
       email: 
         html: 
@@ -7376,7 +7376,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_submitted: "Submission: %{user_name}, %{assignment_name}"
       twitter: 
-        user_submitted: "Canvas Alert - Submission: %{user_name}, %{assignment_name}"
+        user_submitted: "OpenLMS Alert - Submission: %{user_name}, %{assignment_name}"
     assignment_submitted_late: 
       email: 
         html: 
@@ -7397,7 +7397,7 @@ en:
         turned_in_at: "turned in: %{submission_date}"
         user_submitted: "Late Assignment: %{user_name}, %{assignment_name}"
       twitter: 
-        user_submitted: "Canvas Alert - Late Submission: %{user_name}, %{assignment_name}"
+        user_submitted: "OpenLMS Alert - Late Submission: %{user_name}, %{assignment_name}"
     assignment_unmuted: 
       email: 
         body: |-
@@ -7466,7 +7466,7 @@ en:
             in %{service} and you were invited using your email address, %{email}.
         subject: "Collaboration Invitation: %{course_or_group}"
       twitter: 
-        body: "Canvas Alert - Collaboration Invite: %{document}, %{course_or_group}"
+        body: "OpenLMS Alert - Collaboration Invite: %{document}, %{course_or_group}"
     confirm_email_communication_channel: 
       email: 
         body: "The email address, %{email} is being registered at %{website} for the user, %{user}."
@@ -7474,21 +7474,21 @@ en:
         html: 
           body: "The email address, %{email} is being registered at %{website} for the user, %{user}."
           details: "Click here to confirm this registration"
-          subject: "Confirm Email: Canvas"
-        subject: "Confirm Email: Canvas"
+          subject: "Confirm Email: OpenLMS"
+        subject: "Confirm Email: OpenLMS"
     confirm_registration: 
       email: 
-        body: "Thank you for registering with Canvas!  This email is confirmation that the user %{user} is registering for a new account at %{website}."
+        body: "Thank you for registering with OpenLMS!  This email is confirmation that the user %{user} is registering for a new account at %{website}."
         details: "To finish the registration process, please visit the following url:"
         html: 
-          body: "Thank you for registering with Canvas! This email is confirmation that the user %{user} is registering for a new account at %{website}."
+          body: "Thank you for registering with OpenLMS! This email is confirmation that the user %{user} is registering for a new account at %{website}."
           details: "Click here to finish the registration process"
-          subject: "Confirm Registration: Canvas"
-        subject: "Confirm Registration: Canvas"
+          subject: "Confirm Registration: OpenLMS"
+        subject: "Confirm Registration: OpenLMS"
     confirm_sms_communication_channel: 
       sms: 
         body: |-
-            Confirm Canvas registration w/ code:
+            Confirm OpenLMS registration w/ code:
             
             %{confirmation_code}
             
@@ -7520,83 +7520,83 @@ en:
       email: 
         attached_files: "Attached Files:"
         audio_comment: "This message includes media comments. To listen or reply, click the link below:"
-        body: "%{user_name} just sent you a message in Canvas:"
+        body: "%{user_name} just sent you a message in OpenLMS:"
         html: 
           attached_files: "Attached Files:"
           audio_comment: "This message includes media comments. To listen or reply, click the link below:"
-          body: "%{user_name} just sent you a message in Canvas:"
+          body: "%{user_name} just sent you a message in OpenLMS:"
           download: download
           reply_message: "To reply to this message, click the link below:"
-          subject: "%{user_name} just sent you a message in Canvas."
+          subject: "%{user_name} just sent you a message in OpenLMS."
           unknown_user: "Unknown User"
         reply_message: "To reply to this message, click the link below:"
-        subject: "%{user_name} just sent you a message in Canvas."
+        subject: "%{user_name} just sent you a message in OpenLMS."
         unknown_user: "Unknown User"
       facebook: 
-        body: "%{user_name} just sent you a message in Canvas."
+        body: "%{user_name} just sent you a message in OpenLMS."
         link_text: "View Message"
         unknown_user: "Unknown User"
       sms: 
-        body: "%{user_name} just sent you a message in Canvas:"
+        body: "%{user_name} just sent you a message in OpenLMS:"
         more_info: "More info at %{url}"
         unknown_user: "Unknown User"
       summary: 
-        body: "%{user_name} just sent you a message in Canvas:"
-        subject: "%{user_name} just sent you a message in Canvas."
+        body: "%{user_name} just sent you a message in OpenLMS:"
+        subject: "%{user_name} just sent you a message in OpenLMS."
         unknown_user: "Unknown User"
       twitter: 
-        tweet: "Canvas Alert - Message from %{user_name}."
+        tweet: "OpenLMS Alert - Message from %{user_name}."
     course_already_started: 
       email: 
         body: |-
             Hi %{user},
             
-            %{course}, your course on Canvas Network, started a couple days ago, and we noticed you haven't logged in yet. We just wanted to send you one last reminder in case you forgot.
+            %{course}, your course on OpenLMS Network, started a couple days ago, and we noticed you haven't logged in yet. We just wanted to send you one last reminder in case you forgot.
             
             To log in, go to %{site} and enter your username and password. If you haven't set a password yet, you can set one here: %{password_url}. If you simply can't make this particular course, feel free to browse our course catalog at %{site} to find something else that inspires you. New courses are being added all the time!
             
             We hope to see you soon,
             
-            Canvas Network
+            OpenLMS Network
         course_already_started: "Your course has already started"
     course_required_materials: 
       email: 
         body: |-
             Hi %{user},
             
-            Good news! %{course}, the course you enrolled in on Canvas Network, will be starting soon.
+            Good news! %{course}, the course you enrolled in on OpenLMS Network, will be starting soon.
             
-            To help make sure you get the most from your course, you should check for any special instructions or course materials listed by the instructor.  You can look for this on the course details page on Canvas Network, or just click the link below.
+            To help make sure you get the most from your course, you should check for any special instructions or course materials listed by the instructor.  You can look for this on the course details page on OpenLMS Network, or just click the link below.
             
             %{url}
             
             Keep learning,
             
-            Canvas Network
+            OpenLMS Network
         course_required_materials: "Materials and instructions for %{course}"
     course_started: 
       email: 
         body: |-
             Hello %{user},
             
-            This is a friendly reminder that %{course}, your course on Canvas Network, begins today. You can now log in to %{site} and get started!
+            This is a friendly reminder that %{course}, your course on OpenLMS Network, begins today. You can now log in to %{site} and get started!
             
-            Don't forget to set up your Canvas Network profile, so others in the course know who you are. You can update your profile at %{profile_url}
+            Don't forget to set up your OpenLMS Network profile, so others in the course know who you are. You can update your profile at %{profile_url}
             
             Keep learning,
             
-            Canvas Network
+            OpenLMS Network
         course_starts_today: "Your course begins today"
     course_starts_in_week: 
       email: 
         body: |-
             %{user},
             
-            It's almost time! %{course}, a course you enrolled in on Canvas Network, begins next week. We know how excited you must be, and we're excited too.
+            It's almost time! %{course}, a course you enrolled in on OpenLMS Network, begins next week. We know how excited you must be, and we're excited too.
             
             What can you do to get ready?
             
-            If you haven't already created your Canvas Network profile, you can log in and set it up at Canvas.net. Your profile will help other people in the course know who you are. There, you can also set up your notification preferences.
+            If you haven't already created your OpenLMS Network profile, you can log in and set it up at Canvas.net. Your profile will help other people in the course know who you are. There, you can also set up your notification preferences.
             
             Finally, you can review the required materials and any instructions for your course here: %{url}
             

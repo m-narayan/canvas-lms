@@ -12,7 +12,7 @@ module Canvas
           :available_to => ['user', 'student', 'teacher', 'admin'],
           :text => I18n.t('#help_dialog.search_the_OpenLMS_guides', 'Search the OpenLMS Guides'),
           :subtext => I18n.t('#help_dialog.OpenLMS_help_sub', 'Find answers to common questions'),
-          :url => 'http://guides.instructure.com'
+          :url => 'http://guides.arrivuapps.com'
         },
         {
           :available_to => ['user', 'student', 'teacher', 'admin'],

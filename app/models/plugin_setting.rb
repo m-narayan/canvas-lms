@@ -31,12 +31,13 @@ class PluginSetting < ActiveRecord::Base
   before_save :validate_posted_settings
   serialize :settings
   attr_accessor :posted_settings
-  attr_accessible :name, :settings
+  attr_accessible :name, :settings,:account_id
   attr_writer :plugin
 
   before_save :encrypt_settings
   after_save :clear_cache
   after_destroy :clear_cache
+  belongs_to :account, :class_name => 'Account'
   
   def validate_uniqueness_of_name?
     true

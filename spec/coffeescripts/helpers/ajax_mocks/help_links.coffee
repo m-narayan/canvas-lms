@@ -8,8 +8,8 @@ require [ 'support/jquery.mockjax'], ($) ->
       available_to: [ "user", "student", "teacher", "admin" ]
     },
     {
-      subtext: "Have an idea to improve Canvas?"
-      url: "http://help.instructure.com/forums/337215-feature-requests"
+      subtext: "Have an idea to improve OpenLMS?"
+      url: "http://help.arrivuapps.com/forums/337215-feature-requests"
       text: "Request a Feature"
       available_to: [ "user", "student", "teacher", "admin" ]
     }]
