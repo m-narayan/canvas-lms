@@ -45,6 +45,12 @@ namespace :deploy do
     sudo "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
+  task :cleanup, :except => { :no_release => true } do
+    count = fetch(:keep_releases, 5).to_i
+    sudo "ls -1dt #{releases_path}/* | tail -n +#{count + 1} | xargs rm -rf"
+  end
+
+
   namespace :web do
     task :disable, :roles => :app do
       on_rollback { rm "#{shared_path}/system/maintenance.html" }
@@ -206,7 +212,6 @@ after 'deploy:restart', 'monit:start'
 
 # Add this to automatically ping the server after a restart:
 after "deploy:restart", "deploy:ping"
-
 
 #before(:deploy, "canvas:check_user")
 # # UTILITY TASKS
