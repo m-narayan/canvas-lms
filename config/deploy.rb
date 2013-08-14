@@ -7,14 +7,13 @@ set :passenger_user,"canvasuser"
 
 set :stages, ["testing","staging", "production"]
 set :default_stage, "testing"
-set :use_sudo, false
 
-set :repository,    "https://github.com:m-narayan/canvas-lms.git"
+set :repository,    "https://github.com/m-narayan/canvas-lms.git"
 set :scm,     :git
 set :deploy_via,  :remote_cache
 set :branch,        "deploy"
 set :deploy_to,     "/var/capistrano/deploy/lms"
-set :use_sudo,      false
+set :use_sudo,      true
 set :deploy_env,    "deploy"
 #set :bundle_dir,    "/var/data/gems"
 set :bundle_without, []
@@ -43,8 +42,14 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    sudo "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+
+  task :cleanup, :except => { :no_release => true } do
+    count = fetch(:keep_releases, 5).to_i
+    sudo "ls -1dt #{releases_path}/* | tail -n +#{count + 1} | xargs rm -rf"
+  end
+
 
   namespace :web do
     task :disable, :roles => :app do
@@ -52,11 +57,11 @@ namespace :deploy do
 
       run "cp /usr/local/deployment/maintenance.html #{shared_path}/system/maintenance.html && chmod 0644 #{shared_path}/system/maintenance.html"
     end
-    
+
     task :enable, :roles => :app do
       run "rm #{shared_path}/system/maintenance.html"
     end
-  end   
+  end
 end
 
 # Canavs-specific task after a deploy
@@ -70,22 +75,10 @@ namespace :canvas do
       exit
     end
   end
- 
+
   # LOCAL COMMANDS
   desc "Update the deploy branch of the local repo"
   task :update do
-    stashResponse = run_locally "git stash"
-    puts stashResponse
-    puts run_locally "git checkout vendor"
-    puts run_locally "git fetch"
-    #puts run_locally "git merge upstream/stable"
-    puts run_locally "git checkout develop"
-    puts run_locally "git stash pop" unless stashResponse == "No local changes to save\n"
-    puts "\x1b[42m\x1b[1;37m Update successful. You should now run 'git merge vendor' then 'cap canvas:update_gems' \x1b[0m"
-  end
-  
-  desc "Install new gems from bundle and push updates"
-  task :update_gems do
     stashResponse = run_locally "git stash"
     puts stashResponse
     puts run_locally "bundle install"  #--path path=~/gems"
@@ -118,7 +111,7 @@ namespace :canvas do
     run "ln -nfs #{shared_path}/config/logging.yml #{release_path}/config/logging.yml"
     run "ln -nfs #{shared_path}/config/outgoing_mail.yml #{release_path}/config/outgoing_mail.yml"
     run "ln -nfs #{shared_path}/config/redis.yml #{release_path}/config/redis.yml"
-    run "ln -nfs #{shared_path}/config/security.yml #{release_path}/config/security.yml"   
+    run "ln -nfs #{shared_path}/config/security.yml #{release_path}/config/security.yml"
   end
 
   desc "Clone QTIMigrationTool"
@@ -128,19 +121,19 @@ namespace :canvas do
 
   desc "Clone canvas-mt"
   task :clone_canvas_mt do
-    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/canvas-mt.git canvas_mt"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} git@github.com:m-narayan/canvas-mt.git canvas_mt"
   end
 
   desc "Clone lms_customization"
   task :clone_lms_customization do
-    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/lms_customization.git lms_customization"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} git@github.com:m-narayan/lms_customization.git lms_customization"
   end
 
   desc "Compile static assets"
   task :compile_assets, :on_error => :continue do
     # On remote: bundle exec rake canvas:compile_assets
     run "cd #{latest_release} && bundle exec #{rake} RAILS_ENV=#{rails_env} canvas:compile_assets[false]"
-    run "cd #{latest_release} && chown -R #{passenger_user}:#{passenger_user} ."
+    # run "cd #{latest_release} && chown -R #{passenger_user}:#{passenger_user} ."
   end
 
   desc "Load new notification types"
@@ -150,12 +143,12 @@ namespace :canvas do
   end
 
 
-  
+
   desc "Restarted delayed jobs workers"
   task :restart_jobs, :on_error => :continue do
-    run "touch #{current_path}/tmp/restart.txt"
+    sudo "touch #{current_path}/tmp/restart.txt"
     # On remote: /etc/init.d/canvas_init restart
-    run "/etc/init.d/canvas_init restart"
+    sudo "/etc/init.d/canvas_init restart"
   end
 
   desc "Tasks that run before create_symlink"
@@ -170,10 +163,10 @@ namespace :canvas do
 
   desc "change permission to canvasuser "
   task :canvasuser_permission, :on_error => :continue do
-    run "#{try_sudo} mkdir -p #{current_path}/log #{current_path}/tmp/pids #{current_path}/public/assets #{current_path}/public/stylesheets/compiled"
-    run "#{try_sudo} touch Gemfile.lock"
-    run "#{try_sudo} chown -R canvasuser #{current_path}/config/environment.rb #{current_path}/log #{current_path}/tmp #{current_path}/public/assets #{current_path}/public/stylesheets/compiled #{current_path}/Gemfile.lock #{current_path}/config.ru"
- end
+    sudo "mkdir -p #{current_path}/log #{current_path}/tmp/pids #{current_path}/public/assets #{current_path}/public/stylesheets/compiled"
+    sudo "touch Gemfile.lock"
+    sudo "chown -R canvasuser #{current_path}/config/environment.rb #{current_path}/log #{current_path}/tmp #{current_path}/public/assets #{current_path}/public/stylesheets/compiled #{current_path}/Gemfile.lock #{current_path}/config.ru"
+  end
 
   desc "Tasks that run after create_symlink"
   task :after_create_symlink do
@@ -191,10 +184,10 @@ end
 #Monit tasks
 namespace :monit do
   task :start do
-    run 'monit '
+    sudo 'monit'
   end
   task :stop do
-    run 'monit quit'
+    sudo 'monit quit'
   end
 end
 
@@ -220,22 +213,21 @@ after 'deploy:restart', 'monit:start'
 # Add this to automatically ping the server after a restart:
 after "deploy:restart", "deploy:ping"
 
-
 #before(:deploy, "canvas:check_user")
-  # # UTILITY TASKS
-  # desc "Make sure that only the deploy user can run certain tasks"
-  # task :check_user do
-  #   transaction do 
-  #     do_check_user
-  #   end
-  # end
+# # UTILITY TASKS
+# desc "Make sure that only the deploy user can run certain tasks"
+# task :check_user do
+#   transaction do
+#     do_check_user
+#   end
+# end
 
-  # desc "Make sure that only the deploy user can run certain tasks"
-  # task :do_check_user do
-  #   on_rollback do
-  #     puts "\x1b[41m\x1b[1;37m Please run this command as '#{user}' user \x1b[0m"
-  #   end
-  #   run_locally "[ `whoami` == #{user} ]"
+# desc "Make sure that only the deploy user can run certain tasks"
+# task :do_check_user do
+#   on_rollback do
+#     puts "\x1b[41m\x1b[1;37m Please run this command as '#{user}' user \x1b[0m"
+#   end
+#   run_locally "[ `whoami` == #{user} ]"
   # end
 
 
