@@ -1150,7 +1150,8 @@ Spec::Runner.configure do |config|
     account.name = account_name
     account.save!
     Account.site_admin.add_user(user, 'AccountAdmin')
-    Account.default.add_user(user, 'AccountAdmin')
+    default_admin_account_user = Account.default.add_user(user, 'AccountAdmin')
+    #default_admin_account_user
     account
   end
 
