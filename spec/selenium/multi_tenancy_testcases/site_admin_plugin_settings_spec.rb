@@ -312,6 +312,15 @@ require File.expand_path(File.dirname(__FILE__) + '/common_mt')
       #driver.find_element(:css, ".error_text").should include_text "Your OpenLMS User creation limit is exceeded. Please contact your account admin"
       f('.error_text').should be_displayed
 
+      driver.get "http://ibm.lvh.me:#{$server_port}/courses/#{ibm_course.id}/users"
+      f("#addUsers").click
+      f("#create-users-step-1").should be_displayed
+      f("#user_list_textarea").send_keys("ibm.st1@arrivusystems.com")
+      f("#next-step").click
+      f("#create-users-verified").text.should include_text "ibm.st1@arrivusystems.com"
+      f("#createUsersAddButton").click
+      wait_for_ajaximations
+      f("#create-users-step-3").should_not be_displayed
     end
 
 

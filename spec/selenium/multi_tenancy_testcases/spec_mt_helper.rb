@@ -1154,8 +1154,6 @@ Spec::Runner.configure do |config|
     #default_admin_account_user
     account
   end
-
-
 end
 
 Dir[Rails.root+'vendor/plugins/*/spec_canvas/spec_helper.rb'].each do |f|
