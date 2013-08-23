@@ -163,7 +163,6 @@
           elsif params[:user_role]=="student"
             expect_new_page_load{driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{course_id}"}
           end
-
         end
         sleep 5
         expect_new_page_load { f('.logout > a').click }
@@ -280,7 +279,7 @@
         course_cross_checking(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:cross_account_name=>"ibm",:course_id=>ibm_course_m1.id,:access_type=>"change course id")
       end
 
-      it "should show Login message when IBM admin tried to accessing IBM domain's course with IBM url" do
+      it "should show Login message when TCS admin tried to accessing IBM domain's course with IBM url" do
         course_cross_checking(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:cross_account_name=>"ibm",:course_id=>ibm_course_m1.id,:access_type=>"change url")
       end
 

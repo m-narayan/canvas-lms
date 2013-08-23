@@ -79,7 +79,7 @@ describe "Acount creation and Admin user creation test" do
   it "should login as a admin user in tcs_sub_account2" do
     sub_account_login(:account_name=>"tcs",:sub_account_name=>"tcs_sub_account2",:sub_account_id=>tcs_sub_account2.id, :user_name=>"tcs.s2@arrivusystems.com", :password=>"Admin123$")
   end
-
+                                  nil
   it "should login as a admin user in cisco_sub_account1" do
     sub_account_login(:account_name=>"cisco",:sub_account_name=>"cisco_sub_account1",:sub_account_id=>cisco_sub_account1.id, :user_name=>"cisco.s1@arrivusystems.com", :password=>"Admin123$")
   end
