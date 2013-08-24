@@ -56,7 +56,7 @@ describe "Acount creation and Admin user creation test" do
     #driver.get "http://ibm.lvh.me:#{$server_port}"
     #fill_in_login_form("ibm.s1@arrivusystems.com","Admin123$")
     #f('.user_name').text.should == "ibm.s1@arrivusystems.com"
-    #driver.get "http://ibm.lvh.me:#{$server_port}/accounts/#{ibm_sub_account1.account_id}/settings"
+    #driver.get "http://ibm.lvh.me:#{$server_port}/accounts/#{ibm_sub_account1.id}/settings"
     #f("#section-tabs-header").should include_text("ibm_sub_account1")
     #fj('#tab-announcements-link:visible').should be_nil
     #f('.faculty_journal:visible').should be_nil
@@ -64,44 +64,44 @@ describe "Acount creation and Admin user creation test" do
     #f('.admin_tools:visible').should be_nil
     #expect_new_page_load { f('.logout > a').click }
 
-    sub_account_login(:account_name=>"ibm",:sub_account_name=>"ibm_sub_account1",:sub_account_id=>ibm_sub_account1.account_id, :user_name=>"ibm.s1@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"ibm",:sub_account_name=>"ibm_sub_account1",:sub_account_id=>ibm_sub_account1.id, :user_name=>"ibm.s1@arrivusystems.com", :password=>"Admin123$")
 
   end
 
   it "should login as a admin user in ibm_sub_account2" do
-    sub_account_login(:account_name=>"ibm",:sub_account_name=>"ibm_sub_account2",:sub_account_id=>ibm_sub_account2.account_id, :user_name=>"ibm.s2@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"ibm",:sub_account_name=>"ibm_sub_account2",:sub_account_id=>ibm_sub_account2.id, :user_name=>"ibm.s2@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in tcs_sub_account1" do
-    sub_account_login(:account_name=>"tcs",:sub_account_name=>"tcs_sub_account1",:sub_account_id=>tcs_sub_account1.account_id, :user_name=>"tcs.s1@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"tcs",:sub_account_name=>"tcs_sub_account1",:sub_account_id=>tcs_sub_account1.id, :user_name=>"tcs.s1@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in tcs_sub_account2" do
-    sub_account_login(:account_name=>"tcs",:sub_account_name=>"tcs_sub_account2",:sub_account_id=>tcs_sub_account2.account_id, :user_name=>"tcs.s2@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"tcs",:sub_account_name=>"tcs_sub_account2",:sub_account_id=>tcs_sub_account2.id, :user_name=>"tcs.s2@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in cisco_sub_account1" do
-    sub_account_login(:account_name=>"cisco",:sub_account_name=>"cisco_sub_account1",:sub_account_id=>cisco_sub_account1.account_id, :user_name=>"cisco.s1@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"cisco",:sub_account_name=>"cisco_sub_account1",:sub_account_id=>cisco_sub_account1.id, :user_name=>"cisco.s1@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in cisco_sub_account2" do
-    sub_account_login(:account_name=>"cisco",:sub_account_name=>"cisco_sub_account2",:sub_account_id=>cisco_sub_account2.account_id, :user_name=>"cisco.s2@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"cisco",:sub_account_name=>"cisco_sub_account2",:sub_account_id=>cisco_sub_account2.id, :user_name=>"cisco.s2@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in beacon_sub_account1" do
-    sub_account_login(:account_name=>"beacon",:sub_account_name=>"beacon_sub_account1",:sub_account_id=>beacon_sub_account1.account_id, :user_name=>"beacon.s1@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"beacon",:sub_account_name=>"beacon_sub_account1",:sub_account_id=>beacon_sub_account1.id, :user_name=>"beacon.s1@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in beacon_sub_account2" do
-    sub_account_login(:account_name=>"beacon",:sub_account_name=>"beacon_sub_account2",:sub_account_id=>beacon_sub_account2.account_id, :user_name=>"beacon.s2@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"beacon",:sub_account_name=>"beacon_sub_account2",:sub_account_id=>beacon_sub_account2.id, :user_name=>"beacon.s2@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in infosys_sub_account1" do
-    sub_account_login(:account_name=>"infosys",:sub_account_name=>"infosys_sub_account1",:sub_account_id=>infosys_sub_account1.account_id, :user_name=>"infosys.s1@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"infosys",:sub_account_name=>"infosys_sub_account1",:sub_account_id=>infosys_sub_account1.id, :user_name=>"infosys.s1@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should login as a admin user in infosys_sub_account2" do
-    sub_account_login(:account_name=>"infosys",:sub_account_name=>"infosys_sub_account2",:sub_account_id=>infosys_sub_account2.account_id, :user_name=>"infosys.s2@arrivusystems.com", :password=>"Admin123$")
+    sub_account_login(:account_name=>"infosys",:sub_account_name=>"infosys_sub_account2",:sub_account_id=>infosys_sub_account2.id, :user_name=>"infosys.s2@arrivusystems.com", :password=>"Admin123$")
   end
 
   it "should not login when other domain users login in IBM domain" do

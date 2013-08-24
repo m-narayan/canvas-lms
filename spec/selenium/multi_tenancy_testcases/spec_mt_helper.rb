@@ -1116,10 +1116,11 @@ Spec::Runner.configure do |config|
     @sub_account=Account.create!(:name => subaccount_name, :parent_account => @parent_account)
     #@user=add_user(subaccount_name,email,password)
     @user=User.create!(:name => email,:sortable_name => email)
-    pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
+    pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @parent_account )
     @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
     @account_user=@sub_account.add_user(@user, 'AccountAdmin')
-    @account_user
+    #@account_user
+    @sub_account
   end
 
   def add_user(account_name,email,password)
