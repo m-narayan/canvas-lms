@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/common_mt')
+require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
 describe "Site_Admin user creation test" do
 
@@ -17,11 +18,11 @@ describe "Site_Admin user creation test" do
   end
 
   account=create_site_admin("openlms","openlms@arrivusystems.com","Admin123$")
-  ibm_account=add_mt_account("ibm")
-  tcs_account=add_mt_account("tcs")
-  cisco_account =add_mt_account("cisco")
-  beacon_account=add_mt_account("beacon")
-  infosys_account=add_mt_account("infosys")
+  #ibm_account=add_mt_account("ibm")
+  #tcs_account=add_mt_account("tcs")
+  #cisco_account =add_mt_account("cisco")
+  #beacon_account=add_mt_account("beacon")
+  #infosys_account=add_mt_account("infosys")
 
   before do
     @login_error_box_css = ".error_text:last"

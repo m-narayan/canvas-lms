@@ -1,4 +1,5 @@
     require File.expand_path(File.dirname(__FILE__) + '/common_mt')
+    #require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     describe "Course_cross_checking" do
 
@@ -32,7 +33,7 @@
       tcs_course_s2=course(:course_name=>"tcs course S2-Sub Account Course2", :account=>tcs_sub_account1, :active_course=>true)
       tcs_course_s3=course(:course_name=>"tcs course S3-Sub Account Course3", :account=>tcs_sub_account2, :active_course=>true)
       tcs_course_s4=course(:course_name=>"tcs course S4-Sub Account Course4", :account=>tcs_sub_account2, :active_course=>true)
-      
+
       ibm_student1=add_user("ibm","ibm.st1@arrivusystems.com","Admin123$")
       ibm_student2=add_user("ibm","ibm.st2@arrivusystems.com","Admin123$")
       ibm_student3=add_user("ibm","ibm.st3@arrivusystems.com","Admin123$")

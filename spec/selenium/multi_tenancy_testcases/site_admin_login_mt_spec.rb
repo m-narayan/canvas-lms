@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/common_mt')
+require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
 describe "Site_Admin user creation and Login test" do
 
@@ -7,20 +8,20 @@ describe "Site_Admin user creation and Login test" do
 
   openlms_account=create_site_admin("openlms","openlms@arrivusystems.com","Admin123$")
 
-  ibm_account=add_mt_account("ibm")
-  add_mt_account_admin_users("ibm","ibm@arrivusystems.com","Admin123$")
-
-  tcs_account=add_mt_account("tcs")
-  add_mt_account_admin_users("tcs","tcs@arrivusystems.com","Admin123$")
-
-  cisco_account=add_mt_account("cisco")
-  add_mt_account_admin_users("cisco","cisco@arrivusystems.com","Admin123$")
-
-  beacon_account=add_mt_account("beacon")
-  add_mt_account_admin_users("beacon","beacon@arrivusystems.com","Admin123$")
-
-  infosys_account=add_mt_account("infosys")
-  add_mt_account_admin_users("infosys","infosys@arrivusystems.com","Admin123$")
+  #ibm_account=add_mt_account("ibm")
+  #add_mt_account_admin_users("ibm","ibm@arrivusystems.com","Admin123$")
+  #
+  #tcs_account=add_mt_account("tcs")
+  #add_mt_account_admin_users("tcs","tcs@arrivusystems.com","Admin123$")
+  #
+  #cisco_account=add_mt_account("cisco")
+  #add_mt_account_admin_users("cisco","cisco@arrivusystems.com","Admin123$")
+  #
+  #beacon_account=add_mt_account("beacon")
+  #add_mt_account_admin_users("beacon","beacon@arrivusystems.com","Admin123$")
+  #
+  #infosys_account=add_mt_account("infosys")
+  #add_mt_account_admin_users("infosys","infosys@arrivusystems.com","Admin123$")
 
 
   before do

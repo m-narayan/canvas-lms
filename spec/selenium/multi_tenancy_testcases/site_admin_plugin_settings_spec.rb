@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/common_mt')
+require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
   describe "Site_Admin user creation test" do
 
@@ -6,9 +7,9 @@ require File.expand_path(File.dirname(__FILE__) + '/common_mt')
 
 
     account=create_site_admin("openlms","openlms@arrivusystems.com","Admin123$")
-    ibm_account=add_mt_account("ibm")
-    add_mt_account_admin_users("ibm","ibm@arrivusystems.com","Admin123$")
-    ibm_course=create_course("IBM course M1-Sample Course1","IBMM1","ibm")
+    #ibm_account=add_mt_account("ibm")
+    #add_mt_account_admin_users("ibm","ibm@arrivusystems.com","Admin123$")
+    #ibm_course=create_course("IBM course M1-Sample Course1","IBMM1","ibm")
 
 
     def admin_login(params={})

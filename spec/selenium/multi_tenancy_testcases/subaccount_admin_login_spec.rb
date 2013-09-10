@@ -1,29 +1,30 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/common_mt')
+require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
 describe "Acount creation and Admin user creation test" do
 
   it_should_behave_like "in-process server selenium tests"
 
-  add_mt_account("ibm")
-  ibm_sub_account1=add_sub_account_mt("ibm","ibm_sub_account1","ibm.s1@arrivusystems.com","Admin123$")
-  ibm_sub_account2=add_sub_account_mt("ibm","ibm_sub_account2","ibm.s2@arrivusystems.com","Admin123$")
-
-  add_mt_account("tcs")
-  tcs_sub_account1=add_sub_account_mt("tcs","tcs_sub_account1","tcs.s1@arrivusystems.com","Admin123$")
-  tcs_sub_account2=add_sub_account_mt("tcs","tcs_sub_account2","tcs.s2@arrivusystems.com","Admin123$")
-
-  add_mt_account("cisco")
-  cisco_sub_account1=add_sub_account_mt("cisco","cisco_sub_account1","cisco.s1@arrivusystems.com","Admin123$")
-  cisco_sub_account2=add_sub_account_mt("cisco","cisco_sub_account2","cisco.s2@arrivusystems.com","Admin123$")
-
-  add_mt_account("beacon")
-  beacon_sub_account1=add_sub_account_mt("beacon","beacon_sub_account1","beacon.s1@arrivusystems.com","Admin123$")
-  beacon_sub_account2=add_sub_account_mt("beacon","beacon_sub_account2","beacon.s2@arrivusystems.com","Admin123$")
-
-  add_mt_account("infosys")
-  infosys_sub_account1=add_sub_account_mt("infosys","infosys_sub_account1","infosys.s1@arrivusystems.com","Admin123$")
-  infosys_sub_account2=add_sub_account_mt("infosys","infosys_sub_account2","infosys.s2@arrivusystems.com","Admin123$")
+  #add_mt_account("ibm")
+  #ibm_sub_account1=add_sub_account_mt("ibm","ibm_sub_account1","ibm.s1@arrivusystems.com","Admin123$")
+  #ibm_sub_account2=add_sub_account_mt("ibm","ibm_sub_account2","ibm.s2@arrivusystems.com","Admin123$")
+  #
+  #add_mt_account("tcs")
+  #tcs_sub_account1=add_sub_account_mt("tcs","tcs_sub_account1","tcs.s1@arrivusystems.com","Admin123$")
+  #tcs_sub_account2=add_sub_account_mt("tcs","tcs_sub_account2","tcs.s2@arrivusystems.com","Admin123$")
+  #
+  #add_mt_account("cisco")
+  #cisco_sub_account1=add_sub_account_mt("cisco","cisco_sub_account1","cisco.s1@arrivusystems.com","Admin123$")
+  #cisco_sub_account2=add_sub_account_mt("cisco","cisco_sub_account2","cisco.s2@arrivusystems.com","Admin123$")
+  #
+  #add_mt_account("beacon")
+  #beacon_sub_account1=add_sub_account_mt("beacon","beacon_sub_account1","beacon.s1@arrivusystems.com","Admin123$")
+  #beacon_sub_account2=add_sub_account_mt("beacon","beacon_sub_account2","beacon.s2@arrivusystems.com","Admin123$")
+  #
+  #add_mt_account("infosys")
+  #infosys_sub_account1=add_sub_account_mt("infosys","infosys_sub_account1","infosys.s1@arrivusystems.com","Admin123$")
+  #infosys_sub_account2=add_sub_account_mt("infosys","infosys_sub_account2","infosys.s2@arrivusystems.com","Admin123$")
 
 
   def sub_account_login(params={})
