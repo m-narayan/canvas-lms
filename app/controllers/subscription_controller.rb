@@ -63,7 +63,7 @@ class SubscriptionController < ApplicationController
           end
           res = @pseudonym.save!
           @account.add_user(@user, 'AccountAdmin')
-          send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
+        #  send_email(params[:subscription][:email],params[:subscription][:name],password,params[:subscription][:subdomain])
           reset_session_for_login
           cross_domain_login_token = AutoHandle.generate(nil, 150)
           create_subscription_authentication(@account.name,@pseudonym.unique_id,password,cross_domain_login_token)
