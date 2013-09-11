@@ -923,7 +923,7 @@ end
 ## #Teacher as a student course check in the same domain
 # ##IBM Teacher as a student course check in the same domain
 
-it "should show the course page without editing options when a teacher1 enrolled as a student in other courses of same domain" do
+it "should show the Announcement page without editing options when a teacher1 enrolled as a student in other courses of same domain" do
     teacher_as_a_student(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",
                          :course_id=>ibm_course4.id,:announcement_id=>ibm_course4_announcement.id,:user_role=>"student")
 
@@ -934,7 +934,7 @@ end
 
 #TCS Teacher as a student course check in the same domain
 
-it "should show the course page without editing options when a teacher1 enrolled as a student in other courses of same domain" do
+it "should show the Announcement page without editing options when a teacher1 enrolled as a student in other courses of same domain" do
      teacher_as_a_student(:account_name=>"tcs",:user_name=>"tcs.tr1@arrivusystems.com",
                           :course_id=>tcs_course4.id,:announcement_id=>tcs_course4_announcement.id,:user_role=>"student")
 
@@ -945,7 +945,7 @@ end
 ##  Teacher as a student course check in the different domain
 ## IBM Teacher accessing as a student of course in another domain
 
-it "should show the course page without editing options when a teacher1 enrolled as a student in other courses of different domain" do
+it "should show the Announcement page without editing options when a teacher1 enrolled as a student in other courses of different domain" do
      teacher_as_a_student(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",
                           :course_id=>tcs_course4.id,:announcement_id=>tcs_course4_announcement.id,:user_role=>"student")
 
@@ -953,7 +953,7 @@ end
 
 
 ### TCS Teacher accessing as a student of course in another domain
-it "should show the course page without editing options when a teacher1 enrolled as a student in other courses of different domain" do
+it "should show the Announcement page without editing options when a teacher1 enrolled as a student in other courses of different domain" do
      teacher_as_a_student(:account_name=>"tcs",:user_name=>"tcs.tr1@arrivusystems.com",
                           :course_id=>ibm_course4.id,:announcement_id=>ibm_course4_announcement.id,:user_role=>"student")
 
