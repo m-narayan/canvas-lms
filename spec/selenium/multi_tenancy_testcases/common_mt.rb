@@ -17,7 +17,6 @@
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/spec_mt_helper')
-require "selenium-webdriver"
 require "socket"
 require "timeout"
 require 'coffee-script'

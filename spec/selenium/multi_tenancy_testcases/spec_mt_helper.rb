@@ -1093,86 +1093,90 @@ Spec::Runner.configure do |config|
 # our customization
 
   def add_mt_account(account_name)
-    @account = Account.new
-    @account.name = account_name
-    @account.settings[:smartlms_kaltura_disable]= false
-    @account.settings[:smartlms_bbb_disable]= false
-    @account.settings[:smartlms_grade_disable]= false
-    @account.settings[:smartlms_outcomes_disable]= false
-    @account.settings[:smartlms_course_import_disable]= false
-    @account.settings[:smartlms_course_export_disable]= false
-    @account.settings[:private_license_enable]= false
-    puts "Creating Account #{account_name}... "
-    @account.save!
-    #def add_mt_account(account_name,server_port)
-    #account = account_with_cas_mt({:account => account_name, :cas_url => "http://#{name}.lvh.me:#{server_port}"})
+    @account=Account.find_by_name(account_name)
+    if @account==nil
+      @account = Account.new
+      @account.name = account_name
+      puts "Creating Account #{account_name}..."
+      @account.save!
+      end
+    @account
   end
-
-  def add_sub_account_mt(account_name,parent_account)
-    @parent_account= Account.find_by_name(parent_account)
-    #subaccount = Account.create!(:name => account_name, :parent_account => @account.id)
-    sub_account=Account.create!(:name => account_name, :parent_account => @parent_account)
-    #let(:account) { Account.create(:name => account_name, :parent_account => @account) }
-    #puts "creating subaccount #{sub_account.inspect}"
-    #@sub_account = @parent_account.sub_accounts.build(account_name)
-    #@sub_account.root_account = @parent_account.root_account
-    #@sub_account.save
-
-  end
-
 
   def add_mt_account_admin_users(account_name,email,password)
-    # puts "account_name : #{account_name}"
-    # puts "email : #{email}"
-    # puts "password : #{password}"
-    @account = Account.find_by_name(account_name)
-    user=User.create!(:name => email,:sortable_name => email)
-    pseudonym = user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
-    @account=@account.add_user(user, 'AccountAdmin')
-    #puts "Creating Admin user #{account_name} "
-    #user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+    @user=User.find_by_name(email)
+    if @user == nil
+      @account = Account.find_by_name(account_name)
+      @user=User.create!(:name => email,:sortable_name => email)
+      pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
+      @account=@account.add_user(@user, 'AccountAdmin')
+      @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+      puts "Creating  #{account_name} admin user..."
+      end
+    @user
+  end
 
-    #puts "User details ------------------------------------------------------------"
-    #puts "#{user.inspect}"
-    #puts "account details ------------------------------------------------------------"
-    #puts "#{@account.inspect}"
-    #puts "pseudonym details ------------------------------------------------------------"
-    #puts "#{pseudonym.inspect}"
-    #puts "Account user details ------------------------------------------------------------"
-    #puts "#{account.inspect}"
-    #puts "-------------------------------------------------------------------------------"
-    #puts "#{user.id},#{user.name} = #{pseudonym.unique_id}"
-    #puts "#{@account.id},#{@account.name}"
-    #puts "#{account.account_id},#{account.user_id}"
-    #puts "-------------------------------------------------------------------------------"
+  def add_sub_account_mt(parent_account,subaccount_name,email,password)
+    @sub_account=Account.find_by_name(subaccount_name)
+    if @sub_account==nil
+    #@parent_account=add_mt_account(parent_account)
+      @parent_account= Account.find_by_name(parent_account)
+      @sub_account=Account.create!(:name => subaccount_name, :parent_account => @parent_account)
+      #@user=add_user(subaccount_name,email,password)
+      @user=User.create!(:name => email,:sortable_name => email)
+      pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @parent_account )
+      @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+      @account_user=@sub_account.add_user(@user, 'AccountAdmin')
+      puts "Creating Sub Account and #{subaccount_name} admin user..."
+    #@account_user
+    end
+    @sub_account
   end
 
   def add_user(account_name,email,password)
-    @account = Account.find_by_name(account_name)
+    @user=User.find_by_name(email)
+    if @user == nil
+      @account = Account.find_by_name(account_name)
+      @user=User.create!(:name => email,:sortable_name => email)
+      pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
+      @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+      puts "Creating user #{email} ..."
+    end
+    @user
+  end
+
+
+
+  def create_course(course_name,course_code,account_name)
+    @course=Course.find_by_name(course_name)
+    if @course==nil
+      account= Account.find_by_name(account_name)
+      @course = Course.create!(:name => course_name, :course_code => course_code, :account => account)
+      puts "Creating #{account_name}'s course #{course_code} ..."
+    end
+    @course
+  end
+
+  def create_site_admin(account_name,email, password)
+    account=Account.find_by_name(account_name)
+    if account==nil
     user=User.create!(:name => email,:sortable_name => email)
-    pseudonym = user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
-    puts "Creating user #{account_name} "
+    user.register! unless user.registered?
+    user.pseudonyms.create!(:unique_id => email, :password => password, :password_confirmation => password, :account => Account.site_admin)
     user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
+    account = Account.default
+    account.name = account_name
+    account.save!
+    Account.site_admin.add_user(user, 'AccountAdmin')
+    default_admin_account_user = Account.default.add_user(user, 'AccountAdmin')
+    puts "Creating site admin user #{account_name} ..."
+    #default_admin_account_user
+    end
+    account
   end
 
-  def create_course(course_name,account_name)
-    account= Account.find_by_name(account_name)
-    @course = Course.create!(:name => course_name, :account => account)
-  end
 
 
-  def course_assign_to_user(user_type,user)
-
-  end
-
-  def create_siteadmin_user_mt(account_name, email,password)
-    @account=add_mt_account(accout_name)
-    @user=add_mt_account_admin_users(account_name,email,password)
-    site_admin_ac_admin_user = Account.site_admin.account_users.first
-    @account.add_user(site_admin_ac_admin_user.user, 'SiteAdmin')
-    #Account.site_admin.add_user(@user, opts[:membership_type] || 'AccountAdmin')
-
-  end
 
 
 end

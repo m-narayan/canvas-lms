@@ -56,12 +56,12 @@
       <li><a href="#tab-alerts" id="tab-alerts-link"><%= t(:tab_alerts, "Alerts") %></a></li>
   <% end %>
   <% if can_do(@context, @current_user, :manage_account_settings) %>
-      <li><a href="#tab-sms" id="tab-tools-link">SMS Settings</a></li>
+      <li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>
   <% end %>
 
   <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
       <% if can_do(@context, @current_user, :manage_account_settings) %>
-          <li><a href="#tab-plugins" id="tab-tools-link">Plugins</a></li>
+          <li><a href="#tab-plugins" id="tab-plugin-link">Plugins</a></li>
       <% end %>
   <% end %>
 
