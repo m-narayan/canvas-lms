@@ -1175,10 +1175,25 @@ Spec::Runner.configure do |config|
     account
   end
 
-
-
-
-
+  def create_outcome(context,short_description,description)
+    outcome= LearningOutcome.find_by_short_description(short_description)
+    if outcome==nil
+    outcome = context.learning_outcomes.create!(
+        :short_description => short_description,
+        :rubric_criterion => {
+            :description => description,
+            :points_possible => 10,
+            :mastery_points => 9,
+            :ratings => [
+                {:description => "Exceeds Expectations", :points => 5},
+                {:description => "Meets Expectations", :points => 3},
+                {:description => "Does Not Meet Expectations", :points => 0}
+            ]
+        })
+    context.root_outcome_group.add_outcome(outcome)
+    end
+    outcome
+  end
 end
 
 Dir[Rails.root+'vendor/plugins/*/spec_canvas/spec_helper.rb'].each do |f|

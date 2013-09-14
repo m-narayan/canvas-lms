@@ -151,6 +151,7 @@
       def course_check_by_user(params={})
         driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
         fill_in_login_form(params[:user_name],"Admin123$")
+        wait_for_ajaximations
         f('.user_name').text.should == params[:user_name]
         params[:course_id].each do |course_id|
           driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses"
@@ -172,6 +173,7 @@
       def course_check_by_admin(params={})
         driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
         fill_in_login_form(params[:user_name],"Admin123$")
+        wait_for_ajaximations
         f('.user_name').text.should == params[:user_name]
         params[:course_id].each do |course_id|
         course_name=Course.find(course_id).name
@@ -189,6 +191,7 @@
       def course_cross_checking(params={})
         driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
         fill_in_login_form(params[:user_name],"Admin123$")
+        wait_for_ajaximations
         f('.user_name').text.should == params[:user_name]
         if params[:access_type]=="change course id"
           driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}"
@@ -214,6 +217,7 @@
       def course_cross_check_by_user(params={})
         driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
         fill_in_login_form(params[:user_name],"Admin123$")
+        wait_for_ajaximations
         f('.user_name').text.should == params[:user_name]
         params[:course_id].each do |course_id|
           if params[:access_type]=="change course id"
@@ -239,6 +243,7 @@
       def teacher_as_a_student(params={})
         driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
         fill_in_login_form(params[:user_name],"Admin123$")
+        wait_for_ajaximations
         f('.user_name').text.should == params[:user_name]
         driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}"
         f('#section-tabs-header').should be_displayed

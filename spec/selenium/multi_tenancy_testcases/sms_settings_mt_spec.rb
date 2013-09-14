@@ -31,6 +31,7 @@ describe "Site_Admin user creation test" do
   def site_admin_login(params={})
     driver.get "http://openlms.lvh.me:#{$server_port}"
     fill_in_login_form("openlms@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "openlms@arrivusystems.com"
     driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{params[:account_id]}/settings"
     f("#section-tabs-header").text.should== params[:checking_account_name]

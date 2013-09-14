@@ -31,6 +31,7 @@ describe "Acount creation and Admin user creation test" do
 
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],params[:password])
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/accounts/#{params[:sub_account_id]}/settings"
     sleep 1

@@ -103,6 +103,7 @@ describe "Site_Admin user creation and Login test" do
 
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form("openlms@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     #fj('.user_name').text.should == "openlms@arrivusystems.com"
     f('.user_name').should include_text "openlms@arrivusystems.com"
     params[:accounts].each do |account,account_id|

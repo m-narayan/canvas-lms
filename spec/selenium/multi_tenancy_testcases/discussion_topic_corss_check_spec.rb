@@ -9,6 +9,7 @@ describe "Announcement_Cross_Check_Creation" do
   def discussion_check_by_admin(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     params[:discussion_topic_ids].each do |discussion_topic_id|
       discussion_topic_details=DiscussionTopic.find(discussion_topic_id)
@@ -35,6 +36,7 @@ describe "Announcement_Cross_Check_Creation" do
   def discussion_corss_check(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     params[:discussion_topic_ids].each do |discussion_topic_id|
       discussion_topic_details=DiscussionTopic.find(discussion_topic_id)

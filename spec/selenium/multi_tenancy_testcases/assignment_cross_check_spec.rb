@@ -11,6 +11,7 @@ describe "Assignment_Cross_Check_Creation" do
   def assignment_check_by_admin(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     params[:assignment_ids]. each do |assignment_id|
       course_id=Assignment.find(assignment_id).context_id
@@ -27,6 +28,7 @@ describe "Assignment_Cross_Check_Creation" do
   def assignment_cross_check_admin(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     params[:assignment_ids].each do |assignment_id|
       course_id=Assignment.find(assignment_id).context_id
@@ -51,6 +53,7 @@ describe "Assignment_Cross_Check_Creation" do
   def assignment_check_by_student(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     params[:assignment_ids]. each do |assignment_id|
       course_id=Assignment.find(assignment_id).context_id

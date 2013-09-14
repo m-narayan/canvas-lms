@@ -48,6 +48,7 @@ describe "Student creation and login test" do
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     params[:user_name].each do |user_name|
     fill_in_login_form(user_name,params[:password])
+    wait_for_ajaximations
     f('.user_name').text.should == user_name
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}/users"
     driver.find_element(:name, 'search_term').send_keys(user_name)

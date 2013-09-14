@@ -129,6 +129,7 @@ describe "Announcement_Cross_Check_Creation" do
   def course_check_by_user(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}/announcements"
     sleep 2
@@ -154,6 +155,7 @@ describe "Announcement_Cross_Check_Creation" do
   def course_check_by_admin(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
       driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}/announcements"
       sleep 5
@@ -177,6 +179,7 @@ describe "Announcement_Cross_Check_Creation" do
   def course_cross_check_by_admin(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     if params[:access_type]=="change course id"
       driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}/announcements/#{params[:announcement_id]}"
@@ -202,6 +205,7 @@ describe "Announcement_Cross_Check_Creation" do
   def course_cross_check_by_user(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
 
       if params[:access_type]=="change course id"
@@ -232,6 +236,7 @@ describe "Announcement_Cross_Check_Creation" do
   def teacher_as_a_student(params={})
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
     fill_in_login_form(params[:user_name],"Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == params[:user_name]
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course_id]}/announcements"
     sleep 2

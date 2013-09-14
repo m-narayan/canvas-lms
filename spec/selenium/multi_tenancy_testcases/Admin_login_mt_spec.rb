@@ -29,6 +29,7 @@ describe "Acount and Admin user creation test" do
   it "should create a admin user for ibm account and login with it" do
     driver.get "http://ibm.lvh.me:#{$server_port}"
     fill_in_login_form("ibm@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "ibm@arrivusystems.com"
     driver.get "http://ibm.lvh.me:#{$server_port}/accounts/#{ibm_account.id}/settings"
     driver.find_element(:id, 'account_settings').should be_displayed
@@ -39,6 +40,7 @@ describe "Acount and Admin user creation test" do
   it "should create a admin user for tcs account and login with it" do
     driver.get "http://tcs.lvh.me:#{$server_port}"
     fill_in_login_form("tcs@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "tcs@arrivusystems.com"
     driver.get "http://tcs.lvh.me:#{$server_port}/accounts/#{tcs_account.id}/settings"
     driver.find_element(:id, 'account_settings').should be_displayed
@@ -49,6 +51,7 @@ describe "Acount and Admin user creation test" do
   it "should create a admin user for cisco account and login with it" do
     driver.get "http://cisco.lvh.me:#{$server_port}"
     fill_in_login_form("cisco@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "cisco@arrivusystems.com"
     driver.get "http://cisco.lvh.me:#{$server_port}/accounts/#{cisco_account.id}/settings"
     driver.find_element(:id, 'account_settings').should be_displayed
@@ -59,6 +62,7 @@ describe "Acount and Admin user creation test" do
   it "should create a admin user for beacon account and login with it" do
     driver.get "http://beacon.lvh.me:#{$server_port}"
     fill_in_login_form("beacon@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "beacon@arrivusystems.com"
     driver.get "http://beacon.lvh.me:#{$server_port}/accounts/#{beacon_account.id}/settings"
     driver.find_element(:id, 'account_settings').should be_displayed
@@ -69,6 +73,7 @@ describe "Acount and Admin user creation test" do
   it "should create a admin user for infosys account and login with it" do
     driver.get "http://infosys.lvh.me:#{$server_port}"
     fill_in_login_form("infosys@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "infosys@arrivusystems.com"
     driver.get "http://infosys.lvh.me:#{$server_port}/accounts/#{infosys_account.id}/settings"
     driver.find_element(:id, 'account_settings').should be_displayed

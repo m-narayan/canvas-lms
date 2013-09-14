@@ -78,6 +78,7 @@ describe "user creation and login test" do
     driver.get "http://ibm.lvh.me:#{$server_port}"
 
     fill_in_login_form("ibm.st1@arrivusystems.com","Admin123$")
+    wait_for_ajaximations
     f('.user_name').text.should == "ibm.st1@arrivusystems.com"
     expect_new_page_load { f('.logout > a').click }
 
