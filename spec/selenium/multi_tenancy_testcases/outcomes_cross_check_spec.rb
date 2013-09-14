@@ -152,114 +152,154 @@ describe "Announcement_Cross_Check_Creation" do
 
 
 
-  ###############  Account Level Outcomes ##########################
+  ################  Account Level Outcomes ##########################
+  #
+  # #### IBM Admin viewing account level outcomes in IBM domain
+  #it "should show the Outcomes with editing options when IBM admin try to access IBM account level outcome" do
+  #  view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],:outcome_level=>"account level")
+  #end
+  # #### TCS Admin viewing account level outcomes in TCS domain
+  #it "should show the Outcomes with editing options when TCS admin try to access TCS account level outcome" do
+  #  view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],:outcome_level=>"account level")
+  #end
+  #
+  #
+  #
+  ###### Account level outcome cross check by admin by changing account id
+  #it "should show unauthorized message when IBM admin try to access TCS account's account level outcome by changing account id" do
+  #  outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],
+  #                      :outcome_level=>"account level",:access_type=>"change account id")
+  #end
+  #
+  #it "should show unauthorized message when TCS admin try to access IBM account's account level outcome  by changing account id" do
+  #  outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],
+  #                      :outcome_level=>"account level",:access_type=>"change account id")
+  #end
+  #
+  #
+  ###### Account level outcome cross check by admin by changing whole url
+  #it "should show login page with warning message when IBM admin try to access TCS account's account level outcome by changing whole url" do
+  #  outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],
+  #                      :checking_account_name=>"tcs",:outcome_level=>"account level",:access_type=>"change url")
+  #end
+  #
+  #it "should show login page with warning message when TCS admin try to access IBM account's account level outcome by changing whole url" do
+  #  outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],
+  #                      :checking_account_name=>"ibm",:outcome_level=>"account level",:access_type=>"change url")
+  #end
+  #
+  ##### Teacher going to view account level outcome
+  #
+  #it "should show unauthorized message when IBM teachers going to access Account level outcomes" do
+  #  admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>ibm_account.id,:access_type=>"change account id",
+  #                                :users=>[ibm_teacher1,ibm_teacher2,ibm_teacher3,ibm_teacher4],:outcome_id=>ibm_account_level_outcome.id)
+  #end
+  #
+  #it "should show unauthorized message when TCS teachers going to access Account level outcomes" do
+  #  admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>tcs_account.id,:access_type=>"change account id",
+  #                                :users=>[tcs_teacher1,tcs_teacher2,tcs_teacher3,tcs_teacher4],:outcome_id=>tcs_account_level_outcome.id)
+  #end
 
-   #### IBM Admin viewing account level outcomes in IBM domain
-  it "should show the Outcomes with editing options when IBM admin try to access IBM account level outcome" do
-    view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],:outcome_level=>"account level")
-  end
-   #### TCS Admin viewing account level outcomes in TCS domain
-  it "should show the Outcomes with editing options when TCS admin try to access TCS account level outcome" do
-    view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],:outcome_level=>"account level")
-  end
+  ###### cross check by changing account id
+  #
+  #it "should show unauthorized message when IBM teachers going to access TCS Account level outcomes by changing account id" do
+  #  admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>tcs_account.id,:access_type=>"change account id",
+  #                                :users=>[ibm_teacher1,ibm_teacher2,ibm_teacher3,ibm_teacher4],:outcome_id=>tcs_account_level_outcome.id)
+  #end
+  #
+  #it "should show unauthorized message when TCS teachers going to access IBM Account level outcomes by changing account id" do
+  #  admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>ibm_account.id,:access_type=>"change account id",
+  #                                :users=>[tcs_teacher1,tcs_teacher2,tcs_teacher3,tcs_teacher4],:outcome_id=>ibm_account_level_outcome.id)
+  #end
+  #
+  #### cross check by changing whold url
+  #it "should show login page with warning message when IBM teachers going to access TCS Account level outcomes by changing whole url" do
+  #  admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>tcs_account.id,:access_type=>"change url",:checking_account_name=>"tcs",
+  #                                :users=>[ibm_teacher1,ibm_teacher2,ibm_teacher3,ibm_teacher4],:outcome_id=>tcs_account_level_outcome.id)
+  #end
+  #
+  #it "should show login page with warning message when TCS teachers going to access IBM Account level outcomes by changing whole url" do
+  #  admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>ibm_account.id,:access_type=>"change url",:checking_account_name=>"ibm",
+  #                                :users=>[tcs_teacher1,tcs_teacher2,tcs_teacher3,tcs_teacher4],:outcome_id=>ibm_account_level_outcome.id)
+  #end
 
-
-
-  ##### Account level outcome cross check by admin by changing account id
-  it "should show unauthorized message when IBM admin try to access TCS account's account level outcome by changing account id" do
-    outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],
-                        :outcome_level=>"account level",:access_type=>"change account id")
-  end
-
-  it "should show unauthorized message when TCS admin try to access IBM account's account level outcome  by changing account id" do
-    outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],
-                        :outcome_level=>"account level",:access_type=>"change account id")
-  end
-
-
-  ##### Account level outcome cross check by admin by changing whole url
-  it "should show login page with warning message when IBM admin try to access TCS account's account level outcome by changing whole url" do
-    outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],
-                        :checking_account_name=>"tcs",:outcome_level=>"account level",:access_type=>"change url")
-  end
-
-  it "should show login page with warning message when TCS admin try to access IBM account's account level outcome by changing whole url" do
-    outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],
-                        :checking_account_name=>"ibm",:outcome_level=>"account level",:access_type=>"change url")
-  end
-
-  ##### Account level out come cross check by admin
-
-  it "should show unauthorized message when IBM admin try to access TCS account's course level outcome by changing account id" do
-    outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[tcs_course1_outcome,tcs_course2_outcome,tcs_course3_outcome,tcs_course4_outcome],
-                        :outcome_level=>"course level",:access_type=>"change account id")
-  end
-
-  it "should show unauthorized message when TCS admin try to access IBM account's course level outcome  by changing account id" do
-    outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
-                        :outcome_level=>"course level",:access_type=>"change account id")
-  end
-
-  it "should show login page with warning message when IBM admin try to access TCS account's account level outcome by changing whole url" do
-    outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
-                        :checking_account_name=>"tcs",:outcome_level=>"course level",:access_type=>"change url")
-  end
-
-  it "should show login page with warning message when TCS admin try to access IBM account's account level outcome by changing whole url" do
-    outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
-                        :checking_account_name=>"ibm",:outcome_level=>"course level",:access_type=>"change url")
-  end
-
-
-  #### Teacher going to view account level outcome
-
-  it "should show unauthorized message when IBM teachers going to access Account level outcomes" do
-    admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>ibm_account.id,:access_type=>"change account id",
-                                  :users=>[ibm_teacher1,ibm_teacher2,ibm_teacher3,ibm_teacher4],:outcome_id=>ibm_account_level_outcome.id)
-  end
-
-  it "should show unauthorized message when TCS teachers going to access Account level outcomes" do
-    admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>tcs_account.id,:access_type=>"change account id",
-                                  :users=>[tcs_teacher1,tcs_teacher2,tcs_teacher3,tcs_teacher4],:outcome_id=>tcs_account_level_outcome.id)
-  end
-
-  ### cross check by changing course id
-
-  it "should show unauthorized message when IBM teachers going to access TCS Account level outcomes by changing account id" do
-    admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>tcs_account.id,:access_type=>"change account id",
-                                  :users=>[ibm_teacher1,ibm_teacher2,ibm_teacher3,ibm_teacher4],:outcome_id=>tcs_account_level_outcome.id)
-  end
-
-  it "should show unauthorized message when TCS teachers going to access IBM Account level outcomes by changing account id" do
-    admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>ibm_account.id,:access_type=>"change account id",
-                                  :users=>[tcs_teacher1,tcs_teacher2,tcs_teacher3,tcs_teacher4],:outcome_id=>ibm_account_level_outcome.id)
-  end
-
-  it "should show login page with warning message when IBM teachers going to access TCS Account level outcomes by changing whole url" do
-    admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>tcs_account.id,:access_type=>"change url",:checking_account_name=>"tcs",
-                                  :users=>[ibm_teacher1,ibm_teacher2,ibm_teacher3,ibm_teacher4],:outcome_id=>tcs_account_level_outcome.id)
-  end
-
-  it "should show login page with warning message when TCS teachers going to access IBM Account level outcomes by changing whole url" do
-    admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>ibm_account.id,:access_type=>"change url",:checking_account_name=>"ibm",
-                                  :users=>[tcs_teacher1,tcs_teacher2,tcs_teacher3,tcs_teacher4],:outcome_id=>ibm_account_level_outcome.id)
-  end
+  ##### student going to view account level outcome
+  #
+  #it "should show unauthorized message when IBM students going to access Account level outcomes" do
+  #  admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>ibm_account.id,:access_type=>"change account id",
+  #                                :users=>[ibm_student1,ibm_student2,ibm_student3,ibm_student4],:outcome_id=>ibm_account_level_outcome.id)
+  #end
+  #
+  #it "should show unauthorized message when TCS students going to access Account level outcomes" do
+  #  admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>tcs_account.id,:access_type=>"change account id",
+  #                                :users=>[tcs_student1,tcs_student2,tcs_student3,tcs_student4],:outcome_id=>tcs_account_level_outcome.id)
+  #end
+  #
+  #### cross check by changing account id
+  #
+  #it "should show unauthorized message when IBM students going to access TCS Account level outcomes by changing account id" do
+  #  admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>tcs_account.id,:access_type=>"change account id",
+  #                                :users=>[ibm_student1,ibm_student2,ibm_student3,ibm_student4],:outcome_id=>tcs_account_level_outcome.id)
+  #end
+  #
+  #it "should show unauthorized message when TCS students going to access IBM Account level outcomes by changing account id" do
+  #  admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>ibm_account.id,:access_type=>"change account id",
+  #                                :users=>[tcs_student1,tcs_student2,tcs_student3,tcs_student4],:outcome_id=>ibm_account_level_outcome.id)
+  #end
+  #
+  #### cross check by changing whold url
+  #it "should show login page with warning message when IBM students going to access TCS Account level outcomes by changing whole url" do
+  #  admin_outcome_access_by_users(:account_name=>"ibm",:checking_account_id=>tcs_account.id,:access_type=>"change url",:checking_account_name=>"tcs",
+  #                                :users=>[ibm_student1,ibm_student2,ibm_student3,ibm_student4],:outcome_id=>tcs_account_level_outcome.id)
+  #end
+  #
+  #it "should show login page with warning message when TCS students going to access IBM Account level outcomes by changing whole url" do
+  #  admin_outcome_access_by_users(:account_name=>"tcs",:checking_account_id=>ibm_account.id,:access_type=>"change url",:checking_account_name=>"ibm",
+  #                                :users=>[tcs_student1,tcs_student2,tcs_student3,tcs_student4],:outcome_id=>ibm_account_level_outcome.id)
+  #end
+  #
 
 
 
 
+  ################## Coruse Level Outcomes  ############################
+  #
+  ##### IBM Admin viewing course level outcomes in IBM domain
+  #it "should show the Outcomes with editing options when IBM admin try to access IBM Course level Outcomes" do
+  #  view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],:outcome_level=>"course level")
+  #end
+  ##### TCS Admin viewing course level outcomes in TCS domain
+  #it "should show the Outcomes with editing options when TCS admin try to access TCS Course level Outcomes" do
+  #  view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[tcs_course1_outcome,tcs_course2_outcome,tcs_course3_outcome,tcs_course4_outcome],:outcome_level=>"course level")
+  #end
+  #
+  ###### course level out come cross check by admin
+  #
+  #it "should show unauthorized message when IBM admin try to access TCS account's course level outcome by changing account id" do
+  #  outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[tcs_course1_outcome,tcs_course2_outcome,tcs_course3_outcome,tcs_course4_outcome],
+  #                      :outcome_level=>"course level",:access_type=>"change account id")
+  #end
+  #
+  #it "should show unauthorized message when TCS admin try to access IBM account's course level outcome  by changing account id" do
+  #  outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
+  #                      :outcome_level=>"course level",:access_type=>"change account id")
+  #end
+  #
+  #it "should show login page with warning message when IBM admin try to access TCS account's account level outcome by changing whole url" do
+  #  outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
+  #                      :checking_account_name=>"tcs",:outcome_level=>"course level",:access_type=>"change url")
+  #end
+  #
+  #it "should show login page with warning message when TCS admin try to access IBM account's account level outcome by changing whole url" do
+  #  outcome_corss_check(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
+  #                      :checking_account_name=>"ibm",:outcome_level=>"course level",:access_type=>"change url")
+  #end
 
+  ##### IBM Teachers viewing course level outcomes in IBM domain
 
-
-  ################# Coruse Level Outcomes  ############################
-
-  #### IBM Admin viewing course level outcomes in IBM domain
-  it "should show the Outcomes with editing options when IBM admin try to access IBM Course level Outcomes" do
-    view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],:outcome_level=>"course level")
-  end
-  #### TCS Admin viewing course level outcomes in TCS domain
-  it "should show the Outcomes with editing options when TCS admin try to access TCS Course level Outcomes" do
-    view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[tcs_course1_outcome,tcs_course2_outcome,tcs_course3_outcome,tcs_course4_outcome],:outcome_level=>"course level")
+  it "should show the outcome with editing options when IBM teacher1 access their course level outcomes" do
+    outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome,ibm_course3_outcome,ibm_course4_outcome],
+                          :outcome_level=>"course level",:access_type=>"change account id")
   end
 
 end
