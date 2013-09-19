@@ -66,10 +66,14 @@ describe "Announcement_Cross_Check_Creation" do
       end
         fj(".outcomes-sidebar").text.should include_text outcome.short_description
         f(".ellipsis[title='#{outcome.short_description}']").click
+        wait_for_ajaximations
         fj(".outcomes-content").text.should include_text outcome.short_description
       if params[:user_role]!="student"
         f('.edit_button').should be_displayed
         f('.delete_button').should be_displayed
+      else
+        f('.edit_button').should be_nil
+        f('.delete_button').should be_nil
       end
 
       wait_for_ajaximations
@@ -168,13 +172,13 @@ describe "Announcement_Cross_Check_Creation" do
 
 
 
-  ###############  Account Level Outcomes ##########################
+  ##############  Account Level Outcomes ##########################
 
   #### IBM Admin viewing account level outcomes in IBM domain
   it "should show the Outcomes with editing options when IBM admin try to access IBM account level outcome" do
     view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:outcomes=>[ibm_account_level_outcome],:outcome_level=>"account level")
   end
-  #### TCS Admin viewing account level outcomes in TCS domain
+  ##### TCS Admin viewing account level outcomes in TCS domain
   it "should show the Outcomes with editing options when TCS admin try to access TCS account level outcome" do
     view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs@arrivusystems.com",:outcomes=>[tcs_account_level_outcome],:outcome_level=>"account level")
   end
@@ -385,17 +389,17 @@ describe "Announcement_Cross_Check_Creation" do
 
   #### IBM Students viewing course level outcomes in IBM domain
 
-  it "should show the outcome with editing options when IBM student1 access their course level outcomes" do
+  it "should show the outcome with out editing options when IBM student1 access their course level outcomes" do
     view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm.st1@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course2_outcome],
                                :outcome_level=>"course level", :user_role=>"student")
   end
 
-  it "should show the outcome with editing options when IBM student2 access their course level outcomes" do
+  it "should show the outcome with out editing options when IBM student2 access their course level outcomes" do
     view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm.st2@arrivusystems.com",:outcomes=>[ibm_course2_outcome,ibm_course3_outcome],
                                :outcome_level=>"course level", :user_role=>"student")
   end
 
-  it "should show the outcome with editing options when IBM student3 access their course level outcomes" do
+  it "should show the outcome with out editing options when IBM student3 access their course level outcomes" do
     view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm.st3@arrivusystems.com",:outcomes=>[ibm_course1_outcome,ibm_course3_outcome],
                                :outcome_level=>"course level", :user_role=>"student")
   end
@@ -453,6 +457,28 @@ describe "Announcement_Cross_Check_Creation" do
     outcome_corss_check(:account_name=>"ibm",:user_name=>"ibm.st3@arrivusystems.com",:outcomes=>[tcs_course2_outcome,tcs_course2_outcome,tcs_course3_outcome],
                         :checking_account_name=>"tcs",:outcome_level=>"course level", :access_type=>"change url")
 
+  end
+
+  ##### Teacher as a student going to view outcome in same domain
+
+  it "should show the outcome with out editing options when IBM teacher1 as a student in IBM domain, access their course level outcomes" do
+    view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",:outcomes=>[ibm_course4_outcome],
+                               :outcome_level=>"course level", :user_role=>"student")
+  end
+
+  it "should show the outcome with out editing options when TCS teacher1 as a student in TCS domain, access their course level outcomes" do
+    view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs.tr1@arrivusystems.com",:outcomes=>[tcs_course4_outcome],
+                               :outcome_level=>"course level", :user_role=>"student")
+  end
+
+  it "should show the outcome with out editing options when IBM teacher1 as a student in TCS domain, access their course level outcomes" do
+    view_account_level_outcome(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",:outcomes=>[tcs_course4_outcome],
+                               :outcome_level=>"course level", :user_role=>"student")
+  end
+
+  it "should show the outcome with out editing options when TCS teacher1 as a student in IBM domain, access their course level outcomes" do
+    view_account_level_outcome(:account_name=>"tcs",:user_name=>"tcs.tr1@arrivusystems.com",:outcomes=>[ibm_course4_outcome],
+                               :outcome_level=>"course level", :user_role=>"student")
   end
 
 end
