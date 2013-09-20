@@ -827,63 +827,67 @@ tcs_course4.enroll_user(tcs_teacher1,"StudentEnrollment",:enrollment_state=>'act
 #infosys_grade_book
 
 ###### Outcome creation
+#
+#def ibm_account_level_outcome
+#  create_outcome(ibm_account,"ibm account level outcome","ibm account level outcome for selenium testing")
+#end
+#
+#def tcs_account_level_outcome
+#  create_outcome(tcs_account,"tcs account level outcome","tcs account level outcome for selenium testing")
+#end
+#
+#def ibm_course1_outcome
+#  create_outcome(ibm_course1,"ibm course1 outcome","ibm course1 level outcome for selenium testing")
+#end
+#
+#def ibm_course2_outcome
+#  create_outcome(ibm_course2,"ibm course2 outcome","ibm course2 level outcome for selenium testing")
+#end
+#
+#def ibm_course3_outcome
+#  create_outcome(ibm_course3,"ibm course3 outcome","ibm course3 level outcome for selenium testing")
+#end
+#
+#def ibm_course4_outcome
+#  create_outcome(ibm_course4,"ibm course4 outcome","ibm course4 level outcome for selenium testing")
+#end
+#
+#
+#def tcs_course1_outcome
+#  create_outcome(tcs_course1,"tcs course1 outcome","tcs course1 level outcome for selenium testing")
+#end
+#
+#def tcs_course2_outcome
+#  create_outcome(tcs_course2,"tcs course2 outcome","tcs course2 level outcome for selenium testing")
+#end
+#
+#def tcs_course3_outcome
+#  create_outcome(tcs_course3,"tcs course3 outcome","tcs course3 level outcome for selenium testing")
+#end
+#
+#def tcs_course4_outcome
+#  create_outcome(tcs_course4,"tcs course4 outcome","tcs course4 level outcome for selenium testing")
+#end
+#
+#ibm_account_level_outcome
+#tcs_account_level_outcome
+#
+#ibm_course1_outcome
+#ibm_course2_outcome
+#ibm_course3_outcome
+#ibm_course4_outcome
+#
+#tcs_course1_outcome
+#tcs_course2_outcome
+#tcs_course3_outcome
+#tcs_course4_outcome
 
-def ibm_account_level_outcome
-  create_outcome(ibm_account,"ibm account level outcome","ibm account level outcome for selenium testing")
+
+###### Files Creation
+
+def ibm_student1_file
+
 end
-
-def tcs_account_level_outcome
-  create_outcome(tcs_account,"tcs account level outcome","tcs account level outcome for selenium testing")
-end
-
-def ibm_course1_outcome
-  create_outcome(ibm_course1,"ibm course1 outcome","ibm course1 level outcome for selenium testing")
-end
-
-def ibm_course2_outcome
-  create_outcome(ibm_course2,"ibm course2 outcome","ibm course2 level outcome for selenium testing")
-end
-
-def ibm_course3_outcome
-  create_outcome(ibm_course3,"ibm course3 outcome","ibm course3 level outcome for selenium testing")
-end
-
-def ibm_course4_outcome
-  create_outcome(ibm_course4,"ibm course4 outcome","ibm course4 level outcome for selenium testing")
-end
-
-
-def tcs_course1_outcome
-  create_outcome(tcs_course1,"tcs course1 outcome","tcs course1 level outcome for selenium testing")
-end
-
-def tcs_course2_outcome
-  create_outcome(tcs_course2,"tcs course2 outcome","tcs course2 level outcome for selenium testing")
-end
-
-def tcs_course3_outcome
-  create_outcome(tcs_course3,"tcs course3 outcome","tcs course3 level outcome for selenium testing")
-end
-
-def tcs_course4_outcome
-  create_outcome(tcs_course4,"tcs course4 outcome","tcs course4 level outcome for selenium testing")
-end
-
-ibm_account_level_outcome
-tcs_account_level_outcome
-
-ibm_course1_outcome
-ibm_course2_outcome
-ibm_course3_outcome
-ibm_course4_outcome
-
-tcs_course1_outcome
-tcs_course2_outcome
-tcs_course3_outcome
-tcs_course4_outcome
-
-
-
 
 def login_warning_message
   driver.find_element(:id,"login_form").should be_displayed

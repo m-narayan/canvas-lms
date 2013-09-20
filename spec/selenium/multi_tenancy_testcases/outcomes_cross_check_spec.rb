@@ -1,42 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/common_mt')
 require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
-describe "Announcement_Cross_Check_Creation" do
+describe "outcomes_Cross_Check_Creation" do
 
   it_should_behave_like "in-process server selenium tests"
-
-    #def view_account_level_outcome(params={})
-    #  driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
-    #  fill_in_login_form(params[:user_name],"Admin123$")
-    #  wait_for_ajaximations
-    #  f('.user_name').text.should == params[:user_name]
-    #  if params[:outcome_level]=="account level"
-    #    driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/accounts/#{params[:account_id]}/outcomes"
-    #    f("#section-tabs-header").text.should include_text params[:account_name]
-    #  else
-    #    driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course][:id]}/outcomes"
-    #    f("#section-tabs-header").text.should include_text params[:course][:course_code]
-    #  end
-    #  wait_for_ajaximations
-    #  f("#content").text.should include_text "Learning Outcomes"
-    #  fj(".ui-button-text").text.should include_text "New Outcome"
-    #  f('.find_outcome').should be_displayed
-    #  outcome_name=params[:outcome][:short_description]
-    #  fj(".outcomes-sidebar").text.should include_text outcome_name
-    #  f(".ellipsis[title='#{outcome_name}']").click
-    #  wait_for_ajaximations
-    #  f(".outcomes-content .title").text.should == outcome_name
-    #  if params[:outcome_level]=="account level"
-    #    driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/accounts/#{params[:account_id]}/outcomes/#{params[:outcome][:id]}"
-    #  else
-    #    driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/courses/#{params[:course][:id]}/outcomes/#{params[:outcome][:id]}"
-    #  end
-    #  wait_for_ajaximations
-    #  fj("a:contains(' Back to Outcomes')").should be_displayed
-    #  f("#content").text.should include_text "Aligned Items"
-    #  f("#content").text.should include_text "Outcome Artifacts"
-    #  expect_new_page_load { f('.logout > a').click }
-    #end
 
 
   def view_account_level_outcome(params={})

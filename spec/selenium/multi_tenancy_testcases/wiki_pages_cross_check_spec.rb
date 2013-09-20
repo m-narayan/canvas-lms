@@ -1,7 +1,7 @@
 #require File.expand_path(File.dirname(__FILE__) + '/common_mt')
 #require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 #
-#describe "Announcement_Cross_Check_Creation" do
+#describe "wikipages_Cross_Check_Creation" do
 #
 #  it_should_behave_like "in-process server selenium tests"
 #
