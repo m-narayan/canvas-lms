@@ -883,11 +883,6 @@ tcs_course4.enroll_user(tcs_teacher1,"StudentEnrollment",:enrollment_state=>'act
 #tcs_course4_outcome
 
 
-###### Files Creation
-
-def ibm_student1_file
-
-end
 
 def login_warning_message
   driver.find_element(:id,"login_form").should be_displayed
@@ -934,8 +929,90 @@ end
 
 
 
+###############################################
+
+####### Files Creation
+#
+#def ibm_course1_file
+#  ibm_student1_file=Attachment.find_by_display_name("ibm_course1_doc")
+#  if ibm_student1_file==nil
+#    ibm_student1_file=add_file(uploaded_data("ibm_course1_doc.doc"),ibm_course1, "ibm_course1_doc")
+#  end
+#  ibm_student1_file
+#end
+#
+#def ibm_course2_file
+#  ibm_student2_file=Attachment.find_by_display_name("ibm_course2_doc")
+#  if ibm_student2_file==nil
+#    ibm_student2_file=add_file(uploaded_data("ibm_course2_doc.doc"),ibm_course2, "ibm_course2_doc")
+#  end
+#  ibm_student2_file
+#end
+#
+#def ibm_course3_file
+#  ibm_student3_file=Attachment.find_by_display_name("ibm_course3_doc")
+#  if ibm_student3_file==nil
+#    ibm_student3_file=add_file(uploaded_data("ibm_course3_doc.doc"),ibm_course3, "ibm_course3_doc")
+#  end
+#  ibm_student3_file
+#end
+#
+#
+#def ibm_course4_file
+#  ibm_student4_file=Attachment.find_by_display_name("ibm_course4_doc")
+#  if ibm_student4_file==nil
+#   ibm_student4_file=add_file(uploaded_data("ibm_course4_doc.doc"),ibm_course3, "ibm_course4_doc")
+#  end
+#  ibm_student4_file
+#end
+#
+#
+#def tcs_course1_file
+#  tcs_student1_file=Attachment.find_by_display_name("tcs_course1_doc")
+#  if tcs_student1_file==nil
+#    add_file(uploaded_data("tcs_course1_doc.doc.doc"),tcs_course1, "tcs_course1_doc")
+#  end
+#  tcs_student1_file
+#end
+#
+#def tcs_course2_file
+#  tcs_student2_file=Attachment.find_by_display_name("tcs_course2_doc")
+#  if tcs_student2_file==nil
+#    add_file(uploaded_data("tcs_course2_doc.doc.doc"),tcs_course2, "tcs_course2_doc")
+#  end
+#  tcs_student2_file
+#end
+#
+#def tcs_course3_file
+#  tcs_student3_file=Attachment.find_by_display_name("tcs_course3_doc")
+#  if tcs_student3_file==nil
+#    add_file(uploaded_data("tcs_course3_doc.doc.doc"),tcs_course3, "tcs_course3_doc")
+#  end
+#  tcs_student3_file
+#end
+#
+#
+#def tcs_course4_file
+#  tcs_student4_file=Attachment.find_by_display_name("tcs_course4_doc")
+#  if tcs_student4_file==nil
+#    add_file(uploaded_data("tcs_course4_doc.doc.doc"),tcs_course3, "tcs_course4_doc")
+#  end
+#  tcs_student4_file
+#end
+#
+#ibm_course1_file
+#ibm_course2_file
+#ibm_course3_file
+#ibm_course4_file
+#
+#tcs_course1_file
+#tcs_course2_file
+#tcs_course3_file
+#tcs_course4_file
 
 
+
+###############################################
 
 ###############################################
 ###### IBM Wiki pages creation

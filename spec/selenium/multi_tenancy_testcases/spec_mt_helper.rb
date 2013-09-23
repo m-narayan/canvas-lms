@@ -1196,6 +1196,22 @@ Spec::Runner.configure do |config|
   end
 end
 
+def uploaded_data(filename)
+  require 'action_controller'
+  require 'action_controller/test_process.rb'
+  ActionController::TestUploadedFile.new(File.expand_path(File.dirname(__FILE__) + '/../../fixtures/scribd_docs/'+"#{filename}"), 'application/msword', true)
+end
+
+def add_file(fixture, context, name)
+  context.attachments.create! do |attachment|
+    attachment.uploaded_data = fixture
+    attachment.filename = name
+    attachment.folder = Folder.root_folders(context).first
+  end
+end
+
+
+
 Dir[Rails.root+'vendor/plugins/*/spec_canvas/spec_helper.rb'].each do |f|
   require f
 end
