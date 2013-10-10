@@ -38,6 +38,9 @@ class ReplyToAddress
     return message.from if message.context_type == 'ErrorReport'
 
     address, domain = ReplyToAddress.address_from_pool(message).split('@')
+    #without secure ID
+    #"#{address}@#{domain}"
+    #with secure ID
     "#{address}+#{secure_id}-#{message.global_id}@#{domain}"
   end
 
