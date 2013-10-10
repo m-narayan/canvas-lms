@@ -212,7 +212,7 @@ GEM
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
     sass (3.2.3)
-    selenium-webdriver (2.31.0)
+    selenium-webdriver (2.33.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip
@@ -343,7 +343,7 @@ DEPENDENCIES
   safe_yaml-instructure (= 0.8.0)
   sanitize (= 2.0.3)
   sass (= 3.2.3)
-  selenium-webdriver (= 2.31.0)
+  selenium-webdriver (= 2.33.0)
   sexp_processor (= 4.2.1)
   shackles (= 1.0.0)
   simplecov (= 0.7.1)

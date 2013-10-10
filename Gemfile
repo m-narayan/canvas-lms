@@ -88,6 +88,7 @@ group :assets do
   
 end
 
+
 #group :mysql do
 #  gem 'mysql',        '2.8.1'
 #  gem 'mysql2',       '0.2.18'
@@ -96,6 +97,7 @@ end
 group :postgres do
   gem 'pg',           '0.15.0'
 end
+
 
 #group :sqlite do
 #  gem 'sqlite3-ruby', '1.3.2'
@@ -113,7 +115,7 @@ group :test do
     gem 'rspec',        '1.3.2'
     gem 'rspec-rails',  '1.3.4'
   end
-  gem 'selenium-webdriver', '2.31.0'
+  gem 'selenium-webdriver', '2.33.0'
   gem 'webrat',       '0.7.3'
   gem 'yard',         '0.8.0'
   gem 'yard-appendix',  '>=0.1.8'
@@ -130,6 +132,7 @@ group :development do
   # Option to DISABLE_RUBY_DEBUGGING is helpful IDE-based debugging.
   # The ruby debug gems conflict with the IDE-based debugger gem.
   # Set this option in your dev environment to disable.
+
  # unless ENV['DISABLE_RUBY_DEBUGGING']
   # if ONE_NINE
     # gem 'debugger',     '1.1.3'
@@ -140,6 +143,7 @@ group :development do
  # unless ENV['DISABLE_RUBY_DEBUGGING']
  #   gem 'debugger',     '1.5.0'
  # end
+
 end
 
 group :development, :test do
