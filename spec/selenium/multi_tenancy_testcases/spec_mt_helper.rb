@@ -1097,7 +1097,7 @@ Spec::Runner.configure do |config|
     if @account==nil
       @account = Account.new
       @account.name = account_name
-      puts "Creating Account #{account_name}..."
+      #puts "Creating Account #{account_name}..."
       @account.save!
       end
     @account
@@ -1111,7 +1111,7 @@ Spec::Runner.configure do |config|
       pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
       @account=@account.add_user(@user, 'AccountAdmin')
       @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
-      puts "Creating  #{account_name} admin user..."
+      #puts "Creating  #{account_name} admin user..."
       end
     @user
   end
@@ -1127,7 +1127,7 @@ Spec::Runner.configure do |config|
       pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @parent_account )
       @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
       @account_user=@sub_account.add_user(@user, 'AccountAdmin')
-      puts "Creating Sub Account and #{subaccount_name} admin user..."
+      #puts "Creating Sub Account and #{subaccount_name} admin user..."
     #@account_user
     end
     @sub_account
@@ -1140,7 +1140,7 @@ Spec::Runner.configure do |config|
       @user=User.create!(:name => email,:sortable_name => email)
       pseudonym = @user.pseudonyms.create!(:unique_id => email,:password => password, :password_confirmation => password,:account => @account )
       @user.communication_channels.create!(:path => email) { |cc| cc.workflow_state = 'active' }
-      puts "Creating user #{email} ..."
+      #puts "Creating user #{email} ..."
     end
     @user
   end
@@ -1152,7 +1152,7 @@ Spec::Runner.configure do |config|
     if @course==nil
       account= Account.find_by_name(account_name)
       @course = Course.create!(:name => course_name, :course_code => course_code, :account => account)
-      puts "Creating #{account_name}'s course #{course_code} ..."
+      #puts "Creating #{account_name}'s course #{course_code} ..."
     end
     @course
   end
@@ -1169,7 +1169,7 @@ Spec::Runner.configure do |config|
     account.save!
     Account.site_admin.add_user(user, 'AccountAdmin')
     default_admin_account_user = Account.default.add_user(user, 'AccountAdmin')
-    puts "Creating site admin user #{account_name} ..."
+    #puts "Creating site admin user #{account_name} ..."
     #default_admin_account_user
     end
     account
@@ -1201,6 +1201,8 @@ def uploaded_data(filename)
   require 'action_controller/test_process.rb'
   ActionController::TestUploadedFile.new(File.expand_path(File.dirname(__FILE__) + '/../../fixtures/scribd_docs/'+"#{filename}"), 'application/msword', true)
 end
+
+##### adding file
 
 def add_file(fixture, context, name)
   context.attachments.create! do |attachment|
