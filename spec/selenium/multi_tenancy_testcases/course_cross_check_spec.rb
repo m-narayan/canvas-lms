@@ -1,5 +1,5 @@
     require File.expand_path(File.dirname(__FILE__) + '/common_mt')
-    #require File.expand_path(File.dirname(__FILE__) + '/data_setup')
+
 
     describe "Course_cross_checking" do
 
@@ -399,7 +399,7 @@
 
       end
 
-      #student cross check with in the same domain
+      ###student cross check with in the same domain
 
       it "Should show unauthorized message when a IBM Student1 try to access a course whose is not part of the course by giving course id" do
         course_cross_check_by_user(:account_name=>"ibm",:user_name=>"ibm.st1@arrivusystems.com",:course_id=>[ibm_course_s2.id,ibm_course_s3.id,ibm_course_s4.id,ibm_course_m2.id,ibm_course_ms2.id],:access_type=>"change course id")
@@ -586,22 +586,22 @@
 
       #Teacher as a student course check in the same domain
 
-      it "should show the course page without editing options when a teacher enrolled as a student in other courses of same domain" do
+      it "should show the course page without editing options when a ibm teacher1 enrolled as a student in other courses of same domain" do
         teacher_as_a_student(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",:course_id=>ibm_course_m2.id)
 
       end
 
-      it "should show the course page without editing options when a teacher enrolled as a student in other courses of same domain" do
+      it "should show the course page without editing options when a tcs teacher1 enrolled as a student in other courses of same domain" do
         teacher_as_a_student(:account_name=>"tcs",:user_name=>"tcs.tr1@arrivusystems.com",:course_id=>tcs_course_m2.id)
 
       end
 
-      it "should show the course page without editing options when a teacher enrolled as a student in other courses of other domain" do
+      it "should show the course page without editing options when a ibm teacher enrolled as a student in tcs courses of tcs domain" do
         teacher_as_a_student(:account_name=>"ibm",:user_name=>"ibm.tr1@arrivusystems.com",:course_id=>tcs_course_m1.id)
 
       end
 
-      it "should show the course page without editing options when a teacher enrolled as a student in other courses of other domain" do
+      it "should show the course page without editing options when a tcs teacher enrolled as a student in ibm courses of ibm domain" do
         teacher_as_a_student(:account_name=>"tcs",:user_name=>"tcs.tr1@arrivusystems.com",:course_id=>ibm_course_m1.id)
 
       end
