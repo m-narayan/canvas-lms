@@ -25,7 +25,8 @@ class ContentExport < ActiveRecord::Base
   has_many :attachments, :as => :context, :dependent => :destroy
   has_a_broadcast_policy
   serialize :settings
-  attr_accessible
+  attr_accessible :course
+  validates_presence_of :course_id, :workflow_state
 
   alias_method :context, :course
 
@@ -114,12 +115,12 @@ class ContentExport < ActiveRecord::Base
   #   checked should be exported or not. 
   #
   #   Returns: bool
-  def export_object?(obj)
+  def export_object?(obj, asset_type=nil)
     return false unless obj
     return true if selected_content.empty?
     return true if is_set?(selected_content[:everything])
 
-    asset_type = obj.class.table_name
+    asset_type ||= obj.class.table_name
     return true if is_set?(selected_content["all_#{asset_type}"])
 
     return false unless selected_content[asset_type]

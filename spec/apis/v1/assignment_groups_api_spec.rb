@@ -44,21 +44,21 @@ describe AssignmentGroupsController, :type => :integration do
         'name' => 'group2',
         'position' => 7,
         'rules' => {},
-        'group_weight' => nil
+        'group_weight' => 0
       },
       {
         'id' => group1.id,
         'name' => 'group1',
         'position' => 10,
         'rules' => {},
-        'group_weight' => nil
+        'group_weight' => 0
       },
       {
         'id' => group3.id,
         'name' => 'group3',
         'position' => 12,
         'rules' => {},
-        'group_weight' => nil
+        'group_weight' => 0
       }
     ]
   end
@@ -106,7 +106,7 @@ describe AssignmentGroupsController, :type => :integration do
         'rules' => {},
         'assignments' => [
           controller.assignment_json(a3,@user,session),
-          controller.assignment_json(a4,@user,session,true)
+          controller.assignment_json(a4,@user,session, include_discussion_topic: true)
         ],
       },
       {
@@ -118,6 +118,86 @@ describe AssignmentGroupsController, :type => :integration do
         'assignments' => [
           controller.assignment_json(a1,@user,session),
           controller.assignment_json(a2,@user,session)
+        ],
+      }
+    ]
+
+    compare_json(json, expected)
+  end
+
+  it "should not include all dates " do
+    course_with_teacher(:active_all => true)
+    group = @course.assignment_groups.build(:name => 'group1')
+    group.position = 10
+    group.group_weight = 40
+    group.save!
+
+    a1 = @course.assignments.create!(:title => "test1", :assignment_group => group, :points_possible => 10)
+    a2 = @course.assignments.create!(:title => "test2", :assignment_group => group, :points_possible => 12)
+
+    a1.assignment_overrides.create! do |override|
+      override.set = @course.course_sections.first
+      override.title = "All"
+      override.due_at = 1.day.ago
+      override.due_at_overridden = true
+    end
+
+    json = api_call(:get,
+          "/api/v1/courses/#{@course.id}/assignment_groups.json?include[]=assignments",
+          { :controller => 'assignment_groups', :action => 'index',
+            :format => 'json', :course_id => @course.id.to_s,
+            :include => ['assignments'] })
+
+    expected = [
+      {
+        'group_weight' => 40,
+        'id' => group.id,
+        'name' => 'group1',
+        'position' => 10,
+        'rules' => {},
+        'assignments' => [
+          controller.assignment_json(a1, @user,session),
+          controller.assignment_json(a2, @user,session)
+        ],
+      }
+    ]
+
+    compare_json(json, expected)
+  end
+
+  it "should include all dates" do
+    course_with_teacher(:active_all => true)
+    group = @course.assignment_groups.build(:name => 'group1')
+    group.position = 10
+    group.group_weight = 40
+    group.save!
+
+    a1 = @course.assignments.create!(:title => "test1", :assignment_group => group, :points_possible => 10)
+    a2 = @course.assignments.create!(:title => "test2", :assignment_group => group, :points_possible => 12)
+
+    a1.assignment_overrides.create! do |override|
+      override.set = @course.course_sections.first
+      override.title = "All"
+      override.due_at = 1.day.ago
+      override.due_at_overridden = true
+    end
+
+    json = api_call(:get,
+          "/api/v1/courses/#{@course.id}/assignment_groups.json?include[]=assignments&include[]=all_dates",
+          { :controller => 'assignment_groups', :action => 'index',
+            :format => 'json', :course_id => @course.id.to_s,
+            :include => ['assignments', 'all_dates'] })
+
+    expected = [
+      {
+        'group_weight' => 40,
+        'id' => group.id,
+        'name' => 'group1',
+        'position' => 10,
+        'rules' => {},
+        'assignments' => [
+          controller.assignment_json(a1, @user,session, :include_all_dates => true),
+          controller.assignment_json(a2, @user,session, :include_all_dates => true)
         ],
       }
     ]
@@ -147,7 +227,7 @@ describe AssignmentGroupsController, :type => :integration do
     group['assignments'].first['name'].should == 'test1'
   end
 
-  it "should not return weights that aren't being applied" do
+  it "should return weights that aren't being applied" do
     course_with_teacher(:active_all => true)
     @course.update_attribute(:group_weighting_scheme, 'equal')
 
@@ -158,7 +238,7 @@ describe AssignmentGroupsController, :type => :integration do
                     { :controller => 'assignment_groups', :action => 'index',
                       :format => 'json', :course_id => @course.to_param })
 
-    json.each { |group| group['group_weight'].should be_nil }
+    json.each { |group| group['group_weight'].should == 50 }
   end
 
   it "should not explode on assignments with <objects> with percentile widths" do
@@ -175,7 +255,29 @@ describe AssignmentGroupsController, :type => :integration do
              :course_id => @course.id.to_s,
              :include => ['assignments'])
   end
+
+  it "should not return unpublished assignments to students" do
+    course_with_student(:active_all => true)
+    @course.root_account.tap{ |a| a.settings[:enable_draft] = true }.save!
+    @course.require_assignment_group
+    assignment = @course.assignments.create! do |a|
+      a.title = "test"
+      a.assignment_group = @course.assignment_groups.first
+      a.points_possible = 10
+      a.workflow_state = "unpublished"
+    end
+    assignment.should be_unpublished
+
+    json = api_call(:get, "/api/v1/courses/#{@course.id}/assignment_groups.json?include[]=assignments",
+                    :controller => 'assignment_groups',
+                    :action => 'index',
+                    :format => 'json',
+                    :course_id => @course.id.to_s,
+                    :include => ['assignments'])
+    json.first['assignments'].should be_empty
+  end
 end
+
 
 describe AssignmentGroupsApiController, :type => :integration do
   include Api

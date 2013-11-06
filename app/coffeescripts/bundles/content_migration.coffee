@@ -46,6 +46,11 @@ require [
                                  template: progressingMigrationCollectionTemplate
                                  emptyTemplate: -> "There are no migrations currently running"
                                  itemView: ProgressingContentMigrationView
+
+  progressingCollectionView.getStatusView = (migProgress) ->
+    if getView = ConverterViewControl.getView(migProgress.get('migration_type'))?.view?.getStatusView
+      getView(migProgress)
+
   progressingCollectionView.render()
 
   migrationConverterView    = new MigrationConverterView
@@ -83,7 +88,7 @@ require [
     key: 'course_copy_importer'
     view: new CopyCourseView
             courseFindSelect: new CourseFindSelectView 
-                                courses: ENV.COURSES
+                                current_user_id: ENV.current_user_id
                                 model: ConverterViewControl.getModel()
 
             selectContent:    new SelectContentCheckboxView(model: ConverterViewControl.getModel())
@@ -92,6 +97,9 @@ require [
                                 model: ConverterViewControl.getModel()
                                 collection: daySubCollection
                                 daySubstitution: daySubCollectionView
+                                oldStartDate: ENV.OLD_START_DATE
+                                oldEndDate: ENV.OLD_END_DATE
+
 
   ConverterViewControl.register
     key: 'moodle_converter'
@@ -110,6 +118,8 @@ require [
                                 model: ConverterViewControl.getModel()
                                 collection: daySubCollection
                                 daySubstitution: daySubCollectionView
+                                oldStartDate: ENV.OLD_START_DATE
+                                oldEndDate: ENV.OLD_END_DATE
 
   ConverterViewControl.register
     key: 'canvas_cartridge_importer'
@@ -124,6 +134,8 @@ require [
                                 model: ConverterViewControl.getModel()
                                 collection: daySubCollection
                                 daySubstitution: daySubCollectionView
+                                oldStartDate: ENV.OLD_START_DATE
+                                oldEndDate: ENV.OLD_END_DATE
 
   ConverterViewControl.register
     key: 'common_cartridge_importer'
@@ -133,6 +145,7 @@ require [
                                    fileSizeLimit: ENV.UPLOAD_LIMIT
 
             selectContent:       new SelectContentCheckboxView(model: ConverterViewControl.getModel())
+            overwriteAssessmentContent: new OverwriteAssessmentContentView(model: ConverterViewControl.getModel())
 
             questionBank:        new QuestionBankView
                                    questionBanks: ENV.QUESTION_BANKS
@@ -142,6 +155,8 @@ require [
                                 model: ConverterViewControl.getModel()
                                 collection: daySubCollection
                                 daySubstitution: daySubCollectionView
+                                oldStartDate: ENV.OLD_START_DATE
+                                oldEndDate: ENV.OLD_END_DATE
 
   ConverterViewControl.register
     key: 'qti_converter'

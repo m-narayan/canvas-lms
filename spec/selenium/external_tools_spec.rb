@@ -26,6 +26,22 @@ describe "external tools" do
       fj('a.app_cancel').click
       wait_for_ajaximations
 
+      #App list should have apps
+      ff('.app').size.should > 0
+      fj('a[data-toggle-installed-state="installed"]').click
+      wait_for_ajaximations
+
+      #Installed app list should have no apps
+      ff('.app').size.should == 0
+      fj('a[data-toggle-installed-state="not_installed"]').click
+      wait_for_ajaximations
+
+      #Not installed app list should have apps
+      ff('.app').size.should > 0
+      fj('a[data-toggle-installed-state="all"]').click
+      wait_for_ajaximations
+
+      #Install an app
       ff('.app').size.should > 0
       ff('.app').first.click
       wait_for_ajaximations
@@ -34,6 +50,24 @@ describe "external tools" do
       fj('a.add_app').click
       wait_for_ajaximations
 
+      #It should auto install because it only requires a name
+      f("#add_app_form").should be_nil
+      fj('.view_app_center_link').click
+      wait_for_ajaximations
+
+      fj('a[data-toggle-installed-state="installed"]').click
+      wait_for_ajaximations
+
+      #Installed app list should have apps
+      ff('.app').size.should > 0
+      ff('.app').first.click
+      wait_for_ajaximations
+
+      #Install app again
+      fj('a.add_app').click
+      wait_for_ajaximations
+
+      #Add app form should be displayed because the app is already installed
       f("#add_app_form").should be_displayed
       replace_content(f("#canvas_app_name"), "New App")
       fj('button.btn-primary[role="button"]').click
@@ -404,7 +438,7 @@ describe "external tools" do
     it "should launch assignment external tools when viewing assignment" do
       @tool = @course.context_external_tools.create!(:name => "new tool", :consumer_key => "key", :shared_secret => "secret", :domain => 'example.com', :custom_fields => {'a' => '1', 'b' => '2'})
       assignment_model(:course => @course, :points_possible => 40, :submission_types => 'external_tool', :grading_type => 'points')
-      tag = @assignment.build_external_tool_tag(:url => "http://example.com/one")
+      tag = @assignment.build_external_tool_tag(:url => "http://example.com")
       tag.content_type = 'ContextExternalTool'
       tag.save!
       get "/courses/#{@course.id}/assignments/#{@assignment.id}"
@@ -485,7 +519,7 @@ describe "external tools" do
 
       def assert_invalid_selection_message(msg=nil)
         msg ||= /returned an invalid/
-        keep_trying_until{ ff("#flash_message_holder li").length > 0 }
+        keep_trying_until{ ffj("#flash_message_holder li").length > 0 }
         message = f("#flash_message_holder li")
         message.should_not be_nil
         message.text.should match(msg)
@@ -519,8 +553,12 @@ describe "external tools" do
         f("#external_tool_url").attribute('value').should match(/delete\.png/)
         f("#external_tool_filename").attribute('value').should eql('delete.png')
         f("#external_tool_submission_type").attribute('value').should eql('online_url_to_file')
-        f("#submit_from_external_tool_form .btn-primary").click
-        wait_for_ajax_requests
+
+        expect do
+          f("#submit_from_external_tool_form .btn-primary").click
+          wait_for_ajaximations
+        end.to change(Delayed::Job, :count).by(1)
+
         Delayed::Job.last.invoke_job
         a = Attachment.last
         keep_trying_until { puts a.file_state; a.file_state == 'available' }

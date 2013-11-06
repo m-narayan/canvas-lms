@@ -9,6 +9,7 @@
 
   content_for :pre_html do
     @body_class_no_headers = @headers == false
+    @show_embedded_chat = embedded_chat_visible
     @show_fixed_bottom = (@fixed_warnings.present? || (@real_current_user && @real_current_user != @current_user)) && (!@body_class_no_headers || @outer_frame)
     @body_classes << "no-headers" if @body_class_no_headers
     unless (@body_classes.include? "no-headers") || (@show_left_side == false)
@@ -20,13 +21,15 @@
     #we dont want to render a right side unless there is actually content in it.
     @body_classes << "with-right-side" if right_side and not right_side.strip.empty?
     @body_classes << "padless-content" if @padless
+    @body_classes << "with-embedded-chat" if @show_embedded_chat
     @body_classes << 'with-fixed-bottom' if @show_fixed_bottom
+    @body_classes << 'pages' if @controller.js_env[:WIKI_PAGE].present?
     @body_classes << @active_tab
   end
 
 -%>
 <% content_for :head do %>
-  <%= include_stylesheets :common, :media => "all" %>
+  <%= include_common_stylesheets %>
   <% if @eportfolio_view === true %>
     <%= stylesheet_link_tag "compiled/instructure_eportfolio.css" %>
   <% end %>
@@ -165,7 +168,7 @@
         </div>
       </div>
     </div>
-    <footer role="contentinfo" id="footer">     
+    <footer role="contentinfo" id="footer">
       <span id="footer-links">
         <% if Setting.get_cached("show_opensource_linkback", "false") == "true" %>
         <% end %>
@@ -175,6 +178,10 @@
     </footer>
   </div>
 </div>
+
+<% if @show_embedded_chat %>
+  <%= render :partial => 'shared/embedded_chat' %>
+<% end %>
 
 <% if @show_fixed_bottom %>
   <%= render :partial => 'layouts/fixed_bottom' %>
@@ -227,7 +234,7 @@
   <%= render :partial => "shared/global_dialogs" %>
 <% end %>
 <div id='aria_alerts' aria-live="assertive" class='hide-text affix'></div>
-<%= debug(params) if Rails.env.development? %>
+<%= debug(params)  %>
 <%= render :partial => 'accounts/demo_bottom', :locals => { :include_common_bundle => true } %>
 <%= render :partial => 'layouts/foot', :locals => { :include_common_bundle => true } %>
 

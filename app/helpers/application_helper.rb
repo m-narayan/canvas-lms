@@ -160,7 +160,7 @@ module ApplicationHelper
     end
   end
 
-  def avatar_image(user_or_id, width=50)
+  def avatar_image(user_or_id, width=50, opts = {})
     user_id = user_or_id.is_a?(User) ? user_or_id.id : user_or_id
     user = user_or_id.is_a?(User) && user_or_id
     if session["reported_#{user_id}"]
@@ -179,14 +179,17 @@ module ApplicationHelper
         alt = user ? user.short_name : ''
         [url, alt]
       end
-      image_tag(image_url, :style => "width: #{width}px; min-height: #{(width/1.6).to_i}px; max-height: #{(width*1.6).to_i}px", :alt => alt_tag)
+      image_tag(image_url,
+        :style => "width: #{width}px; min-height: #{(width/1.6).to_i}px; max-height: #{(width*1.6).to_i}px",
+        :alt => alt_tag,
+        :class => Array(opts[:image_class]).join(' '))
     end
   end
 
-  def avatar(user_or_id, context_code, width=50)
+  def avatar(user_or_id, context_code, width=50, opts = {})
     user_id = user_or_id.is_a?(User) ? user_or_id.id : user_or_id
     if service_enabled?(:avatars)
-      link_to(avatar_image(user_or_id, width), "#{context_prefix(context_code)}/users/#{user_id}", :style => 'z-index: 2; position: relative;', :class => 'avatar')
+      link_to(avatar_image(user_or_id, width, opts), "#{context_prefix(context_code)}/users/#{user_id}", :style => 'z-index: 2; position: relative;', :class => 'avatar img-circle')
     end
   end
 
@@ -231,12 +234,31 @@ module ApplicationHelper
     @context_url_lookup[lookup] = res
   end
 
+  def full_url(path)
+    uri = URI.parse(request.url)
+    uri.path = ''
+    uri.query = ''
+    URI.join(uri, path).to_s
+  end
+
   def url_helper_context_from_object(context)
     (context ? context.class.base_ar_class : context.class).name.underscore
   end
 
-  def message_user_path(user)
-    conversations_path(:user_id => user.id)
+  def message_user_path(user, context = nil)
+    context = context || @context
+    context = nil unless context.is_a?(Course)
+    conversations_path(user_id: user.id, user_name: user.name,
+                       context_id: context.try(:asset_string))
+  end
+
+  # Public: Determine if the currently logged-in user is an account or site admin.
+  #
+  # Returns a boolean.
+  def current_user_is_account_admin
+    [@domain_root_account, Account.site_admin].map do |account|
+      account.membership_for_user(@current_user)
+    end.any?
   end
 
   def hidden(include_style=false)
@@ -396,6 +418,10 @@ module ApplicationHelper
     end
   end
 
+  def include_common_stylesheets
+    include_stylesheets :vendor, :common, media: "all"
+  end
+
   def section_tabs
     @section_tabs ||= begin
       if @context
@@ -477,6 +503,55 @@ module ApplicationHelper
     end
   end
 
+  def embedded_chat_quicklaunch_params
+    {user_id: @current_user.id, course_id: @context.id, canvas_url: "#{HostUrl.protocol}://#{HostUrl.default_host}"}
+  end
+
+  def embedded_chat_url
+    chat_tool = active_external_tool_by_id('chat')
+    return unless chat_tool && chat_tool.url && chat_tool.custom_fields['mini_view_url']
+    uri = URI.parse(chat_tool.url)
+    uri.path = chat_tool.custom_fields['mini_view_url']
+    uri.to_s
+  end
+
+  def embedded_chat_enabled
+    chat_tool = active_external_tool_by_id('chat')
+    chat_tool && chat_tool.url && chat_tool.custom_fields['mini_view_url'] && Canvas::Plugin.value_to_boolean(chat_tool.custom_fields['embedded_chat_enabled'])
+  end
+
+  def embedded_chat_visible
+    @show_embedded_chat != false &&
+      !@embedded_view &&
+      !@body_class_no_headers &&
+      @current_user &&
+      @context.is_a?(Course) &&
+      embedded_chat_enabled &&
+      external_tool_tab_visible('chat')
+  end
+
+  def active_external_tool_by_id(tool_id)
+    # don't use for groups. they don't have account_chain_ids
+    tool = @context.context_external_tools.active.find_by_tool_id(tool_id)
+    return tool if tool
+
+    # account_chain_ids is in the order we need to search for tools
+    # unfortunately, the db will return an arbitrary one first.
+    # so, we pull all the tools (probably will only have one anyway) and look through them here
+    tools = ContextExternalTool.active.where(:context_type => 'Account', :context_id => @context.account_chain_ids, :tool_id => tool_id).all
+    @context.account_chain_ids.each do |account_id|
+      tool = tools.find {|t| t.context_id == account_id}
+      return tool if tool
+    end
+    nil
+  end
+
+  def external_tool_tab_visible(tool_id)
+    tool = active_external_tool_by_id(tool_id)
+    return false unless tool
+    @context.tabs_available(@current_user).find {|tc| tc[:id] == tool.asset_string}.present?
+  end
+
   def license_help_link
     @include_license_dialog = true
     link_to(image_tag('help.png'), '#', :class => 'license_help_link no-hover', :title => "Help with content licensing")
@@ -531,7 +606,7 @@ module ApplicationHelper
     global_inst_object = { :environment =>  Rails.env }
     {
       :allowMediaComments       => Kaltura::ClientV3.config && @context.try_rescue(:allow_media_comments?),
-      :kalturaSettings          => Kaltura::ClientV3.config.try(:slice, 'domain', 'resource_domain', 'rtmp_domain', 'partner_id', 'subpartner_id', 'player_ui_conf', 'player_cache_st', 'kcw_ui_conf', 'upload_ui_conf', 'max_file_size_bytes'),
+      :kalturaSettings          => Kaltura::ClientV3.config.try(:slice, 'domain', 'resource_domain', 'rtmp_domain', 'partner_id', 'subpartner_id', 'player_ui_conf', 'player_cache_st', 'kcw_ui_conf', 'upload_ui_conf', 'max_file_size_bytes', 'do_analytics'),
       :equellaEnabled           => !!equella_enabled?,
       :googleAnalyticsAccount   => Setting.get_cached('google_analytics_key', nil),
       :http_status              => @status,
@@ -555,6 +630,7 @@ module ApplicationHelper
     contexts << @context if @context && @context.respond_to?(:context_external_tools)
     contexts += @context.account_chain if @context.respond_to?(:account_chain)
     contexts << @domain_root_account if @domain_root_account
+    return [] if contexts.empty?
     Rails.cache.fetch((['editor_buttons_for'] + contexts.uniq).cache_key) do
       tools = ContextExternalTool.active.having_setting('editor_button').where(contexts.map{|context| "(context_type='#{context.class.base_class.to_s}' AND context_id=#{context.id})"}.join(" OR "))
       tools.sort_by(&:id).map do |tool|
@@ -619,15 +695,19 @@ module ApplicationHelper
     opts[:indent_width] ||= 3
     opts[:depth] ||= 0
     opts[:options_so_far] ||= []
+    if opts.has_key?(:all_folders)
+      opts[:sub_folders] = opts.delete(:all_folders).to_a.group_by{|f| f.parent_folder_id}
+    end
+
     folders.each do |folder|
       opts[:options_so_far] << %{<option value="#{folder.id}" #{'selected' if opts[:selected_folder_id] == folder.id}>#{"&nbsp;" * opts[:indent_width] * opts[:depth]}#{"- " if opts[:depth] > 0}#{html_escape folder.name}</option>}
       if opts[:max_depth].nil? || opts[:depth] < opts[:max_depth]
-        child_folders = if opts[:all_folders]
-                          opts[:all_folders].select {|f| f.parent_folder_id == folder.id }
+        child_folders = if opts[:sub_folders]
+                          opts[:sub_folders][folder.id] || []
                         else
                           folder.active_sub_folders.by_position
                         end
-        folders_as_options(child_folders, opts.merge({:depth => opts[:depth] + 1}))
+        folders_as_options(child_folders, opts.merge({:depth => opts[:depth] + 1})) if child_folders.any?
       end
     end
     opts[:depth] == 0 ? raw(opts[:options_so_far].join("\n")) : nil
@@ -671,6 +751,7 @@ module ApplicationHelper
       {
         :longName => "#{course.name} - #{course.short_name}",
         :shortName => course.name,
+        :courseCode => course.course_code,
         :href => course_path(course, :invitation => course.read_attribute(:invitation)),
         :term => term || nil,
         :subtitle => subtitle,
@@ -785,30 +866,35 @@ module ApplicationHelper
     @global_includes
   end
 
-  def include_account_js
+  def include_account_js(options = {})
     return if params[:global_includes] == '0'
-    includes = get_global_includes.inject([]) do |js_includes, global_include|
-      js_includes << "'#{global_include[:js]}'" if global_include[:js].present?
-      js_includes
+    includes = get_global_includes.map do |global_include|
+      global_include[:js] if global_include[:js].present?
     end
+    includes.compact!
     if includes.length > 0
-      str = <<-ENDSCRIPT
-        (function() {
-          var inject = function(src) {
-            var s = document.createElement('script');
-            s.src = src;
-            s.type = 'text/javascript';
-            document.body.appendChild(s);
-          };
-          var srcs = [#{includes.join(', ')}];
-          require(['jquery'], function() {
-            for (var i = 0, l = srcs.length; i < l; i++) {
-              inject(srcs[i]);
-            }
-          });
-        })();
-      ENDSCRIPT
-      content_tag(:script, str, {}, false)
+      if options[:raw]
+        includes.unshift("/optimized/vendor/jquery-1.7.2.js")
+        javascript_include_tag(includes)
+      else
+        str = <<-ENDSCRIPT
+          (function() {
+            var inject = function(src) {
+              var s = document.createElement('script');
+              s.src = src;
+              s.type = 'text/javascript';
+              document.body.appendChild(s);
+            };
+            var srcs = #{includes.to_json};
+            require(['jquery'], function() {
+              for (var i = 0, l = srcs.length; i < l; i++) {
+                inject(srcs[i]);
+              }
+            });
+          })();
+        ENDSCRIPT
+        javascript_tag(str)
+      end
     end
   end
 
@@ -876,8 +962,13 @@ module ApplicationHelper
   def agree_to_terms
     # may be overridden by a plugin
     @agree_to_terms ||
-    t("#user.registration.agree_to_terms",
-      "You agree to the *terms of use*.",
-      :wrapper => link_to('\1', "http://www.arrivuapps.com/terms-of-use", :target => "_new"))
+    t("#user.registration.agree_to_terms_and_privacy_policy",
+      "You agree to the *terms of use* and acknowledge the **privacy policy**.",
+      wrapper: {
+        '*' => link_to('\1', @domain_root_account.terms_of_use_url, target: '_blank'),
+        '**' => link_to('\1', @domain_root_account.privacy_policy_url, target: '_blank')
+      }
+    )
+
   end
 end

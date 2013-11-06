@@ -164,28 +164,28 @@ describe "users" do
 
     it "should show an error if the user id entered is the current users" do
       get "/users/#{@student_1.id}/admin_merge"
-      assert_flash_error_message /\A\z/
+      flash_message_present?(:error).should be_false
       f('#manual_user_id').send_keys(@student_1.id)
       expect_new_page_load { f('button[type="submit"]').click }
       wait_for_ajaximations
-      assert_flash_error_message /You can't merge an account with itself./
+      flash_message_present?(:error, /You can't merge an account with itself./).should be_true
     end
 
     it "should show an error if invalid text is entered in the id box" do
       get "/users/#{@student_1.id}/admin_merge"
-      assert_flash_error_message /\A\z/
+      flash_message_present?(:error).should be_false
       f('#manual_user_id').send_keys("azxcvbytre34567uijmm23456yhj")
       expect_new_page_load { f('button[type="submit"]').click }
       wait_for_ajaximations
-      assert_flash_error_message /No active user with that ID was found./
+      flash_message_present?(:error, /No active user with that ID was found./).should be_true
     end
 
     it "should show an error if the user id doesnt exist" do
       get "/users/#{@student_1.id}/admin_merge"
-      assert_flash_error_message /\A\z/
+      flash_message_present?(:error).should be_false
       f('#manual_user_id').send_keys(1234567809)
       expect_new_page_load { f('button[type="submit"]').click }
-      assert_flash_error_message /No active user with that ID was found./
+      flash_message_present?(:error, /No active user with that ID was found./).should be_true
     end
   end
 
@@ -194,6 +194,34 @@ describe "users" do
       a = Account.default
       a.settings = {:self_registration => true}
       a.save!
+    end
+
+    it "should not require terms if not configured to do so" do
+      Setting.set('terms_required', 'false')
+
+      get '/register'
+
+      %w{teacher student parent}.each do |type|
+        f("#signup_#{type}").click
+        form = fj('.ui-dialog:visible form')
+        f('input[name="user[terms_of_use]"]', form).should be_nil
+        fj('.ui-dialog-titlebar-close:visible').click
+      end
+    end
+
+    it "should require terms if configured to do so" do
+      get "/register"
+
+      %w{teacher student parent}.each do |type|
+        f("#signup_#{type}").click
+        form = fj('.ui-dialog:visible form')
+        input = f('input[name="user[terms_of_use]"]', form)
+        input.should_not be_nil
+        form.submit
+        wait_for_ajaximations
+        assert_error_box 'input[name="user[terms_of_use]"]:visible'
+        fj('.ui-dialog-titlebar-close:visible').click
+      end
     end
 
     it "should register a student with a join code" do
@@ -209,8 +237,7 @@ describe "users" do
       f('#student_username').send_keys('student')
       f('#student_password').send_keys('asdfasdf')
       f('#student_password_confirmation').send_keys('asdfasdf')
-      form.find_element(:css, 'input[name="user[terms_of_use]"]').click
-      wait_for_ajaximations
+      f('input[name="user[terms_of_use]"]', form).click
 
       expect_new_page_load { form.submit }
       # confirm the user is authenticated into the dashboard
@@ -221,13 +248,11 @@ describe "users" do
     it "should register a teacher" do
       get '/register'
       f('#signup_teacher').click
-      wait_for_ajaximations
 
       form = fj('.ui-dialog:visible form')
       f('#teacher_name').send_keys('teacher!')
       f('#teacher_email').send_keys('teacher@example.com')
-      form.find_element(:css, 'input[name="user[terms_of_use]"]').click
-      wait_for_ajaximations
+      f('input[name="user[terms_of_use]"]', form).click
 
       expect_new_page_load { form.submit }
       # confirm the user is authenticated into the dashboard
@@ -240,15 +265,13 @@ describe "users" do
 
       get '/register'
       f('#signup_parent').click
-      wait_for_ajaximations
 
       form = fj('.ui-dialog:visible form')
       f('#parent_name').send_keys('parent!')
       f('#parent_email').send_keys('parent@example.com')
       f('#parent_child_username').send_keys(@pseudonym.unique_id)
       f('#parent_child_password').send_keys('lolwut')
-      form.find_element(:css, 'input[name="user[terms_of_use]"]').click
-      wait_for_ajaximations
+      f('input[name="user[terms_of_use]"]', form).click
 
       expect_new_page_load { form.submit }
       # confirm the user is authenticated into the dashboard

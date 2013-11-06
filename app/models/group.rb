@@ -23,6 +23,7 @@ class Group < ActiveRecord::Base
   include UserFollow::FollowedItem
 
   attr_accessible :name, :context, :max_membership, :group_category, :join_level, :default_view, :description, :is_public, :avatar_attachment, :storage_quota_mb
+  validates_presence_of :context_id, :context_type, :account_id, :root_account_id, :workflow_state
   validates_allowed_transitions :is_public, false => true
 
   has_many :group_memberships, :dependent => :destroy, :conditions => ['group_memberships.workflow_state != ?', 'deleted']
@@ -62,11 +63,14 @@ class Group < ActiveRecord::Base
   has_many :following_user_follows, :class_name => 'UserFollow', :as => :followed_item
   has_many :user_follows, :foreign_key => 'following_user_id'
 
-  before_save :ensure_defaults, :maintain_category_attribute
+  before_validation :ensure_defaults
+  before_save :maintain_category_attribute
   after_save :close_memberships_if_deleted
 
   include StickySisFields
   are_sis_sticky :name
+
+  validates_length_of :name, :maximum => maximum_string_length, :allow_nil => true, :allow_blank => true
 
   alias_method :participating_users_association, :participating_users
 
@@ -193,7 +197,10 @@ class Group < ActiveRecord::Base
     group_memberships.update_all(:workflow_state => 'deleted')
   end
 
+  Bookmarker = BookmarkedCollection::SimpleBookmarker.new(Group, :name, :id)
+
   scope :active, where("groups.workflow_state<>'deleted'")
+  scope :by_name, lambda { order(Bookmarker.order_by) }
 
   def full_name
     res = before_label(self.name) + " "
@@ -406,10 +413,6 @@ class Group < ActiveRecord::Base
     true
   end
 
-  def file_structure_for(user)
-    User.file_structure_for(self, user)
-  end
-
   def is_a_context?
     true
   end
@@ -559,21 +562,18 @@ class Group < ActiveRecord::Base
     [Shard.default]
   end
 
-  class Bookmarker
-    def self.bookmark_for(group)
-      group.id
-    end
+  # Public: Determine if the current context has draft_state enabled.
+  #
+  # Returns a boolean.
+  def draft_state_enabled?
+    # shouldn't matter, but most specs create anonymous (contextless) groups :(
+    return false if context.nil?
+    context.draft_state_enabled?
+  end
 
-    def self.validate(bookmark)
-      bookmark.is_a?(Fixnum)
-    end
-
-    def self.restrict_scope(scope, pager)
-      if bookmark = pager.current_bookmark
-        comparison = (pager.include_bookmark ? 'groups.id >= ?' : 'groups.id > ?')
-        scope = scope.where(comparison, bookmark)
-      end
-      scope.order("groups.id ASC")
-    end
+  def serialize_permissions(permissions_hash, user, session)
+    permissions_hash.merge(
+      create_discussion_topic: DiscussionTopic.context_allows_user_to_create?(self, user, session)
+    )
   end
 end

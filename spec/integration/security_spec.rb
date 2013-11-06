@@ -16,7 +16,7 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../sharding_spec_helper')
 
 describe "security" do
 
@@ -362,6 +362,22 @@ describe "security" do
       pers1.should_not == pers2
       get "/", {}, "HTTP_COOKIE" => "pseudonym_credentials=#{creds}"
       response.should redirect_to("https://www.example.com/login")
+    end
+
+    context "sharding" do
+      specs_require_sharding
+
+      it "should work for an out-of-shard user" do
+        @shard1.activate do
+          account = Account.create!
+          user_with_pseudonym(:account => account)
+        end
+        token = SessionPersistenceToken.generate(@pseudonym)
+        get "/", {}, "HTTP_COOKIE" => "pseudonym_credentials=#{token.pseudonym_credentials}"
+        response.should be_success
+        cookies['_normandy_session'].should be_present
+        session[:used_remember_me_token].should be_true
+      end
     end
   end
 
@@ -819,7 +835,6 @@ describe "security" do
         response.should be_success
         html = Nokogiri::HTML(response.body)
         html.css('.edit_course_link').should_not be_empty
-        html.css('#tab-users').should_not be_empty
         html.css('#tab-navigation').should_not be_empty
       end
 
@@ -856,9 +871,6 @@ describe "security" do
         get "/courses/#{@course.id}/details"
         response.should be_success
         response.body.should match /People/
-        html = Nokogiri::HTML(response.body)
-        html.css('#tab-users').should_not be_empty
-        html.css('.add_users_link').should be_empty
       end
 
       it "manage_students" do
@@ -874,8 +886,6 @@ describe "security" do
         get "/courses/#{@course.id}/details"
         response.should be_success
         response.body.should_not match /People/
-        html = Nokogiri::HTML(response.body)
-        html.css('#tab-users').should be_empty
 
         add_permission :manage_students
 
@@ -893,8 +903,6 @@ describe "security" do
         get "/courses/#{@course.id}/details"
         response.should be_success
         response.body.should match /People/
-        html = Nokogiri::HTML(response.body)
-        html.css('#tab-users').should_not be_empty
 
         @course.tab_configuration = [ { :id => Course::TAB_PEOPLE, :hidden => true } ]
         @course.save!
@@ -1058,7 +1066,7 @@ describe "security" do
         response.should be_success
         response.body.should_not match /Import Content into this Course/
 
-        get "/courses/#{@course.id}/imports"
+        get "/courses/#{@course.id}/content_migrations"
         response.status.should == '401 Unauthorized'
 
         add_permission :manage_content
@@ -1067,7 +1075,7 @@ describe "security" do
         response.should be_success
         response.body.should match /Import Content into this Course/
 
-        get "/courses/#{@course.id}/imports"
+        get "/courses/#{@course.id}/content_migrations"
         response.should be_success
       end
 

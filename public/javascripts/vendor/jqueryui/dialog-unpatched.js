@@ -99,6 +99,12 @@ $.widget("ui.dialog", {
 
 			uiDialog = ( this.uiDialog = $( "<div>" ) )
 				.addClass( uiDialogClasses + options.dialogClass )
+				.attr({
+					role: "alertdialog",
+					"aria-live": "assertive",
+					"aria-hidden": true,
+					"aria-atomic": true
+				})
 				.css({
 					display: "none",
 					outline: 0, // TODO: move to stylesheet
@@ -122,6 +128,7 @@ $.widget("ui.dialog", {
 				.show()
 				.removeAttr( "title" )
 				.addClass( "ui-dialog-content ui-widget-content" )
+				.attr("role", "alert")
 				.appendTo( uiDialog ),
 
 			uiDialogTitlebar = ( this.uiDialogTitlebar = $( "<div>" ) )
@@ -132,6 +139,7 @@ $.widget("ui.dialog", {
 			uiDialogTitlebarClose = $( "<a href='#'></a>" )
 				.addClass( "ui-dialog-titlebar-close  ui-corner-all" )
 				.attr( "role", "button" )
+				.attr( "tabindex", 0)
 				.click(function( event ) {
 					event.preventDefault();
 					that.close( event );
@@ -147,6 +155,7 @@ $.widget("ui.dialog", {
 				.uniqueId()
 				.addClass( "ui-dialog-title" )
 				.html( title )
+				.attr("role", "heading")
 				.prependTo( uiDialogTitlebar ),
 
 			uiDialogButtonPane = ( this.uiDialogButtonPane = $( "<div>" ) )
@@ -156,10 +165,9 @@ $.widget("ui.dialog", {
 				.addClass( "ui-dialog-buttonset" )
 				.appendTo( uiDialogButtonPane );
 
-		uiDialog.attr({
-			role: "dialog",
-			"aria-labelledby": uiDialogTitle.attr( "id" )
-		});
+		if (uiDialogContent.attr("id") === undefined) {
+			uiDialogContent.uniqueId();
+		}
 
 		uiDialogTitlebar.find( "*" ).add( uiDialogTitlebar ).disableSelection();
 		this._hoverable( uiDialogTitlebarClose );
@@ -244,6 +252,7 @@ $.widget("ui.dialog", {
 			this._trigger( "close", event );
 		}
 
+		this.uiDialog.attr('aria-hidden', true);
 		$.ui.dialog.overlay.resize();
 
 		// adjust the maxZ to allow other modal dialogs to continue to work (see #4309)
@@ -324,18 +333,18 @@ $.widget("ui.dialog", {
 					return;
 				}
 
-				// ! 328 patched from https://github.com/larowlan/jquery-ui/blob/bb2c897f128e42dc8ad485719ee260d86e56befe/ui/jquery.ui.dialog.js
-				var tabbables = $( ":tabbable", this.uiDialog ),
-					first = tabbables.filter( ":first" ),
-					last  = tabbables.filter( ":last" );
-
-				if ( event.target === last[0] && !event.shiftKey ) {
-					first.focus( 1 );
-					return false;
-				} else if ( event.target === first[0] && event.shiftKey ) {
-					last.focus( 1 );
-					return false;
-				}
+				// INSTRUCTURE
+				// Constrain tabbing to within the modal.
+				// Safari was shift-tabbing from a control in the
+				// middle of the new conversations compose dialog
+				// to a background control, killing focus
+				var tabbables = $( ":tabbable", this.uiDialog );
+				var index = $.inArray( event.target, tabbables );
+				if ( index == -1 ) {return;}
+				var targetIndex = index + (event.shiftKey ? -1 : 1);
+				targetIndex = (targetIndex + tabbables.length) % tabbables.length;
+				tabbables.eq(targetIndex).focus();
+				return false;
 			}});
 		}
 
@@ -348,7 +357,11 @@ $.widget("ui.dialog", {
 				hasFocus = uiDialog;
 			}
 		}
-		hasFocus.eq( 0 ).focus();
+
+		this.uiDialog.attr('aria-hidden', false);
+		if ($.browser && $.browser.safari) {
+			hasFocus.eq( 0 ).focus();
+		}
 
 		this._isOpen = true;
 		this._trigger( "open" );
@@ -715,7 +728,11 @@ $.extend( $.ui.dialog.overlay, {
 					$( document ).bind( $.ui.dialog.overlay.events, function( event ) {
 						// stop events if the z-index of the target is < the z-index of the overlay
 						// we cannot return true when we don't want to cancel the event (#3523)
-						if ( $( event.target ).zIndex() < $.ui.dialog.overlay.maxZ ) {
+						//
+						// INSTRUCTURE - make sure that the element isn't in the dialog
+						// before stopping all events
+						if ( $( event.target ).zIndex() < $.ui.dialog.overlay.maxZ &&
+								!(dialog.element.has(event.target).length ) ) {
 							return false;
 						}
 					});

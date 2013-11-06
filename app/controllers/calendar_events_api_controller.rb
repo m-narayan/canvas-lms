@@ -20,81 +20,81 @@
 #
 # API for creating, accessing and updating calendar events.
 #
-# @object Calendar Event
+# @object CalendarEvent
 #     {
 #       // The ID of the calendar event
-#       id: 234,
+#       "id": 234,
 #
 #       // The title of the calendar event
-#       title: "Paintball Fight!",
+#       "title": "Paintball Fight!",
 #
 #       // The start timestamp of the event
-#       start_at: "2012-07-19T15:00:00-06:00",
+#       "start_at": "2012-07-19T15:00:00-06:00",
 #
 #       // The end timestamp of the event
-#       end_at: "2012-07-19T16:00:00-06:00",
+#       "end_at": "2012-07-19T16:00:00-06:00",
 #
 #       // The HTML description of the event
-#       description: "<b>It's that time again!</b>",
+#       "description": "<b>It's that time again!</b>",
 #
 #       // The location name of the event
-#       location_name: "Greendale Community College",
+#       "location_name": "Greendale Community College",
 #
 #       // The address where the event is taking place
-#       location_address: "Greendale, Colorado",
+#       "location_address": "Greendale, Colorado",
 #
 #       // the context code of the calendar this event belongs to (course, user
 #       // or group)
-#       context_code: "course_123",
+#       "context_code": "course_123",
 #
 #       // if specified, it indicates which calendar this event should be
 #       // displayed on. for example, a section-level event would have the
 #       // course's context code here, while the section's context code would
 #       // be returned above)
-#       effective_context_code: null,
+#       "effective_context_code": null,
 #
 #       // Current state of the event ("active", "locked" or "deleted")
 #       // "locked" indicates that start_at/end_at cannot be changed (though
 #       // the event could be deleted). Normally only reservations or time
 #       // slots with reservations are locked (see the Appointment Groups API)
-#       workflow_state: "active",
+#       "workflow_state": "active",
 #
 #       // Whether this event should be displayed on the calendar. Only true
 #       // for course-level events with section-level child events.
-#       hidden: false,
+#       "hidden": false,
 #
 #       // Normally null. If this is a reservation (see the Appointment Groups
 #       // API), the id will indicate the time slot it is for. If this is a
 #       // section-level event, this will be the course-level parent event.
-#       parent_event_id: null,
+#       "parent_event_id": null,
 #
 #       // The number of child_events. See child_events (and parent_event_id)
-#       child_events_count: 0,
+#       "child_events_count": 0,
 #
 #       // Included by default, but may be excluded (see include[] option).
 #       // If this is a time slot (see the Appointment Groups API) this will
 #       // be a list of any reservations. If this is a course-level event,
 #       // this will be a list of section-level events (if any)
-#       child_events: [],
+#       "child_events": [],
 #
 #       // URL for this calendar event (to update, delete, etc.)
-#       url: "https://example.com/api/v1/calendar_events/234",
+#       "url": "https://example.com/api/v1/calendar_events/234",
 #
 #       // URL for a user to view this event
-#       html_url: "https://example.com/calendar?event_id=234&include_contexts=course_123",
+#       "html_url": "https://example.com/calendar?event_id=234&include_contexts=course_123",
 #
 #       // The date of this event
-#       all_day_date: "2012-07-19",
+#       "all_day_date": "2012-07-19",
 #
 #       // Boolean indicating whether this is an all-day event (midnight to
 #       // midnight)
-#       all_day: false,
+#       "all_day": false,
 #
 #       // When the calendar event was created
-#       created_at: "2012-07-12T10:55:20-06:00",
+#       "created_at": "2012-07-12T10:55:20-06:00",
 #
 #       // When the calendar event was last updated
-#       updated_at: "2012-07-12T10:55:20-06:00",
+#       "updated_at": "2012-07-12T10:55:20-06:00",
 #
 #
 #       ///////////////////////////////////////////////////////////////////////
@@ -105,83 +105,83 @@
 #       ///////////////////////////////////////////////////////////////////////
 #
 #       // The id of the appointment group
-#       appointment_group_id: null,
+#       "appointment_group_id": null,
 #
 #       // The API URL of the appointment group
-#       appointment_group_url: null,
+#       "appointment_group_url": null,
 #
 #       // If the event is a reservation, this a boolean indicating whether it
 #       // is the current user's reservation, or someone else's
-#       own_reservation: null,
+#       "own_reservation": null,
 #
 #       // If the event is a time slot, the API URL for reserving it 
-#       reserve_url: null,
+#       "reserve_url": null,
 #
 #       // If the event is a time slot, a boolean indicating whether the user
 #       // has already made a reservation for it 
-#       reserved: null,
+#       "reserved": null,
 #
 #       // If the event is a time slot, this is the participant limit
-#       participants_per_appointment: null,
+#       "participants_per_appointment": null,
 #
 #       // If the event is a time slot and it has a participant limit, an
 #       // integer indicating how many slots are available
-#       available_slots: null,
+#       "available_slots": null,
 #
 #       // If the event is a user-level reservation, this will contain the user
 #       // participant JSON (refer to the Users API).
-#       user: null,
+#       "user": null,
 #
 #       // If the event is a group-level reservation, this will contain the
 #       // group participant JSON (refer to the Groups API).
-#       group: null
+#       "group": null
 #     }
 #
-# @object Assignment Event
+# @object AssignmentEvent
 #     {
 #       // A synthetic ID for the assignment
-#       id: "assignment_987",
+#       "id": "assignment_987",
 #
 #       // The title of the assignment
-#       title: "Essay",
+#       "title": "Essay",
 #
 #       // The due_at timestamp of the assignment
-#       start_at: "2012-07-19T23:59:00-06:00",
+#       "start_at": "2012-07-19T23:59:00-06:00",
 #
 #       // The due_at timestamp of the assignment
-#       end_at: "2012-07-19T23:59:00-06:00",
+#       "end_at": "2012-07-19T23:59:00-06:00",
 #
 #       // The HTML description of the assignment
-#       description: "<b>Write an essay. Whatever you want.</b>",
+#       "description": "<b>Write an essay. Whatever you want.</b>",
 #
 #       // the context code of the (course) calendar this assignment belongs to
-#       context_code: "course_123",
+#       "context_code": "course_123",
 #
 #       // Current state of the assignment ("published" or "deleted")
-#       workflow_state: "published",
+#       "workflow_state": "published",
 #
 #       // URL for this assignment (note that updating/deleting should be done
 #       // via the Assignments API)
-#       url: "https://example.com/api/v1/calendar_events/assignment_987",
+#       "url": "https://example.com/api/v1/calendar_events/assignment_987",
 #
 #       // URL for a user to view this assignment
-#       html_url: "http://example.com/courses/123/assignments/987",
+#       "html_url": "http://example.com/courses/123/assignments/987",
 #
 #       // The due date of this assignment
-#       all_day_date: "2012-07-19",
+#       "all_day_date": "2012-07-19",
 #
 #       // Boolean indicating whether this is an all-day event (e.g. assignment
 #       // due at midnight)
-#       all_day: true,
+#       "all_day": true,
 #
 #       // When the assignment was created
-#       created_at: "2012-07-12T10:55:20-06:00",
+#       "created_at": "2012-07-12T10:55:20-06:00",
 #
 #       // When the assignment was last updated
-#       updated_at: "2012-07-12T10:55:20-06:00",
+#       "updated_at": "2012-07-12T10:55:20-06:00",
 #
 #       // The full assignment JSON data (See the Assignments API)
-#       assigmment: { id: 987, ... }
+#       "assignment": {}
 #     }
 
 class CalendarEventsApiController < ApplicationController
@@ -194,18 +194,23 @@ class CalendarEventsApiController < ApplicationController
   #
   # Retrieve the list of calendar events or assignments for the current user
   #
-  # @argument type [Optional, "event"|"assignment"] Defaults to "event"
-  # @argument start_date [Optional] Only return events since the start_date (inclusive). 
+  # @argument type [Optional, String, "event"|"assignment"] Defaults to "event"
+  # @argument start_date [Optional, Date]
+  #   Only return events since the start_date (inclusive). 
   #   Defaults to today. The value should be formatted as: yyyy-mm-dd.
-  # @argument end_date [Optional] Only return events before the end_date (inclusive). 
+  # @argument end_date [Optional, Date]
+  #   Only return events before the end_date (inclusive). 
   #   Defaults to start_date. The value should be formatted as: yyyy-mm-dd.
   #   If end_date is the same as start_date, then only events on that day are 
   #   returned.
-  # @argument undated [Optional] Boolean, defaults to false (dated events only).
+  # @argument undated [Optional, Boolean]
+  #   Defaults to false (dated events only).
   #   If true, only return undated events and ignore start_date and end_date.
-  # @argument all_events [Optional] Boolean, defaults to false (uses start_date, end_date, and undated criteria).
+  # @argument all_events [Optional, Boolean]
+  #   Defaults to false (uses start_date, end_date, and undated criteria).
   #   If true, all events are returned, ignoring start_date, end_date, and undated criteria.
-  # @argument context_codes[] [Optional] List of context codes of courses/groups/users whose events you want to see.
+  # @argument context_codes[] [Optional, String]
+  #   List of context codes of courses/groups/users whose events you want to see.
   #   If not specified, defaults to the current user (i.e personal calendar, 
   #   no course/group events). Limited to 10 context codes, additional ones are 
   #   ignored. The format of this field is the context type, followed by an 
@@ -243,17 +248,33 @@ class CalendarEventsApiController < ApplicationController
   #
   # Create and return a new calendar event
   #
-  # @argument calendar_event[context_code] [Required] Context code of the course/group/user whose calendar this event should be added to
-  # @argument calendar_event[title] [Optional] Short title for the calendar event
-  # @argument calendar_event[description] [Optional] Longer HTML description of the event
-  # @argument calendar_event[start_at] [Optional] Start date/time of the event
-  # @argument calendar_event[end_at] [Optional] End date/time of the event
-  # @argument calendar_event[location_name] [Optional] Location name of the event
-  # @argument calendar_event[location_address] [Optional] Location address
-  # @argument calendar_event[time_zone_edited] [Optional] Time zone of the user editing the event. Allowed time zones are listed in {http://rubydoc.info/docs/rails/2.3.8/ActiveSupport/TimeZone The Ruby on Rails documentation}.
-  # @argument calendar_event[child_event_data][X][start_at] [Optional] Section-level start time(s) if this is a course event. X can be any identifier, provided that it is consistent across the start_at, end_at and context_code
-  # @argument calendar_event[child_event_data][X][end_at] [Optional] Section-level end time(s) if this is a course event.
-  # @argument calendar_event[child_event_data][X][context_code] [Optional] Context code(s) corresponding to the section-level start and end time(s).
+  # @argument calendar_event[context_code] [String]
+  #   Context code of the course/group/user whose calendar this event should be
+  #   added to.
+  # @argument calendar_event[title] [Optional, String]
+  #   Short title for the calendar event.
+  # @argument calendar_event[description] [Optional, String]
+  #   Longer HTML description of the event.
+  # @argument calendar_event[start_at] [Optional, DateTime]
+  #   Start date/time of the event.
+  # @argument calendar_event[end_at] [Optional, DateTime]
+  #   End date/time of the event.
+  # @argument calendar_event[location_name] [Optional, String]
+  #   Location name of the event.
+  # @argument calendar_event[location_address] [Optional, String]
+  #   Location address
+  # @argument calendar_event[time_zone_edited] [Optional, String]
+  #   Time zone of the user editing the event. Allowed time zones are
+  #   {http://www.iana.org/time-zones IANA time zones} or friendlier
+  #   {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+  # @argument calendar_event[child_event_data][X][start_at] [Optional, DateTime]
+  #   Section-level start time(s) if this is a course event. X can be any
+  #   identifier, provided that it is consistent across the start_at, end_at
+  #   and context_code
+  # @argument calendar_event[child_event_data][X][end_at] [Optional, DateTime]
+  #   Section-level end time(s) if this is a course event.
+  # @argument calendar_event[child_event_data][X][context_code] [Optional, String]
+  #   Context code(s) corresponding to the section-level start and end time(s).
   #
   # @example_request
   #
@@ -275,7 +296,7 @@ class CalendarEventsApiController < ApplicationController
       if @event.save
         render :json => event_json(@event, @current_user, session), :status => :created
       else
-        render :json => @event.errors.to_json, :status => :bad_request
+        render :json => @event.errors, :status => :bad_request
       end
     end
   end
@@ -294,11 +315,13 @@ class CalendarEventsApiController < ApplicationController
   #
   # Reserves a particular time slot and return the new reservation
   #
-  # @argument participant_id [Optional]. User or group id for whom you are
-  #   making the reservation (depends on the participant type). Defaults to the
-  #   current user (or user's candidate group).
-  # @argument cancel_existing [Optional]. Defaults to false. If true, cancel
-  #   any previous reservation(s) for this participant and appointment group.
+  # @argument participant_id [Optional, String]
+  #   User or group id for whom you are making the reservation (depends on the
+  #   participant type). Defaults to the current user (or user's candidate group).
+  #
+  # @argument cancel_existing [Optional, Boolean]
+  #   Defaults to false. If true, cancel any previous reservation(s) for this
+  #   participant and appointment group.
   #
   # @example_request
   #
@@ -336,18 +359,33 @@ class CalendarEventsApiController < ApplicationController
   #
   # Update and return a calendar event
   #
-  # @argument calendar_event[title] [Optional] Short title for the calendar event
-  # @argument calendar_event[description] [Optional] Longer HTML description of the event
-  # @argument calendar_event[start_at] [Optional] Start date/time of the event
-  # @argument calendar_event[end_at] [Optional] End date/time of the event
-  # @argument calendar_event[location_name] [Optional] Location name of the event
-  # @argument calendar_event[location_address] [Optional] Location address
-  # @argument calendar_event[time_zone_edited] [Optional] Time zone of the user editing the event. Allowed time zones are listed in {http://rubydoc.info/docs/rails/2.3.8/ActiveSupport/TimeZone The Ruby on Rails documentation}.
-  # @argument calendar_event[child_event_data][X][start_at] [Optional] Section-level start time(s) if this is a course event. X can be any identifier, provided that it is consistent across the start_at, end_at and context_code. Note that if any child_event_data is specified, it will replace any existing child events.
-  # @argument calendar_event[child_event_data][X][end_at] [Optional] Section-level end time(s) if this is a course event.
-  # @argument calendar_event[child_event_data][X][context_code] [Optional] Context code(s) corresponding to the section-level start and end time(s).
-  # @argument calendar_event[remove_child_events] [Optional] Boolean, indicates that all child events (i.e. section-level events) should be removed.
-  # @argument calendar_event[participants_per_appointment] [Optional] Maximum number of participants that may sign up for this time slot. Ignored for regular calendar events or reservations.
+  # @argument calendar_event[context_code] [String]
+  #   Context code of the course/group/user whose calendar this event should be
+  #   added to.
+  # @argument calendar_event[title] [Optional, String]
+  #   Short title for the calendar event.
+  # @argument calendar_event[description] [Optional, String]
+  #   Longer HTML description of the event.
+  # @argument calendar_event[start_at] [Optional, DateTime]
+  #   Start date/time of the event.
+  # @argument calendar_event[end_at] [Optional, DateTime]
+  #   End date/time of the event.
+  # @argument calendar_event[location_name] [Optional, String]
+  #   Location name of the event.
+  # @argument calendar_event[location_address] [Optional, String]
+  #   Location address
+  # @argument calendar_event[time_zone_edited] [Optional, String]
+  #   Time zone of the user editing the event. Allowed time zones are
+  #   {http://www.iana.org/time-zones IANA time zones} or friendlier
+  #   {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+  # @argument calendar_event[child_event_data][X][start_at] [Optional, DateTime]
+  #   Section-level start time(s) if this is a course event. X can be any
+  #   identifier, provided that it is consistent across the start_at, end_at
+  #   and context_code
+  # @argument calendar_event[child_event_data][X][end_at] [Optional, DateTime]
+  #   Section-level end time(s) if this is a course event.
+  # @argument calendar_event[child_event_data][X][context_code] [Optional, String]
+  #   Context code(s) corresponding to the section-level start and end time(s).
   #
   # @example_request
   #
@@ -369,10 +407,9 @@ class CalendarEventsApiController < ApplicationController
         params[:calendar_event][:description] = process_incoming_html_content(params[:calendar_event][:description])
       end
       if @event.update_attributes(params[:calendar_event])
-        json_response = event_json(@event, @current_user, session)
-        render :json => json_response
+        render :json => event_json(@event, @current_user, session)
       else
-        render :json => @event.errors.to_json, :status => :bad_request
+        render :json => @event.errors, :status => :bad_request
       end
     end
   end
@@ -381,7 +418,8 @@ class CalendarEventsApiController < ApplicationController
   #
   # Delete an event from the calendar and return the deleted event
   #
-  # @argument cancel_reason [Optional] Reason for deleting/canceling the event.
+  # @argument cancel_reason [Optional, String]
+  #   Reason for deleting/canceling the event.
   #
   # @example_request
   #
@@ -397,7 +435,7 @@ class CalendarEventsApiController < ApplicationController
       if @event.destroy
         render :json => event_json(@event, @current_user, session)
       else
-        render :json => @event.errors.to_json, :status => :bad_request
+        render :json => @event.errors, :status => :bad_request
       end
     end
   end
@@ -442,7 +480,7 @@ class CalendarEventsApiController < ApplicationController
       end
     end
 
-    @events = @events.sort_by{ |e| [(e.start_at || Time.now), e.title] }
+    @events = @events.sort_by{ |e| [e.start_at || SortLast, Canvas::ICU.collation_key(e.title)] }
 
     @contexts.each do |context|
       log_asset_access("calendar_feed:#{context.asset_string}", "calendar", 'other')

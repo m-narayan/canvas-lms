@@ -25,6 +25,7 @@ class Attachment < ActiveRecord::Base
   attr_accessible :context, :folder, :filename, :display_name, :user, :locked, :position, :lock_at, :unlock_at, :uploaded_data, :hidden
   include HasContentTags
   include ContextModuleItem
+  include SearchTermHelper
 
   attr_accessor :podcast_associated_asset, :submission_attachment
 
@@ -220,9 +221,7 @@ class Attachment < ActiveRecord::Base
     existing ||= self.cloned_item_id ? context.attachments.find_by_cloned_item_id(self.cloned_item_id) : nil
     dup ||= Attachment.new
     dup = existing if existing && options[:overwrite]
-    self.attributes.delete_if{|k,v| [:id, :root_attachment_id, :uuid, :folder_id, :user_id, :filename].include?(k.to_sym) }.each do |key, val|
-      dup.send("#{key}=", val)
-    end
+    dup.send(:attributes=, self.attributes.except(*%w[id root_attachment_id uuid folder_id user_id filename namespace]), false)
     dup.write_attribute(:filename, self.filename)
     # avoid cycles (a -> b -> a) and self-references (a -> a) in root_attachment_id pointers
     if dup.new_record? || ![self.id, self.root_attachment_id].include?(dup.id)
@@ -300,7 +299,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def assert_attachment
-    if !self.to_be_zipped? && !self.zipping? && !self.errored? && (!filename || !content_type || !downloadable?)
+    if !self.to_be_zipped? && !self.zipping? && !self.errored? && !self.deleted? && (!filename || !content_type || !downloadable?)
       self.errors.add_to_base(t('errors.not_found', "File data could not be found"))
       return false
     end
@@ -309,8 +308,7 @@ class Attachment < ActiveRecord::Base
   after_create :flag_as_recently_created
   attr_accessor :recently_created
 
-  validates_presence_of :context_id
-  validates_presence_of :context_type
+  validates_presence_of :context_id, :context_type, :workflow_state
 
   serialize :scribd_doc, Scribd::Document
 
@@ -491,11 +489,13 @@ class Attachment < ActiveRecord::Base
 
     if !self.scribd_mime_type_id && !['text/html', 'application/xhtml+xml', 'application/xml', 'text/xml'].include?(self.content_type)
       @@mime_ids ||= {}
-      @@mime_ids[self.content_type] ||= self.content_type && ScribdMimeType.find_by_name(self.content_type).try(:id)
-      self.scribd_mime_type_id = @@mime_ids[self.content_type]
+      self.scribd_mime_type_id = @@mime_ids.fetch(self.content_type) do
+        @@mime_ids[self.content_type] = self.content_type && ScribdMimeType.find_by_name(self.content_type).try(:id)
+      end
       if !self.scribd_mime_type_id
-        @@mime_ids[self.after_extension] ||= self.after_extension && ScribdMimeType.find_by_extension(self.after_extension).try(:id)
-        self.scribd_mime_type_id = @@mime_ids[self.after_extension]
+        self.scribd_mime_type_id = @@mime_ids.fetch(self.after_extension) do
+          @@mime_ids[self.after_extension] = self.after_extension && ScribdMimeType.find_by_extension(self.after_extension).try(:id)
+        end
       end
     end
 
@@ -548,7 +548,8 @@ class Attachment < ActiveRecord::Base
     #
     # I've added the root_account_id accessor above, but I didn't verify there
     # isn't any code still accessing the namespace for the account id directly.
-    ns = Attachment.domain_namespace
+    ns = root_attachment.try(:namespace) if root_attachment_id
+    ns ||= Attachment.domain_namespace
     ns ||= self.context.root_account.file_namespace rescue nil
     ns ||= self.context.account.file_namespace rescue nil
     if Rails.env.development? && Attachment.local_storage?
@@ -590,10 +591,28 @@ class Attachment < ActiveRecord::Base
     self.size = details[:content_length]
 
     if existing_attachment = find_existing_attachment_for_md5
-      s3object.delete rescue nil
-      self.root_attachment = existing_attachment
-      write_attribute(:filename, nil)
-      clear_cached_urls
+      if existing_attachment.s3object.exists?
+        # deduplicate. the existing attachment's s3object should be the same as
+        # that just uploaded ('cuz md5 match). delete the new copy and just
+        # have this attachment inherit from the existing attachment.
+        s3object.delete rescue nil
+        self.root_attachment = existing_attachment
+        write_attribute(:filename, nil)
+        clear_cached_urls
+      else
+        # it looks like we had a duplicate, but the existing attachment doesn't
+        # actually have an s3object (probably from an earlier bug). update it
+        # and all its inheritors to inherit instead from this attachment.
+        existing_attachment.root_attachment = self
+        existing_attachment.write_attribute(:filename, nil)
+        existing_attachment.clear_cached_urls
+        existing_attachment.save!
+        Attachment.where(root_attachment_id: existing_attachment).update_all(
+          root_attachment_id: self,
+          filename: nil,
+          cached_scribd_thumbnail: nil,
+          updated_at: Time.zone.now)
+      end
     end
 
     save!
@@ -941,10 +960,12 @@ class Attachment < ActiveRecord::Base
         if record.context.is_a?(Course) && (record.folder.locked? || record.context.tab_hidden?(Course::TAB_FILES))
           # only notify course students if they are able to access it
           to_list = record.context.participating_admins - [record.user]
-        else
+        elsif record.context.respond_to?(:participants)
           to_list = record.context.participants - [record.user]
         end
         recipient_keys = (to_list || []).compact.map(&:asset_string)
+        next if recipient_keys.empty?
+
         asset_context = record.context
         data = { :count => count }
         DelayedNotification.send_later_if_production_enqueue_args(
@@ -1181,7 +1202,12 @@ class Attachment < ActiveRecord::Base
     can :download
   end
 
+  # checking if an attachment is locked is expensive and pointless for
+  # submission attachments
+  attr_writer :skip_submission_attachment_lock_checks
+
   def locked_for?(user, opts={})
+    return false if @skip_submission_attachment_lock_checks
     return false if opts[:check_policies] && self.grants_right?(user, nil, :update)
     return {:asset_string => self.asset_string, :manually_locked => true} if self.locked || (self.folder && self.folder.locked?)
     Rails.cache.fetch(locked_cache_key(user), :expires_in => 1.minute) do
@@ -1192,6 +1218,7 @@ class Attachment < ActiveRecord::Base
         locked = {:asset_string => self.asset_string, :lock_at => self.lock_at}
       elsif self.could_be_locked && item = locked_by_module_item?(user, opts[:deep_check_if_needed])
         locked = {:asset_string => self.asset_string, :context_module => item.context_module.attributes}
+        locked[:unlock_at] = locked[:context_module]["unlock_at"] if locked[:context_module]["unlock_at"]
       end
       locked
     end
@@ -1267,8 +1294,7 @@ class Attachment < ActiveRecord::Base
     state :unattached_temporary
   end
 
-  scope :to_be_zipped, where("attachments.workflow_state='to_be_zipped' AND attachments.scribd_attempts<10").order(:created_at)
-
+  scope :visible, where(['attachments.file_state in (?, ?)', 'available', 'public'])
   scope :not_deleted, where("attachments.file_state<>'deleted'")
 
   scope :not_hidden, where("attachments.file_state<>'hidden'")
@@ -1276,16 +1302,28 @@ class Attachment < ActiveRecord::Base
     where("(attachments.locked IS NULL OR attachments.locked=?) AND ((attachments.lock_at IS NULL) OR
       (attachments.lock_at>? OR (attachments.unlock_at IS NOT NULL AND attachments.unlock_at<?)))", false, Time.now.utc, Time.now.utc)
   }
+  scope :by_content_types, lambda { |types|
+    clauses = []
+    types.each do |type|
+      if type.include? '/'
+        clauses << sanitize_sql_array(["(attachments.content_type=?)", type])
+      else
+        clauses << wildcard('attachments.content_type', type + '/', :type => :right)
+      end
+    end
+    condition_sql = clauses.join(' OR ')
+    where(condition_sql)
+  }
 
   alias_method :destroy!, :destroy
   # file_state is like workflow_state, which was already taken
   # possible values are: available, deleted
-  def destroy(delete_media_object = true)
+  def destroy
     return if self.new_record?
     self.file_state = 'deleted' #destroy
     self.deleted_at = Time.now
     ContentTag.delete_for(self)
-    MediaObject.where(:attachment_id => self).update_all(:workflow_state => 'deleted', :updated_at => Time.now.utc) if self.id && delete_media_object
+    MediaObject.update_all({:attachment_id => nil, :updated_at => Time.now.utc}, {:attachment_id => self.id})
     send_later_if_production(:delete_scribd_doc) if scribd_doc
     save!
     # if the attachment being deleted belongs to a user and the uuid (hash of file) matches the avatar_image_url
@@ -1545,7 +1583,6 @@ class Attachment < ActiveRecord::Base
   def self.serialization_methods; [:mime_class, :scribdable?, :currently_locked, :crocodoc_available?]; end
   cattr_accessor :skip_thumbnails
 
-
   scope :scribdable?, where("scribd_mime_type_id IS NOT NULL")
   scope :recyclable, where("attachments.scribd_attempts<? AND attachments.workflow_state='errored'", MAX_SCRIBD_ATTEMPTS)
   scope :needing_scribd_conversion_status, lambda { where("attachments.workflow_state='processing' AND attachments.updated_at<?", 30.minutes.ago).limit(50) }
@@ -1670,5 +1707,29 @@ class Attachment < ActiveRecord::Base
 
   def record_inline_view
     update_attribute(:last_inline_view, Time.now)
+    check_rerender_scribd_doc unless self.scribd_doc
+  end
+
+  def scribd_doc_missing?
+    scribdable? && scribd_doc.nil? && !pending_upload? && !processing?
+  end
+
+  def scribd_render_url
+    if scribd_doc_missing?
+      "/#{context_url_prefix}/files/#{self.id}/scribd_render"
+    else
+      nil
+    end
+  end
+
+  def check_rerender_scribd_doc
+    if scribd_doc_missing?
+      self.scribd_attempts = 0
+      self.workflow_state = 'pending_upload'
+      self.save!
+      send_later :submit_to_scribd!
+      return true
+    end
+    false
   end
 end

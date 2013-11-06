@@ -124,6 +124,20 @@ describe WikiPage do
     p1.url.should eql('asdf-2')
   end
 
+  it "should preserve course links when in a group belonging to the course" do
+    other_course = Course.create!
+    course_with_teacher
+    group(:group_context => @course)
+    page = @group.wiki.wiki_pages.create(:title => "poni3s")
+    page.user = @teacher
+    page.update_attribute(:body, %{<a href='/courses/#{@course.id}/files#oops'>click meh</a>
+                                  <a href='/courses/#{other_course.id}/files#whoops'>click meh too</a>})
+
+    page.reload
+    page.body.should include("/courses/#{@course.id}/files#oops")
+    page.body.should include("/groups/#{@group.id}/files#whoops")
+  end
+
   context "unpublished" do
     before do
       teacher_in_course(:active_all => true)
@@ -156,31 +170,302 @@ describe WikiPage do
     end
   end
 
-  describe '#editing_role?' do
+  describe '#can_edit_page?' do
     it 'is true if the editing roles include teachers and the user is a teacher' do
       course_with_teacher(:active_all => true)
       page = @course.wiki.wiki_pages.create(:title => "some page", :editing_roles => 'teachers', :hide_from_students => true)
       teacher = @course.teachers.first
-      page.editing_role?(teacher).should be_true
+      page.can_edit_page?(teacher).should be_true
     end
 
     it 'is true for students who are in the course' do
       course_with_student(:active_all => true)
       page = @course.wiki.wiki_pages.create(:title => "some page", :editing_roles => 'students', :hide_from_students => false)
       student = @course.students.first
-      page.editing_role?(student).should be_true
+      page.can_edit_page?(student).should be_true
     end
 
-    it 'is not true for students if it is the front page' do
-      course_with_student(:active_all => true)
-      page = @course.wiki.wiki_pages.create(:title => "some page", :editing_roles => 'students', :hide_from_students => false)
+    it 'is true for users who are not in the course' do
+      course(:active_all => true)
+      page = @course.wiki.wiki_pages.create(:title => "some page", :editing_roles => 'public', :hide_from_students => false)
+      user(:active_all => true)
+      page.can_edit_page?(@user).should be_true
+    end
+  end
 
-      wiki = @course.wiki
-      wiki.front_page_url = page.url
-      wiki.save!
+  context '#sync_hidden_and_unpublished' do
+    before :each do
+      course :active_all => true
+      @page = @course.wiki.wiki_pages.build(:title => 'Test Page', :url => 'test-page')
+    end
 
-      page.reload
-      page.editing_role?(@student).should_not be_true
+    context 'with draft state disabled' do
+      before :each do
+        @course.account.settings[:allow_draft] = false
+        @course.account.save!
+        @course.enable_draft = false
+        @course.save!
+      end
+
+      it 'should be performed on save' do
+        @page.workflow_state = 'unpublished'
+        @page.hide_from_students = false
+        @page.save!
+        @page.workflow_state.should == 'active'
+        @page.hide_from_students.should be_true
+        @page.reload
+        @page.workflow_state.should == 'active'
+        @page.hide_from_students.should be_true
+      end
+
+      it 'should be performed on load' do
+        @page.save!
+        WikiPage.update_all({:workflow_state => 'unpublished', :hide_from_students => false}, {:id => @page.id})
+
+        @page = @course.wiki.wiki_pages.last
+        @page.workflow_state.should == 'active'
+        @page.hide_from_students.should be_true
+      end
+    end
+
+    context 'with draft state enabled' do
+      before :each do
+        @course.account.settings[:allow_draft] = true
+        @course.account.save!
+        @course.enable_draft = true
+        @course.save!
+      end
+
+      it 'should be performed on save' do
+        @page.workflow_state = 'active'
+        @page.hide_from_students = true
+        @page.save!
+        @page.workflow_state.should == 'unpublished'
+        @page.hide_from_students.should be_false
+        @page.reload
+        @page.workflow_state.should == 'unpublished'
+        @page.hide_from_students.should be_false
+      end
+
+      it 'should be performed on load' do
+        @page.save!
+        WikiPage.update_all({:workflow_state => 'active', :hide_from_students => true}, {:id => @page.id})
+
+        @page = @course.wiki.wiki_pages.last
+        @page.workflow_state.should == 'unpublished'
+        @page.hide_from_students.should be_false
+      end
+    end
+  end
+
+  context 'initialize_wiki_page' do
+    it 'should set the course front page body' do
+      course_with_teacher_logged_in
+      front_page = @course.wiki.wiki_pages.new(:title => 'Front Page', :url => 'front-page')
+      front_page.body.should be_nil
+      front_page.initialize_wiki_page(@teacher)
+      front_page.body.should_not be_empty
+    end
+
+    it 'should set the group front page body' do
+      group_with_user_logged_in
+      front_page = @group.wiki.wiki_pages.new(:title => 'Front Page', :url => 'front-page')
+      front_page.body.should be_nil
+      front_page.initialize_wiki_page(@user)
+      front_page.body.should_not be_empty
+    end
+  end
+
+  context 'set policy' do
+    before :each do
+      course :active_all => true
+    end
+
+    context 'admins' do
+      before :each do
+        account_admin_user
+        @page = @course.wiki.wiki_pages.build(:title => 'Some page')
+        @page.workflow_state = 'active'
+      end
+
+      it 'should be given read rights' do
+        @page.grants_right?(@admin, :read).should be_true
+      end
+
+      it 'should be given create rights' do
+        @page.grants_right?(@admin, :create).should be_true
+      end
+
+      it 'should be given update rights' do
+        @page.grants_right?(@admin, :update).should be_true
+      end
+
+      it 'should be given delete rights' do
+        @page.grants_right?(@admin, :delete).should be_true
+      end
+
+      it 'should be given delete rights for unpublished pages' do
+        @page.workflow_state = 'unpublished'
+        @page.grants_right?(@admin, :delete).should be_true
+      end
+    end
+
+    context 'teachers' do
+      before :each do
+        course_with_teacher :course => @course, :active_all => true
+        @page = @course.wiki.wiki_pages.build(:title => 'Some page')
+        @page.workflow_state = 'active'
+      end
+
+      it 'should be given read rights' do
+        @page.grants_right?(@teacher, :read).should be_true
+      end
+
+      it 'should be given create rights' do
+        @page.grants_right?(@teacher, :create).should be_true
+      end
+
+      it 'should be given update rights' do
+        @page.grants_right?(@teacher, :update).should be_true
+      end
+
+      it 'should be given delete rights' do
+        @page.grants_right?(@teacher, :delete).should be_true
+      end
+
+      it 'should be given delete rights for unpublished pages' do
+        @page.workflow_state = 'unpublished'
+        @page.grants_right?(@teacher, :delete).should be_true
+      end
+    end
+
+    context 'students' do
+      before :each do
+        course_with_student :course => @course, :active_all => true
+        @page = @course.wiki.wiki_pages.build(:title => 'Some page')
+        @page.workflow_state = 'active'
+      end
+
+      it 'should be given read rights' do
+        @page.grants_right?(@user, :read).should be_true
+      end
+
+      it 'should be given read rights, unless hidden from students' do
+        @page.hide_from_students = true
+        @page.grants_right?(@user, :read).should be_false
+      end
+
+      it 'should be given read rights, unless unpublished' do
+        @page.workflow_state = 'unpublished'
+        @page.grants_right?(@user, :read).should be_false
+      end
+
+      it 'should not be given create rights' do
+        @page.grants_right?(@user, :create).should be_false
+      end
+
+      it 'should not be given update rights' do
+        @page.grants_right?(@user, :update).should be_false
+      end
+
+      it 'should not be given update_content rights' do
+        @page.grants_right?(@user, :update_content).should be_false
+      end
+
+      it 'should not be given delete rights' do
+        @page.grants_right?(@user, :delete).should be_false
+      end
+
+      context 'with editing roles' do
+        before :each do
+          @page.editing_roles = 'teachers,students'
+        end
+
+        it 'should be given update_content rights' do
+          @page.grants_right?(@user, :update_content).should be_true
+        end
+
+        it 'should not be given create rights' do
+          @page.grants_right?(@user, :create).should be_false
+        end
+
+        it 'should not be given update rights' do
+          @page.grants_right?(@user, :update).should be_false
+        end
+
+        it 'should not be given delete rights' do
+          @page.grants_right?(@user, :delete).should be_false
+        end
+      end
+
+      context 'with course editing roles' do
+        before :each do
+          @page.context.default_wiki_editing_roles = 'teachers,students'
+          @page.context.save!
+        end
+
+        it 'should be given create rights' do
+          @page.grants_right?(@user, :create).should be_true
+        end
+
+        it 'should be given update rights' do
+          @page.grants_right?(@user, :update).should be_true
+        end
+
+        it 'should be given update_content rights' do
+          @page.grants_right?(@user, :update_content).should be_true
+        end
+
+        it 'should not be given delete rights' do
+          @page.grants_right?(@user, :delete).should be_false
+        end
+      end
+
+      context 'with course editing roles for teacher only page' do
+        before :each do
+          @course.default_wiki_editing_roles = 'teachers,students'
+          @page.editing_roles = 'teachers'
+        end
+
+        it 'should not be given create rights' do
+          @page.grants_right?(@user, :create).should be_false
+        end
+
+        it 'should not be given update rights' do
+          @page.grants_right?(@user, :update).should be_false
+        end
+
+        it 'should not be given update_content rights' do
+          @page.grants_right?(@user, :update_content).should be_false
+        end
+
+        it 'should not be given delete rights' do
+          @page.grants_right?(@user, :delete).should be_false
+        end
+      end
+
+      context 'with course editing roles for unpublished pages' do
+        before :each do
+          @course.default_wiki_editing_roles = 'teachers,students'
+          @page.workflow_state = 'unpublished'
+        end
+
+        it 'should not be given create rights' do
+          @page.grants_right?(@user, :create).should be_false
+        end
+
+        it 'should not be given update rights' do
+          @page.grants_right?(@user, :update).should be_false
+        end
+
+        it 'should not be given update_content rights' do
+          @page.grants_right?(@user, :update_content).should be_false
+        end
+
+        it 'should not be given delete rights' do
+          @page.grants_right?(@user, :delete).should be_false
+        end
+      end
     end
   end
 end

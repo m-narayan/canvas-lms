@@ -4,7 +4,7 @@ define [
   'i18n!create_users_view'
   'compiled/views/DialogFormView'
   'jst/courses/roster/createUsers'
-  'jst/courses/roster/createUsersWrapper'
+  'jst/EmptyDialogFormWrapper'
   'vendor/jquery.placeholder'
 ], (CreateUserList, _, I18n, DialogFormView, template, wrapper) ->
 
@@ -80,6 +80,13 @@ define [
     startOverFrd: ->
       @model.startOver()
       @$textarea?.val ''
+
+    toJSON: =>
+      json = super
+      json.course_section_id = "#{json.course_section_id}"
+      json.limit_privileges_to_course_section = json.limit_privileges_to_course_section == true ||
+                                                    json.limit_privileges_to_course_section == "1"
+      json
 
     afterRender: ->
       @$('[placeholder]').placeholder()

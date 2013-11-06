@@ -7,7 +7,7 @@ i=1
 echo "ADDR[1] : ${ADDR[0]} : : ${ADDR[1]}"
    if [ "${ADDR[1]}" != "selenium" ]
     then
-	RAILS_env=test  script/spec $file > ~/$file	     
+	RAILS_env=test  script/spec $file > ~/spec/arrivu-lms-spec/$file
    else
 	echo "Skipping selenium dir"		
 	continue     

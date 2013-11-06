@@ -35,6 +35,7 @@ class Course < ActiveRecord::Base
                   :syllabus_body,
                   :public_description,
                   :allow_student_forum_attachments,
+                  :enable_draft,
                   :allow_student_discussion_topics,
                   :allow_student_discussion_editing,
                   :default_wiki_editing_roles,
@@ -174,13 +175,14 @@ class Course < ActiveRecord::Base
   include Profile::Association
 
   before_save :assign_uuid
-  before_save :assert_defaults
+  before_validation :assert_defaults
   before_save :set_update_account_associations_if_changed
   before_save :update_enrollments_later
   after_save :update_final_scores_on_weighting_scheme_change
   after_save :update_account_associations_if_changed
   after_save :set_self_enrollment_code
   before_validation :verify_unique_sis_source_id
+  validates_presence_of :account_id, :root_account_id, :enrollment_term_id, :workflow_state
   validates_length_of :syllabus_body, :maximum => maximum_long_text_length, :allow_nil => true, :allow_blank => true
   validates_length_of :name, :maximum => maximum_string_length, :allow_nil => true, :allow_blank => true
   validates_length_of :course_code, :maximum => maximum_string_length, :allow_nil => true, :allow_blank => true
@@ -245,6 +247,14 @@ class Course < ActiveRecord::Base
       self.context_modules.not_deleted
     else
       self.context_modules.active
+    end
+  end
+
+  def module_items_visible_to(user)
+    if self.grants_right?(user, :manage_content)
+      self.context_module_tags.not_deleted.joins(:context_module).where("context_modules.workflow_state <> 'deleted'")
+    else
+      self.context_module_tags.active.joins(:context_module).where(:context_modules => {:workflow_state => 'active'})
     end
   end
 
@@ -434,7 +444,7 @@ class Course < ActiveRecord::Base
   scope :recently_ended, lambda { where(:conclude_at => 1.month.ago..Time.zone.now).order("start_at DESC").limit(10) }
   scope :recently_created, lambda { where("created_at>?", 1.month.ago).order("created_at DESC").limit(50).includes(:teachers) }
   scope :for_term, lambda {|term| term ? where(:enrollment_term_id => term) : scoped }
-  scope :active_first, order("CASE WHEN courses.workflow_state='available' THEN 0 ELSE 1 END, name")
+  scope :active_first, lambda { order("CASE WHEN courses.workflow_state='available' THEN 0 ELSE 1 END, #{best_unicode_collation_key('name')}") }
   scope :name_like, lambda { |name| where(wildcard('courses.name', 'courses.sis_source_id', 'courses.course_code', name)) }
   scope :needs_account, lambda { |account, limit| where(:account_id => nil, :root_account_id => account).limit(limit) }
   scope :active, where("courses.workflow_state<>'deleted'")
@@ -600,6 +610,14 @@ class Course < ActiveRecord::Base
   # Returns boolean.
   def apply_group_weights?
     group_weighting_scheme == 'percent'
+  end
+
+  def apply_assignment_group_weights=(apply)
+    if apply
+      self.group_weighting_scheme = 'percent'
+    else
+      self.group_weighting_scheme = 'equal'
+    end
   end
 
   def grade_weight_changed!
@@ -968,7 +986,12 @@ class Course < ActiveRecord::Base
     can :read and can :read_outcomes
 
     # Active students
-    given { |user| self.available? && user && user.cached_current_enrollments.any?{|e| e.course_id == self.id && e.participating_student? } }
+    given { |user|
+      available?  && user &&
+        user.cached_current_enrollments.any? { |e|
+        e.course_id == id && e.participating_student?
+      }
+    }
     can :read and can :participate_as_student and can :read_grades and can :read_outcomes
 
     given { |user| (self.available? || self.completed?) && user && user.cached_not_ended_enrollments.any?{|e| e.course_id == self.id && e.participating_observer? && e.associated_user_id} }
@@ -1500,6 +1523,7 @@ class Course < ActiveRecord::Base
     limit_privileges_to_course_section = opts[:limit_privileges_to_course_section]
     associated_user_id = opts[:associated_user_id]
     role_name = opts[:role_name]
+    self_enrolled = opts[:self_enrolled]
     section ||= self.default_section
     enrollment_state ||= self.available? ? "invited" : "creation_pending"
     if type == 'TeacherEnrollment' || type == 'TaEnrollment' || type == 'DesignerEnrollment'
@@ -1535,6 +1559,7 @@ class Course < ActiveRecord::Base
     end
     e.associated_user_id = associated_user_id
     e.role_name = role_name
+    e.self_enrolled = self_enrolled
     if e.changed?
       if opts[:no_notify]
         e.save_without_broadcasting
@@ -1557,8 +1582,7 @@ class Course < ActiveRecord::Base
   end
 
   def self_enroll_student(user, opts = {})
-    enrollment = enroll_student(user, opts.merge(:no_notify => true))
-    enrollment.self_enrolled = true
+    enrollment = enroll_student(user, opts.merge(:self_enrolled => true))
     enrollment.accept(:force)
     unless opts[:skip_pseudonym]
       new_pseudonym = user.find_or_initialize_pseudonym_for_account(root_account)
@@ -1686,11 +1710,6 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def file_structure_for(user)
-    User.file_structure_for(self, user)
-  end
-
-
   def merge_in(course, options = {}, import = nil)
     return [] if course == self
     res = merge_into_course(course, options, import)
@@ -1713,6 +1732,7 @@ class Course < ActiveRecord::Base
     pairs.uniq.each do |context_type, id|
       context = Context.find_by_asset_string("#{context_type}_#{id}") rescue nil
       if context
+        next if to_context.respond_to?(:context) && context == to_context.context
         if context.grants_right?(user, nil, :manage_content)
           html = self.migrate_content_links(html, context, to_context, content_types_to_copy)
         else
@@ -1726,8 +1746,9 @@ class Course < ActiveRecord::Base
   def turnitin_settings
     # check if somewhere up the account chain turnitin is enabled and
     # has valid settings
-    self.account.turnitin_settings
+    account.turnitin_settings
   end
+  memoize :turnitin_settings
 
   def turnitin_pledge
     self.account.closest_turnitin_pledge
@@ -1774,14 +1795,16 @@ class Course < ActiveRecord::Base
     rewriter.set_default_handler do |match|
       new_url = match.url
       next(new_url) if supported_types && !supported_types.include?(match.type)
-      new_id = @merge_mappings["#{match.obj_class.name.underscore}_#{match.obj_id}"]
-      next(new_url) unless rewriter.user_can_view_content? { match.obj_class.find_by_id(match.obj_id) }
-      if !new_id && to_context != from_context
-        new_obj = self.find_or_create_for_new_context(match.obj_class, to_context, from_context, match.obj_id)
-        new_id = new_obj.id if new_obj
-      end
-      if !limit_migrations_to_listed_types || new_id
-        new_url = new_url.gsub("#{match.type}/#{match.obj_id}", new_id ? "#{match.type}/#{new_id}" : "#{match.type}")
+      if match.obj_id
+        new_id = @merge_mappings["#{match.obj_class.name.underscore}_#{match.obj_id}"]
+        next(new_url) unless rewriter.user_can_view_content? { match.obj_class.find_by_id(match.obj_id) }
+        if !new_id && to_context != from_context
+          new_obj = self.find_or_create_for_new_context(match.obj_class, to_context, from_context, match.obj_id)
+          new_id = new_obj.id if new_obj
+        end
+        if !limit_migrations_to_listed_types || new_id
+          new_url = new_url.gsub("#{match.type}/#{match.obj_id}", new_id ? "#{match.type}/#{new_id}" : "#{match.type}")
+        end
       end
       new_url.gsub("/#{from_name}/#{from_context.id}", "/#{to_name}/#{to_context.id}")
     end
@@ -1935,7 +1958,18 @@ class Course < ActiveRecord::Base
       import_settings_from_migration(data, migration); migration.update_import_progress(96)
     end
 
-    syllabus_should_be_added = everything_selected || migration.copy_options[:syllabus_body]
+    # be very explicit about draft state courses, but be liberal toward legacy courses
+    if self.draft_state_enabled?
+      if migration.for_course_copy? && (source = migration.source_course || Course.find_by_id(migration.migration_settings[:source_course_id]))
+        self.wiki.has_no_front_page = !!source.wiki.has_no_front_page
+        self.wiki.front_page_url = source.wiki.front_page_url
+        self.wiki.save!
+      end
+    end
+    front_page = self.wiki.front_page
+    self.wiki.unset_front_page! if front_page.nil? || (self.draft_state_enabled? && front_page.new_record?)
+
+    syllabus_should_be_added = everything_selected || migration.copy_options[:syllabus_body] || migration.copy_options[:all_syllabus_body]
     if syllabus_should_be_added
       syllabus_body = data[:course][:syllabus_body] if data[:course]
       import_syllabus_from_migration(syllabus_body) if syllabus_body
@@ -1974,8 +2008,7 @@ class Course < ActiveRecord::Base
           end
         end
 
-        self.start_at ||= shift_options[:new_start_date]
-        self.conclude_at ||= shift_options[:new_end_date]
+        self.set_course_dates_if_blank(shift_options)
       end
     rescue
       add_migration_warning("Couldn't adjust the due dates.", $!)
@@ -2089,58 +2122,60 @@ class Course < ActiveRecord::Base
     attachments = course.attachments.where("file_state <> 'deleted'").all
     total = attachments.count + 1
 
-    attachments.each_with_index do |file, i|
-      cm.update_import_progress((i.to_f/total) * 18.0) if cm && (i % 10 == 0)
+    Attachment.skip_media_object_creation do
+      attachments.each_with_index do |file, i|
+        cm.update_import_progress((i.to_f/total) * 18.0) if cm && (i % 10 == 0)
 
-      if !ce || ce.export_object?(file)
-        begin
-          new_file = file.clone_for(self, nil, :overwrite => true)
-          self.attachment_path_id_lookup[file.full_display_path.gsub(/\A#{root_folder_name}/, '')] = new_file.migration_id
-          new_folder_id = merge_mapped_id(file.folder)
-
-          if file.folder && file.folder.parent_folder_id.nil?
-            new_folder_id = root_folder.id
-          end
-          # make sure the file has somewhere to go
-          if !new_folder_id
-            # gather mapping of needed folders from old course to new course
-            old_folders = []
-            old_folders << file.folder
-            new_folders = []
-            new_folders << old_folders.last.clone_for(self, nil, options.merge({:include_subcontent => false}))
-            while old_folders.last.parent_folder && old_folders.last.parent_folder.parent_folder_id
-              old_folders << old_folders.last.parent_folder
-              new_folders << old_folders.last.clone_for(self, nil, options.merge({:include_subcontent => false}))
-            end
-            old_folders.reverse!
-            new_folders.reverse!
-            # try to use folders that already match if possible
-            final_new_folders = []
-            parent_folder = Folder.root_folders(self).first
-            old_folders.each_with_index do |folder, idx|
-              if f = parent_folder.active_sub_folders.find_by_name(folder.name)
-                final_new_folders << f
-              else
-                final_new_folders << new_folders[idx]
-              end
-              parent_folder = final_new_folders.last
-            end
-            # add or update the folder structure needed for the file
-            final_new_folders.first.parent_folder_id ||=
-                merge_mapped_id(old_folders.first.parent_folder) ||
-                    Folder.root_folders(self).first.id
-            old_folders.each_with_index do |folder, idx|
-              final_new_folders[idx].save!
-              map_merge(folder, final_new_folders[idx])
-              final_new_folders[idx + 1].parent_folder_id ||= final_new_folders[idx].id if final_new_folders[idx + 1]
-            end
+        if !ce || ce.export_object?(file)
+          begin
+            new_file = file.clone_for(self, nil, :overwrite => true)
+            self.attachment_path_id_lookup[file.full_display_path.gsub(/\A#{root_folder_name}/, '')] = new_file.migration_id
             new_folder_id = merge_mapped_id(file.folder)
+
+            if file.folder && file.folder.parent_folder_id.nil?
+              new_folder_id = root_folder.id
+            end
+            # make sure the file has somewhere to go
+            if !new_folder_id
+              # gather mapping of needed folders from old course to new course
+              old_folders = []
+              old_folders << file.folder
+              new_folders = []
+              new_folders << old_folders.last.clone_for(self, nil, options.merge({:include_subcontent => false}))
+              while old_folders.last.parent_folder && old_folders.last.parent_folder.parent_folder_id
+                old_folders << old_folders.last.parent_folder
+                new_folders << old_folders.last.clone_for(self, nil, options.merge({:include_subcontent => false}))
+              end
+              old_folders.reverse!
+              new_folders.reverse!
+              # try to use folders that already match if possible
+              final_new_folders = []
+              parent_folder = Folder.root_folders(self).first
+              old_folders.each_with_index do |folder, idx|
+                if f = parent_folder.active_sub_folders.find_by_name(folder.name)
+                  final_new_folders << f
+                else
+                  final_new_folders << new_folders[idx]
+                end
+                parent_folder = final_new_folders.last
+              end
+              # add or update the folder structure needed for the file
+              final_new_folders.first.parent_folder_id ||=
+                merge_mapped_id(old_folders.first.parent_folder) ||
+                Folder.root_folders(self).first.id
+              old_folders.each_with_index do |folder, idx|
+                final_new_folders[idx].save!
+                map_merge(folder, final_new_folders[idx])
+                final_new_folders[idx + 1].parent_folder_id ||= final_new_folders[idx].id if final_new_folders[idx + 1]
+              end
+              new_folder_id = merge_mapped_id(file.folder)
+            end
+            new_file.folder_id = new_folder_id
+            new_file.save_without_broadcasting!
+            map_merge(file, new_file)
+          rescue
+            cm.add_warning(t(:file_copy_error, "Couldn't copy file \"%{name}\"", :name => file.display_name || file.path_name), $!)
           end
-          new_file.folder_id = new_folder_id
-          new_file.save_without_broadcasting!
-          map_merge(file, new_file)
-        rescue
-          cm.add_warning(t(:file_copy_error, "Couldn't copy file \"%{name}\"", :name => file.display_name || file.path_name), $!)
         end
       end
     end
@@ -2376,8 +2411,7 @@ class Course < ActiveRecord::Base
         end
         event.respond_to?(:save_without_broadcasting!) ? event.save_without_broadcasting! : event.save!
       end
-      self.start_at ||= shift_options[:new_start_date]
-      self.conclude_at ||= shift_options[:new_end_date]
+      self.set_course_dates_if_blank(shift_options)
     end
 
     self.save
@@ -2399,7 +2433,7 @@ class Course < ActiveRecord::Base
       :storage_quota, :tab_configuration, :allow_wiki_comments,
       :turnitin_comments, :self_enrollment, :license, :indexed, :locale,
       :hide_final_grade, :hide_distribution_graphs,
-      :allow_student_discussion_topics, :lock_all_announcements ]
+      :allow_student_discussion_topics, :lock_all_announcements, :enable_draft ]
   end
 
   # TODO: remove me? looks like only a single spec exercises this code (incidentally, no less)
@@ -2441,6 +2475,18 @@ class Course < ActiveRecord::Base
     result[:day_substitutions] = options[:day_substitutions]
     result[:time_zone] = options[:time_zone]
     result[:time_zone] ||= course.account.default_time_zone unless course.account.nil?
+
+    result[:default_start_at] = DateTime.parse(options[:new_start_date]) rescue self.real_start_date
+    result[:default_conclude_at] = DateTime.parse(options[:new_end_date]) rescue self.real_end_date
+    Time.use_zone(result[:time_zone] || Time.zone) do
+      # convert times
+      [:default_start_at, :default_conclude_at].each do |k|
+        old_time = result[k]
+        new_time = Time.utc(old_time.year, old_time.month, old_time.day, (old_time.hour rescue 0), (old_time.min rescue 0)).in_time_zone
+        new_time -= new_time.utc_offset
+        result[k] = new_time
+      end
+    end
     result
   end
 
@@ -2476,6 +2522,11 @@ class Course < ActiveRecord::Base
       log_merge_result("Events for #{old_date.to_s} moved to #{new_date.to_s}")
       new_time
     end
+  end
+
+  def set_course_dates_if_blank(shift_options)
+    self.start_at ||= shift_options[:default_start_at]
+    self.conclude_at ||= shift_options[:default_conclude_at]
   end
 
   def real_start_date
@@ -2556,11 +2607,14 @@ class Course < ActiveRecord::Base
     if opts[:section_ids]
       scope = scope.where('enrollments.course_section_id' => opts[:section_ids].to_a)
     end
-    unless visibilities.any?{|v|v[:admin]}
+    visibility_level = enrollment_visibility_level_for(user, visibilities)
+    account_admin = visibility_level == :full && visibilities.empty?
+    # teachers, account admins, and student view students can see student view students
+    if !visibilities.any?{|v|v[:admin] || v[:type] == 'StudentViewEnrollment' } && !account_admin
       scope = scope.where("enrollments.type<>'StudentViewEnrollment'")
     end
     # See also MessageableUser::Calculator (same logic used to get users across multiple courses) (should refactor)
-    case enrollment_visibility_level_for(user, visibilities)
+    case visibility_level
       when :full, :limited then scope
       when :sections then scope.where("enrollments.course_section_id IN (?) OR (enrollments.limit_privileges_to_course_section=? AND enrollments.type IN ('TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment'))", visibilities.map{|s| s[:course_section_id]}, false)
       when :restricted then scope.where(:enrollments => { :user_id  => visibilities.map{|s| s[:associated_user_id]}.compact + [user] })
@@ -2894,6 +2948,7 @@ class Course < ActiveRecord::Base
   add_setting :lock_all_announcements, :boolean => true, :default => false
   add_setting :large_roster, :boolean => true, :default => lambda { |c| c.root_account.large_course_rosters? }
   add_setting :public_syllabus, :boolean => true, :default => false
+  add_setting :enable_draft, boolean: true, default: false
 
   def user_can_manage_own_discussion_posts?(user)
     return true if allow_student_discussion_editing?
@@ -2957,6 +3012,9 @@ class Course < ActiveRecord::Base
       self.replacement_course_id = new_course.id
       self.workflow_state = 'deleted'
       self.save!
+      # Assign original course profile to the new course (automatically saves it)
+      new_course.profile = self.profile
+
       Course.find(new_course.id)
     end
   end
@@ -3092,5 +3150,18 @@ class Course < ActiveRecord::Base
     self.enrollments.invited.except(:includes).includes(:user => :communication_channels).find_each do |e|
       e.re_send_confirmation! if e.invited?
     end
+  end
+
+  # Public: Determine if draft state is enabled for this course.
+  #
+  # Returns a boolean (default: false).
+  def draft_state_enabled?
+    (root_account.allow_draft? && enable_draft?) || root_account.enable_draft?
+  end
+
+  def serialize_permissions(permissions_hash, user, session)
+    permissions_hash.merge(
+      create_discussion_topic: DiscussionTopic.context_allows_user_to_create?(self, user, session)
+    )
   end
 end

@@ -23,7 +23,9 @@ describe QuizQuestion do
   it "should deserialize its json data" do
     answers = {'answer_0' => {'id' => 1}, 'answer_1' => {'id' => 2}}
     qd = {'name' => 'test question', 'question_type' => 'multiple_choice_question', 'answers' => answers}
-    a = AssessmentQuestion.create!
+    course
+    bank = @course.assessment_question_banks.create!
+    a = bank.assessment_questions.create!
     q = QuizQuestion.create(:question_data => qd, :assessment_question => a)
     q.question_data.should_not be_nil
     q.question_data.class.should == HashWithIndifferentAccess
@@ -36,6 +38,37 @@ describe QuizQuestion do
     data[:answers].length.should eql(2)
     data[:answers][0][:weight].should eql(100)
     data[:answers][1][:weight].should eql(0.0)
+  end
+
+  describe "#question_data=" do
+    before do
+      course_with_teacher
+      course.root_account.enable_quiz_regrade!
+
+      @quiz = @course.quizzes.create
+
+      @data = {:question_name   => 'test question',
+               :points_possible => '1',
+               :question_type   => 'multiple_choice_question',
+               :answers         => {'answer_0' => {'answer_text' => '1', 'id' => 1},
+                                    'answer_1' => {'answer_text' => '2', 'id' => 2},
+                                    'answer_1' => {'answer_text' => '3', 'id' => 3},
+                                    'answer_1' => {'answer_text' => '4', 'id' => 4}}}
+      @question = @quiz.quiz_questions.create(:question_data => @data)
+    end
+
+    it "should save regrade if passed in regrade option in data hash" do
+      QuizQuestionRegrade.first.should be_nil
+
+      QuizRegrade.create(quiz_id: @quiz.id, user_id: @user.id, quiz_version: @quiz.version_number)
+      @question.question_data = @data.merge(:regrade_option => 'full_credit',
+                                            :regrade_user   => @user)
+      @question.save
+
+      question_regrade = QuizQuestionRegrade.first
+      question_regrade.should be
+      question_regrade.regrade_option.should == 'full_credit'
+    end
   end
 
   context "migrate_question_hash" do
@@ -108,6 +141,21 @@ describe QuizQuestion do
         result = QuizQuestion.migrate_question_hash @quiz_question.question_data, :context => @course, :user => @user
         confirm_all_migrations(result)
       }.to change(Attachment, :count).by(@attachment_count)
+    end
+  end
+
+  describe "#destroy" do
+
+    it "does not remove the record from the database, but changes workflow_state" do
+      course_with_teacher
+      course_quiz
+
+      question = @quiz.quiz_questions.create!
+      question.destroy
+      question = QuizQuestion.find(question.id)
+
+      question.should_not be_nil
+      question.should be_deleted
     end
   end
 end

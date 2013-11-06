@@ -1,17 +1,18 @@
 define [
   'Backbone'
   'underscore'
+  'i18n!content_migrations'
   'jst/content_migrations/SelectContent'
-  'jst/courses/roster/createUsersWrapper'
+  'jst/EmptyDialogFormWrapper'
   'jst/content_migrations/ContentCheckboxCollection'
   'compiled/views/DialogFormView'
   'compiled/views/CollectionView'
   'compiled/collections/content_migrations/ContentCheckboxCollection'
   'compiled/views/content_migrations/ContentCheckboxView'
-], (Backbone, _,  template, wrapperTemplate, checkboxCollectionTemplate, DialogFormView, CollectionView , CheckboxCollection, CheckboxView) -> 
+], (Backbone, _, I18n, template, wrapperTemplate, checkboxCollectionTemplate, DialogFormView, CollectionView , CheckboxCollection, CheckboxView) ->
   class SelectContentView extends DialogFormView
 
-    els: 
+    els:
       '.form-dialog-content' : '$formDialogContent'
 
     template: template
@@ -25,14 +26,19 @@ define [
     # 
     # @api private
 
-    submit: (event) => 
-      attr = _.pick @model.attributes, "id", "workflow_state", "user_id", "copy"
+    submit: (event) =>
+      attr = _.pick @model.attributes, "id", "workflow_state", "user_id"
       @model.clear(silent: true)
       @model.set attr
 
-      dfd = super
-      dfd?.done => 
-        @model.trigger 'continue'
+      if _.isEmpty(@getFormData())
+        event.preventDefault()
+        alert(I18n.t('no_content_selected', 'You have not selected any content to import.'))
+        return false
+      else
+        dfd = super
+        dfd?.done =>
+          @model.trigger 'continue'
 
     # Fetch top level checkboxes that have lower level checkboxes.
     # If the dialog has been opened before it will cache the old 
@@ -40,7 +46,7 @@ define [
     # check boxes again. 
     # @api private
 
-    firstOpen: => 
+    firstOpen: =>
       super
 
       @checkboxCollection ||= new CheckboxCollection null,
