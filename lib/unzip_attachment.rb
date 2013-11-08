@@ -50,6 +50,7 @@ class UnzipAttachment
     @logger ||= opts[:logger]
     @rename_files = !!opts[:rename_files]
     @migration_id_map = opts[:migration_id_map] || {}
+    @queue_scribd = !!opts[:queue_scribd]
 
     raise ArgumentError, "Must provide a context." unless self.context && self.context.is_a_context?
     raise ArgumentError, "Must provide a filename." unless self.filename
@@ -110,8 +111,7 @@ class UnzipAttachment
         # Hyphenate the path.  So, /some/file/path becomes some-file-path
         # Since Tempfile guarantees that the names are unique, we don't
         # have to worry about what this name actually is.
-        # NOTE: strip leading ~ as workaround for https://bugs.ruby-lang.org/issues/7547
-        Tempfile.open(filename.sub(/^~/, '')) do |f|
+        Tempfile.open(filename) do |f|
           begin
             entry.extract(f.path) { true }
             # This is where the attachment actually happens.  See file_in_context.rb
@@ -152,6 +152,7 @@ class UnzipAttachment
   end
 
   def queue_scribd_submissions(attachments)
+    return unless @queue_scribd
     scribdable_ids = attachments.select(&:scribdable?).map(&:id)
     if scribdable_ids.any?
       Attachment.send_later_enqueue_args(:submit_to_scribd, { :strand => 'scribd', :max_attempts => 1 }, scribdable_ids)

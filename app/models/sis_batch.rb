@@ -26,9 +26,13 @@ class SisBatch < ActiveRecord::Base
   belongs_to :attachment
   belongs_to :batch_mode_term, :class_name => 'EnrollmentTerm'
 
+  before_save :limit_size_of_messages
+
+  validates_presence_of :account_id, :workflow_state
+
   attr_accessor :zip_path
   attr_accessible :batch_mode, :batch_mode_term
-  
+
   def self.max_attempts
     5
   end
@@ -198,17 +202,26 @@ class SisBatch < ActiveRecord::Base
 
     if data[:supplied_batches].include?(:enrollment)
       # delete enrollments for courses that weren't in this batch, in the selected term
-      scope = Enrollment.active.includes(:course).select("enrollments.*").where("courses.root_account_id=? AND enrollments.sis_batch_id IS NOT NULL AND enrollments.sis_batch_id<>?", self.account, self)
-      scope = scope.where(:courses =>  { :enrollment_term_id => self.batch_mode_term })
+
+      if Rails.version < '3.0'
+        scope = Enrollment.active.scoped(joins: :course, select: "enrollments.*")
+      else
+        scope = Enrollment.active.joins(:course).select("enrollments.*")
+      end
+
+      params = {root_account: self.account, batch: self, term: self.batch_mode_term}
+      scope = scope.where("courses.root_account_id=:root_account
+                           AND enrollments.sis_batch_id IS NOT NULL
+                           AND enrollments.sis_batch_id<>:batch
+                           AND courses.enrollment_term_id=:term", params)
+
       scope.find_each do |enrollment|
-        Enrollment.send(:with_exclusive_scope) do
-          enrollment.destroy
-        end
+        enrollment.destroy
       end
     end
   end
 
-  def api_json
+  def as_json(options={})
     data = {
       "created_at" => self.created_at,
       "ended_at" => self.ended_at,
@@ -220,7 +233,7 @@ class SisBatch < ActiveRecord::Base
     }
     data["processing_errors"] = self.processing_errors if self.processing_errors.present?
     data["processing_warnings"] = self.processing_warnings if self.processing_warnings.present?
-    return data.to_json
+    data
   end
 
   private
@@ -228,5 +241,24 @@ class SisBatch < ActiveRecord::Base
   def messages?
     (self.processing_errors && self.processing_errors.length > 0) || (self.processing_warnings && self.processing_warnings.length > 0)
   end
-  
+
+  def self.max_messages
+    Setting.get_cached('sis_batch_max_messages', '1000').to_i
+  end
+
+  def limit_size_of_messages
+    max_messages = SisBatch.max_messages
+    %w[processing_warnings processing_errors].each do |field|
+      if self.send("#{field}_changed?") && (self.send(field).try(:size) || 0) > max_messages
+        limit_message = case field
+        when "processing_warnings"
+          t 'errors.too_many_warnings', "There were %{count} more warnings", count: (processing_warnings.size - max_messages + 1)
+        when "processing_errors"
+          t 'errors.too_many_errors', "There were %{count} more errors", count: (processing_errors.size - max_messages + 1)
+        end
+        self.send("#{field}=", self.send(field)[0, max_messages-1] + [['', limit_message]])
+      end
+    end
+    true
+  end
 end

@@ -25,16 +25,46 @@ class AssignmentsController < ApplicationController
   include Api::V1::Outcome
 
   include GoogleDocs
+  include KalturaHelper
   before_filter :require_context
   add_crumb(proc { t '#crumbs.assignments', "Assignments" }, :except => [:destroy, :syllabus, :index]) { |c| c.send :course_assignments_path, c.instance_variable_get("@context") }
   before_filter { |c| c.active_tab = "assignments" }
-  
+  before_filter :normalize_title_param, :only => [:new, :edit]
+
   def index
+    return old_index if @context == @current_user || !@context.draft_state_enabled?
+
+    if authorized_action(@context, @current_user, :read)
+      return unless tab_enabled?(@context.class::TAB_ASSIGNMENTS)
+
+      permissions = @context.grants_rights?(@current_user, :manage_assignments, :manage_grades)
+      permissions[:manage] = permissions[:manage_assignments] || permissions[:manage_grades]
+      js_env({
+        :URLS => {
+          :new_assignment_url => new_polymorphic_url([@context, :assignment]),
+          :course_url => api_v1_course_url(@context),
+          :sort_url => reorder_course_assignment_groups_url,
+          :assignment_sort_base_url => course_assignment_groups_url
+        },
+        :PERMISSIONS => permissions,
+        :MODULES => get_module_names
+      })
+
+      respond_to do |format|
+        format.html do
+          @padless = true
+          render :action => :new_index
+        end
+      end
+    end
+  end
+
+  def old_index
     if @context == @current_user || authorized_action(@context, @current_user, :read)
-      get_all_pertinent_contexts
+      get_all_pertinent_contexts  # NOTE: this crap is crazy.  can we get rid of it?
       get_sorted_assignments
       add_crumb(t('#crumbs.assignments', "Assignments"), (@just_viewing_one_course ? named_context_url(@context, :context_assignments_url) : "/assignments" ))
-      @context= (@just_viewing_one_course ? @context : @current_user)
+      @context = (@just_viewing_one_course ? @context : @current_user)
       return if @just_viewing_one_course && !tab_enabled?(@context.class::TAB_ASSIGNMENTS)
 
       respond_to do |format|
@@ -45,15 +75,17 @@ class AssignmentsController < ApplicationController
             format.html { redirect_to root_url }
           end
         elsif @just_viewing_one_course && @context.assignments.new.grants_right?(@current_user, session, :update)
-          format.html
+          format.html {
+            render :action => :index
+          }
         else
           @current_user_submissions ||= @current_user && @current_user.submissions.
               select([:id, :assignment_id, :score, :workflow_state]).
               where(:assignment_id => @upcoming_assignments)
-          format.html { render :action => "student_index" }
+          format.html { render :action => :student_index }
         end
         # TODO: eager load the rubric associations
-        format.json { render :json => @assignments.to_json(:include => [ :rubric_association, :rubric ]) }
+        format.json { render :json => @assignments.map{ |a| a.as_json(include: [:rubric_association, :rubric]) } }
       end
     end
   end
@@ -70,12 +102,16 @@ class AssignmentsController < ApplicationController
     if authorized_action(@assignment, @current_user, :read)
       @assignment = AssignmentOverrideApplicator.assignment_overridden_for(@assignment, @current_user)
       @assignment.ensure_assignment_group
-      js_env :ROOT_OUTCOME_GROUP => outcome_group_json(@context.root_outcome_group, @current_user, session)
+      js_env({
+        :ROOT_OUTCOME_GROUP => outcome_group_json(@context.root_outcome_group, @current_user, session),
+        :DRAFT_STATE => @context.draft_state_enabled?,
+        :COURSE_ID => @context.id,
+        :ASSIGNMENT_ID => @assignment.id
+      })
 
       @locked = @assignment.locked_for?(@current_user, :check_policies => true, :deep_check_if_needed => true)
       @locked.delete(:lock_at) if @locked.is_a?(Hash) && @locked.has_key?(:unlock_at) # removed to allow proper translation on show page
       @unlocked = !@locked || @assignment.grants_rights?(@current_user, session, :update)[:update]
-      @assignment_module = ContextModuleItem.find_tag_with_preferred([@assignment], params[:module_item_id])
       @assignment.context_module_action(@current_user, :read) if @unlocked && !@assignment.new_record?
 
       if @assignment.grants_right?(@current_user, session, :grade)
@@ -89,7 +125,6 @@ class AssignmentsController < ApplicationController
         @current_user_rubric_assessment = @assignment.rubric_association.rubric_assessments.find_by_user_id(@current_user.id) if @current_user && @assignment.rubric_association
         @current_user_submission.send_later(:context_module_action) if @current_user_submission
       end
-
 
       begin
         @google_docs_token = google_docs_retrieve_access_token
@@ -110,7 +145,7 @@ class AssignmentsController < ApplicationController
         else
           format.html { render :action => 'show' }
         end
-        format.json { render :json => @assignment.to_json(:permissions => {:user => @current_user, :session => session}) }
+        format.json { render :json => @assignment.as_json(:permissions => {:user => @current_user, :session => session}) }
       end
     end
   end
@@ -133,7 +168,7 @@ class AssignmentsController < ApplicationController
         {:base => t('errors.google_docs_masquerade_rejected', "Unable to connect to Google Docs as a masqueraded user.")}
       }
       respond_to do |format|
-        format.json { render :json => error_object.to_json, :status => :bad_request }
+        format.json { render :json => error_object, :status => :bad_request }
       end
     end
   end
@@ -166,7 +201,7 @@ class AssignmentsController < ApplicationController
       @request = @assignment.assign_peer_review(@student, @reviewee)
       respond_to do |format|
         format.html { redirect_to named_context_url(@context, :context_assignment_peer_reviews_url, @assignment.id) }
-        format.json { render :json => @request.to_json(:methods => :asset_user_name) }
+        format.json { render :json => @request.as_json(:methods => :asset_user_name) }
       end
     end
   end
@@ -178,10 +213,10 @@ class AssignmentsController < ApplicationController
       respond_to do |format|
         if @request.asset.assignment == @assignment && @request.send_reminder!
           format.html { redirect_to named_context_url(@context, :context_assignment_peer_reviews_url) }
-          format.json { render :json => @request.to_json }
+          format.json { render :json => @request }
         else
           format.html { redirect_to named_context_url(@context, :context_assignment_peer_reviews_url) }
-          format.json { render :json => {:errors => {:base => t('errors.reminder_failed', "Reminder failed")}}.to_json, :status => :bad_request }
+          format.json { render :json => {:errors => {:base => t('errors.reminder_failed', "Reminder failed")}}, :status => :bad_request }
         end
       end
     end
@@ -194,10 +229,10 @@ class AssignmentsController < ApplicationController
       respond_to do |format|
         if @request.asset.assignment == @assignment && @request.destroy
           format.html { redirect_to named_context_url(@context, :context_assignment_peer_reviews_url) }
-          format.json { render :json => @request.to_json }
+          format.json { render :json => @request }
         else
           format.html { redirect_to named_context_url(@context, :context_assignment_peer_reviews_url) }
-          format.json { render :json => {:errors => {:base => t('errors.delete_reminder_failed', "Delete failed")}}.to_json, :status => :bad_request }
+          format.json { render :json => {:errors => {:base => t('errors.delete_reminder_failed', "Delete failed")}}, :status => :bad_request }
         end
       end
     end
@@ -220,7 +255,7 @@ class AssignmentsController < ApplicationController
     active_tab = "Syllabus"
     if authorized_action(@context, @current_user, [:read, :read_syllabus])
       return unless tab_enabled?(@context.class::TAB_SYLLABUS)
-      @groups = @context.assignment_groups.active.order(:position, :name).all
+      @groups = @context.assignment_groups.active.order(:position, AssignmentGroup.best_unicode_collation_key('name')).all
       @assignment_groups = @groups
       @events = @context.events_for(@current_user)
       @undated_events = @events.select {|e| e.start_at == nil}
@@ -233,6 +268,10 @@ class AssignmentsController < ApplicationController
         # (ability for the user to read the syllabus was checked above as :read_syllabus)
         @syllabus_body = api_user_content(@context.syllabus_body, @context, nil)
       end
+
+      hash = { :CONTEXT_ACTION_SOURCE => :syllabus }
+      append_sis_data(hash)
+      js_env(hash)
 
       log_asset_access("syllabus:#{@context.asset_string}", "syllabus", 'other')
       respond_to do |format|
@@ -248,9 +287,9 @@ class AssignmentsController < ApplicationController
 
     respond_to do |format|
       if @assignment && @assignment.send(method)
-        format.json { render :json => @assignment.to_json }
+        format.json { render :json => @assignment }
       else
-        format.json { render :json => @assignment.to_json, :status => :bad_request }
+        format.json { render :json => @assignment, :status => :bad_request }
       end
     end
   end
@@ -270,10 +309,10 @@ class AssignmentsController < ApplicationController
         if @assignment.save
           flash[:notice] = t 'notices.created', "Assignment was successfully created."
           format.html { redirect_to named_context_url(@context, :context_assignment_url, @assignment.id) }
-          format.json { render :json => @assignment.to_json(:permissions => {:user => @current_user, :session => session}), :status => :created}
+          format.json { render :json => @assignment.as_json(:permissions => {:user => @current_user, :session => session}), :status => :created}
         else
           format.html { render :action => "new" }
-          format.json { render :json => @assignment.errors.to_json, :status => :bad_request }
+          format.json { render :json => @assignment.errors, :status => :bad_request }
         end
       end
     end
@@ -281,6 +320,7 @@ class AssignmentsController < ApplicationController
   
   def new
     @assignment ||= @context.assignments.new
+    @assignment.workflow_state = 'unpublished' if @context.draft_state_enabled?
     add_crumb t :create_new_crumb, "Create new"
 
     if params[:submission_types] == 'online_quiz'
@@ -291,7 +331,7 @@ class AssignmentsController < ApplicationController
       edit
     end
   end
-  
+
   def edit
     @assignment ||= @context.assignments.active.find(params[:id])
     if authorized_action(@assignment, @current_user, @assignment.new_record? ? :create : :update)
@@ -321,13 +361,17 @@ class AssignmentsController < ApplicationController
           {:id => section.id, :name => section.name }
         }),
         :ASSIGNMENT_OVERRIDES =>
-          (assignment_overrides_json(@assignment.overrides_visible_to(@current_user)))
+          (assignment_overrides_json(@assignment.overrides_visible_to(@current_user))),
+        :ASSIGNMENT_INDEX_URL => polymorphic_url([@context, :assignments]),
       }
-      hash[:ASSIGNMENT] = assignment_json(@assignment, @current_user, session, true, nil, false)
+      hash[:ASSIGNMENT] = assignment_json(@assignment, @current_user, session, override_dates: false)
       hash[:URL_ROOT] = polymorphic_url([:api_v1, @context, :assignments])
       hash[:CANCEL_TO] = @assignment.new_record? ? polymorphic_url([@context, :assignments]) : polymorphic_url([@context, @assignment])
       hash[:CONTEXT_ID] = @context.id
+      hash[:CONTEXT_ACTION_SOURCE] = :assignments
+      append_sis_data(hash)
       js_env(hash)
+      @padless = true
       render :action => "edit"
     end
   end
@@ -341,7 +385,7 @@ class AssignmentsController < ApplicationController
       if params[:assignment][:default_grade]
         params[:assignment][:overwrite_existing_grades] = (params[:assignment][:overwrite_existing_grades] == "1")
         @assignment.set_default_grade(params[:assignment])
-        render :json => @assignment.submissions.to_json(:include => :quiz_submission)
+        render :json => @assignment.submissions.map{ |s| s.as_json(:include => :quiz_submission) }
         return
       end
       params[:assignment].delete :default_grade
@@ -369,10 +413,10 @@ class AssignmentsController < ApplicationController
           @assignment.reload
           flash[:notice] = t 'notices.updated', "Assignment was successfully updated."
           format.html { redirect_to named_context_url(@context, :context_assignment_url, @assignment) }
-          format.json { render :json => @assignment.to_json(:permissions => {:user => @current_user, :session => session}, :include => [:quiz, :discussion_topic]), :status => :ok }
+          format.json { render :json => @assignment.as_json(:permissions => {:user => @current_user, :session => session}, :include => [:quiz, :discussion_topic]), :status => :ok }
         else
           format.html { render :action => "edit" }
-          format.json { render :json => @assignment.errors.to_json, :status => :bad_request }
+          format.json { render :json => @assignment.errors, :status => :bad_request }
         end
       end
     end
@@ -408,8 +452,31 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def normalize_title_param
+    if title = params.delete(:name)
+      params[:title] = title
+    end
+  end
+
   def index_edit_params
     params.slice(*[:title, :due_at, :points_possible, :assignment_group_id])
+  end
+
+  def get_module_names
+    return {} if @context.context_modules.count == 0
+    @context.assignments.active.each_with_object({}) do |a, hash|
+      tags = nil
+      if a.submission_types == "online_quiz"
+        tags = a.quiz.try(:context_module_tags)
+      elsif a.submission_types == "discussion_topic"
+        tags = a.discussion_topic.try(:context_module_tags)
+      else
+        tags = a.context_module_tags
+      end
+
+      modules = ContextModule.where(:id => tags.map(&:context_module_id)).pluck(:name)
+      hash[a.id] = modules
+    end
   end
 
 end

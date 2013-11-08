@@ -27,7 +27,7 @@ class DelayedMessage < ActiveRecord::Base
     :communication_channel_id, :context, :workflow_state, :root_account_id
 
   validates_length_of :summary, :maximum => maximum_text_length, :allow_nil => true, :allow_blank => true
-  validates_presence_of :communication_channel_id
+  validates_presence_of :communication_channel_id, :workflow_state
 
   before_save :set_send_at
   
@@ -150,8 +150,7 @@ class DelayedMessage < ActiveRecord::Base
         # Eastern. For other notifications, try and user the user's time zone,
         # defaulting to mountain. (Should be impossible to not find mountain, but
         # default to system time if necessary.)
-        zone_name = self.communication_channel.user.time_zone || 'Mountain Time (US & Canada)'
-        time_zone = ActiveSupport::TimeZone.us_zones.find{ |zone| zone.name == zone_name } || Time.zone
+        time_zone = self.communication_channel.user.time_zone || ActiveSupport::TimeZone['America/Denver'] || Time.zone
         target = time_zone.now.change(:hour => 18)
         target += 1.day if target < time_zone.now
       end

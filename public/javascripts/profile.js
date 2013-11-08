@@ -203,7 +203,13 @@ define([
   });
   $("#access_token_form").formSubmit({
     object_name: 'access_token',
-    required: ['purpose'],
+    property_validations: {
+      'purpose': function(value){
+        if (!value || value == ''){
+          return I18n.t('purpose_required', "Purpose is required");
+        }
+      }
+    },
     beforeSubmit: function() {
       $(this).find("button").attr('disabled', true).filter(".submit_button").text(I18n.t('buttons.generating_token', "Generating Token..."));
     },
@@ -293,7 +299,10 @@ define([
     $("#access_token_form").find("button").attr('disabled', false).filter(".submit_button").text(I18n.t('buttons.generate_token', "Generate Token"));
     $("#add_access_token_dialog").find(":input").val("").end()
     .dialog({
-      width: 500
+      width: 500,
+      open: function() {
+        $(this).closest('.ui-dialog').focus()
+      }
     }).fixDialogButtons();
   });
   $(document).fragmentChange(function(event, hash) {

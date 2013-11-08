@@ -56,8 +56,6 @@ module Canvas
     end
     
     def settings
-      # TODO: once we have distributed memcache we can
-      # cache this properly across all web servers
       saved_settings
     end
 
@@ -152,11 +150,11 @@ module Canvas
     end
     
     def self.all
-      @registered_plugins.values.sort{|p,p2| p.name <=> p2.name}
+      @registered_plugins.values.sort_by(&:name)
     end
 
     def self.all_for_tag(tag)
-      @registered_plugins.values.select{|p|p.tag == tag.to_s}.sort{|p,p2| p.name <=> p2.name}
+      @registered_plugins.values.select{|p|p.tag == tag.to_s}.sort_by(&:name)
     end
 
     def self.find(id)

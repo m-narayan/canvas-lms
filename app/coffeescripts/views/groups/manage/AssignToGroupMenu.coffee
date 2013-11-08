@@ -1,42 +1,31 @@
 define [
-  'Backbone'
+  'compiled/views/groups/manage/PopoverMenuView'
   'jst/groups/manage/assignToGroupMenu'
-], ({View}, template) ->
+  'underscore'
+  'compiled/jquery/outerclick'
+], (PopoverMenuView, template, _) ->
 
-  class AssignToGroupMenu extends View
+  class AssignToGroupMenu extends PopoverMenuView
 
-    initialize: ->
-      super
-      @render()
-      $body = $(document.body)
-      $body.on 'click', @hide
-      @$el.appendTo $body
-      @$el.hide()
-      @collection.on 'change add remove reset', @render
-
-    events:
+    events: _.extend {},
+      PopoverMenuView::events,
       'click .set-group': 'setGroup'
+
+    attach: ->
+      @collection.on 'change add remove reset', @render
+      @render()
 
     tagName: 'div'
 
-    className: 'assign-to-group-menu popover content-top horizontal'
+    className: 'assign-to-group-menu ui-tooltip popover content-top horizontal'
 
     template: template
 
-    showBy: ($target) ->
-      @render()
-      @$el.show()
-      @$el.position
-        my: 'left+6 top-47'
-        at: 'right center'
-        of: $target
-
-    hide: =>
-      @$el.hide()
-
     setGroup: (e) ->
       e.preventDefault()
-      @model.set 'groupId', $(e.target).data('group-id')
+      e.stopPropagation()
+      @model.save 'groupId', $(e.currentTarget).data('group-id')
       @hide()
 
-    toJSON: -> groups: @collection.toJSON()
+    toJSON: ->
+      groups: @collection.toJSON()

@@ -83,8 +83,8 @@ describe AssignmentOverrideApplicator do
 
     context "group overrides" do
       before :each do
-        @category = @course.group_categories.create!
-        @group = @category.groups.create!
+        @category = group_category
+        @group = @category.groups.create!(context: @course)
 
         @assignment.group_category = @category
         @assignment.save!
@@ -102,7 +102,7 @@ describe AssignmentOverrideApplicator do
       end
 
       it "should not include group override for groups other than the user's" do
-        @override.set = @category.groups.create!
+        @override.set = @category.groups.create!(context: @course)
         @override.save!
 
         overrides = AssignmentOverrideApplicator.overrides_for_assignment_and_user(@assignment, @student)
@@ -186,7 +186,7 @@ describe AssignmentOverrideApplicator do
         @fake_student = @course.student_view_student
         overrides = AssignmentOverrideApplicator.overrides_for_assignment_and_user(@assignment, @fake_student)
         overrides.should == [override1, override2]
-        AssignmentOverrideApplicator.collapsed_overrides(@assignment, overrides)[:due_at].should == due_at
+        AssignmentOverrideApplicator.collapsed_overrides(@assignment, overrides)[:due_at].to_i.should == due_at.to_i
       end
 
       it "should work for students even if :read_roster is disabled" do
@@ -198,8 +198,8 @@ describe AssignmentOverrideApplicator do
     end
 
     it "should order adhoc override before group override" do
-      @category = @course.group_categories.create!
-      @group = @category.groups.create!
+      @category = group_category
+      @group = @category.groups.create!(:context => @course)
       @membership = @group.add_user(@student)
       @assignment.group_category = @category
       @assignment.save!
@@ -220,8 +220,8 @@ describe AssignmentOverrideApplicator do
     end
 
     it "should order group override before section overrides" do
-      @category = @course.group_categories.create!
-      @group = @category.groups.create!
+      @category = group_category
+      @group = @category.groups.create!(:context => @course)
       @membership = @group.add_user(@student)
       @assignment.group_category = @category
       @assignment.save!
@@ -411,6 +411,12 @@ describe AssignmentOverrideApplicator do
 
     it "should not cast dates to zoned datetimes" do
       @overridden.all_day_date.class.should == Date
+    end
+
+    it "should copy pre-loaded associations" do
+      @overridden.loaded_context?.should == @assignment.loaded_context?
+      @overridden.loaded_rubric?.should == @assignment.loaded_rubric?
+      @overridden.learning_outcome_alignments.loaded? == @assignment.learning_outcome_alignments.loaded?
     end
   end
 
@@ -824,7 +830,28 @@ describe AssignmentOverrideApplicator do
       @unoverridden_assignment.overridden_for_user.should == nil
     end
   end
-  
+
+  describe "Overridable#has_no_overrides" do
+    before do
+      student_in_course
+      @assignment = assignment_model(:course => @course,
+                                     :due_at => 1.week.from_now)
+      o = assignment_override_model(:assignment => @assignment,
+                                    :due_at => 1.week.ago)
+      o.assignment_override_students.create! user: @student
+    end
+
+    it "makes assignment_overridden_for lie!" do
+      truly_overridden_assignment = AssignmentOverrideApplicator.assignment_overridden_for(@assignment, @student)
+
+      @assignment.has_no_overrides = true
+      fake_overridden_assignment = AssignmentOverrideApplicator.assignment_overridden_for(@assignment, @student)
+      fake_overridden_assignment.overridden.should be_true
+      fake_overridden_assignment.due_at.should_not == truly_overridden_assignment.due_at
+      fake_overridden_assignment.due_at.should == @assignment.due_at
+    end
+  end
+
   it "should use the full stack" do
     student_in_course
     original_due_at = 3.days.from_now

@@ -57,7 +57,7 @@ describe CollaborationsController do
 
     it "should work with groups" do
       course_with_student_logged_in(:active_all => true)
-      gc = @course.group_categories.create!
+      gc = group_category
       group = gc.groups.create!(:context => @course)
       group.add_user(@student, 'accepted')
 
@@ -68,7 +68,7 @@ describe CollaborationsController do
 
   describe "GET 'show'" do
     let(:collab_course) { course_with_teacher_logged_in(:active_all => true); @course }
-    let(:collaboration) { collab_course.collaborations.create!.tap{ |c| c.update_attribute :url, 'http://www.example.com' } }
+    let(:collaboration) { collab_course.collaborations.create!(title: "my collab", user: @teacher).tap{ |c| c.update_attribute :url, 'http://www.example.com' } }
 
     before do
       Setting.set('enable_page_views', 'db')

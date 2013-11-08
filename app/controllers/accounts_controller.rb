@@ -62,7 +62,7 @@ class AccountsController < ApplicationController
   #
   # List accounts that are sub-accounts of the given account.
   #
-  # @argument recursive [optional] If true, the entire account tree underneath
+  # @argument recursive [Optional, Boolean] If true, the entire account tree underneath
   #   this account will be returned (though still paginated). If false, only
   #   direct sub-accounts of this account will be returned. Defaults to false.
   #
@@ -100,14 +100,38 @@ class AccountsController < ApplicationController
   # @API List active courses in an account
   # Retrieve the list of courses in this account.
   #
-  # @argument with_enrollments [optional] If true, include only courses with at least one enrollment.  If false, include only courses with no enrollments.  If not present, do not filter on course enrollment status.
-  # @argument published [optional] If true, include only published courses.  If false, exclude published courses.  If not present, do not filter on published status.
-  # @argument completed [optional] If true, include only completed courses (these may be in state 'completed', or their enrollment term may have ended).  If false, exclude completed courses.  If not present, do not filter on completed status.
-  # @argument by_teachers[] [optional] List of User IDs of teachers; if supplied, include only courses taught by one of the referenced users.
-  # @argument by_subaccounts[] [optional] List of Account IDs; if supplied, include only courses associated with one of the referenced subaccounts.
-  # @argument hide_enrollmentless_courses [optional] If present, only return courses that have at least one enrollment.  Equivalent to 'with_enrollments=true'; retained for compatibility.
-  # @argument state[] [optional] If set, only return courses that are in the given state(s). Valid states are "created," "claimed," "available," "completed," and "deleted." By default, all states but "deleted" are returned.
-  # @argument enrollment_term_id [optional] If set, only includes courses from the specified term.
+  # @argument with_enrollments [Optional, Boolean]
+  #   If true, include only courses with at least one enrollment.  If false,
+  #   include only courses with no enrollments.  If not present, do not filter
+  #   on course enrollment status.
+  #
+  # @argument published [Optional, Boolean]
+  #   If true, include only published courses.  If false, exclude published
+  #   courses.  If not present, do not filter on published status.
+  #
+  # @argument completed [Optional, Boolean]
+  #   If true, include only completed courses (these may be in state
+  #   'completed', or their enrollment term may have ended).  If false, exclude
+  #   completed courses.  If not present, do not filter on completed status.
+  #
+  # @argument by_teachers[] [Optional, Integer]
+  #   List of User IDs of teachers; if supplied, include only courses taught by
+  #   one of the referenced users.
+  #
+  # @argument by_subaccounts[] [Optional, Integer]
+  #   List of Account IDs; if supplied, include only courses associated with one
+  #   of the referenced subaccounts.
+  #
+  # @argument hide_enrollmentless_courses [Optional, Boolean]
+  #   If present, only return courses that have at least one enrollment.
+  #   Equivalent to 'with_enrollments=true'; retained for compatibility.
+  #
+  # @argument state[] [Optional, "created"|"claimed"|"available"|"completed"|"deleted"]
+  #   If set, only return courses that are in the given state(s). By default,
+  #   all states but "deleted" are returned.
+  #
+  # @argument enrollment_term_id [Optional, Integer]
+  #   If set, only includes courses from the specified term.
   #
   # @returns [Course]
   def courses_api
@@ -214,11 +238,22 @@ class AccountsController < ApplicationController
   # @API Update an account
   # Update an existing account.
   #
-  # @argument account[name] [optional] Updates the account name
-  # @argument account[default_time_zone] [Optional] The default time zone of the account. Allowed time zones are listed in {http://rubydoc.info/docs/rails/ActiveSupport/TimeZone The Ruby on Rails documentation}.
-  # @argument account[default_storage_quota_mb] [Optional] The default course storage quota to be used, if not otherwise specified.
-  # @argument account[default_user_storage_quota_mb] [Optional] The default user storage quota to be used, if not otherwise specified.
-  # @argument account[default_group_storage_quota_mb] [Optional] The default group storage quota to be used, if not otherwise specified.
+  # @argument account[name] [Optional, String]
+  #   Updates the account name
+  #
+  # @argument account[default_time_zone] [Optional, String]
+  #   The default time zone of the account. Allowed time zones are
+  #   {http://www.iana.org/time-zones IANA time zones} or friendlier
+  #   {http://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html Ruby on Rails time zones}.
+  #
+  # @argument account[default_storage_quota_mb] [Optional, Integer]
+  #   The default course storage quota to be used, if not otherwise specified.
+  #
+  # @argument account[default_user_storage_quota_mb] [Optional, Integer]
+  #   The default user storage quota to be used, if not otherwise specified.
+  #
+  # @argument account[default_group_storage_quota_mb] [Optional, Integer]
+  #   The default group storage quota to be used, if not otherwise specified.
   #
   # @example_request
   #   curl https://<canvas>/api/v1/accounts/<account_id> \ 
@@ -232,7 +267,7 @@ class AccountsController < ApplicationController
   #   {
   #     "id": "1",
   #     "name": "New account name",
-  #     "default_time_zone": "Mountain Time (US & Canada)",
+  #     "default_time_zone": "America/Denver",
   #     "parent_account_id": null,
   #     "root_account_id": null,
   #     "default_storage_quota_mb": 500,
@@ -255,6 +290,7 @@ class AccountsController < ApplicationController
           end
         end
 
+        params[:account][:turnitin_host] = validated_turnitin_host(params[:account][:turnitin_host])
         enable_user_notes = params[:account].delete :enable_user_notes
         allow_sis_import = params[:account].delete :allow_sis_import
         params[:account].delete :default_user_storage_quota_mb unless @account.root_account? && !@account.site_admin?
@@ -315,11 +351,11 @@ class AccountsController < ApplicationController
 
         if @account.update_attributes(params[:account])
           format.html { redirect_to account_settings_url(@account) }
-          format.json { render :json => @account.to_json }
+          format.json { render :json => @account }
         else
           flash[:error] = t(:update_failed_notice, "Account settings update failed")
           format.html { redirect_to account_settings_url(@account) }
-          format.json { render :json => @account.errors.to_json, :status => :bad_request }
+          format.json { render :json => @account.errors, :status => :bad_request }
         end
       end
     end
@@ -342,7 +378,7 @@ class AccountsController < ApplicationController
       @account.available_account_roles.each_with_index do |type, idx|
         order_hash[type] = idx
       end
-      @account_users = @account_users.select(&:user).sort_by{|au| [order_hash[au.membership_type] || 999, au.user.sortable_name.downcase] }
+      @account_users = @account_users.select(&:user).sort_by{|au| [order_hash[au.membership_type] || SortLast, Canvas::ICU.collation_key(au.user.sortable_name)] }
       @announcements = @account.announcements
       @alerts = @account.alerts
       @role_types = RoleOverride.account_membership_types(@account)
@@ -362,12 +398,15 @@ class AccountsController < ApplicationController
     end
 
     js_env :ACCOUNT_ID => @account.id
-    js_env :PERMISSIONS => {:restore_course => @account.grants_right?(@current_user, session, :undelete_courses),
-                            # Permission caching issue makes explicitly checking the account setting
-                            # an easier option.
-                            :view_messages => (@account.settings[:admins_can_view_notifications] &&
-                                @account.grants_right?(@current_user, session, :view_notifications)) ||
-                                Account.site_admin.grants_right?(@current_user, :read_messages)}
+    js_env :PERMISSIONS => {
+       restore_course: @account.grants_right?(@current_user, session, :undelete_courses),
+       # Permission caching issue makes explicitly checking the account setting
+       # an easier option.
+       view_messages: (@account.settings[:admins_can_view_notifications] &&
+                       @account.grants_right?(@current_user, session, :view_notifications)) ||
+                      Account.site_admin.grants_right?(@current_user, :read_messages),
+       auth_logging: @account.grants_rights?(@current_user, :view_statistics, :manage_user_logins).values.any?,
+      }
   end
 
   def confirm_delete_user
@@ -399,15 +438,24 @@ class AccountsController < ApplicationController
       end
       respond_to do |format|
         format.html { redirect_to account_users_url(@account) }
-        format.json { render :json => (@user || {}).to_json }
+        format.json { render :json => @user || {} }
       end
     end
   end
   
   def turnitin_confirmation 
     if authorized_action(@account, @current_user, :manage_account_settings)
-      turnitin = Turnitin::Client.new(params[:id], params[:shared_secret])
-      render :json => {:success => turnitin.testSettings}.to_json
+      host = validated_turnitin_host(params[:turnitin_host])
+      begin
+        turnitin = Turnitin::Client.new(
+          params[:turnitin_account_id],
+          params[:turnitin_shared_secret],
+          host
+        )
+        render :json => { :success => turnitin.testSettings }
+      rescue
+        render :json => { :success => false }
+      end
     end
   end
   
@@ -447,7 +495,7 @@ class AccountsController < ApplicationController
     if authorized_action(@account, @current_user, :view_statistics)
       @items = @account.report_snapshots.progressive.last.try(:report_value_over_time, params[:attribute])
       respond_to do |format|
-        format.json { render :json => @items.to_json }
+        format.json { render :json => @items }
         format.csv { 
           res = CSV.generate do |csv|
             csv << ['Timestamp', 'Value']
@@ -501,7 +549,7 @@ class AccountsController < ApplicationController
       @terms = @account.enrollment_terms.active
       respond_to do |format|
         format.html
-        format.json { render :json => @current_batch.try(:api_json) }
+        format.json { render :json => @current_batch }
       end
     end
   end
@@ -512,16 +560,20 @@ class AccountsController < ApplicationController
   
   def courses
     if authorized_action(@context, @current_user, :read)
-      load_course_right_side
-      @courses = []
-      @query = (params[:course] && params[:course][:name]) || params[:term]
-      if @context && @context.is_a?(Account) && @query
-        @courses = @context.courses_name_like(@query, :term => @term, :hide_enrollmentless_courses => @hide_enrollmentless_courses)
+      Shackles.activate(:slave) do
+        load_course_right_side
+        @courses = []
+        @query = (params[:course] && params[:course][:name]) || params[:term]
+        if @context && @context.is_a?(Account) && @query
+          @courses = @context.courses_name_like(@query, :term => @term, :hide_enrollmentless_courses => @hide_enrollmentless_courses)
+        end
       end
       respond_to do |format|
         format.html {
-          build_course_stats
-          redirect_to @courses.first if @courses.length == 1
+          return redirect_to @courses.first if @courses.length == 1
+          Shackles.activate(:slave) do
+            build_course_stats
+          end
         }
         format.json  { 
           cancel_cache_buster
@@ -586,21 +638,17 @@ class AccountsController < ApplicationController
       @account_user.destroy
       respond_to do |format|
         format.html { redirect_to account_settings_url(@context, :anchor => "tab-users") }
-        format.json { render :json => @account_user.to_json }
+        format.json { render :json => @account_user }
       end
     end
   end
 
-  def run_report
-    if authorized_action(@context, @current_user, :read_reports)
-      student_report = AccountReport.new(:user=>@current_user, :account=>@account, :report_type=>params[:report_type], :parameters=>params[:parameters])
-      student_report.workflow_state = :running
-      student_report.progress = 0
-      student_report.save
-      student_report.run_report
-      respond_to do |format|
-        format.json {render :json => {:student_report_id=>student_report.id, :success=>true}.to_json}
-      end
+  def validated_turnitin_host(input_host)
+    if input_host.present?
+      _, turnitin_uri = CustomValidations.validate_url(input_host)
+      turnitin_uri.host
+    else
+      nil
     end
   end
 

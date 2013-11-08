@@ -176,7 +176,6 @@ describe "people" do
       group_count = 4
       expect_new_page_load { driver.find_element(:link, 'View User Groups').click }
       dialog = open_student_group_dialog
-      dialog.find_element(:css, '#category_split_group_count').send_keys(group_count)
       submit_form('#add_category_form')
       wait_for_ajaximations
       group_count.times do
@@ -228,7 +227,7 @@ describe "people" do
 
       get "/courses/#{@course.id}/users/#{@obs.id}"
       f('.more_user_information_link').click
-      wait_for_animations
+      wait_for_ajaximations
       enrollments = ff(".enrollment")
       enrollments.length.should == 2
 

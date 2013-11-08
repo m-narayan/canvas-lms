@@ -15,7 +15,7 @@ module Api::V1
 
       day_hash.inject([]) do |memo, (date, hash)|
         memo << hash.merge(:date => date)
-      end.sort { |a, b| b[:date] <=> a[:date] }
+      end.sort_by { |a| a[:date] }.reverse
     end
 
     def json_for_date(date, course, api_context)
@@ -31,8 +31,9 @@ module Api::V1
       current_grader = submission.grader || default_grader
 
       model = version.model
-      model.cached_due_date = submission.cached_due_date
-      json = submission_attempt_json(model, assignment, api_context.user, api_context.session, nil, course).with_indifferent_access
+      json = model.without_versioned_attachments do
+        submission_attempt_json(model, assignment, api_context.user, api_context.session, nil, course).with_indifferent_access
+      end
       grader = (json[:grader_id] && json[:grader_id] > 0 && user_cache[json[:grader_id]]) || default_grader
 
       json = json.merge(
@@ -82,7 +83,7 @@ module Api::V1
       # populate previous_* and new_* keys and convert hash to array of objects
       versions_hash.inject([]) do |memo, (submission_id, versions)|
         prior = {}
-        filtered_versions = versions.sort{|a,b| a[:updated_at] <=> b[:updated_at] }.each_with_object([]) do |version, new_array|
+        filtered_versions = versions.sort_by{|v| v[:updated_at] }.each_with_object([]) do |version, new_array|
           if version[:score]
             if prior[:submission_id].nil? || prior[:score] != version[:score]
               if prior[:submission_id].nil?

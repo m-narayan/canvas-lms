@@ -34,13 +34,13 @@
 //these are just commented out because we dont use them yet, if you want them just uncomment.
 //@import "bootstrap/navbar";
 //@import "bootstrap/breadcrumbs";
-//@import "bootstrap/pagination";
-//@import "bootstrap/pager";
+@import "bootstrap/pagination";
+@import "bootstrap/pager";
 
 // Components: Popovers
 //@import "bootstrap/modals"; // use jqueryUI instead
 //@import "bootstrap/tooltip"; // we do our own
-@import "popovers";
+@import "bootstrap/popovers";
 
 // Components: Misc
 @import "bootstrap/thumbnails";

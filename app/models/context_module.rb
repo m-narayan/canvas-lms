@@ -18,12 +18,13 @@
 
 class ContextModule < ActiveRecord::Base
   include Workflow
+  include SearchTermHelper
   attr_accessible :context, :name, :unlock_at, :require_sequential_progress, :completion_requirements, :prerequisites
   belongs_to :context, :polymorphic => true
   belongs_to :cloned_item
   has_many :context_module_progressions, :dependent => :destroy
   has_many :content_tags, :dependent => :destroy, :order => 'content_tags.position, content_tags.title'
-  acts_as_list :scope => :context
+  acts_as_list :scope => 'context_modules.context_type = #{connection.quote(context_type)} AND context_modules.context_id = #{context_id} AND context_modules.workflow_state <> \'deleted\''
   
   serialize :prerequisites
   serialize :completion_requirements
@@ -32,6 +33,7 @@ class ContextModule < ActiveRecord::Base
   before_save :validate_prerequisites
   before_save :confirm_valid_requirements
   after_save :touch_context
+  validates_presence_of :workflow_state, :context_id, :context_type
 
   def self.module_positions(context)
     # Keep a cached hash of all modules for a given context and their
@@ -77,7 +79,7 @@ class ContextModule < ActiveRecord::Base
     self.workflow_state = 'deleted'
     self.deleted_at = Time.now
     ContentTag.where(:context_module_id => self).update_all(:workflow_state => 'deleted', :updated_at => Time.now.utc)
-    self.send_later_if_production(:update_downstreams, self.position)
+    self.send_later_if_production_enqueue_args(:update_downstreams, { max_attempts: 1, n_strand: "context_module_update_downstreams", priority: Delayed::LOW_PRIORITY }, self.position)
     save!
     true
   end
@@ -172,53 +174,35 @@ class ContextModule < ActiveRecord::Base
   def current?
     (self.start_at || self.end_at) && (!self.start_at || Time.now >= self.start_at) && (!self.end_at || Time.now <= self.end_at) rescue true
   end
-  
-  def self.context_prerequisites(context)
-    prereq = {}
-    to_visit = []
-    visited = []
-    context.context_modules.active.each do |m|
-      prereq[m.id] = []
-      (m.prerequisites || []).each do |p|
-        prereq[m.id] << p
-        to_visit << [m.id, p[:id]] if p[:type] == 'context_module'
+
+  def self.module_names(context)
+    Rails.cache.fetch(['module_names', context].cache_key) do
+      names = {}
+      context.context_modules.not_deleted.select([:id, :name]).each do |mod|
+        names[mod.id] = mod.name
       end
+      names
     end
-    while !to_visit.empty?
-      val = to_visit.shift
-      if(!visited.include?(val))
-        visited << val
-        (prereq[val[1]] || []).each do |p|
-          prereq[val[0]] << p
-          to_visit << [val[0], p[:context_module_id]] if p[:type] == 'context_module'
-        end
-      end
-    end
-    prereq.each{|idx, val| prereq[idx] = val.uniq.compact }
-    prereq
   end
-  
+
   def prerequisites=(val)
     if val.is_a?(Array)
       val = val.map {|item|
         if item[:type] == 'context_module'
           "module_#{item[:id]}"
-        else
-          "#{item[:type]}_#{item[:id]}"
         end
-      }.join(',') rescue nil
+      }.compact.join(',') rescue nil
     end
     if val.is_a?(String)
       res = []
-      modules = self.context.context_modules.not_deleted
-      module_prereqs = ContextModule.context_prerequisites(self.context)
-      invalid_prereqs = module_prereqs.to_a.map{|id, ps| id if (ps.any?{|p| p[:type] == 'context_module' && p[:id].to_i == self.id}) }.compact
+      module_names = ContextModule.module_names(self.context)
       pres = val.split(",")
+      pre_regex = /module_(\d+)/
       pres.each do |pre|
-        type, id = pre.reverse.split("_", 2).map{|s| s.reverse}.reverse
-        m = modules.to_a.find{|m| m.id == id.to_i}
-        if type == 'module' && !invalid_prereqs.include?(id.to_i) && m
-          res << {:id => id.to_i, :type => 'context_module', :name => (modules.to_a.find{|m| m.id == id.to_i}.name rescue "module")}
+        next unless match = pre_regex.match(pre)
+        id = match[1].to_i
+        if module_names.has_key?(id)
+          res << {:id => id, :type => 'context_module', :name => module_names[id]}
         end
       end
       val = res
@@ -250,10 +234,18 @@ class ContextModule < ActiveRecord::Base
   end
 
   def content_tags_visible_to(user)
-    if self.grants_right?(user, :update)
-      self.content_tags.not_deleted
+    if self.content_tags.loaded?
+      if self.grants_right?(user, :update)
+        self.content_tags.select{|tag| tag.workflow_state != 'deleted'}
+      else
+        self.content_tags.select{|tag| tag.workflow_state == 'active'}
+      end
     else
-      self.content_tags.active
+      if self.grants_right?(user, :update)
+        self.content_tags.not_deleted
+      else
+        self.content_tags.active
+      end
     end
   end
 
@@ -352,7 +344,7 @@ class ContextModule < ActiveRecord::Base
     return nil unless self.prerequisites_satisfied?(user)
     progression = self.find_or_create_progression(user)
     progression.requirements_met ||= []
-    requirement = self.completion_requirements.to_a.find{|p| p[:id] == tag.id}
+    requirement = self.completion_requirements.to_a.find{|p| p[:id] == tag.local_id}
     return if !requirement || progression.requirements_met.include?(requirement)
     met = false
     met = true if requirement[:type] == 'must_view' && (action == :read || action == :contributed)
@@ -484,19 +476,13 @@ class ContextModule < ActiveRecord::Base
   end
   
   def self.find_or_create_progression(module_id, user_id)
-    s = nil
-    attempts = 0
-    begin
-      s = ContextModuleProgression.find_or_initialize_by_context_module_id_and_user_id(module_id, user_id)
-      s.save! if s.new_record?
-      raise "bad" if s.new_record?
-    rescue => e
-      attempts += 1
-      retry if attempts < 3
+    Shackles.activate(:master) do
+      unique_constraint_retry do
+        ContextModuleProgression.find_or_create_by_context_module_id_and_user_id(module_id, user_id)
+      end
     end
-    s
   end
-  
+
   def content_tags_hash
     return @tags_hash if @tags_hash
     @tags_hash = {}
@@ -514,7 +500,9 @@ class ContextModule < ActiveRecord::Base
     progression ||= self.find_or_create_progression_with_multiple_lookups(user)
     if self.unpublished?
       progression.workflow_state = 'locked'
-      progression.save if progression.workflow_state_changed?
+      Shackles.activate(:master) do
+        progression.save if progression.workflow_state_changed?
+      end
       return progression
     end
     requirements_met_changed = false
@@ -529,7 +517,9 @@ class ContextModule < ActiveRecord::Base
     if recursive_check || progression.new_record? || progression.updated_at < self.updated_at || User.module_progression_jobs_queued?(user.id)
       if self.completion_requirements.blank? && active_prerequisites.empty?
         progression.workflow_state = 'completed'
-        progression.save
+        Shackles.activate(:master) do
+          progression.save
+        end
       end
       progression.workflow_state = 'locked'
       if !self.to_be_unlocked
@@ -603,7 +593,9 @@ class ContextModule < ActiveRecord::Base
       end
     end
     progression.current_position = position
-    progression.save if progression.workflow_state_changed? || requirements_met_changed
+    Shackles.activate(:master) do
+      progression.save if progression.workflow_state_changed? || requirements_met_changed
+    end
     progression
   end
 
@@ -681,14 +673,8 @@ class ContextModule < ActiveRecord::Base
         end
       end
     end
-    migration_ids = modules.map{|m| m['module_id'] }.compact
-    conn = self.connection
-    cases = []
-    max = migration.context.context_modules.not_deleted.map(&:position).compact.max || 0
-    modules.each_with_index{|m, idx| cases << " WHEN migration_id=#{conn.quote(m['module_id'])} THEN #{max + idx + 1} " if m['module_id'] }
-    unless cases.empty?
-      conn.execute("UPDATE context_modules SET position=CASE #{cases.join(' ')} ELSE NULL END WHERE context_id=#{migration.context.id} AND context_type=#{conn.quote(migration.context.class.to_s)} AND migration_id IN (#{migration_ids.map{|id| conn.quote(id)}.join(',')})")
-    end
+    migration.context.context_modules.first.try(:fix_position_conflicts)
+    migration.context.touch
   end
   
   def self.import_from_migration(hash, context, item=nil)

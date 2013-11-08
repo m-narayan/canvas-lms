@@ -63,6 +63,7 @@ describe "User Profile API", :type => :integration do
       'title' => nil,
       'bio' => nil,
       'avatar_url' => "https://secure.gravatar.com/avatar/000?s=50&d=http%3A%2F%2Fwww.example.com%2Fimages%2Fmessages%2Favatar-50.png",
+      'time_zone' => 'Etc/UTC',
     }
 
     get("/courses/#{@course.id}/students")
@@ -82,6 +83,7 @@ describe "User Profile API", :type => :integration do
       'calendar' => { 'ics' => "http://www.example.com/feeds/calendars/user_#{@admin.uuid}.ics" },
       'title' => nil,
       'bio' => nil,
+      'time_zone' => 'Etc/UTC',
     }
   end
 
@@ -100,6 +102,7 @@ describe "User Profile API", :type => :integration do
       'calendar' => { 'ics' => "http://www.example.com/feeds/calendars/user_#{@student.uuid}.ics" },
       'title' => nil,
       'bio' => nil,
+      'time_zone' => 'Etc/UTC',
     }
   end
 
@@ -120,8 +123,8 @@ describe "User Profile API", :type => :integration do
 
   context "user_services" do
     before do
-      @student.user_services.create! :service => 'skype', :service_user_name => 'user', :visible => false
-      @student.user_services.create! :service => 'twitter', :service_user_name => 'user', :visible => true
+      @student.user_services.create! :service => 'skype', :service_user_name => 'user', :service_user_id => 'user', :visible => false
+      @student.user_services.create! :service => 'twitter', :service_user_name => 'user', :service_user_id => 'user', :visible => true
     end
 
     it "should return user_services, if requested" do

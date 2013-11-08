@@ -55,9 +55,9 @@ define [
       @chunk_start = 0
       @students = {}
       @rows = []
-      @sortFn = (student) -> student.sortable_name
       @assignmentsToHide = userSettings.contextGet('hidden_columns') || []
       @sectionToShow = userSettings.contextGet 'grading_show_only_section'
+      @sectionToShow = @sectionToShow && String(@sectionToShow)
       @show_attendance = userSettings.contextGet 'show_attendance'
       @include_ungraded_assignments = userSettings.contextGet 'include_ungraded_assignments'
       @userFilterRemovedRows = []
@@ -116,6 +116,8 @@ define [
       for group in assignmentGroups
         htmlEscape(group)
         @assignmentGroups[group.id] = group
+        if ENV.GRADEBOOK_OPTIONS.draft_state_enabled
+          group.assignments = _.select group.assignments, (a) -> a.published
         for assignment in group.assignments
           htmlEscape(assignment)
           assignment.assignment_group = group
@@ -266,7 +268,6 @@ define [
     # a full redraw
     buildRows: =>
       @rows.length = 0
-      sortables = {}
 
       for id, column of @gradeGrid.getColumns() when ''+column.object?.submission_types is "attendance"
         column.unselectable = !@show_attendance
@@ -278,12 +279,11 @@ define [
         if @rowFilter(student)
           @rows.push(student)
           @calculateStudentGrade(student)
-          sortables[student.id] = @sortFn(student)
 
       @rows.sort (a, b) ->
-        if sortables[a.id] < sortables[b.id] then -1
-        else if sortables[a.id] > sortables[b.id] then 1
-        else 0
+        a.sortable_name.localeCompare(b.sortable_name,
+          window.I18n.locale,
+          { sensitivity: 'accent', ignorePunctuation: true, numeric: true})
 
       student.row = i for student, i in @rows
       @multiGrid.invalidate()
@@ -587,7 +587,7 @@ define [
         )()
         $('#section_to_show').after($sectionToShowMenu).show().kyleMenu()
         $sectionToShowMenu.bind 'menuselect', (event, ui) =>
-          @sectionToShow = Number($sectionToShowMenu.find('[aria-checked="true"] input[name="section_to_show_radio"]').val()) || undefined
+          @sectionToShow = $sectionToShowMenu.find('[aria-checked="true"] input[name="section_to_show_radio"]').val()
           userSettings[ if @sectionToShow then 'contextSet' else 'contextRemove']('grading_show_only_section', @sectionToShow)
           updateSectionBeingShownText()
           @buildRows()

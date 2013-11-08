@@ -92,8 +92,7 @@ define [
       @setOptionProperties()
       @storeChildrenViews()
       @$el.data 'view', this
-      @model.view = this if @model
-      @collection.view = this if @collection
+      @_setViewProperties()
       # magic from mixin
       fn.call this for fn in @__initialize__ if @__initialize__
       @attach()
@@ -105,7 +104,7 @@ define [
     #
     # @api private
     
-    storeChildrenViews: -> 
+    storeChildrenViews: ->
       return unless @constructor.__childViews__
       @children = _.map @constructor.__childViews__, (viewObj) => @[viewObj.name]
     
@@ -116,7 +115,8 @@ define [
 
     setOptionProperties: ->
       for property in @constructor.__optionProperties__
-        @[property] = @options[property] if @options[property]?
+        @[property] = @options[property] if @options[property] isnt undefined
+
 
     ##
     # Renders the view, calls render hooks
@@ -230,6 +230,7 @@ define [
       return unless @constructor.__childViews__
       for {name, selector} in @constructor.__childViews__
         console?.warn?("I need a child view '#{name}' but one was not provided") unless @[name]?
+        continue unless @[name] # don't blow up if the view isn't present (or it's explicitly set to false)
         target = @$ selector
         @[name].setElement target
         @[name].render()
@@ -309,6 +310,21 @@ define [
     hide: -> @$el.hide()
     show: -> @$el.show()
     toggle: -> @$el.toggle()
+
+    # Set view property for attached model/collection objects. If
+    # @setViewProperties is set to false, view properties will
+    # not be set.
+    #
+    # Example:
+    #   class SampleView extends Backbone.View
+    #     setViewProperties: false
+    #
+    # @api private
+    _setViewProperties: ->
+      return if @setViewProperties == false
+      @model.view = this if @model
+      @collection.view = this if @collection
+      return
 
   Backbone.View
 

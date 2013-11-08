@@ -20,24 +20,24 @@
 #
 # Group memberships are the objects that tie users and groups together. 
 #
-# @object Group Membership
+# @object GroupMembership
 #     {
 #       // The id of the membership object
-#       id: 92
+#       "id": 92,
 #
 #       // The id of the group object to which the membership belongs
-#       group_id: 17
+#       "group_id": 17,
 #
 #       // The id of the user object to which the membership belongs
-#       user_id: 3
+#       "user_id": 3,
 #
 #       // The current state of the membership. Current possible values are
 #       // "accepted", "invited", and "requested"
-#       workflow_state: "accepted"
+#       "workflow_state": "accepted",
 #
 #       // Whether or not the user is a moderator of the group (the must also
 #       // be an active member of the group to moderate)
-#       moderator: true
+#       "moderator": true
 #     }
 #
 class GroupMembershipsController < ApplicationController
@@ -53,16 +53,16 @@ class GroupMembershipsController < ApplicationController
   #
   # List the members of a group.
   #
-  # @argument filter_states[] [Optional] Only list memberships with the given
-  #   workflow_states. Allowed values are "accepted", "invited", and
-  #   "requested". By default it will return all memberships.
+  # @argument filter_states[] [Optional, String, "accepted"|"invited"|"requested"]
+  #   Only list memberships with the given workflow_states. By default it will
+  #   return all memberships.
   #
   # @example_request
   #     curl https://<canvas>/api/v1/groups/<group_id>/memberships \ 
   #          -F 'filter_states[]=invited&filter_states[]=requested' \ 
   #          -H 'Authorization: Bearer <token>'
   #
-  # @returns [Group Membership]
+  # @returns [GroupMembership]
   def index
     if authorized_action(@group, @current_user, :read_roster)
       memberships_route = polymorphic_url([:api_v1, @group, :memberships])
@@ -85,14 +85,14 @@ class GroupMembershipsController < ApplicationController
   # group.  If the membership or join request already exists, then it is simply
   # returned
   #
-  # @argument user_id
+  # @argument user_id [String]
   #
   # @example_request
   #     curl https://<canvas>/api/v1/groups/<group_id>/memberships \ 
   #          -F 'user_id=self'
   #          -H 'Authorization: Bearer <token>'
   #
-  # @returns Group Membership
+  # @returns GroupMembership
   def create
     @user = api_find(User, params[:user_id])
     if authorized_action(GroupMembership.new(:group => @group, :user => @user), @current_user, :create)
@@ -109,15 +109,21 @@ class GroupMembershipsController < ApplicationController
   #
   # Accept a membership request, or add/remove moderator rights.
   #
-  # @argument workflow_state Currently, the only allowed value is "accepted"
+  # @argument workflow_state [Optional, String, "accepted"]
+  #   Currently, the only allowed value is "accepted"
+  #
   # @argument moderator
   #
   # @example_request
   #     curl https://<canvas>/api/v1/groups/<group_id>/memberships/<membership_id> \ 
   #          -F 'moderator=true'
   #          -H 'Authorization: Bearer <token>'
+  # @example_request
+  #     curl https://<canvas>/api/v1/groups/<group_id>/users/<user_id> \
+  #          -F 'moderator=true'
+  #          -H 'Authorization: Bearer <token>'
   #
-  # @returns Group Membership
+  # @returns GroupMembership
   def update
     find_membership
     if authorized_action(@membership, @current_user, :update)
@@ -142,6 +148,10 @@ class GroupMembershipsController < ApplicationController
   #     curl https://<canvas>/api/v1/groups/<group_id>/memberships/<membership_id> \ 
   #          -X DELETE \ 
   #          -H 'Authorization: Bearer <token>'
+  # @example_request
+  #     curl https://<canvas>/api/v1/groups/<group_id>/users/<user_id> \
+  #          -X DELETE \
+  #          -H 'Authorization: Bearer <token>'
   def destroy
     find_membership
     if authorized_action(@membership, @current_user, :delete)
@@ -154,14 +164,16 @@ class GroupMembershipsController < ApplicationController
   protected
 
   def find_group
-    @group = Group.active.find(params[:group_id])
+    @group = api_find(Group.active, params[:group_id])
   end
 
   def find_membership
-    if params[:membership_id] == 'self'
-      @membership = @group.group_memberships.where(:user_id => @current_user).first
-    else
+    if (params[:membership_id] && params[:membership_id] == 'self') || (params[:user_id] && params[:user_id] == 'self')
+      @membership = @group.group_memberships.where(:user_id => @current_user).first || not_found
+    elsif params[:membership_id]
       @membership = @group.group_memberships.find(params[:membership_id])
+    else
+      @membership = @group.group_memberships.where(:user_id => params[:user_id]).first || not_found
     end
   end
 end
