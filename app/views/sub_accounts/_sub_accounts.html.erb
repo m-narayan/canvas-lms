@@ -9,7 +9,7 @@
       <span class="links">
         <a href="<%= context_url(@context, :context_sub_account_url, (account ? account.id : "{{ id }}")) %>" class="expand_sub_accounts_link no-hover" title="<%= t('show_sub_accounts', 'Show Sub-Accounts') %>" style="<%= hidden if (keep_going && account && sub_account_count < max_sub_accounts) || (account && sub_account_count == 0) %>"><i class="icon-arrow-down standalone-icon"></i></a>
         <a href="#" class="collapse_sub_accounts_link no-hover" title="<%= t('hide_sub_accounts', 'Hide Sub-Accounts') %>" style="<%= hidden unless keep_going && account && sub_account_count < max_sub_accounts %>"><i class="icon-arrow-up standalone-icon"></i></a>
-        <% unless !!@domain_root_account.settings[:OpenLMS_sub_account_disable] %>
+        <% unless !!@domain_root_account.settings[:Sublime LMS_sub_account_disable] %>
         <a href="#" class="add_sub_account_link no-hover" title="<%= t('add_sub_accounts', 'Add Sub-Account') %>" style="<%= hidden unless (keep_going && account && sub_account_count < max_sub_accounts) || (account && sub_account_count == 0) %>"><i class="icon-add standalone-icon"></i></a>
         <% end %>
         <a href="#" class="edit_account_link no-hover" title="<%= t('edit_account_name', 'Edit Account Name') %>"><i class="icon-edit standalone-icon"></i></a>

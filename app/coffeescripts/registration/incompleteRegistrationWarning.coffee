@@ -7,7 +7,7 @@ define [
     $(template(email: ENV.USER_EMAIL)).
       appendTo($('body')).
       dialog
-        title: I18n.t('welcome_to_canvas', 'Welcome to OpenLMS!')
+        title: I18n.t('welcome_to_canvas', 'Welcome to Sublime LMS!')
         width: 400
         resizable: false
         buttons: [

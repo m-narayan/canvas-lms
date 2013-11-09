@@ -34,11 +34,11 @@ $(document).ready(function() {
     <h3><%= t('headings.next_steps', %{Next Steps}) %></h3>
     <ul class="wizard_options_list">
       <% if can_do @context, @current_user, :manage_content %>
-          <% if !@domain_root_account.OpenLMS_course_import_disable?  %>
+          <% if !@domain_root_account.Sublime LMS_course_import_disable?  %>
         <li class="option download_step <%= 'completed' unless @context.attachments.active.first.nil? %>">
           <a href="<%= context_url(@context, :context_content_migrations_url) %>" class="header icon-download"><%= t('links.import', %{Import Content}) %></a>
           <div class="details" style="display: none;">
-            <%= t 'details.import', %{If you've been using another course management system, you probably have stuff in there that you're going to want moved over to OpenLMS.  We can walk you through the process of easily migrating your content into OpenLMS.} %>
+            <%= t 'details.import', %{If you've been using another course management system, you probably have stuff in there that you're going to want moved over to Sublime LMS.  We can walk you through the process of easily migrating your content into Sublime LMS.} %>
           </div>
         </li>
           <% end %>
@@ -51,7 +51,7 @@ $(document).ready(function() {
           </div>
         </li>
       <% end %>
-      <% if can_do @context, @current_user, :manage_students && !@domain_root_account.OpenLMS_add_user_disable?%>
+      <% if can_do @context, @current_user, :manage_students && !@domain_root_account.Sublime LMS_add_user_disable?%>
         <li class="option students_step <%=  'completed' unless @context.students.first.nil? %>">
           <a href="<%= course_users_path(course_id: @context) %>" class="header icon-group-new"><%= t('links.students', %{Add Students to the Course}) %></a>
           <div class="details" style="display: none;">
@@ -63,7 +63,7 @@ $(document).ready(function() {
         <li class="option download_step <%= 'completed' unless @context.attachments.active.first.nil? %>" style="display: none;">
           <a href="<%= context_url(@context, :context_files_url, :wizard => 1) %>" class="header icon-folder"><%= t('links.files', %{Add Course Files}) %></a>
           <div class="details" style="display: none;">
-            <%= t 'details.files', %{The Files tab is the place to share lecture slides, example documents, study helps -- anything your students will want to download.  Uploading and organizing your files is easy with OpenLMS.  We'll show you how.} %>
+            <%= t 'details.files', %{The Files tab is the place to share lecture slides, example documents, study helps -- anything your students will want to download.  Uploading and organizing your files is easy with Sublime LMS.  We'll show you how.} %>
           </div>
         </li>
       <% end %>
@@ -91,7 +91,7 @@ $(document).ready(function() {
           </div>
         </li>
       <% end %>
-      <% if can_do @context, @current_user, :manage_admin_users && !@domain_root_account.OpenLMS_add_user_disable?%>
+      <% if can_do @context, @current_user, :manage_admin_users && !@domain_root_account.Sublime LMS_add_user_disable?%>
         <li class="option ta_step <%= 'completed' unless @context.tas.empty? %>">
           <a href="<%= course_users_path(:course_id => @context) %>" class="header icon-user-add"><%= t('links.tas', %{Add TAs to the Course}) %></a>
           <div class="details" style="display: none;">
@@ -105,7 +105,7 @@ $(document).ready(function() {
         <div class="details" style="display: none;">
           <% if !@current_user && @pending_teacher %>
             <p>
-              <%= t 'details.publish.not_registered', %{This course is claimed and ready, but you'll need to finish the registration process before you can publish the course.  You should have received an email from OpenLMS with a link to finish the process.  Be sure to check your spam box.} %>
+              <%= t 'details.publish.not_registered', %{This course is claimed and ready, but you'll need to finish the registration process before you can publish the course.  You should have received an email from Sublime LMS with a link to finish the process.  Be sure to check your spam box.} %>
             </p>
             <div style="text-align: center; font-size: 1.2em;">
               <b><a href="<%= re_send_confirmation_path(@pending_teacher.id, @pending_teacher.communication_channel.id) %>" class="re_send_confirmation_link"><%= t('links.re_send_confirmation', %{Re-Send the Confirmation Email}) %></a></b>
@@ -129,7 +129,7 @@ Publishing will allow the users to begin participating in the course.} %>
         <div class="details" style="display: none;">
           <% if @context.created? %>
             <% if @context_just_saved %>
-              <%= mt 'details.created.saved', %{Done and done!  Your course, %{course} is now officially created.  It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how OpenLMS works and to make sure you really are ready to teach.
+              <%= mt 'details.created.saved', %{Done and done!  Your course, %{course} is now officially created.  It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how Sublime LMS works and to make sure you really are ready to teach.
 
 If you need to leave and come back before then, just save *this link* to get back here later.
 
@@ -151,7 +151,7 @@ Please **log in** or ***register*** to claim this course.}, :wrapper => {
             <% end %>
           <% elsif @context.claimed? %>
             <% if @context_just_saved %>
-              <%= mt 'details.claimed.saved', %{Done and done!  Your course, %{course} is now officially created. It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how OpenLMS works and to make sure you really are ready to teach.}, :course => @context.name %>
+              <%= mt 'details.claimed.saved', %{Done and done!  Your course, %{course} is now officially created. It's only visible to you until it is published -- but before you jump the gun, you'll want to run through the list to the left to get a feel for how Sublime LMS works and to make sure you really are ready to teach.}, :course => @context.name %>
               </p>
             <% else %>
               <%= mt 'details.claimed.not_saved', %{Great, so you've got a course...  Now what?  Well, before you go publishing it to the world, you may want to check and make sure you've got the basics laid out.  Work through the list on the left to ensure that your course is ready to use.

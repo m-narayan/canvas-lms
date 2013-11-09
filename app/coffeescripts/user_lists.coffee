@@ -87,7 +87,7 @@ define [
 
     failure: (data) ->
        if data.course_limit
-         $.flashError ("Your OpenLMS User creation limit is exceeded. Please contact your account admin ")
+         $.flashError ("Your Sublime LMS User creation limit is exceeded. Please contact your account admin ")
        else
          $.flashError I18n.t("users_adding_failed", "Failed to enroll users")
 
