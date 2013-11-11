@@ -98,7 +98,7 @@ class SubscriptionController < ApplicationController
 
   def successful_login( pseudonym)
     @current_pseudonym = pseudonym
-    flash[:notice] = "Please check your email to use OpenLMS account"
+    flash[:notice] = "Please check your email to use Sublime account"
     redirect_to root_url
   end
 
@@ -132,7 +132,7 @@ class SubscriptionController < ApplicationController
 
   def send_email(to,name,password,subdomain)
     m=Message.new
-    m.subject="Your OpenLMS free subscription details"
+    m.subject="Your Sublime free subscription details"
     m.to = to
     body = "Hi #{name}<br>"
     body=body+"Your username is #{to}<br>"

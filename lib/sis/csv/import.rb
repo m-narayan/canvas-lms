@@ -410,7 +410,7 @@ module SIS
                   false
                 end
               end
-              add_error(csv, "Couldn't find OpenLMS CSV import headers") if importer.nil?
+              add_error(csv, "Couldn't find Sublime CSV import headers") if importer.nil?
               break
             end
           rescue ::CSV::MalformedCSVError

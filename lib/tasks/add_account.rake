@@ -55,12 +55,12 @@ namespace :db do
         unless @account
           @account = Account.new
           @account.name = name
-          @account.settings[:OpenLMS_kaltura_disable]= kultura_flag
-          @account.settings[:OpenLMS_bbb_disable]= bbb_flag
-          @account.settings[:OpenLMS_grade_disable]= grade_flag
-          @account.settings[:OpenLMS_outcomes_disable]= outcome_flag
-          @account.settings[:OpenLMS_course_import_disable]= course_import_flag
-          @account.settings[:OpenLMS_course_export_disable]= course_export_flag
+          @account.settings[:Sublime_kaltura_disable]= kultura_flag
+          @account.settings[:Sublime_bbb_disable]= bbb_flag
+          @account.settings[:Sublime_grade_disable]= grade_flag
+          @account.settings[:Sublime_outcomes_disable]= outcome_flag
+          @account.settings[:Sublime_course_import_disable]= course_import_flag
+          @account.settings[:Sublime_course_export_disable]= course_export_flag
           @account.settings[:private_license_enable]= course_export_flag
           puts "Creating Account #{name}... "
           @account.save!

@@ -184,7 +184,7 @@ namespace :db do
     if !Rails.env.test? && (ENV["CANVAS_LMS_STATS_COLLECTION"] || "").empty?
       require 'highline/import'
       choose do |menu|
-        menu.header = "To help our developers better serve you, Arrivu would like to collect some usage data about your OpenLMS installation. You can change this setting at any time."
+        menu.header = "To help our developers better serve you, Arrivu would like to collect some usage data about your Sublime installation. You can change this setting at any time."
         menu.prompt = "> "
         menu.choice("Opt in") {
           gather_data = "opt_in"

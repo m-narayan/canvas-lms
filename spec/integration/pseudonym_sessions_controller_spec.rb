@@ -94,7 +94,7 @@ describe PseudonymSessionsController do
       get cas_login_url :ticket => 'ST-abcd'
       response.should redirect_to(@cas_client.logout_url(cas_login_url :no_auto => true))
       get cas_login_url :no_auto => true
-      flash[:delegated_message].should match(/OpenLMS doesn't have an account for user/)
+      flash[:delegated_message].should match(/Sublime doesn't have an account for user/)
     end
 
     it "should login case insensitively" do

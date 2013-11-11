@@ -6,7 +6,7 @@ describe "Site_Admin user creation and Login test" do
   it_should_behave_like "in-process server selenium tests"
 
 
-  openlms_account=create_site_admin("openlms","openlms@arrivusystems.com","Admin123$")
+  Sublime_account=create_site_admin("Sublime","Sublime@arrivusystems.com","Admin123$")
 
   #ibm_account=add_mt_account("ibm")
   #add_mt_account_admin_users("ibm","ibm@arrivusystems.com","Admin123$")
@@ -39,9 +39,9 @@ describe "Site_Admin user creation and Login test" do
   #    account_ids.each do |account_id|
   #      checking_account_name=Account.find(account_id).name
   #      driver.get "http://#{account_name}.lvh.me:#{$server_port}"
-  #      fill_in_login_form("openlms@arrivusystems.com","Admin123$")
+  #      fill_in_login_form("Sublime@arrivusystems.com","Admin123$")
   #      sleep 1
-  #      f('.user_name').text.should == "openlms@arrivusystems.com"
+  #      f('.user_name').text.should == "Sublime@arrivusystems.com"
   #      driver.get "http://#{account_name}.lvh.me:#{$server_port}/accounts/#{account_id}/settings"
   #      f("#section-tabs-header").text.should== checking_account_name
   #      f("#account_name").should have_value(checking_account_name)
@@ -57,7 +57,7 @@ describe "Site_Admin user creation and Login test" do
   #end
   #
   #it "should login in any account and can change the settings" do
-  #  site_admin_login(:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+  #  site_admin_login(:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
   #                            :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   #end
 
@@ -66,7 +66,7 @@ describe "Site_Admin user creation and Login test" do
   # #working code
   #def login(account_name)
   #  driver.get "http://#{account_name}.lvh.me:#{$server_port}"
-  #  fill_in_login_form("openlms@arrivusystems.com","Admin123$")
+  #  fill_in_login_form("Sublime@arrivusystems.com","Admin123$")
   #  f('.user_name').text.should == "#{account_name}@arrivusystems.com"
   #end
   #def site_admin_login(params={})
@@ -85,14 +85,14 @@ describe "Site_Admin user creation and Login test" do
   #  expect_new_page_load { f('.logout > a').click }
   #end
   #
-  #it "should login as a site administrator in OPENLMS" do
-  #  login("openlms")
-  #  site_admin_login(:account=>"openlms",:account_id=>openlms_account.id,:checking_account_name=>"openlms",:checking_account_id=>openlms_account.id)
-  #  site_admin_login(:account=>"openlms",:account_id=>openlms_account.id,:checking_account_name=>"ibm",:checking_account_id=>ibm_account.id)
-  #  site_admin_login(:account=>"openlms",:account_id=>openlms_account.id,:checking_account_name=>"tcs",:checking_account_id=>tcs_account.id)
-  #  site_admin_login(:account=>"openlms",:account_id=>openlms_account.id,:checking_account_name=>"beacon",:checking_account_id=>beacon_account.id)
-  #  site_admin_login(:account=>"openlms",:account_id=>openlms_account.id,:checking_account_name=>"cisco",:checking_account_id=>cisco_account.id)
-  #  site_admin_login(:account=>"openlms",:account_id=>openlms_account.id,:checking_account_name=>"infosys",:checking_account_id=>infosys_account.id)
+  #it "should login as a site administrator in Sublime" do
+  #  login("Sublime")
+  #  site_admin_login(:account=>"Sublime",:account_id=>Sublime_account.id,:checking_account_name=>"Sublime",:checking_account_id=>Sublime_account.id)
+  #  site_admin_login(:account=>"Sublime",:account_id=>Sublime_account.id,:checking_account_name=>"ibm",:checking_account_id=>ibm_account.id)
+  #  site_admin_login(:account=>"Sublime",:account_id=>Sublime_account.id,:checking_account_name=>"tcs",:checking_account_id=>tcs_account.id)
+  #  site_admin_login(:account=>"Sublime",:account_id=>Sublime_account.id,:checking_account_name=>"beacon",:checking_account_id=>beacon_account.id)
+  #  site_admin_login(:account=>"Sublime",:account_id=>Sublime_account.id,:checking_account_name=>"cisco",:checking_account_id=>cisco_account.id)
+  #  site_admin_login(:account=>"Sublime",:account_id=>Sublime_account.id,:checking_account_name=>"infosys",:checking_account_id=>infosys_account.id)
   #  logout
   #
   #end
@@ -102,10 +102,10 @@ describe "Site_Admin user creation and Login test" do
   def site_admin_login(params={})
 
     driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}"
-    fill_in_login_form("openlms@arrivusystems.com","Admin123$")
+    fill_in_login_form("Sublime@arrivusystems.com","Admin123$")
     wait_for_ajaximations
-    #fj('.user_name').text.should == "openlms@arrivusystems.com"
-    f('.user_name').should include_text "openlms@arrivusystems.com"
+    #fj('.user_name').text.should == "Sublime@arrivusystems.com"
+    f('.user_name').should include_text "Sublime@arrivusystems.com"
     params[:accounts].each do |account,account_id|
       checking_account_name=Account.find(account_id).name
       driver.get "http://#{params[:account_name]}.lvh.me:#{$server_port}/accounts/#{account_id}/settings"
@@ -121,33 +121,33 @@ describe "Site_Admin user creation and Login test" do
     expect_new_page_load { f('.logout > a').click }
   end
 
-  it "should login in OPENLMS account" do
-    site_admin_login(:account_name=>"openlms",:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+  it "should login in Sublime account" do
+    site_admin_login(:account_name=>"Sublime",:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
                               :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   end
 
   it "should login in IBM account" do
-    site_admin_login(:account_name=>"ibm",:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+    site_admin_login(:account_name=>"ibm",:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
                                                           :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   end
 
   it "should login in TCS account" do
-    site_admin_login(:account_name=>"tcs",:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+    site_admin_login(:account_name=>"tcs",:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
                                                           :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   end
 
   it "should login in BEACON account" do
-    site_admin_login(:account_name=>"beacon",:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+    site_admin_login(:account_name=>"beacon",:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
                                                           :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   end
 
   it "should login in CISCO account" do
-    site_admin_login(:account_name=>"cisco",:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+    site_admin_login(:account_name=>"cisco",:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
                                                           :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   end
 
   it "should login in INFOSYS account" do
-    site_admin_login(:account_name=>"infosys",:accounts=>{:openlms=>openlms_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
+    site_admin_login(:account_name=>"infosys",:accounts=>{:Sublime=>Sublime_account.id,:ibm=>ibm_account.id,:tcs=>tcs_account.id,
                                                           :cisco=>cisco_account.id,:infosys=>infosys_account.id,:beacon=>beacon_account.id})
   end
 

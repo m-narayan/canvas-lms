@@ -22,7 +22,7 @@ namespace :doc do
 
     t.options = %W[
       -e lib/api_routes.rb
-      --title "OpenLMS REST API"
+      --title "Sublime REST API"
       -p doc
       -t api
       --readme doc/api/README.md

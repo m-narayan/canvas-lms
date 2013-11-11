@@ -6,7 +6,7 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     it_should_behave_like "in-process server selenium tests"
 
 
-    account=create_site_admin("openlms","openlms@arrivusystems.com","Admin123$")
+    account=create_site_admin("Sublime","Sublime@arrivusystems.com","Admin123$")
     #ibm_account=add_mt_account("ibm")
     #add_mt_account_admin_users("ibm","ibm@arrivusystems.com","Admin123$")
     #ibm_course=create_course("IBM course M1-Sample Course1","IBMM1","ibm")
@@ -23,7 +23,7 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     def submit_updated_form(params={})
 
       admin_login(:account_name=>params[:account_name],:user_name=>params[:user_name],:password=>params[:password],:account_id=>params[:account_id])
-      #driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
+      #driver.get "http://Sublime.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
       f("#tab-plugin-link").click
       driver.find_element(:id, params[:css_selector]).click
       submit_form("#account_plugin_settings")
@@ -39,10 +39,10 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     it "should login as a site administrator to disable grades for ibm account" do
 
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
       f("#tab-plugin-link").should be_displayed
       f("#tab-plugin-link").click
-      driver.find_element(:id, 'account_settings_OpenLMS_grade_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_grade_disable').click
       submit_form("#account_plugin_settings")
 
       #to check in quizzes
@@ -101,11 +101,11 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     it "should login as a site administrator to disable outcomes for ibm account" do
       #switch to previous tab
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
-      #driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      #driver.get "http://Sublime.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
       f("#tab-plugin-link").click
-      driver.find_element(:id, 'account_settings_OpenLMS_grade_disable').click
-      driver.find_element(:id, 'account_settings_OpenLMS_outcomes_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_grade_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_outcomes_disable').click
       sleep 2
       submit_form("#account_plugin_settings")
       driver.find_element(:css,'body').send_keys [:alt,'2']
@@ -132,10 +132,10 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     it "should disable course import" do
 
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
-      #driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      #driver.get "http://Sublime.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
       f("#tab-plugin-link").click
-      driver.find_element(:id, 'account_settings_OpenLMS_course_import_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_course_import_disable').click
       sleep 2
       submit_form("#account_plugin_settings")
       driver.find_element(:css,'body').send_keys [:alt,'2']
@@ -161,10 +161,10 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     it "should disable course export" do
 
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
-      #driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      #driver.get "http://Sublime.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
       f("#tab-plugin-link").click
-      driver.find_element(:id, 'account_settings_OpenLMS_course_export_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_course_export_disable').click
       submit_form("#account_plugin_settings")
       driver.find_element(:css,'body').send_keys [:alt,'2']
       admin_login(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
@@ -187,10 +187,10 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     it "should disable sub account" do
 
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
-      #driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      #driver.get "http://Sublime.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
       f("#tab-plugin-link").click
-      driver.find_element(:id, 'account_settings_OpenLMS_sub_account_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_sub_account_disable').click
       submit_form("#account_plugin_settings")
       driver.find_element(:css,'body').send_keys [:alt,'2']
       admin_login(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
@@ -212,15 +212,15 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
     it "should Enable self registration link in login page" do
 
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
-      #driver.get "http://openlms.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      #driver.get "http://Sublime.lvh.me:#{$server_port}/accounts/#{ibm_account.id}"
       f("#tab-plugin-link").click
       driver.find_element(:id, 'account_settings_self_registration').click
       submit_form("#account_plugin_settings")
       driver.find_element(:css,'body').send_keys [:alt,'2']
 
       driver.get "http://ibm.lvh.me:#{$server_port}/login"
-      fj("a:contains('Need a OpenLMS Account?')").should be_displayed
+      fj("a:contains('Need a Sublime Account?')").should be_displayed
       driver.find_element(:id, 'register_link').should be_displayed
       expect_new_page_load {driver.find_element(:id, 'register_link').click}
 
@@ -239,7 +239,7 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     it "should disable adding new courses" do
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      submit_updated_form(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id, :css_selector=>'account_settings_OpenLMS_add_course_disable')
+      submit_updated_form(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id, :css_selector=>'account_settings_Sublime_add_course_disable')
       driver.find_element(:css,'body').send_keys [:alt,'2']
       admin_login(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
 
@@ -259,7 +259,7 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     it "should disable adding new courses" do
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      submit_updated_form(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id, :css_selector=>'account_settings_OpenLMS_add_user_disable')
+      submit_updated_form(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id, :css_selector=>'account_settings_Sublime_add_user_disable')
       driver.find_element(:css,'body').send_keys [:alt,'2']
       admin_login(:account_name=>"ibm",:user_name=>"ibm@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
 
@@ -277,12 +277,12 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     it "should disable adding new courses" do
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
       f("#tab-plugin-link").click
-      driver.find_element(:id, 'account_settings_OpenLMS_grade_disable').click
-      driver.find_element(:id, 'account_settings_OpenLMS_outcomes_disable').click
-      driver.find_element(:id, 'account_settings_OpenLMS_sub_account_disable').click
-      driver.find_element(:id, 'account_settings_OpenLMS_show_lock_menu').click
+      driver.find_element(:id, 'account_settings_Sublime_grade_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_outcomes_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_sub_account_disable').click
+      driver.find_element(:id, 'account_settings_Sublime_show_lock_menu').click
       submit_form("#account_plugin_settings")
 
       driver.find_element(:css,'body').send_keys [:alt,'2']
@@ -296,10 +296,10 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     it "should set the Number of user" do
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
       f("#tab-plugin-link").click
 
-      f('#account_settings_OpenLMS_max_users').send_keys("1")
+      f('#account_settings_Sublime_max_users').send_keys("1")
       submit_form("#account_plugin_settings")
       sleep 3
       driver.find_element(:css,'body').send_keys [:alt,'2']
@@ -313,7 +313,7 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
       f('#pseudonym_unique_id').send_keys("ibm.st1@arrivusystems.com")
       f('#user_name').send_keys("ibmstudent1")
       fj("span:contains('Add User')").click
-      #driver.find_element(:css, ".error_text").should include_text "Your OpenLMS User creation limit is exceeded. Please contact your account admin"
+      #driver.find_element(:css, ".error_text").should include_text "Your Sublime User creation limit is exceeded. Please contact your account admin"
       f('.error_text').should be_displayed
 
       driver.get "http://ibm.lvh.me:#{$server_port}/courses/#{ibm_course.id}/users"
@@ -330,10 +330,10 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
 
     it "should set the Number of courses" do
       driver.find_element(:css,'body').send_keys [:alt,'1']
-      admin_login(:account_name=>"openlms",:user_name=>"openlms@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
+      admin_login(:account_name=>"Sublime",:user_name=>"Sublime@arrivusystems.com",:password=>"Admin123$",:account_id=>ibm_account.id)
       f("#tab-plugin-link").click
 
-      f('#account_settings_OpenLMS_max_courses').send_keys("1")
+      f('#account_settings_Sublime_max_courses').send_keys("1")
       submit_form("#account_plugin_settings")
       sleep 3
       driver.find_element(:css,'body').send_keys [:alt,'2']
@@ -353,7 +353,7 @@ require File.expand_path(File.dirname(__FILE__) + '/data_setup')
       driver.find_element(:id,'new_course_form').should be_displayed
       f("#new_course_form #course_name").send_keys("ibmcourse2")
       fj("span:contains('Create course')").click
-      assert_flash_error_message /Your OpenLMS Course creation limit is exceeded.Please contact your account admin/
+      assert_flash_error_message /Your Sublime Course creation limit is exceeded.Please contact your account admin/
       sleep 2
     end
 

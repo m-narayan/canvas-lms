@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
       @js_env[:lolcalize] = true if ENV['LOLCALIZE']
       #add this line for enable/disable gradable in discussion_topics/new
       if @domain_root_account
-        @js_env[:GRADE_ACTIVE] = @domain_root_account.settings[:OpenLMS_grade_disable]
+        @js_env[:GRADE_ACTIVE] = @domain_root_account.settings[:Sublime_grade_disable]
       else
         @js_env[:GRADE_ACTIVE] =false
       end
@@ -337,7 +337,7 @@ class ApplicationController < ActionController::Base
   def delegated_authentication_url?
     @domain_root_account.delegated_authentication? &&
     !@domain_root_account.ldap_authentication? &&
-    !params[:canvas_login]
+    !params[:lms_login]
   end
 
   # To be used as a before_filter, requires controller or controller actions
@@ -1205,26 +1205,26 @@ class ApplicationController < ActionController::Base
         !!LinkedIn.config
       elsif feature == :google_docs
         if @domain_root_account
-         !!GoogleDocs.config   unless  @domain_root_account.OpenLMS_google_docs_disable?
+         !!GoogleDocs.config   unless  @domain_root_account.Sublime_google_docs_disable?
         end
       elsif feature == :etherpad
         !!EtherpadCollaboration.config
       elsif feature == :kaltura
-        !!Kaltura::ClientV3.config and !!!@domain_root_account.OpenLMS_kaltura_disable?
+        !!Kaltura::ClientV3.config and !!!@domain_root_account.Sublime_kaltura_disable?
       elsif feature == :web_conferences
-        !!WebConference.config and !!!@domain_root_account.OpenLMS_bbb_disable?
+        !!WebConference.config and !!!@domain_root_account.Sublime_bbb_disable?
       elsif feature == :tinychat
         !!Tinychat.config
       elsif feature == :scribd
         !!ScribdAPI.config
       elsif feature == :crocodoc
         if @domain_root_account
-        !!Canvas::Crocodoc.config unless @domain_root_account.OpenLMS_Crocodoc_disable?
+        !!Canvas::Crocodoc.config unless @domain_root_account.Sublime_Crocodoc_disable?
         end
       elsif feature == :lockdown_browser
         Canvas::Plugin.all_for_tag(:lockdown_browser).any? { |p| p.settings[:enabled] }
       elsif feature == :kandan_chat
-        !!Kandanchat.config   and !!!@domain_root_account.OpenLMS_kandan_chat_disable?
+        !!Kandanchat.config   and !!!@domain_root_account.Sublime_kandan_chat_disable?
       else
         false
       end

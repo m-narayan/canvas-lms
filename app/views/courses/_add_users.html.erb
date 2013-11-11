@@ -2,7 +2,7 @@
    has_multiple_sections = @context.course_sections.active.count > 1
 %>
 
-<% if !@domain_root_account.OpenLMS_add_user_disable?  %>
+<% if !@domain_root_account.Sublime_add_user_disable?  %>
 <% if can_do(@context, @current_user, :manage_students) || can_do(@context, @current_user, :manage_admin_users) %>
   <% if @context.completed? || @context.soft_concluded? %>
     <%= t('cannot_add_users_to_concluded_course', %{You cannot add users to a concluded course.}) %>

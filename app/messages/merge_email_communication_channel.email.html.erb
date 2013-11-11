@@ -8,8 +8,8 @@
 <% end %>
 
 <% define_content :subject do %>
-  <%= t('subject', 'New OpenLMS Account') %>
+  <%= t('subject', 'New Sublime Account') %>
 <% end %>
 <% url = (HostUrl.context_host((asset.pseudonym || asset.user.pseudonym).account) rescue nil) || HostUrl.default_host %>
-<p><%= t :account_created, "An account has been created for you at %{url}, but you already have a OpenLMS account.", :url => url %></p>
+<p><%= t :account_created, "An account has been created for you at %{url}, but you already have a Sublime account.", :url => url %></p>
 <p><%= t :merge, "If you would like to merge them together, <a href=\"%{link}\">click here</a>", :link => content(:link) %></p>

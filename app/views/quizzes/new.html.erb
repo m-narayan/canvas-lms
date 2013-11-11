@@ -170,7 +170,7 @@
               <div class="controls">
                 <select name="quiz[quiz_type]" id="quiz_assignment_id">
                   <option value="practice_quiz"><%= render_quiz_type('practice_quiz') %></option>
-                  <% unless @domain_root_account.settings[:OpenLMS_grade_disable]  %>
+                  <% unless @domain_root_account.settings[:Sublime_grade_disable]  %>
                   <option value="assignment" <%= 'selected' if @quiz.quiz_type == 'assignment' %> ><%= render_quiz_type('assignment') %></option>
                   <option value="graded_survey" <%= 'selected' if @quiz.quiz_type == 'graded_survey' %> ><%= render_quiz_type('graded_survey') %></option>
                   <% end %>

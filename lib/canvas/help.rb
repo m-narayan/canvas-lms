@@ -10,14 +10,14 @@ module Canvas
         },
         {
           :available_to => ['user', 'student', 'teacher', 'admin'],
-          :text => I18n.t('#help_dialog.search_the_OpenLMS_guides', 'Search the OpenLMS Guides'),
-          :subtext => I18n.t('#help_dialog.OpenLMS_help_sub', 'Find answers to common questions'),
+          :text => I18n.t('#help_dialog.search_the_Sublime_guides', 'Search the Sublime Guides'),
+          :subtext => I18n.t('#help_dialog.Sublime_help_sub', 'Find answers to common questions'),
           :url => 'http://guides.instructure.com'
         },
         {
           :available_to => ['user', 'student', 'teacher', 'admin'],
           :text => I18n.t('#help_dialog.report_problem', 'Report a Problem'),
-          :subtext => I18n.t('#help_dialog.report_problem_sub', 'If OpenLMS misbehaves, tell us about it'),
+          :subtext => I18n.t('#help_dialog.report_problem_sub', 'If Sublime misbehaves, tell us about it'),
           :url => '#create_ticket'
         }
       ]
