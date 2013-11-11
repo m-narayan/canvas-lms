@@ -36,6 +36,7 @@
 .rvmrc
 tags
 /vendor/plugins/rails_upgrade
+/vendor/bundle
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
