@@ -148,9 +148,9 @@ group :development do
   # The ruby debug gems conflict with the IDE-based debugger gem.
   # Set this option in your dev environment to disable.
 
-  #unless ENV['DISABLE_RUBY_DEBUGGING']
-  #  gem 'debugger', '1.5.0'
-  #end
+  unless ENV['DISABLE_RUBY_DEBUGGING']
+    gem 'debugger', '1.5.0'
+  end
 
 end
 
@@ -197,3 +197,4 @@ Dir[File.join(File.dirname(__FILE__), 'vendor/plugins/*/Gemfile')].each do |g|
 end
 
 gem 'subdomain-fu', '0.5.4'
+gem 'rack-cors', :require => 'rack/cors'

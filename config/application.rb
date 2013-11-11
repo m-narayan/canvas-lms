@@ -14,5 +14,13 @@ module CanvasRails
     config.filter_parameters.concat LoggingFilter.filtered_parameters
 
     eval(File.read(File.expand_path("../shared_boot.rb", __FILE__)), binding, "config/shared_boot.rb", 1)
+
+    use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :delete, :options]
+      end
+    end
+
   end
 end
