@@ -55,6 +55,13 @@ config.autoload_paths += %W(#{Rails.root}/app/middleware
                             #{Rails.root}/app/observers
                             #{Rails.root}/app/presenters)
 
+config.middleware.use "Rack::Cors" do
+  allow do
+    origins '*'
+    resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :options]
+  end
+end
+
 if Rails.version < "3.0"
   # XXX: Rails3 needs SessionsTimeout
   config.middleware.insert_after(ActionController::Base.session_store, 'SessionsTimeout')
