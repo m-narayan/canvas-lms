@@ -58,7 +58,9 @@ config.autoload_paths += %W(#{Rails.root}/app/middleware
 config.middleware.use "Rack::Cors" do
   allow do
     origins '*'
-    resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :options]
+    resource '*', :headers => :any,
+             :methods => [:get, :post, :delete, :put, :options],
+             :expose  => ['Link']
   end
 end
 
