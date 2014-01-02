@@ -25,6 +25,37 @@ describe QuizSubmission do
     @quiz = @course.quizzes.create!
   end
 
+  context "saving a quiz submission" do
+    it "should validate numericality of extra time" do
+      qs = QuizSubmission.new
+      qs.extra_time = 'asdf'
+      qs.valid?.should == false
+      qs.errors.on(:extra_time).should == "is not a number"
+    end
+
+    it "should validate extra time is not too long" do
+      qs = QuizSubmission.new
+      qs.extra_time = 10081
+      qs.valid?.should == false
+      qs.errors.on(:extra_time).should == "must be less than or equal to 10080"
+    end
+
+    it "should validate numericality of extra attempts" do
+      qs = QuizSubmission.new
+      qs.extra_attempts = 'asdf'
+      qs.valid?.should == false
+      qs.errors.on(:extra_attempts).should == "is not a number"
+    end
+
+    it "should validate extra attempts is not too long" do
+      qs = QuizSubmission.new
+      qs.extra_attempts = 1001
+      qs.valid?.should == false
+      qs.errors.on(:extra_attempts).should == "must be less than or equal to 1000"
+    end
+
+  end
+
   it "should copy the quiz's points_possible whenever it's saved" do
     Quiz.where(:id => @quiz).update_all(:points_possible => 1.1)
     q = @quiz.quiz_submissions.create!
@@ -63,6 +94,35 @@ describe QuizSubmission do
       q.update_attribute(:end_at, Time.now + 1.hour)
 
       q.time_left.should eql(60 * 60)
+    end
+  end
+
+  describe "#time_spent" do
+    it "should return nil if there's no finished_at" do
+      q = @quiz.quiz_submissions.new
+      q.finished_at = nil
+
+      q.time_spent.should be_nil
+    end
+
+    it "should return the correct time spent in seconds" do
+      anchor = Time.now
+
+      q = @quiz.quiz_submissions.new
+      q.started_at = anchor
+      q.finished_at = anchor + 1.hour
+      q.time_spent.should eql(1.hour.to_i)
+    end
+
+    it "should account for extra time" do
+      anchor = Time.now
+
+      q = @quiz.quiz_submissions.new
+      q.started_at = anchor
+      q.finished_at = anchor + 1.hour
+      q.extra_time = 5.minutes
+
+      q.time_spent.should eql((1.hour + 5.minutes).to_i)
     end
   end
 
@@ -486,12 +546,12 @@ describe QuizSubmission do
         :question_type => "calculated_question",
         :answer_tolerance => 2.0,
         :formulas => [[0, "2*z"]],
-        :variables => [["variable_0", {:scale => 0, :min => 1.0, :max => 10.0, :name => 'z'}]],
-        :answers => [["answer_0", {
+        :variables => [{:scale => 0, :min => 1.0, :max => 10.0, :name => 'z'}],
+        :answers => [{
           :weight => 100,
-          :variables => [["variable_0", {:value => 2.0, :name => 'z'}]],
+          :variables => [{:value => 2.0, :name => 'z'}],
           :answer_text => "4.0"
-        }]],
+        }],
         :question_text => "2 * [z] is ?"
       }
       @quiz.generate_quiz_data(:persist => true)
@@ -515,12 +575,12 @@ describe QuizSubmission do
         :question_type => "calculated_question",
         :answer_tolerance => "10.0%",
         :formulas => [[0, "2*z"]],
-        :variables => [["variable_0", {:scale => 0, :min => 1.0, :max => 10.0, :name => 'z'}]],
-        :answers => [["answer_0", {
+        :variables => [{:scale => 0, :min => 1.0, :max => 10.0, :name => 'z'}],
+        :answers => [{
           :weight => 100,
-          :variables => [["variable_0", {:value => 2.0, :name => 'z'}]],
+          :variables => [{:value => 2.0, :name => 'z'}],
           :answer_text => "4.0"
-        }]],
+        }],
         :question_text => "2 * [z] is ?"
       }
       @quiz.generate_quiz_data(:persist => true)
@@ -561,8 +621,8 @@ describe QuizSubmission do
     it "should create learning outcome results when aligned to assessment questions" do
       course_with_student(:active_all => true)
       @quiz = @course.quizzes.create!(:title => "new quiz", :shuffle_answers => true)
-      @q1 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 1', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => {'answer_0' => {'answer_text' => '1', 'answer_weight' => '100'}, 'answer_1' => {'answer_text' => '2'}, 'answer_2' => {'answer_text' => '3'},'answer_3' => {'answer_text' => '4'}}})
-      @q2 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 2', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => {'answer_0' => {'answer_text' => '1', 'answer_weight' => '100'}, 'answer_1' => {'answer_text' => '2'}, 'answer_2' => {'answer_text' => '3'},'answer_3' => {'answer_text' => '4'}}})
+      @q1 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 1', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => [{'answer_text' => '1', 'answer_weight' => '100'}, {'answer_text' => '2'}, {'answer_text' => '3'}, {'answer_text' => '4'}]})
+      @q2 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 2', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => [{'answer_text' => '1', 'answer_weight' => '100'}, {'answer_text' => '2'}, {'answer_text' => '3'}, {'answer_text' => '4'}]})
       @outcome = @course.created_learning_outcomes.create!(:short_description => 'new outcome')
       @bank = @q1.assessment_question.assessment_question_bank
       @outcome.align(@bank, @bank.context, :mastery_score => 0.7)
@@ -592,8 +652,8 @@ describe QuizSubmission do
     it "should update learning outcome results when aligned to assessment questions" do
       course_with_student(:active_all => true)
       @quiz = @course.quizzes.create!(:title => "new quiz", :shuffle_answers => true)
-      @q1 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 1', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => {'answer_0' => {'answer_text' => '1', 'answer_weight' => '100'}, 'answer_1' => {'answer_text' => '2'}, 'answer_2' => {'answer_text' => '3'},'answer_3' => {'answer_text' => '4'}}})
-      @q2 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 2', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => {'answer_0' => {'answer_text' => '1', 'answer_weight' => '100'}, 'answer_1' => {'answer_text' => '2'}, 'answer_2' => {'answer_text' => '3'},'answer_3' => {'answer_text' => '4'}}})
+      @q1 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 1', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => [{'answer_text' => '1', 'answer_weight' => '100'}, {'answer_text' => '2'}, {'answer_text' => '3'}, {'answer_text' => '4'}]})
+      @q2 = @quiz.quiz_questions.create!(:question_data => {:name => 'question 2', :points_possible => 1, 'question_type' => 'multiple_choice_question', 'answers' => [{'answer_text' => '1', 'answer_weight' => '100'}, {'answer_text' => '2'}, {'answer_text' => '3'}, {'answer_text' => '4'}]})
       @outcome = @course.created_learning_outcomes.create!(:short_description => 'new outcome')
       @bank = @q1.assessment_question.assessment_question_bank
       @outcome.align(@bank, @bank.context, :mastery_score => 0.7)
@@ -621,8 +681,8 @@ describe QuizSubmission do
       @sub = @quiz.generate_submission(@user)
       @sub.attempt.should eql(2)
       @sub.submission_data = {}
-      question_1 = @q1.question_data[:id]
-      question_2 = @q2.question_data[:id]
+      question_1 = @q1.data[:id]
+      question_2 = @q2.data[:id]
       @sub.submission_data["question_#{question_1}"] = answer_1 + 1
       @sub.submission_data["question_#{question_2}"] = answer_2
       @sub.grade_submission
@@ -749,6 +809,7 @@ describe QuizSubmission do
         "question_1_answer_7397" => "6067",
         "question_1_answer_7398" => "6068",
         "question_1_answer_7399" => "6069",
+        "blah" => "foo"
       })
       user_answer.should == {
         :question_id => 1, :correct => false, :points => 0, :text => "",
@@ -1532,7 +1593,7 @@ describe QuizSubmission do
 
   end
 
-  describe "submitted_versions" do
+  describe "submitted_attempts" do
     let(:submission) { @quiz.quiz_submissions.build }
 
     before do
@@ -1540,11 +1601,11 @@ describe QuizSubmission do
     end
 
     it "should find regrade versions for a submission" do
-      submission.submitted_versions.length.should == 1
+      submission.submitted_attempts.length.should == 1
     end
   end
 
-  describe "attempt_versions" do
+  describe "attempts" do
     let(:quiz)       { @course.quizzes.create! }
     let(:submission) { quiz.quiz_submissions.new }
 
@@ -1569,41 +1630,76 @@ describe QuizSubmission do
       submission.with_versioning(true, &:save!)
       submission.version_number.should eql(3)
 
-      attempt_versions = submission.attempt_versions
-      attempt_versions.length.should == 2
-      attempt_versions.first.should be_a(Version)
+      attempts = submission.attempts
+      attempts.should be_a(QuizSubmissionHistory)
+      attempts.length.should == 2
+
+      first_attempt = attempts.first
+      first_attempt.should be_a(QuizSubmissionAttempt)
+
+      attempts.last_versions.map {|version| version.number }.should == [2, 3]
     end
   end
 
-  describe "submitted_attempts" do
-    let(:quiz)       { @course.quizzes.create! }
-    let(:submission) { quiz.quiz_submissions.new }
-
-    it "should find attempt versions for a submission" do
-      submission.workflow_state = "complete"
-      submission.score = 5.0
-      submission.attempt = 1
-      submission.with_versioning(true, &:save!)
-      submission.version_number.should eql(1)
-      submission.score.should eql(5.0)
-
-      # regrade
-      submission.score_before_regrade = 5.0
-      submission.score = 4.0
-      submission.attempt = 1
-      submission.with_versioning(true, &:save!)
-      submission.version_number.should eql(2)
-
-      # new attempt
-      submission.score = 3.0
-      submission.attempt = 2
-      submission.with_versioning(true, &:save!)
-      submission.version_number.should eql(3)
-
-      submitted_attempts = submission.submitted_attempts
-      submitted_attempts.length.should == 2
-      submitted_attempts.first.should be_a(QuizSubmission)
+  describe "#has_regrade?" do
+    it "should be true if score before regrade is present" do
+      QuizSubmission.new(:score_before_regrade => 10).has_regrade?.should be_true
     end
+
+    it "should be false if score before regrade is absent" do
+      QuizSubmission.new.has_regrade?.should be_false
+    end
+  end
+
+  describe "#score_affected_by_regrade?" do
+    it "should be true if score before regrade differs from current score" do
+      submission = QuizSubmission.new(:score_before_regrade => 10)
+      submission.kept_score = 5
+      submission.score_affected_by_regrade?.should be_true
+    end
+
+    it "should be false if score before regrade is the same as current score" do
+      submission = QuizSubmission.new(:score_before_regrade => 10)
+      submission.kept_score = 10
+      submission.score_affected_by_regrade?.should be_false
+    end
+  end
+
+  describe "#questions_regraded_since_last_attempt" do
+    before do
+      @quiz = @course.quizzes.create! title: 'Test Quiz'
+      course_with_teacher_logged_in(active_all: true, course: @course)
+
+      @submission = @quiz.quiz_submissions.build
+      @submission.workflow_state = "complete"
+      @submission.score = 5.0
+      @submission.attempt = 1
+      @submission.with_versioning(true, &:save!)
+      @submission.version_number.should eql(1)
+      @submission.score.should eql(5.0)
+      @submission.save
+    end
+
+    it "should pass the date from the first version of the most recent attempt to quiz#questions_regraded_since" do
+      @submission.quiz.expects(:questions_regraded_since)
+      @submission.questions_regraded_since_last_attempt
+    end
+
+  end
+
+  it "does not put a graded survey submission in teacher's todos" do
+    questions = [
+      { question_data: { name: 'question 1', question_type: 'essay_question' } }
+    ]
+    submission_data = { 'question_1' => 'Hello' }
+    survey_with_submission(questions) { submission_data }
+    teacher_in_course(course: @course, active_all: true)
+    @quiz.update_attributes(points_possible: 15, quiz_type: 'graded_survey')
+    @quiz_submission.reload.grade_submission
+
+    @quiz_submission.should be_completed
+    @quiz_submission.submission.should be_graded
+    @teacher.assignments_needing_grading.should_not include @quiz.assignment
   end
 
   describe 'broadcast policy' do
@@ -1655,4 +1751,5 @@ describe QuizSubmission do
       @submission.reload.messages_sent.keys.should_not include 'Submission Needs Grading'
     end
   end
+
 end

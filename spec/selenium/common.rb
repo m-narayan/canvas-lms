@@ -68,7 +68,7 @@ module SeleniumTestsHelperMethods
         if SELENIUM_CONFIG[:firefox_profile].present?
           profile = Selenium::WebDriver::Firefox::Profile.from_name(SELENIUM_CONFIG[:firefox_profile])
         end
-        profile.native_events = native
+        profile.native_events = true
         options[:profile] = profile
       end
       if path = SELENIUM_CONFIG[:paths].try(:[], browser)
@@ -931,6 +931,13 @@ shared_examples_for "all selenium tests" do
     dy = target_location.y - source_location.y
 
     drag_with_js source_selector, dx, dy
+  end
+
+  ##
+  # drags the source element to the target element and waits for ajaximations
+  def drag_and_drop_element(source, target)
+    driver.action.drag_and_drop(source, target).perform
+    wait_for_ajaximations
   end
 
 ##

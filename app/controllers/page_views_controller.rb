@@ -171,11 +171,11 @@ class PageViewsController < ApplicationController
       end
       page_views = @user.page_views(date_options)
       url = api_v1_user_page_views_url(url_options)
-      @page_views = Api.paginate(page_views, self, url, :order => 'created_at DESC', :without_count => :true)
 
       respond_to do |format|
         format.json do
-          render :json => @page_views.map { |pv| page_view_json(pv, @current_user, session) }
+          @page_views = Api.paginate(page_views, self, url, :total_entries => nil)
+          render :json => page_views_json(@page_views, @current_user, session)
         end
         format.csv do
           cancel_cache_buster

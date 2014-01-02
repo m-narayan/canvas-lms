@@ -21,14 +21,14 @@ class WikiPagesController < ApplicationController
 
   before_filter :require_context
   before_filter :get_wiki_page
-  before_filter :set_js_rights, :only => [:pages_index, :show_page, :edit_page]
-  before_filter :set_js_wiki_data, :only => [:pages_index, :show_page, :edit_page]
+  before_filter :set_js_rights, :only => [:pages_index, :show_page, :edit_page, :page_revisions]
+  before_filter :set_js_wiki_data, :only => [:pages_index, :show_page, :edit_page, :page_revisions]
   add_crumb(proc { t '#crumbs.wiki_pages', "Pages"}) do |c|
     url = nil
     context = c.instance_variable_get('@context')
     current_user = c.instance_variable_get('@current_user')
     if context.grants_right?(current_user, :read)
-      if context.draft_state_enabled?
+      if context.feature_enabled?(:draft_state)
         url = c.send :polymorphic_path, [context, :pages]
       else
         url = c.send :named_context_url, c.instance_variable_get("@context"), :context_wiki_pages_url
@@ -43,7 +43,7 @@ class WikiPagesController < ApplicationController
   end
 
   def show
-    if @context.draft_state_enabled?
+    if @context.feature_enabled?(:draft_state)
       redirect_to polymorphic_url([@context, :named_page], :wiki_page_id => @page)
       return
     end
@@ -69,14 +69,14 @@ class WikiPagesController < ApplicationController
         format.json {render :json => @page }
       end
     else
-      render_unauthorized_action(@page)
+      render_unauthorized_action
     end
   end
 
   def index
     return unless tab_enabled?(@context.class::TAB_PAGES)
 
-    if @context.draft_state_enabled?
+    if @context.feature_enabled?(:draft_state)
       front_page
     else
       redirect_to named_context_url(@context, :context_wiki_page_url, @context.wiki.get_front_page_url || Wiki::DEFAULT_FRONT_PAGE_URL)
@@ -105,7 +105,7 @@ class WikiPagesController < ApplicationController
 
   def perform_update
     if @page.update_attributes(params[:wiki_page].merge(:user_id => @current_user.id))
-      unless @page.context.draft_state_enabled?
+      unless @page.context.feature_enabled?(:draft_state)
         @page.set_as_front_page! if !@page.wiki.has_front_page? and @page.url == Wiki::DEFAULT_FRONT_PAGE_URL
       end
 
@@ -160,7 +160,7 @@ class WikiPagesController < ApplicationController
   end
 
   def pages_index
-    if !@context.draft_state_enabled?
+    if !@context.feature_enabled?(:draft_state)
       redirect_to polymorphic_url([@context, :wiki_pages])
       return
     end
@@ -171,7 +171,7 @@ class WikiPagesController < ApplicationController
   end
 
   def show_page
-    if !@context.draft_state_enabled?
+    if !@context.feature_enabled?(:draft_state)
       redirect_to polymorphic_url([@context, :named_wiki_page], :id => @page)
       return
     end
@@ -203,7 +203,7 @@ class WikiPagesController < ApplicationController
   end
 
   def edit_page
-    if !@context.draft_state_enabled?
+    if !@context.feature_enabled?(:draft_state)
       redirect_to polymorphic_url([@context, :named_wiki_page], :id => @page) + '#edit'
       return
     end
@@ -216,6 +216,26 @@ class WikiPagesController < ApplicationController
     else
       if authorized_action(@page, @current_user, :read)
         flash[:warning] = t('notices.cannot_edit', 'You are not allowed to edit the page "%{title}".', :title => @page.title)
+        redirect_to polymorphic_url([@context, :named_page], :wiki_page_id => @page)
+      end
+    end
+  end
+
+  def page_revisions
+    if !@context.feature_enabled?(:draft_state)
+      redirect_to polymorphic_url([@context, @page, :wiki_page_revisions])
+      return
+    end
+
+    if is_authorized_action?(@page, @current_user, :read_revisions)
+      add_crumb(@page.title, polymorphic_url([@context, :named_page], :wiki_page_id => @page))
+      add_crumb(t("#crumbs.revisions", "Revisions"))
+
+      @padless = true
+      render
+    else
+      if authorized_action(@page, @current_user, :read)
+        flash[:warning] = t('notices.cannot_read_revisions', 'You are not allowed to review the historical revisions of "%{title}".', :title => @page.title)
         redirect_to polymorphic_url([@context, :named_page], :wiki_page_id => @page)
       end
     end

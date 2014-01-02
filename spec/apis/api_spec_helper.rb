@@ -17,6 +17,7 @@
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/helpers/api_specs')
 
 class HashWithDupCheck < Hash
   def []=(k,v)
@@ -46,9 +47,15 @@ def api_call(method, path, params, body_params = {}, headers = {}, opts = {})
     Api.parse_pagination_links(response.headers['Link'])
   end
 
+  if jsonapi_call?(headers) && method == :delete
+    response.status.should == '204 No Content'
+    return
+  end
+
   case params[:format]
   when 'json'
     response.header['content-type'].should == 'application/json; charset=utf-8'
+
     body = response.body
     if body.respond_to?(:call)
       StringIO.new.tap { |sio| body.call(nil, sio); body = sio.string }
@@ -65,6 +72,10 @@ def api_call(method, path, params, body_params = {}, headers = {}, opts = {})
   end
 end
 
+def jsonapi_call?(headers)
+  headers['Accept'] == 'application/vnd.api+json'
+end
+
 # like api_call, but performed by the specified user instead of @user
 def api_call_as_user(user, method, path, params, body_params = {}, headers = {}, opts = {})
   token = access_token_for_user(user)
@@ -72,6 +83,7 @@ def api_call_as_user(user, method, path, params, body_params = {}, headers = {},
   account = opts[:domain_root_account] || Account.default
   user.pseudonyms.reload
   account.pseudonyms.create!(:unique_id => "#{user.id}@example.com", :user => user) unless user.find_pseudonym_for_account(account, true)
+  Pseudonym.any_instance.stubs(:works_for_account?).returns(true)
   api_call(method, path, params, body_params, headers, opts)
 end
 

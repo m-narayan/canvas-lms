@@ -93,6 +93,7 @@ define [
       'click     .ac-clear'            : '_onClearTokens'
       'click     .ac-token-remove-btn' : '_onRemoveToken'
       'click     .ac-search-btn'       : '_onSearch'
+      'keyclick  .ac-search-btn'       : '_onSearch'
       'focus     .ac-input'            : '_onInputFocus'
       'input     .ac-input'            : '_onSearchTermChange'
       'keydown   .ac-input'            : '_onInputAction'
@@ -468,6 +469,7 @@ define [
     #
     # Returns nothing.
     _onSearch: (e) ->
+      return if @$searchBtn.attr('disabled')
       @_fetchResults(true)
       @$input.focus()
 

@@ -30,7 +30,7 @@ class Rubric < ActiveRecord::Base
   after_save :update_alignments
   validates_presence_of :context_id, :context_type, :workflow_state
   validates_length_of :description, :maximum => maximum_text_length, :allow_nil => true, :allow_blank => true
-  validates_length_of :title, :maximum => maximum_text_length, :allow_nil => true, :allow_blank => true
+  validates_length_of :title, :maximum => maximum_string_length, :allow_nil => true, :allow_blank => true
 
   before_save :default_values
   after_save :update_alignments
@@ -79,15 +79,9 @@ class Rubric < ActiveRecord::Base
   def default_values
     original_title = self.title
     cnt = 0
-
-    loop do
-      dup_title = if new_record?
-                    Rubric.first :conditions => ["title = ? AND context_id = ? AND context_type = ? AND workflow_state != 'deleted'", self.title, self.context_id, self.context_type]
-                  else
-                    Rubric.first :conditions => ["title = ? AND context_id = ? AND context_type = ? AND id != ? AND workflow_state != 'deleted'", self.title, self.context_id, self.context_type, self.id]
-                  end
-      break unless dup_title
-
+    siblings = Rubric.where(context_id: self.context_id, context_type: self.context_type).where("workflow_state<>'deleted'")
+    siblings = siblings.where("id<>?", self.id) unless new_record?
+    while siblings.where(title: self.title).exists?
       cnt += 1
       self.title = "#{original_title} (#{cnt})"
     end

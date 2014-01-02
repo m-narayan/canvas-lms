@@ -282,7 +282,7 @@ describe ContentMigration do
 
     context "unpublished items" do
       before :each do
-        Course.any_instance.stubs(:draft_state_enabled?).returns(true)
+        Account.default.enable_feature!(:draft_state)
       end
 
       it "should copy unpublished modules" do
@@ -360,8 +360,7 @@ describe ContentMigration do
       end
 
       it "should copy wiki has_no_front_page setting if draft state is enabled" do
-        @copy_from.root_account.settings[:enable_draft] = true
-        @copy_from.root_account.save!
+        @copy_from.root_account.enable_feature!(:draft_state)
 
         @copy_from.wiki.front_page.save!
         @copy_from.wiki.unset_front_page!
@@ -383,8 +382,7 @@ describe ContentMigration do
       end
 
       it "should set default view to feed if wiki front page is missing and draft state is enabled" do
-        @copy_from.root_account.settings[:enable_draft] = true
-        @copy_from.root_account.save!
+        @copy_from.root_account.enable_feature!(:draft_state)
 
         @copy_from.default_view = 'wiki'
         @copy_from.save!
@@ -749,6 +747,7 @@ describe ContentMigration do
           :description => "Outcome row 2",
           :id => 2,
           :ratings => [{:points => 3,:description => "lame'",:criterion_id => 2,:id => 3}],
+          :ignore_for_scoring => true,
           :learning_outcome_id => lo2.id
         }
       ]
@@ -765,6 +764,7 @@ describe ContentMigration do
       to_assign = @copy_to.assignments.first
       
       to_rub.data[1]["learning_outcome_id"].should == new_lo2.id
+      to_rub.data[1]["ignore_for_scoring"].should == true
       to_rub.data[0]["learning_outcome_id"].should == lo.id
       to_rub.learning_outcome_alignments.map(&:learning_outcome_id).sort.should == [lo.id, new_lo2.id].sort
       to_assign.learning_outcome_alignments.map(&:learning_outcome_id).sort.should == [lo.id, new_lo2.id].sort
@@ -1391,6 +1391,23 @@ describe ContentMigration do
       @copy_to.quizzes.find_by_migration_id(mig_id(quiz2)).should be_nil
     end
 
+    it "should copy module prerequisites" do
+      enable_cache do
+        mod = @copy_from.context_modules.create!(:name => "first module")
+        mod2 = @copy_from.context_modules.create(:name => "next module")
+        mod2.position = 2
+        mod2.prerequisites = "module_#{mod.id}"
+        mod2.save!
+
+        run_course_copy
+
+        to_mod = @copy_to.context_modules.find_by_migration_id(mig_id(mod))
+        to_mod2 = @copy_to.context_modules.find_by_migration_id(mig_id(mod2))
+        to_mod2.prerequisites.should_not == []
+        to_mod2.prerequisites[0][:id].should eql(to_mod.id)
+      end
+    end
+
     it "should preserve links to re-uploaded attachments" do
       att = Attachment.create!(:filename => 'first.png', :uploaded_data => StringIO.new('ohai'), :folder => Folder.root_folders(@copy_from).first, :context => @copy_from)
       att.destroy
@@ -1455,7 +1472,9 @@ describe ContentMigration do
       )
       @copy_from.quizzes.create!(:due_at => "05 Jul 2012 06:00:00 UTC +00:00",
                                  :unlock_at => old_start + 1.days,
-                                 :lock_at => old_start + 5.days
+                                 :lock_at => old_start + 5.days,
+                                 :show_correct_answers_at => old_start + 6.days,
+                                 :hide_correct_answers_at => old_start + 7.days
       )
       @copy_from.discussion_topics.create!(:title => "some topic",
                                            :message => "<p>some text</p>",
@@ -1483,6 +1502,8 @@ describe ContentMigration do
       new_quiz.due_at.to_i.should  == (new_start + 4.day).to_i
       new_quiz.unlock_at.to_i.should == (new_start + 1.day).to_i
       new_quiz.lock_at.to_i.should == (new_start + 5.day).to_i
+      new_quiz.show_correct_answers_at.to_i.should == (new_start + 6.day).to_i
+      new_quiz.hide_correct_answers_at.to_i.should == (new_start + 7.day).to_i
 
       new_disc = @copy_to.discussion_topics.first
       new_disc.delayed_post_at.to_i.should == (new_start + 3.day).to_i
@@ -1503,7 +1524,7 @@ describe ContentMigration do
               :title => 'quiz',
               :description => "<p>description eh</p>",
               :shuffle_answers => true,
-              :show_correct_answers => 'true',
+              :show_correct_answers => true,
               :time_limit => 20,
               :allowed_attempts => 4,
               :scoring_policy => 'keep_highest',
@@ -1661,9 +1682,16 @@ describe ContentMigration do
       date2 = "Jun 21 2012 00:00am"
       asmnt = @copy_from.assignments.create!(:title => 'all day', :due_at => date)
       asmnt.all_day.should be_true
-      cal = @copy_from.calendar_events.create(:title => "haha", :description => "oi", :start_at => date2, :end_at => date2)
 
-      run_course_copy
+      cal = nil
+      Time.use_zone('America/Denver') do
+        cal = @copy_from.calendar_events.create!(:title => "haha", :description => "oi", :start_at => date2, :end_at => date2)
+        cal.start_at.strftime("%H:%M").should == "00:00"
+      end
+
+      Time.use_zone('UTC') do
+        run_course_copy
+      end
 
       asmnt_2 = @copy_to.assignments.find_by_migration_id(mig_id(asmnt))
       asmnt_2.all_day.should be_true
@@ -1673,7 +1701,7 @@ describe ContentMigration do
       cal_2 = @copy_to.calendar_events.find_by_migration_id(mig_id(cal))
       cal_2.all_day.should be_true
       cal_2.all_day_date.should == Date.parse("Jun 21 2012")
-      cal_2.start_at.strftime("%H:%M").should == "00:00"
+      cal_2.start_at.utc.should == cal.start_at.utc
     end
 
     it "should leave file references in AQ context as-is on copy" do
@@ -1967,7 +1995,7 @@ equation: <img class="equation_image" title="Log_216" src="/equation_images/Log_
 
     context "external tools" do
       append_before do
-        @tool_from = @copy_from.context_external_tools.create!(:name => "new tool", :consumer_key => "key", :shared_secret => "secret", :domain => 'example.com', :custom_fields => {'a' => '1', 'b' => '2'})
+        @tool_from = @copy_from.context_external_tools.create!(:name => "new tool", :consumer_key => "key", :shared_secret => "secret", :custom_fields => {'a' => '1', 'b' => '2'}, :url => "http://www.example.com")
         @tool_from.settings[:course_navigation] = {:url => "http://www.example.com", :text => "Example URL"}
         @tool_from.save!
       end
@@ -2052,6 +2080,32 @@ equation: <img class="equation_image" title="Log_216" src="/equation_images/Log_
         tool.account_navigation.should == @tool_from.account_navigation
         tool.user_navigation.should_not be_nil
         tool.user_navigation.should == @tool_from.user_navigation
+      end
+
+      it "should keep reference to ContextExternalTool by id for courses" do
+        mod1 = @copy_from.context_modules.create!(:name => "some module")
+        tag = mod1.add_item :type => 'context_external_tool', :id => @tool_from.id,
+                      :url => "https://www.example.com/launch"
+        run_course_copy
+
+        tool_copy = @copy_to.context_external_tools.find_by_migration_id(CC::CCHelper.create_key(@tool_from))
+        tag = @copy_to.context_modules.first.content_tags.first
+        tag.content_type.should == 'ContextExternalTool'
+        tag.content_id.should == tool_copy.id
+      end
+
+      it "should keep reference to ContextExternalTool by id for accounts" do
+        account = @copy_from.root_account
+        @tool_from.context = account
+        @tool_from.save!
+        mod1 = @copy_from.context_modules.create!(:name => "some module")
+        mod1.add_item :type => 'context_external_tool', :id => @tool_from.id, :url => "https://www.example.com/launch"
+
+        run_course_copy
+
+        tag = @copy_to.context_modules.first.content_tags.first
+        tag.content_type.should == 'ContextExternalTool'
+        tag.content_id.should == @tool_from.id
       end
     end
   end
@@ -2142,6 +2196,22 @@ equation: <img class="equation_image" title="Log_216" src="/equation_images/Log_
       @course.reload
       @course.attachments.count.should == 1
     end
+  end
+
+  it "should use url for migration file" do
+    course_with_teacher
+    cm = ContentMigration.new(:context => @course, :user => @user,)
+    cm.migration_type = 'zip_file_importer'
+    cm.migration_settings[:folder_id] = Folder.root_folders(@course).first.id
+    # the mock below should prevent it from actually hitting the url
+    cm.migration_settings[:file_url] = "http://localhost:3000/file.zip"
+    cm.save!
+
+    Attachment.any_instance.expects(:clone_url).with(cm.migration_settings[:file_url], false, true, :quota_context => cm.context)
+
+    cm.queue_migration
+    worker = Canvas::Migration::Worker::CCWorker.new
+    worker.perform(cm)
   end
 
 end

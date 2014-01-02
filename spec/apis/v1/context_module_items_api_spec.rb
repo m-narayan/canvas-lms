@@ -200,6 +200,14 @@ describe "Module Items API", :type => :integration do
       json['content_details'].should == {'points_possible' => @assignment.points_possible}
     end
 
+    it "should frame_external_urls" do
+      json = api_call(:get, "/api/v1/courses/#{@course.id}/modules/#{@module1.id}/items/#{@external_url_tag.id}?frame_external_urls=true",
+                      :controller => "context_module_items_api", :action => "show", :format => "json",
+                      :course_id => "#{@course.id}", :module_id => "#{@module1.id}", :frame_external_urls => 'true',
+                      :id => "#{@external_url_tag.id}")
+      json['html_url'].should eql "http://www.example.com/courses/#{@course.id}/modules/items/#{@external_url_tag.id}"
+    end
+
     it "should paginate the module item list" do
       module3 = @course.context_modules.create!(:name => "module with lots of items")
       4.times { |i| module3.add_item(:type => 'context_module_sub_header', :title => "item #{i}") }
@@ -280,6 +288,18 @@ describe "Module Items API", :type => :integration do
                         {:controller => "context_module_items_api", :action => "create", :format => "json",
                          :course_id => "#{@course.id}", :module_id => "#{@module1.id}"},
                         {:module_item => {:title => 'Blah', :type => 'Page', :page_url => 'invalidpageurl'}},
+                        {}, {:expected_status => 400})
+      end
+
+      it "should require a non-deleted page_url" do
+        page = @course.wiki.wiki_pages.create(:title => 'Deleted Page')
+        page.workflow_state = 'deleted'
+        page.save!
+
+        json = api_call(:post, "/api/v1/courses/#{@course.id}/modules/#{@module1.id}/items",
+                        {:controller => "context_module_items_api", :action => "create", :format => "json",
+                         :course_id => "#{@course.id}", :module_id => "#{@module1.id}"},
+                        {:module_item => {:title => 'Deleted Page', :type => 'Page', :page_url => page.url}},
                         {}, {:expected_status => 400})
       end
 
@@ -666,7 +686,7 @@ describe "Module Items API", :type => :integration do
         json['modules'].map {|mod| mod['id']}.sort.should == [@module1.id, @module2.id].sort
       end
 
-      it "should find find a wiki page by url" do
+      it "should find a (non-deleted) wiki page by url" do
         json = api_call(:get, "/api/v1/courses/#{@course.id}/module_item_sequence?asset_type=Page&asset_id=#{@wiki_page.url}",
                         :controller => "context_module_items_api", :action => "item_sequence", :format => "json",
                         :course_id => @course.to_param, :asset_type => 'Page', :asset_id => @wiki_page.to_param)
@@ -675,6 +695,15 @@ describe "Module Items API", :type => :integration do
         json['items'][0]['current']['id'].should == @wiki_page_tag.id
         json['items'][0]['next']['id'].should == @attachment_tag.id
         json['modules'].map {|mod| mod['id']}.sort.should == [@module1.id, @module2.id].sort
+
+        @wiki_page.workflow_state = 'deleted'
+        @wiki_page.save!
+
+        json = api_call(:get, "/api/v1/courses/#{@course.id}/module_item_sequence?asset_type=Page&asset_id=#{@wiki_page.url}",
+                        :controller => "context_module_items_api", :action => "item_sequence", :format => "json",
+                        :course_id => @course.to_param, :asset_type => 'Page', :asset_id => @wiki_page.to_param)
+        json['items'].size.should eql 0
+        json['modules'].size.should eql 0
       end
 
       it "should skip a deleted module" do

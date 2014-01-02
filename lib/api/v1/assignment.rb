@@ -49,6 +49,10 @@ module Api::V1::Assignment
     )
   }
 
+  def assignments_json(assignments, user, session, opts = {})
+    assignments.map{ |assignment| assignment_json(assignment, user, session, opts) }
+  end
+
   def assignment_json(assignment, user, session, opts = {})
     opts.reverse_merge!(
       include_discussion_topic: true,
@@ -92,7 +96,7 @@ module Api::V1::Assignment
       hash['external_tool_tag_attributes'] = {
         'url' => external_tool_tag.url,
         'new_tab' => external_tool_tag.new_tab,
-        'resource_link_id' => external_tool_tag.opaque_identifier(:asset_string)
+        'resource_link_id' => ContextExternalTool.opaque_identifier_for(external_tool_tag, assignment.shard)
       }
       hash['url'] = sessionless_launch_url(@context,
                                            :launch_type => 'assessment',
@@ -157,9 +161,19 @@ module Api::V1::Assignment
       hash['all_dates'] = assignment.dates_hash_visible_to(user)
     end
 
-    #show published/unpublished if account.settings[:enable_draft]
-    if @domain_root_account.enable_draft?
+    if opts[:include_module_ids]
+      thing_in_module = case assignment.submission_types
+                        when "online_quiz" then assignment.quiz
+                        when "discussion_topic" then assignment.discussion_topic
+                        else assignment
+                        end
+      module_ids = thing_in_module.context_module_tags.map &:context_module_id
+      hash['module_ids'] = module_ids
+    end
+
+    if assignment.context.feature_enabled?(:draft_state)
       hash['published'] = ! assignment.unpublished?
+      hash['unpublishable'] = !assignment.has_student_submissions?
     end
 
     if submission = opts[:submission]
@@ -313,7 +327,7 @@ module Api::V1::Assignment
       update_params["description"] = process_incoming_html_content(update_params["description"])
     end
 
-    if @domain_root_account.enable_draft?
+    if assignment.context.feature_enabled?(:draft_state)
       if assignment_params.has_key? "published"
         published = value_to_boolean(assignment_params['published'])
         assignment.workflow_state = published ? 'published' : 'unpublished'

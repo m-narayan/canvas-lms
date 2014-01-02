@@ -27,14 +27,14 @@ module Api::V1::WikiPage
     hash = api_json(wiki_page, current_user, session, :only => WIKI_PAGE_JSON_ATTRS)
     hash['editing_roles'] ||= 'teachers'
     hash['last_edited_by'] = user_display_json(wiki_page.user, wiki_page.context) if wiki_page.user
-    if wiki_page.context.draft_state_enabled?
+    if wiki_page.context.feature_enabled?(:draft_state)
       hash['published'] = wiki_page.active?
       hash['hide_from_students'] = !hash['published']
     else
       hash['published'] = true
     end
     hash['front_page'] = wiki_page.is_front_page?
-    if wiki_page.context.draft_state_enabled?
+    if wiki_page.context.feature_enabled?(:draft_state)
       hash['html_url'] = polymorphic_url([wiki_page.context, :named_page], :wiki_page_id => wiki_page)
     else
       hash['html_url'] = polymorphic_url([wiki_page.context, :named_wiki_page], :id => wiki_page)
@@ -48,12 +48,15 @@ module Api::V1::WikiPage
     wiki_pages.map { |page| wiki_page_json(page, current_user, session, false) }
   end
 
-  def wiki_page_revision_json(version, current_user, current_session, include_content = true)
+  def wiki_page_revision_json(version, current_user, current_session, include_content = true, latest_version = nil)
     page = version.model
     hash = {
       'revision_id' => version.number,
       'updated_at' => page.updated_at
     }
+    if latest_version
+      hash['latest'] = version.number == latest_version.number
+    end
     if include_content
       hash.merge!({
         'url' => page.url,
@@ -65,7 +68,7 @@ module Api::V1::WikiPage
     hash
   end
 
-  def wiki_page_revisions_json(versions, current_user, current_session)
-    versions.map { |ver| wiki_page_revision_json(ver, current_user, current_session, false) }
+  def wiki_page_revisions_json(versions, current_user, current_session, latest_version = nil)
+    versions.map { |ver| wiki_page_revision_json(ver, current_user, current_session, false, latest_version) }
   end
 end

@@ -1169,6 +1169,26 @@ describe CoursesController, :type => :integration do
     end
 
     describe "/users" do
+      it "returns an empty array for a page past the end" do
+        json = api_call(:get, "/api/v1/courses/#{@course1.id}/users.json?page=5",
+          controller: 'courses',
+          action: 'users',
+          course_id: @course1.id.to_s,
+          page: '5',
+          format: 'json')
+        json.should == []
+      end
+
+      it "returns a 404 for an otherwise invalid page" do
+        raw_api_call(:get, "/api/v1/courses/#{@course1.id}/users.json?page=invalid",
+          controller: 'courses',
+          action: 'users',
+          course_id: @course1.id.to_s,
+          page: 'invalid',
+          format: 'json')
+        response.status.should == "404 Not Found"
+      end
+
       it "returns a list of users" do
         json = api_call(:get, "/api/v1/courses/#{@course1.id}/users.json",
                         { :controller => 'courses', :action => 'users', :course_id => @course1.id.to_s, :format => 'json' })
@@ -1643,8 +1663,8 @@ describe CoursesController, :type => :integration do
         it "should find courses in sub accounts" do
           sub_account = @course.account.sub_accounts.create!
           c2 = sub_account.courses.create!
-          json = api_call(:get, "/api/v1/accounts/#{@course.account.id}/courses/#{c2.id}.json",
-                          {:controller => 'courses', :action => 'show', :id => c2.to_param, :format => 'json', :account_id => @course.account.id.to_param})
+          json = api_call(:get, "/api/v1/accounts/#{sub_account.id}/courses/#{c2.id}.json",
+                          {:controller => 'courses', :action => 'show', :id => c2.to_param, :format => 'json', :account_id => sub_account.id.to_param})
           json['id'].should == c2.id
         end
 

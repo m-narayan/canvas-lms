@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU Affero General Public License along
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-require 'zip/zip'
-require 'action_controller'
-require 'action_controller/test_process.rb'
+require 'zip'
+require 'action_controller_test_process'
 require 'tmpdir'
 require 'set'
+
 
 class ContentZipper
 
@@ -79,7 +79,7 @@ class ContentZipper
 
     make_zip_tmpdir(filename) do |zip_name|
       @logger.debug("creating #{zip_name}")
-      Zip::ZipFile.open(zip_name, Zip::ZipFile::CREATE) do |zipfile|
+      Zip::File.open(zip_name, Zip::File::CREATE) do |zipfile|
         count = submissions.length
         submissions.each_with_index do |submission, idx|
           @assignment = assignment
@@ -184,7 +184,7 @@ class ContentZipper
     make_zip_tmpdir(filename) do |zip_name|
       idx = 0
       count = static_attachments.length + 2
-      Zip::ZipFile.open(zip_name, Zip::ZipFile::CREATE) do |zipfile|
+      Zip::File.open(zip_name, Zip::File::CREATE) do |zipfile|
         update_progress(zip_attachment, idx, count)
         portfolio.eportfolio_entries.each do |entry|
           filename = "#{entry.full_slug}.html"
@@ -232,7 +232,7 @@ class ContentZipper
     filename = "#{folder.context.short_name}-#{folder.name} files"
     make_zip_tmpdir(filename) do |zip_name|
       @logger.debug("creating #{zip_name}")
-      Zip::ZipFile.open(zip_name, Zip::ZipFile::CREATE) do |zipfile|
+      Zip::File.open(zip_name, Zip::File::CREATE) do |zipfile|
         @logger.debug("zip_name: #{zip_name}")
         process_folder(folder, zipfile)
       end
@@ -323,7 +323,7 @@ class ContentZipper
     handle = nil
     begin
       handle = attachment.open(:need_local_file => true)
-      zipfile.get_output_stream(filename){|zos| IOExtras.copy_stream(zos, handle)}
+      zipfile.get_output_stream(filename){|zos| Zip::IOExtras.copy_stream(zos, handle)}
     rescue => e
       @logger.error("  skipping #{attachment.full_filename} with error: #{e.message}")
       return false

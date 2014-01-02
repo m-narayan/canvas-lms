@@ -103,10 +103,7 @@ describe WikiPagesController do
 
     context "draft state enabled" do
       before do
-        root = @course.root_account
-        root.settings[:enable_draft] = true
-        root.save!
-        @course.reload
+        @course.root_account.enable_feature!(:draft_state)
       end
 
       it "should forward /wiki to /pages index if no front page" do
@@ -129,9 +126,25 @@ describe WikiPagesController do
         response.code.should == '302'
         response.redirected_to.should =~ %r{/pages/a-page\z}
       end
+
+      it "should forward /wiki/name/revisions to /pages/name/revisions" do
+        get @base_url + "wiki/a-page/revisions"
+        response.code.should == '302'
+        response.redirected_to.should =~ %r{/pages/a-page/revisions\z}
+      end
+
+      it "should forward /wiki/name/revisions/revision to /pages/name/revisions" do
+        get @base_url + "wiki/a-page/revisions/42"
+        response.code.should == '302'
+        response.redirected_to.should =~ %r{/pages/a-page/revisions\z}
+      end
     end
 
     context "draft state disabled" do
+      before do
+        @course.root_account.disable_feature!(:draft_state)
+      end
+
       it "should forward /pages to /wiki" do
         get @base_url + "pages"
         response.code.should == '302'
@@ -148,6 +161,12 @@ describe WikiPagesController do
         get @base_url + "pages/a-page/edit"
         response.code.should == '302'
         response.redirected_to.should =~ %r{/wiki/a-page#edit\z}
+      end
+
+      it "should forward /pages/name/revisions to /wiki/name/revisions" do
+        get @base_url + "pages/a-page/revisions"
+        response.code.should == '302'
+        response.redirected_to.should =~ %r{/wiki/a-page/revisions\z}
       end
     end
 

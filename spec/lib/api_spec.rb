@@ -595,6 +595,39 @@ describe Api do
     end
   end
 
+  context ".paginate" do
+    let(:request) { stub('request', query_parameters: {}) }
+    let(:response) { stub('response', headers: {}) }
+    let(:controller) { stub('controller', request: request, response: response, params: {}) }
+
+    describe "ordinal collection" do
+      let(:collection) { [1, 2, 3] }
+
+      it "should not raise Folio::InvalidPage for pages past the end" do
+        Api.paginate(collection, controller, 'example.com', page: collection.size + 1, per_page: 1).
+          should == []
+      end
+
+      it "should not raise Folio::InvalidPage for integer-equivalent non-Integer pages" do
+        Api.paginate(collection, controller, 'example.com', page: '1').
+          should == collection
+      end
+
+      it "should raise Folio::InvalidPage for pages <= 0" do
+        lambda{ Api.paginate(collection, controller, 'example.com', page: 0) }.
+          should raise_error(Folio::InvalidPage)
+
+        lambda{ Api.paginate(collection, controller, 'example.com', page: -1) }.
+          should raise_error(Folio::InvalidPage)
+      end
+
+      it "should raise Folio::InvalidPage for non-integer pages" do
+        lambda{ Api.paginate(collection, controller, 'example.com', page: 'abc') }.
+          should raise_error(Folio::InvalidPage)
+      end
+    end
+  end
+
   context ".build_links" do
     it "should not build links if not pagination is provided" do
       Api.build_links("www.example.com").should be_empty
@@ -654,6 +687,28 @@ describe Api do
         :next => 4,
       })
       links.first.should == "<www.example.com/?page=4&per_page=10>; rel=\"next\""
+    end
+  end
+
+  describe "#accepts_jsonapi?" do
+    class TestApiController
+      include Api
+    end
+
+    it "returns true when application/vnd.api+json in the Accept header" do
+      controller = TestApiController.new
+      controller.stubs(:request).returns stub(headers: {
+        'Accept' => 'application/vnd.api+json'
+      })
+      controller.accepts_jsonapi?.should == true
+    end
+
+    it "returns false when application/vnd.api+json not in the Accept header" do
+      controller = TestApiController.new
+      controller.stubs(:request).returns stub(headers: {
+        'Accept' => 'application/json'
+      })
+      controller.accepts_jsonapi?.should == false
     end
   end
 end
