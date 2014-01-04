@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011 Instructure, Inc.
+# Copyright (C) 2011 - 2013 Instructure, Inc.
 #
 # This file is part of Canvas.
 #
@@ -222,7 +222,7 @@ class Pseudonym < ActiveRecord::Base
   def destroy(even_if_managed_password=false)
     raise "Cannot delete system-generated pseudonyms" if !even_if_managed_password && self.managed_password?
     self.workflow_state = 'deleted'
-    self.deleted_at = Time.now
+    self.deleted_at = Time.now.utc
     result = self.save
     self.user.try(:update_account_associations) if result
     result
@@ -384,11 +384,17 @@ class Pseudonym < ActiveRecord::Base
 
   def self.serialization_excludes; [:crypted_password, :password_salt, :reset_password_token, :persistence_token, :single_access_token, :perishable_token, :sis_ssha]; end
 
+  def self.associated_shards(unique_id_or_sis_user_id)
+    [Shard.default]
+  end
+
   def self.find_all_by_arbitrary_credentials(credentials, account_ids, remote_ip)
     return [] if credentials[:unique_id].blank? ||
                  credentials[:password].blank?
     too_many_attempts = false
+    associated_shards = associated_shards(credentials[:unique_id])
     pseudonyms = Shard.partition_by_shard(account_ids) do |account_ids|
+      next if GlobalLookups.enabled? && !associated_shards.include?(Shard.current)
       active.
         by_unique_id(credentials[:unique_id]).
         where(:account_id => account_ids).

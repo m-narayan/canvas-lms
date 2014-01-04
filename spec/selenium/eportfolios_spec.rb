@@ -212,7 +212,7 @@ describe "eportfolios" do
           f(".edit_content_link").click
           hover_and_click("#page_section_1 .delete_page_section_link")
           try_to_close_modal
-          sleep 1
+          wait_for_ajaximations
           submit_form(".form_content")
           wait_for_ajaximations
           @eportfolio.eportfolio_entries.first.content[0].should == "No Content Added Yet"
@@ -232,7 +232,8 @@ describe "eportfolios" do
 
       it "should add a course submission" do
         f(".add_submission_link").click
-        f(".submission_list").should include_text(@assignment.title)
+        wait_for_ajaximations
+        keep_trying_until { f(".submission_list").should include_text(@assignment.title) }
         f(".select_submission_button").click
         submit_form(".form_content")
       end

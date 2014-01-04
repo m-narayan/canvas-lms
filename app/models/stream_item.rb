@@ -273,7 +273,7 @@ class StreamItem < ActiveRecord::Base
     # the teacher's comment even if it is farther down.
 
     # touch all the users to invalidate the cache
-    if Rails.version < '3.0'
+    if CANVAS_RAILS2
       User.update_all({:updated_at => Time.now.utc}, {:id => user_ids})
     else
       User.where(:id => user_ids).update_all(:updated_at => Time.now.utc)
@@ -352,7 +352,7 @@ class StreamItem < ActiveRecord::Base
 
     unless user_ids.empty?
       # touch all the users to invalidate the cache
-      if Rails.version < '3.0'
+      if CANVAS_RAILS2
         User.update_all({:updated_at => Time.now.utc}, {:id => user_ids.to_a})
       else
         User.where(:id => user_ids.to_a).update_all(:updated_at => Time.now.utc)
@@ -408,7 +408,14 @@ class StreamItem < ActiveRecord::Base
 
   public
   def destroy_stream_item_instances
-    # bare scoped call avoid Rails 2 HasManyAssociation loading all objects
-    self.stream_item_instances.with_each_shard { |scope| scope.scoped.delete_all; nil }
+    self.stream_item_instances.with_each_shard do |scope|
+      if CANVAS_RAILS2
+        # bare scoped call avoid Rails 2 HasManyAssociation loading all objects
+        scope.scoped.delete_all
+      else
+        scope.delete_all
+      end
+      nil
+    end
   end
 end

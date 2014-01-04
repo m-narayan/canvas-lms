@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2012 Instructure, Inc.
+# Copyright (C) 2011 - 2013 Instructure, Inc.
 #
 # This file is part of Canvas.
 #
@@ -29,6 +29,9 @@ class Attachment < ActiveRecord::Base
 
   attr_accessor :podcast_associated_asset, :submission_attachment
 
+  # this is a gross hack to work around freaking SubmissionComment#attachments=
+  attr_accessor :ok_for_submission_comment
+
   MAX_SCRIBD_ATTEMPTS = 3
   MAX_CROCODOC_ATTEMPTS = 2
   # This value is used as a flag for when we are skipping the submit to scribd for this attachment
@@ -44,7 +47,6 @@ class Attachment < ActiveRecord::Base
   has_many :attachment_associations
   belongs_to :root_attachment, :class_name => 'Attachment'
   belongs_to :scribd_mime_type
-  belongs_to :scribd_account
   has_one :sis_batch
   has_one :thumbnail, :foreign_key => "parent_id", :conditions => {:thumbnail => "thumb"}
   has_many :thumbnails, :foreign_key => "parent_id"
@@ -165,7 +167,7 @@ class Attachment < ActiveRecord::Base
       @after_attachment_saved_workflow_state = nil
     end
 
-    if scribdable? && !Attachment.skip_3rd_party_submits?
+    if !root_attachment_id && scribdable? && !Attachment.skip_3rd_party_submits?
       send_later_enqueue_args(:submit_to_scribd!,
                               {:n_strand => 'scribd', :max_attempts => 1})
     elsif %w(pending_upload processing).include?(workflow_state)
@@ -175,7 +177,9 @@ class Attachment < ActiveRecord::Base
 
     # directly update workflow_state so we don't trigger another save cycle
     if self.workflow_state_changed?
-      self.class.where(:id => self).update_all(:workflow_state => self.workflow_state)
+      self.shard.activate do
+        self.class.where(:id => self).update_all(:workflow_state => self.workflow_state)
+      end
     end
 
     # try an infer encoding if it would be useful to do so
@@ -241,7 +245,7 @@ class Attachment < ActiveRecord::Base
     transitioned_to_this_state = self.id_was == nil || self.file_state_changed? && self.workflow_state_was =~ /^unattached/
     if in_the_right_state && transitioned_to_this_state &&
         self.content_type && self.content_type.match(/\A(video|audio)/)
-      delay = Setting.get_cached('attachment_build_media_object_delay_seconds', 10.to_s).to_i
+      delay = Setting.get('attachment_build_media_object_delay_seconds', 10.to_s).to_i
       MediaObject.send_later_enqueue_args(:add_media_files, { :run_at => delay.seconds.from_now, :priority => Delayed::LOWER_PRIORITY }, self, false)
     end
   end
@@ -300,7 +304,7 @@ class Attachment < ActiveRecord::Base
 
   def assert_attachment
     if !self.to_be_zipped? && !self.zipping? && !self.errored? && !self.deleted? && (!filename || !content_type || !downloadable?)
-      self.errors.add_to_base(t('errors.not_found', "File data could not be found"))
+      self.errors.add(:base, t('errors.not_found', "File data could not be found"))
       return false
     end
   end
@@ -323,45 +327,33 @@ class Attachment < ActiveRecord::Base
     end
   end
 
-  # It seems like there are at least three possibilities here:
-  # 1. the root attachment's record has a scribd_doc; the child attachmenent's
-  #    doesn't, and uses the root's implicitly (iow, Attachment#scribd_doc
-  #    loads the parent's if the child doesn't have one).
-  #    -> I cannot find any examples of this; in my experience, the child's
-  #       record always has a scribd_doc explicitly set...
-  #    --> if we trusted this case never to happen, then we could add
-  #        "where scribd_doc is not null" to the condition below
-  # 2. the root attachment and the child attachment each have an explicit
-  #    scribd_doc, specifying the same doc_id
-  #    -> I see plenty of examples of this in the db, but I have
-  #       not seen it happen...
-  # 3. the root attachment and the child attachment each have an explicit
-  #    scribd_doc, specifying different doc_ids (i.e., not sharing)
-  #    -> This is what happens when I upload two copies of the same file.
-  def scribd_doc_shared?
-    return false unless scribd_doc
-    related_attachments.not_deleted.any? do |att|
-      att.scribd_doc && att.scribd_doc.doc_id == scribd_doc.doc_id
-    end
-  end
-
   # disassociate the scribd_doc from this Attachment
   # and also delete it from scribd if no other Attachments are using it
   def delete_scribd_doc
+    # we no longer do scribd docs on child attachments, but the migration
+    # moving them up to root attachments might still be running
+    return true if root_attachment_id
     return true unless ScribdAPI.enabled? && scribd_doc
-    shared = scribd_doc_shared?
 
     scribd_doc = self.scribd_doc
+    Scribd::API.instance.user = scribd_user
     self.scribd_doc = nil
+    self.scribd_attempts = 0
     self.workflow_state = 'deleted'  # not file_state :P
-    unless shared
-      ScribdAPI.instance.set_user(self.scribd_account)
+    begin
       return false unless scribd_doc.destroy
+    rescue Scribd::ResponseError => e
+      # does not exist
+      return false unless e.code == '612'
     end
     save
   end
 
-  # This method retrieves a URL to the thumbnail of a document, in a given size, and for any page in that document. Note that docs.getSettings and docs.getList also retrieve thumbnail URLs in default size - this method is really for resizing those. IMPORTANT - it is possible that at some time in the future, Scribd will redesign its image system, invalidating these URLs. So if you cache them, please have an update strategy in place so that you can update them if neceessary.
+  def scribd_user
+    self.scribd_doc.try(:owner) || (Rails.env.production? ? "canvas-#{context.global_asset_string}" : "canvas-#{Rails.env}")
+  end
+
+  # This method retrieves a URL to the thumbnail of a document, in a given size, and for any page in that document. Note that docs.getSettings and docs.getList also retrieve thumbnail URLs in default size - this method is really for resizing those. IMPORTANT - it is possible that at some time in the future, Scribd will redesign its image system, invalidating these URLs. So if you cache them, please have an update strategy in place so that you can update them if necessary.
   #
   # Parameters
   # integer width  (optional) Width in px of the desired image. If not included, will use the default thumb size.
@@ -373,31 +365,25 @@ class Attachment < ActiveRecord::Base
   # or just some_attachment.scribd_thumbnail  #will give you the default tumbnail for the document.
   def scribd_thumbnail(options={})
     return unless self.scribd_doc && ScribdAPI.enabled?
-    if options.empty? && self.cached_scribd_thumbnail
+    if options.empty?
+      # we cache the 'default' version in the DB
+      unless self.cached_scribd_thumbnail
+        self.cached_scribd_thumbnail = self.request_scribd_thumbnail(options)
+        Attachment.where(:id => self).update_all(:cached_scribd_thumbnail => self.cached_scribd_thumbnail)
+      end
       self.cached_scribd_thumbnail
     else
-      begin
-      # if we aren't requesting special demensions, fetch and save it to the db.
-      if options.empty?
-        ScribdAPI.instance.set_user(self.scribd_account)
-        self.cached_scribd_thumbnail = self.scribd_doc.thumbnail(options)
-        # just update the cached_scribd_thumbnail column of this attachment without running callbacks
-        Attachment.where(:id => self).update_all(:cached_scribd_thumbnail => self.cached_scribd_thumbnail)
-        self.cached_scribd_thumbnail
-      else
-        Rails.cache.fetch(['scribd_thumb', self, options].cache_key) do
-          ScribdAPI.instance.set_user(self.scribd_account)
-          self.scribd_doc.thumbnail(options)
-        end
-      end
-      rescue Scribd::NotReadyError
-        nil
-      rescue => e
-        nil
+      # we cache other versions in the rails cache
+      Rails.cache.fetch(['scribd_thumb', self, options].cache_key) do
+        self.request_scribd_thumbnail(options)
       end
     end
   end
-  memoize :scribd_thumbnail
+
+  def request_scribd_thumbnail(options)
+    Scribd::API.instance.user = scribd_user
+    self.scribd_doc.thumbnail(options)
+  end
 
   def turnitinable?
     self.content_type && [
@@ -480,7 +466,7 @@ class Attachment < ActiveRecord::Base
     self.scribd_attempts ||= 0
     self.folder_id ||= Folder.root_folders(context).first.id rescue nil
     if self.root_attachment && self.new_record?
-      [:md5, :size, :content_type, :scribd_mime_type_id, :scribd_user, :submitted_to_scribd_at, :workflow_state, :scribd_doc].each do |key|
+      [:md5, :size, :content_type, :scribd_mime_type_id, :submitted_to_scribd_at, :workflow_state, :scribd_doc].each do |key|
         self.send("#{key.to_s}=", self.root_attachment.send(key))
       end
       self.write_attribute(:filename, self.root_attachment.filename)
@@ -513,15 +499,6 @@ class Attachment < ActiveRecord::Base
     end
 
     self.media_entry_id ||= 'maybe' if self.new_record? && self.content_type && self.content_type.match(/(video|audio)/)
-
-    # Raise an error if this is scribdable without a scribdable context?
-    if scribdable_context? and scribdable? and ScribdAPI.enabled?
-      unless context.scribd_account
-        ScribdAccount.create(:scribdable => context)
-        self.context.reload
-      end
-      self.scribd_account_id ||= context.scribd_account.id
-    end
   end
   protected :default_values
 
@@ -720,7 +697,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def self.minimum_size_for_quota
-    Setting.get_cached('attachment_minimum_size_for_quota', '512').to_i
+    Setting.get('attachment_minimum_size_for_quota', '512').to_i
   end
 
   def self.get_quota(context)
@@ -729,11 +706,11 @@ class Attachment < ActiveRecord::Base
     context = context.quota_context if context.respond_to?(:quota_context) && context.quota_context
     if context
       Shackles.activate(:slave) do
-        quota = Setting.get_cached('context_default_quota', 50.megabytes.to_s).to_i
+        quota = Setting.get('context_default_quota', 50.megabytes.to_s).to_i
         quota = context.quota if (context.respond_to?("quota") && context.quota)
         min = self.minimum_size_for_quota
         # translated to ruby this is [size, min].max || 0
-        quota_used = context.attachments.active.sum("COALESCE(CASE when size < #{min} THEN #{min} ELSE size END, 0)", :conditions => { :root_attachment_id => nil }).to_i
+        quota_used = context.attachments.active.where(root_attachment_id: nil).sum("COALESCE(CASE when size < #{min} THEN #{min} ELSE size END, 0)").to_i
       end
     end
     {:quota => quota, :quota_used => quota_used}
@@ -877,7 +854,6 @@ class Attachment < ActiveRecord::Base
       # "still need to handle things that are not images with thumbnails, scribd_docs, or kaltura docs"
     end
   end
-  memoize :thumbnail_url
 
   def thumbnail_for_size(geometry)
     if self.class.allows_thumbnails_of_size?(geometry)
@@ -1200,6 +1176,12 @@ class Attachment < ActiveRecord::Base
         session['file_access_expiration'] && session['file_access_expiration'].to_i > Time.now.to_i
     }
     can :download
+
+    given { |user, session|
+      owner = self.user
+      context_type == 'Assignment' && user == owner
+    }
+    can :attach_to_submission_comment
   end
 
   # checking if an attachment is locked is expensive and pointless for
@@ -1225,9 +1207,11 @@ class Attachment < ActiveRecord::Base
   end
 
   def hidden?
-    self.file_state == 'hidden' || (self.folder && self.folder.hidden?)
+    return @hidden if defined?(@hidden)
+    @hidden = self.file_state == 'hidden' || (self.folder && self.folder.hidden?)
   end
-  memoize :hidden?
+
+  def published?; !locked?; end
 
   def just_hide
     self.file_state == 'hidden'
@@ -1236,7 +1220,6 @@ class Attachment < ActiveRecord::Base
   def public?
     self.file_state == 'public'
   end
-  memoize :public?
 
   def currently_locked
     self.locked || (self.lock_at && Time.now > self.lock_at) || (self.unlock_at && Time.now < self.unlock_at) || self.file_state == 'hidden'
@@ -1255,7 +1238,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def self.filtering_scribd_submits?
-    Setting.get_cached("filter_scribd_submits", "false") == "true"
+    Setting.get("filter_scribd_submits", "false") == "true"
   end
 
   include Workflow
@@ -1321,7 +1304,7 @@ class Attachment < ActiveRecord::Base
   def destroy
     return if self.new_record?
     self.file_state = 'deleted' #destroy
-    self.deleted_at = Time.now
+    self.deleted_at = Time.now.utc
     ContentTag.delete_for(self)
     MediaObject.update_all({:attachment_id => nil, :updated_at => Time.now.utc}, {:attachment_id => self.id})
     send_later_if_production(:delete_scribd_doc) if scribd_doc
@@ -1389,7 +1372,7 @@ class Attachment < ActiveRecord::Base
   def submit_to_scribd!
     # Newly created record that needs to be submitted to scribd
     if self.pending_upload? and self.scribdable? and self.filename and ScribdAPI.enabled?
-      ScribdAPI.instance.set_user(self.scribd_account)
+      Scribd::API.instance.user = scribd_user
       begin
         upload_path = if Attachment.local_storage?
                  self.full_filename
@@ -1439,7 +1422,7 @@ class Attachment < ActiveRecord::Base
 
   def resubmit_to_scribd!
     if self.scribd_doc && ScribdAPI.enabled?
-      ScribdAPI.instance.set_user(self.scribd_account)
+      Scribd::API.instance.user = scribd_user
       self.scribd_doc.destroy rescue nil
     end
     self.workflow_state = 'pending_upload'
@@ -1472,8 +1455,8 @@ class Attachment < ActiveRecord::Base
   def query_conversion_status!
     return unless ScribdAPI.enabled? && self.scribdable?
     if self.scribd_doc
-      ScribdAPI.set_user(self.scribd_account) rescue nil
-      res = ScribdAPI.get_status(self.scribd_doc) rescue 'ERROR'
+      Scribd::API.instance.user = scribd_user
+      res = scribd_doc.conversion_status rescue 'ERROR'
       case res
       when 'DONE'
         self.process
@@ -1490,7 +1473,7 @@ class Attachment < ActiveRecord::Base
   def download_url(format='original')
     return @download_url if @download_url
     return nil unless ScribdAPI.enabled?
-    ScribdAPI.set_user(self.scribd_account)
+    Scribd::API.instance.user = scribd_user
     begin
       @download_url = self.scribd_doc.download_url(format)
     rescue Scribd::ResponseError => e
@@ -1622,6 +1605,15 @@ class Attachment < ActiveRecord::Base
     end
   end
 
+  def self.delete_stale_scribd_docs
+    cutoff = Setting.get('scribd.stale_threshold', 120).to_f.days.ago
+    Shackles.activate(:slave) do
+      Attachment.where("scribd_doc IS NOT NULL AND (last_inline_view<? OR (last_inline_view IS NULL AND created_at<?))", cutoff, cutoff).find_each do |att|
+        Shackles.activate(:master) { att.delete_scribd_doc }
+      end
+    end
+  end
+
   # returns filename, if it's already unique, or returns a modified version of
   # filename that makes it unique. you can either pass existing_files as string
   # filenames, in which case it'll test against those, or a block that'll be
@@ -1650,7 +1642,7 @@ class Attachment < ActiveRecord::Base
 
   # the list of allowed thumbnail sizes to be generated dynamically
   def self.dynamic_thumbnail_sizes
-    DYNAMIC_THUMBNAIL_SIZES + Setting.get_cached("attachment_thumbnail_sizes", "").split(",")
+    DYNAMIC_THUMBNAIL_SIZES + Setting.get("attachment_thumbnail_sizes", "").split(",")
   end
 
   def create_dynamic_thumbnail(geometry_string)
@@ -1662,13 +1654,15 @@ class Attachment < ActiveRecord::Base
 
   class OverQuotaError < StandardError; end
 
-  def clone_url(url, duplicate_handling, check_quota)
+  def clone_url(url, duplicate_handling, check_quota, opts={})
     begin
       Canvas::HTTP.clone_url_as_attachment(url, :attachment => self)
 
       if check_quota
         self.save! # save to calculate attachment size, otherwise self.size is nil
-        raise(OverQuotaError) if Attachment.over_quota?(self.context, self.size)
+        if Attachment.over_quota?(opts[:quota_context] || self.context, self.size)
+          raise OverQuotaError, t(:over_quota, 'The downloaded file exceeds the quota.')
+        end
       end
 
       self.file_state = 'available'
@@ -1676,6 +1670,7 @@ class Attachment < ActiveRecord::Base
       handle_duplicates(duplicate_handling || 'overwrite')
     rescue Exception, Timeout::Error => e
       self.file_state = 'errored'
+      self.workflow_state = 'errored'
       case e
       when Canvas::HTTP::TooManyRedirectsError
         self.upload_error_message = t :upload_error_too_many_redirects, "Too many redirects"
@@ -1691,7 +1686,7 @@ class Attachment < ActiveRecord::Base
       when OverQuotaError
         self.upload_error_message = t :upload_error_over_quota, "file size exceeds quota limits: %{bytes} bytes", :bytes => self.size
       else
-        self.upload_error_message = t :upload_error_unexpected, "An unknown error occured downloading from %{url}", :url => url
+        self.upload_error_message = t :upload_error_unexpected, "An unknown error occurred downloading from %{url}", :url => url
       end
       self.save!
     end
@@ -1706,7 +1701,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def record_inline_view
-    update_attribute(:last_inline_view, Time.now)
+    (root_attachment || self).update_attribute(:last_inline_view, Time.now)
     check_rerender_scribd_doc unless self.scribd_doc
   end
 
@@ -1724,10 +1719,11 @@ class Attachment < ActiveRecord::Base
 
   def check_rerender_scribd_doc
     if scribd_doc_missing?
-      self.scribd_attempts = 0
-      self.workflow_state = 'pending_upload'
-      self.save!
-      send_later :submit_to_scribd!
+      attachment = root_attachment || self
+      attachment.scribd_attempts = 0
+      attachment.workflow_state = 'pending_upload'
+      attachment.save!
+      attachment.send_later :submit_to_scribd!
       return true
     end
     false

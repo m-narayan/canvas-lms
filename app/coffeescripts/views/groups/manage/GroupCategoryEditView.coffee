@@ -20,15 +20,14 @@ define [
       fixDialogButtons: false
 
     els:
-      '.self-signup-help':        '$selfSignupHelp'
+      '.self-signup-help': '$selfSignupHelp'
       '.self-signup-description': '$selfSignup'
-      '.self-signup-toggle':      '$selfSignupToggle'
-      '.self-signup-controls':    '$selfSignupControls'
+      '.self-signup-toggle': '$selfSignupToggle'
+      '.self-signup-controls': '$selfSignupControls'
 
-    events:
-      _.extend {},
-      DialogFormView::events,
-      'click .dialog_closer':      'close'
+    events: _.extend {},
+      DialogFormView::events
+      'click .dialog_closer': 'close'
       'click .self-signup-toggle': 'toggleSelfSignup'
 
     afterRender: ->
@@ -36,8 +35,10 @@ define [
 
     openAgain: ->
       super
+      # reset the form contents
       @render()
-      @$el.find('input:first').focus()
+      # auto-focus the first input
+      @$('input:first').focus()
 
     toggleSelfSignup: ->
       disabled = !@$selfSignupToggle.prop('checked')
@@ -57,4 +58,3 @@ define [
                  class="input-micro"
                  value="#{h(json.group_limit ? '')}">
           """
-

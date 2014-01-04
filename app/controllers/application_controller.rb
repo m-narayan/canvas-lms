@@ -20,6 +20,14 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  def self.promote_view_path(path)
+    if CANVAS_RAILS2
+      self.view_paths.delete path
+    else
+      self.view_paths = self.view_paths.to_ary.reject{ |p| p.to_s == path }
+    end
+    prepend_view_path(path)
+  end
 
   attr_accessor :active_tab
 
@@ -178,7 +186,7 @@ class ApplicationController < ActionController::Base
     # we can't block frames on the files domain, since files domain requests
     # are typically embedded in an iframe in canvas, but the hostname is
     # different
-    if !files_domain? && Setting.get_cached('block_html_frames', 'true') == 'true' && !@embeddable
+    if !files_domain? && Setting.get('block_html_frames', 'true') == 'true' && !@embeddable
       headers['X-Frame-Options'] = 'SAMEORIGIN'
     end
     true
@@ -275,9 +283,10 @@ class ApplicationController < ActionController::Base
   # end
   def authorized_action(object, *opts)
     can_do = is_authorized_action?(object, *opts)
-    render_unauthorized_action(object) unless can_do
+    render_unauthorized_action unless can_do
     can_do
   end
+  alias :authorized_action? :authorized_action
 
   def is_authorized_action?(object, *opts)
     user = opts.shift
@@ -300,9 +309,7 @@ class ApplicationController < ActionController::Base
     can_do
   end
 
-  def render_unauthorized_action(object=nil)
-    object ||= User.new
-    object.errors.add_to_base(t "#application.errors.unauthorized.generic", "You are not authorized to perform this action")
+  def render_unauthorized_action
     respond_to do |format|
       @show_left_side = false
       clear_crumbs
@@ -777,6 +784,7 @@ class ApplicationController < ActionController::Base
   # to generate access reports per student per course.
   def log_asset_access(asset, asset_category, asset_group=nil, level=nil, membership_type=nil)
     return unless @current_user && @context && asset
+    return if asset.respond_to?(:new_record?) && asset.new_record?
     @accessed_asset = {
       :code => asset.is_a?(String) ? asset : asset.asset_string,
       :group_code => asset_group.is_a?(String) ? asset_group : (asset_group.asset_string rescue 'unknown'),
@@ -790,11 +798,12 @@ class ApplicationController < ActionController::Base
     return true if !page_views_enabled?
 
     if @current_user && @log_page_views != false
-      if request.xhr? && params[:page_view_id] && !(@page_view && @page_view.generated_by_hand)
-        @page_view = PageView.for_request_id(params[:page_view_id])
+      updated_fields = params.slice(:interaction_seconds, :page_view_contributed)
+      if request.xhr? && params[:page_view_id] && !updated_fields.empty? && !(@page_view && @page_view.generated_by_hand)
+        @page_view = PageView.find_for_update(params[:page_view_id])
         if @page_view
           response.headers["X-Canvas-Page-View-Id"] = @page_view.id.to_s if @page_view.id
-          @page_view.do_update(params.slice(:interaction_seconds, :page_view_contributed))
+          @page_view.do_update(updated_fields)
           @page_view_update = true
         end
       end
@@ -840,7 +849,7 @@ class ApplicationController < ActionController::Base
       status_code = interpret_status(response_code)
       status = status_code
       status = 'AUT' if exception.is_a?(ActionController::InvalidAuthenticityToken)
-      type = 'default'
+      type = nil
       type = '404' if status == '404 Not Found'
 
       unless exception.respond_to?(:skip_error_report?) && exception.skip_error_report?
@@ -895,7 +904,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  if Rails.version < "3.0"
+  if CANVAS_RAILS2
     rescue_responses['AuthenticationMethods::AccessTokenError'] = 401
   else
     ActionDispatch::ShowExceptions.rescue_responses['AuthenticationMethods::AccessTokenError'] = 401
@@ -1012,7 +1021,7 @@ class ApplicationController < ActionController::Base
     @wiki.check_has_front_page
 
     page_name = params[:wiki_page_id] || params[:id] || (params[:wiki_page] && params[:wiki_page][:title])
-    page_name ||= (@wiki.get_front_page_url || Wiki::DEFAULT_FRONT_PAGE_URL) unless @context.draft_state_enabled?
+    page_name ||= (@wiki.get_front_page_url || Wiki::DEFAULT_FRONT_PAGE_URL) unless @context.feature_enabled?(:draft_state)
     if(params[:format] && !['json', 'html'].include?(params[:format]))
       page_name += ".#{params[:format]}"
       params[:format] = 'html'
@@ -1060,9 +1069,7 @@ class ApplicationController < ActionController::Base
         @resource_title = @tag.title
       end
       @resource_url = @tag.url
-      @opaque_id = @tag.opaque_identifier(:asset_string)
       @tool = ContextExternalTool.find_external_tool(tag.url, context, tag.content_id)
-      @target = '_blank' if tag.new_tab
       tag.context_module_action(@current_user, :read)
       if !@tool
         flash[:error] = t "#application.errors.invalid_external_tool", "Couldn't find valid settings for this link"
@@ -1070,10 +1077,12 @@ class ApplicationController < ActionController::Base
       else
         return unless require_user
         @return_url = named_context_url(@context, :context_external_tool_finished_url, @tool.id, :include_host => true)
+        @opaque_id = @tool.opaque_identifier_for(@tag)
         @launch = BasicLTI::ToolLaunch.new(:url => @resource_url, :tool => @tool, :user => @current_user, :context => @context, :link_code => @opaque_id, :return_url => @return_url)
         if @assignment
           @launch.for_assignment!(@tag.context, lti_grade_passback_api_url(@tool), blti_legacy_grade_passback_api_url(@tool))
         end
+        @tool_launch_type = 'window' if tag.new_tab
         @tool_settings = @launch.generate
         render :template => 'external_tools/tool_show'
       end
@@ -1217,6 +1226,8 @@ class ApplicationController < ActionController::Base
         !!Tinychat.config
       elsif feature == :scribd
         !!ScribdAPI.config
+      elsif feature == :scribd_html5
+        ScribdAPI.config && ScribdAPI.config[:enable_html5_viewer]
       elsif feature == :crocodoc
         if @domain_root_account
         !!Canvas::Crocodoc.config unless @domain_root_account.Sublime_Crocodoc_disable?
@@ -1396,7 +1407,15 @@ class ApplicationController < ActionController::Base
     set_layout_options
     if options && options.key?(:json)
       json = options.delete(:json)
-      json = ActiveSupport::JSON.encode(json, stringify_json_ids: stringify_json_ids?) unless json.is_a?(String)
+      unless json.is_a?(String)
+        Api.recursively_stringify_json_ids(json) if stringify_json_ids?
+        if CANVAS_RAILS2
+          json = MultiJson.dump(json)
+        else
+          json = ActiveSupport::JSON.encode(json)
+        end
+      end
+
       # prepend our CSRF protection to the JSON response, unless this is an API
       # call that didn't use session auth, or a non-GET request.
       if prepend_json_csrf?
@@ -1471,7 +1490,7 @@ class ApplicationController < ActionController::Base
   def reject_student_view_student
     return unless @current_user && @current_user.fake_student?
     @unauthorized_message ||= t('#application.errors.student_view_unauthorized', "You cannot access this functionality in student view.")
-    render_unauthorized_action(@current_user)
+    render_unauthorized_action
   end
 
   def set_site_admin_context
@@ -1556,16 +1575,16 @@ class ApplicationController < ActionController::Base
     data
   end
 
-  unless CANVAS_RAILS3
+  if CANVAS_RAILS2
     filter_parameter_logging *LoggingFilter.filtered_parameters
-  end
 
-  # filter out sensitive parameters in the query string as well when logging
-  # the rails "Completed in XXms" line.
-  # this is fixed in Rails 3.x
-  def complete_request_uri
-    uri = LoggingFilter.filter_uri(request.request_uri)
-    "#{request.protocol}#{request.host}#{uri}"
+    # filter out sensitive parameters in the query string as well when logging
+    # the rails "Completed in XXms" line.
+    # this is fixed in Rails 3.x
+    def complete_request_uri
+      uri = LoggingFilter.filter_uri(request.request_uri)
+      "#{request.protocol}#{request.host}#{uri}"
+    end
   end
 
   def self.batch_jobs_in_actions(opts = {})
@@ -1608,7 +1627,7 @@ class ApplicationController < ActionController::Base
 
     if @page
       hash[:WIKI_PAGE] = wiki_page_json(@page, @current_user, session)
-      hash[:WIKI_PAGE_REVISION] = (current_version = @page.versions.current) ? current_version.number : nil
+      hash[:WIKI_PAGE_REVISION] = (current_version = @page.versions.current) ? Api.stringify_json_id(current_version.number) : nil
       hash[:WIKI_PAGE_SHOW_PATH] = polymorphic_path([@context, :named_page], :wiki_page_id => @page)
       hash[:WIKI_PAGE_EDIT_PATH] = polymorphic_path([@context, :edit_named_page], :wiki_page_id => @page)
       hash[:WIKI_PAGE_HISTORY_PATH] = polymorphic_path([@context, @page, :wiki_page_revisions])

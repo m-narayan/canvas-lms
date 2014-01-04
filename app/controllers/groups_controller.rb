@@ -123,13 +123,21 @@ class GroupsController < ApplicationController
     category = @context.group_categories.find_by_id(params[:category_id])
     return render :json => {}, :status => :not_found unless category
     page = (params[:page] || 1).to_i rescue 1
-    per_page = [[(params[:per_page] || 15).to_i, 1].max, 100].min
+    per_page = Api.per_page_for(self, default: 15, max: 100)
     if category && !category.student_organized?
       groups = category.groups.active
     else
       groups = []
     end
-    users = @context.paginate_users_not_in_groups(groups, page, per_page)
+
+    if CANVAS_RAILS2
+      scope = @context.users_not_in_groups(groups, order: User.sortable_name_order_by_clause('users'))
+      total_entries = scope.count('users.id', distinct: true)
+      users = scope.paginate(page: page, per_page: per_page, total_entries: total_entries)
+    else
+      users = @context.users_not_in_groups(groups, order: User.sortable_name_order_by_clause('users')).
+        paginate(page: page, per_page: per_page)
+    end
 
     if authorized_action(@context, @current_user, :manage)
       respond_to do |format|
@@ -226,9 +234,11 @@ class GroupsController < ApplicationController
       format.html do
         if @context.grants_right?(@current_user, session, :manage_groups)
           if @domain_root_account.enable_manage_groups2?
-            js_env group_categories: @categories.map{ |cat| group_category_json(cat, @current_user, session, include: ["progress_url"]) },
+            js_env group_categories: @categories.map{ |cat| group_category_json(cat, @current_user, session, include: ["progress_url", "unassigned_users_count", "groups_count"]) },
                    group_user_type: @group_user_type,
                    allow_self_signup: @allow_self_signup
+            # since there are generally lots of users in an account, always do large roster view
+            @js_env[:IS_LARGE_ROSTER] ||= @context.is_a?(Account)
           end
           render :action => 'context_manage_groups'
         else
@@ -384,7 +394,7 @@ class GroupsController < ApplicationController
     if authorized_action(@group, @current_user, :create)
       respond_to do |format|
         if @group.save
-          @group.add_user(@current_user, 'accepted', true) if @group.should_add_creator?
+          @group.add_user(@current_user, 'accepted', true) if @group.should_add_creator?(@current_user)
           @group.invitees = params[:invitees]
           flash[:notice] = t('notices.create_success', 'Group was successfully created.')
           format.html { redirect_to group_url(@group) }

@@ -16,8 +16,8 @@ describe "Files_Cross_Check" do
   #  ActionController::TestUploadedFile.new(fixture_file_path(file), mimetype)
   #end
   #fixture = fixture_file_upload('files/html-editing-test.html', 'text/html')
-  ibm_course1_file
-  tcs_course1_file
+  #ibm_course1_file
+  #tcs_course1_file
 
 
   def view_files(params={})

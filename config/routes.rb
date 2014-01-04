@@ -1,13 +1,19 @@
-# Even on Rails 2.3, we're using Rails 3 style routes.
-#
-# You should have plenty of examples in here for anything you're trying to do,
-# but if you want a full primer this is a good one:
-# http://blog.engineyard.com/2010/the-lowdown-on-routes-in-rails-3
-#
-# Don't try anything too fancy, FakeRails3Routes doesn't support some of the
-# more advanced Rails 3 routing features, since in the background it's just
-# calling into the Rails 2 routing system.
-FakeRails3Routes.draw do
+if CANVAS_RAILS2
+  # Even on Rails 2.3, we're using Rails 3 style routes.
+  #
+  # You should have plenty of examples in here for anything you're trying to do,
+  # but if you want a full primer this is a good one:
+  # http://blog.engineyard.com/2010/the-lowdown-on-routes-in-rails-3
+  #
+  # Don't try anything too fancy, FakeRails3Routes doesn't support some of the
+  # more advanced Rails 3 routing features, since in the background it's just
+  # calling into the Rails 2 routing system.
+  routes = FakeRails3Routes
+else
+  routes = CanvasRails::Application.routes
+end
+
+routes.draw do
   resources :submission_comments, :only => :destroy
 
   match 'inbox' => 'context#mark_inbox_as_read', :as => :mark_inbox_as_read, :via => :delete
@@ -21,7 +27,6 @@ FakeRails3Routes.draw do
   match 'conversations/sent' => 'conversations#index', :as => :conversations_sent, :redirect_scope => 'sent'
   match 'conversations/archived' => 'conversations#index', :as => :conversations_archived, :redirect_scope => 'archived'
   match 'conversations/find_recipients' => 'search#recipients'
-  match '/conversations/beta' => 'conversations#index_new'
 
   match 'search/recipients' => 'search#recipients', :as => :search_recipients
   match 'conversations/mark_all_as_read' => 'conversations#mark_all_as_read', :as => :conversations_mark_all_as_read, :via => :post
@@ -156,6 +161,7 @@ FakeRails3Routes.draw do
     get 'pages' => 'wiki_pages#pages_index'
     get 'pages/:wiki_page_id' => 'wiki_pages#show_page', :wiki_page_id => /[^\/]+/, :as => :named_page
     get 'pages/:wiki_page_id/edit' => 'wiki_pages#edit_page', :wiki_page_id => /[^\/]+/, :as => :edit_named_page
+    get 'pages/:wiki_page_id/revisions' => 'wiki_pages#page_revisions', :wiki_page_id => /[^\/]+/, :as => :named_page_revisions
 
     resources :wiki_pages, :path => :wiki do
       match 'revisions/latest' => 'wiki_page_revisions#latest_version_number', :as => :latest_version_number
@@ -313,11 +319,14 @@ FakeRails3Routes.draw do
     resources :quizzes do
       match 'managed_quiz_data' => 'quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes#submission_versions', :as => :submission_versions
-      match 'reorder' => 'quizzes#reorder', :as => :reorder
       match 'history' => 'quizzes#history', :as => :history
       match 'statistics' => 'quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes#read_only', :as => :read_only
-      match 'filters' => 'quizzes#filters', :as => :filters
+
+      collection do
+        get :fabulous_quizzes
+      end
+
       resources :quiz_submissions, :path => :submissions do
         collection do
           put :backup
@@ -331,7 +340,9 @@ FakeRails3Routes.draw do
       match 'extensions/:user_id' => 'quiz_submissions#extensions', :as => :extensions, :via => :post
       resources :quiz_questions, :path => :questions, :only => ["create", "update", "destroy", "show"]
       resources :quiz_groups, :path => :groups, :only => ["create", "update", "destroy"] do
-        match 'reorder' => 'quiz_groups#reorder', :as => :reorder
+        member do
+          post :reorder
+        end
       end
 
       match 'take' => 'quizzes#show', :as => :take, :take => '1'
@@ -529,6 +540,7 @@ FakeRails3Routes.draw do
 
     resources :terms
     resources :sub_accounts
+
     match 'avatars' => 'accounts#avatars', :as => :avatars
     match 'sis_import' => 'accounts#sis_import', :as => :sis_import, :via => :get
     resources :sis_imports, :only => [:create, :show], :controller => :sis_imports_api
@@ -877,6 +889,13 @@ FakeRails3Routes.draw do
       get 'audit/authentication/users/:user_id', :action => :for_user, :path_name => 'audit_authentication_user'
     end
 
+    scope(:controller => :grade_change_audit_api) do
+      get 'audit/grade_change/assignments/:assignment_id', :action => :for_assignment, :path_name => 'audit_grade_change_assignment'
+      get 'audit/grade_change/courses/:course_id', :action => :for_course, :path_name => 'audit_grade_change_course'
+      get 'audit/grade_change/students/:student_id', :action => :for_student, :path_name => 'audit_grade_change_student'
+      get 'audit/grade_change/graders/:grader_id', :action => :for_grader, :path_name => 'audit_grade_change_grader'
+    end
+
     scope(:controller => :assignments_api) do
       get 'courses/:course_id/assignments', :action => :index, :path_name => 'course_assignments'
       get 'courses/:course_id/assignments/:id', :action => :show, :path_name => 'course_assignment'
@@ -907,6 +926,9 @@ FakeRails3Routes.draw do
       submissions_api("course")
       submissions_api("section", "course_section")
     end
+
+    post '/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
+      :action => :create_file, :controller => :submission_comments_api
 
     scope(:controller => :gradebook_history_api) do
       get "courses/:course_id/gradebook_history/days", :action => :days, :path_name => 'gradebook_history'
@@ -1049,6 +1071,10 @@ FakeRails3Routes.draw do
       get 'accounts/:account_id/courses/:id', :controller => :courses, :action => :show, :path_name => 'account_course_show'
     end
 
+    scope(:controller => :sub_accounts) do
+      post 'accounts/:account_id/sub_accounts', :action => :create
+    end
+
     scope(:controller => :role_overrides) do
       get 'accounts/:account_id/roles', :action => :api_index, :path_name => 'account_roles'
       get 'accounts/:account_id/roles/:role', :role => /[^\/]+/, :action => :show
@@ -1112,6 +1138,7 @@ FakeRails3Routes.draw do
       get 'users/:user_id/communication_channels', :action => :index, :path_name => 'communication_channels'
       post 'users/:user_id/communication_channels', :action => :create
       delete 'users/:user_id/communication_channels/:id', :action => :destroy
+      delete 'users/:user_id/communication_channels/:type/:address', :action => :destroy, :constraints => { :address => %r{[^/?]+} }
     end
 
     scope(:controller => :comm_messages_api) do
@@ -1277,7 +1304,23 @@ FakeRails3Routes.draw do
       post "courses/:course_id/quizzes", :action => :create, :path_name => 'course_quiz_create'
       get "courses/:course_id/quizzes/:id", :action => :show, :path_name => 'course_quiz'
       put "courses/:course_id/quizzes/:id", :action => :update, :path_name => 'course_quiz_update'
-      delete "courses/:course_id/quizzes/:id", action: :destroy, path_name: 'course_quiz_destroy'
+      delete "courses/:course_id/quizzes/:id", :action => :destroy, :path_name => 'course_quiz_destroy'
+      post "courses/:course_id/quizzes/:id/reorder", :action => :reorder, :path_name => 'course_quiz_reorder'
+    end
+
+    scope(:controller => :quiz_groups) do
+      post "courses/:course_id/quizzes/:quiz_id/groups", :action => :create, :path_name => 'course_quiz_group_create'
+      put "courses/:course_id/quizzes/:quiz_id/groups/:id", :action => :update, :path_name => 'course_quiz_group_update'
+      delete "courses/:course_id/quizzes/:quiz_id/groups/:id", :action => :destroy, :path_name => 'course_quiz_group_destroy'
+      post "courses/:course_id/quizzes/:quiz_id/groups/:id/reorder", :action => :reorder, :path_name => 'course_quiz_group_reorder'
+    end
+
+    scope(:controller => :quiz_questions) do
+      get "courses/:course_id/quizzes/:quiz_id/questions", :action => :index, :path_name => 'course_quiz_questions'
+      get "courses/:course_id/quizzes/:quiz_id/questions/:id", :action => :show, :path_name => 'course_quiz_question'
+      post "courses/:course_id/quizzes/:quiz_id/questions", :action => :create, :path_name => 'course_quiz_question_create'
+      put "courses/:course_id/quizzes/:quiz_id/questions/:id", :action => :update, :path_name => 'course_quiz_question_update'
+      delete "courses/:course_id/quizzes/:quiz_id/questions/:id", :action => :destroy, :path_name => 'course_quiz_question_destroy'
     end
 
     scope(:controller => :quiz_reports) do
@@ -1285,8 +1328,17 @@ FakeRails3Routes.draw do
       get "courses/:course_id/quizzes/:quiz_id/reports/:id", :action => :show, :path_name => 'course_quiz_report'
     end
 
+    scope(:controller => :quiz_submission_files) do
+      post 'courses/:course_id/quizzes/:quiz_id/submissions/self/files', :action => :create, :path_name => 'quiz_submission_files'
+    end
+
     scope(:controller => :quiz_submissions_api) do
-      post 'courses/:course_id/quizzes/:quiz_id/quiz_submissions/self/files', :action => :create_file, :path_name => 'quiz_submission_create_file'
+      get 'courses/:course_id/quizzes/:quiz_id/submissions', :action => :index, :path_name => 'course_quiz_submissions'
+      get 'courses/:course_id/quizzes/:quiz_id/submissions/:id', :action => :show, :path_name => 'course_quiz_submission'
+    end
+
+    scope(:controller => :quiz_ip_filters) do
+      get 'courses/:course_id/quizzes/:quiz_id/ip_filters', :action => :index, :path_name => 'course_quiz_ip_filters'
     end
 
     scope(:controller => :outcome_groups_api) do
@@ -1341,6 +1393,17 @@ FakeRails3Routes.draw do
         get  "#{prefix}/apps/:app_id/reviews",      :action => :reviews, :path_name => "#{context}_app_center_app_reviews"
         get  "#{prefix}/apps/:app_id/reviews/self", :action => :review,  :path_name => "#{context}_app_center_app_review"
         post "#{prefix}/apps/:app_id/reviews/self", :action => :add_review
+      end
+    end
+
+    scope(:controller => :feature_flags) do
+      ['course', 'account', 'user'].each do |context|
+        prefix = "#{context}s/:#{context}_id/features"
+        get "#{prefix}", :action => :index, :path_name => "#{context}_features"
+        get "#{prefix}/enabled", :action => :enabled_features, :path_name => "#{context}_enabled_features"
+        get "#{prefix}/flags/:feature", :action => :show
+        put "#{prefix}/flags/:feature", :action => :update
+        delete "#{prefix}/flags/:feature", :action => :delete
       end
     end
   end

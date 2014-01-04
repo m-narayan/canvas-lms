@@ -29,7 +29,6 @@ class WikiPage < ActiveRecord::Base
   include SearchTermHelper
 
   belongs_to :wiki, :touch => true
-  belongs_to :cloned_item
   belongs_to :user
   acts_as_url :title, :scope => [:wiki_id, :not_deleted], :sync_url => true
 
@@ -74,15 +73,17 @@ class WikiPage < ActiveRecord::Base
   def sync_hidden_and_unpublished
     return if (context rescue nil).nil?
 
-    if context.draft_state_enabled?
-      if self.hide_from_students # hide_from_students overrides published
-        self.hide_from_students = false
-        self.workflow_state = 'unpublished'
-      end
-    else
-      if self.workflow_state.to_s == 'unpublished' # unpublished overrides hide_from_students
-        self.workflow_state = 'active'
-        self.hide_from_students = true
+    WikiPage.skip_callback(:after_find) do
+      if context.feature_enabled?(:draft_state)
+        if self.hide_from_students # hide_from_students overrides published
+          self.hide_from_students = false
+          self.workflow_state = 'unpublished'
+        end
+      else
+        if self.workflow_state.to_s == 'unpublished' # unpublished overrides hide_from_students
+          self.workflow_state = 'active'
+          self.hide_from_students = true
+        end
       end
     end
   end
@@ -156,6 +157,7 @@ class WikiPage < ActiveRecord::Base
   }
   after_save :remove_changed_flag
 
+
   workflow do
     state :active do
       event :unpublish, :transitions_to => :unpublished
@@ -171,8 +173,10 @@ class WikiPage < ActiveRecord::Base
 
   end
 
+  alias_method :published?, :active?
+
   def restore
-    self.workflow_state = 'active'
+    self.workflow_state = context.feature_enabled?(:draft_state) ? 'unpublished' : 'active'
     self.save
   end
 
@@ -205,6 +209,8 @@ class WikiPage < ActiveRecord::Base
 
   scope :not_deleted, where("wiki_pages.workflow_state<>'deleted'")
 
+  scope :unpublished, where("wiki_pages.workflow_state='unpublished' OR (wiki_pages.hide_from_students=? AND wiki_pages.workflow_state<>'deleted')", true)
+
   # needed for ensure_unique_url
   def not_deleted
     !deleted?
@@ -232,7 +238,7 @@ class WikiPage < ActiveRecord::Base
 
   def is_front_page?
     return false if self.deleted?
-    self.url == self.wiki.get_front_page_url # wiki.get_front_page_url checks has_front_page? and context.draft_state_enabled?
+    self.url == self.wiki.get_front_page_url # wiki.get_front_page_url checks has_front_page? and context.feature_enabled?(:draft_state)
   end
 
   def set_as_front_page!
@@ -324,7 +330,9 @@ class WikiPage < ActiveRecord::Base
   end
 
   def context(user=nil)
-    @context ||= Course.find_by_wiki_id(self.wiki_id) || Group.find_by_wiki_id(self.wiki_id)
+    shard.activate do
+      @context ||= Course.find_by_wiki_id(self.wiki_id) || Group.find_by_wiki_id(self.wiki_id)
+    end
   end
 
   def participants
@@ -365,30 +373,6 @@ class WikiPage < ActiveRecord::Base
     res = self.revised_at || self.updated_at
     res = Time.now if res.is_a?(String)
     res
-  end
-
-  attr_accessor :clone_updated
-  def clone_for(context, dup=nil, options={}) #migrate=true)
-    options[:migrate] = true if options[:migrate] == nil
-    if !self.cloned_item && !self.new_record?
-      self.cloned_item ||= ClonedItem.create(:original_item => self)
-      self.save!
-    end
-    existing = context.wiki.wiki_pages.active.find_by_id(self.id)
-    existing ||= context.wiki.wiki_pages.active.find_by_cloned_item_id(self.cloned_item_id || 0)
-    return existing if existing && !options[:overwrite]
-    dup ||= WikiPage.new
-    dup = existing if existing && options[:overwrite]
-    self.attributes.delete_if{|k,v| [:id, :wiki_id].include?(k.to_sym) }.each do |key, val|
-      dup.send("#{key}=", val)
-    end
-    dup.wiki = context.wiki
-    dup.body = context.migrate_content_links(self.body, options[:old_context] || self.context) if options[:migrate]
-    context.log_merge_result(t('notices.wiki_page_created', 'Wiki Page "%{title}" created', :title => dup.title))
-    context.may_have_links_to_migrate(dup)
-    dup.updated_at = Time.now
-    dup.clone_updated = true
-    dup
   end
 
   def self.process_migration_course_outline(data, migration)
@@ -575,19 +559,19 @@ class WikiPage < ActiveRecord::Base
     unless self.new_record?
       self.with_versioning(false) do |p|
         context ||= p.context
-        p.connection.execute("UPDATE wiki_pages SET view_count=COALESCE(view_count, 0) + 1 WHERE id=#{p.id}")
+        WikiPage.where(id: p).update_all("view_count=COALESCE(view_count, 0) + 1")
         p.context_module_action(user, context, :read)
       end
     end
   end
 
   def initialize_wiki_page(user)
-    unless context.draft_state_enabled?
+    unless context.feature_enabled?(:draft_state)
       set_as_front_page! if !wiki.has_front_page? and url == Wiki::DEFAULT_FRONT_PAGE_URL
     end
 
     is_privileged_user = wiki.grants_right?(user, :manage)
-    if is_privileged_user && context.draft_state_enabled? && !context.is_a?(Group)
+    if is_privileged_user && context.feature_enabled?(:draft_state) && !context.is_a?(Group)
       self.workflow_state = 'unpublished'
     else
       self.workflow_state = 'active'

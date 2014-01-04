@@ -104,6 +104,20 @@ describe ActiveRecord::Base do
         end
       end
     end
+
+    it "should not use a cursor when start is passed" do
+      pending "needs PostgreSQL" unless Account.connection.adapter_name == 'PostgreSQL'
+      Account.transaction do
+        Account.expects(:find_in_batches_with_cursor).never
+        Account.where(:id => Account.default).includes(:courses).find_each(start: 0) do |a|
+          a.courses.loaded?.should be_true
+        end
+      end
+    end
+
+    it "should raise an error when start is used with group" do
+      lambda { Account.group(:id).find_each(start: 0) }.should raise_error(ArgumentError)
+    end
   end
 
   describe "#remove_dropped_columns" do
@@ -516,6 +530,17 @@ describe ActiveRecord::Base do
     end
   end
 
+  describe "delete_all with_limit" do
+    it "should work" do
+      u = User.create!
+      p1 = u.pseudonyms.create!(unique_id: 'a', account: Account.default)
+      p2 = u.pseudonyms.create!(unique_id: 'b', account: Account.default)
+      u.pseudonyms.scoped.reorder("unique_id DESC").limit(1).delete_all
+      p1.reload
+      lambda { p2.reload }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   context "fake arel extensions" do
     before do
       @user = User.create!(:name => 'a')
@@ -646,6 +671,15 @@ describe ActiveRecord::Base do
 
     it "should sort nulls last, desc" do
       User.where(id: @us).order(User.nulls(:last, :name, :desc), :id).all.should == [@u4, @u2, @u1, @u3]
+    end
+  end
+
+  describe "marshalling" do
+    it "should not load associations when marshalling" do
+      a = Account.default
+      a.user_account_associations.loaded?.should be_false
+      Marshal.dump(a)
+      a.user_account_associations.loaded?.should be_false
     end
   end
 end

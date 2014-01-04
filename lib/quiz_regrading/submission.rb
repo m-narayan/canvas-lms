@@ -11,7 +11,7 @@ class QuizRegrader::Submission
     return unless answers_to_grade.size > 0
 
     # regrade all previous versions
-    submission.attempt_versions.each do |version|
+    submission.attempts.last_versions.each do |version|
       QuizRegrader::AttemptVersion.new(
         :version           => version,
         :question_regrades => question_regrades).regrade!
@@ -52,7 +52,7 @@ class QuizRegrader::Submission
       id = question[:id]
       if submitted_answer_ids.include?(id)
         question.keep_if {|k, v| %w{id position published_at}.include?(k) }
-        question.merge(question_regrades[id].question_data)
+        question.merge(question_regrades[id].question_data.to_hash)
       else
         question
       end

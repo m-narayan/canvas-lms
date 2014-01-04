@@ -37,7 +37,7 @@ class Wiki < ActiveRecord::Base
 
   def set_has_no_front_page_default
     if self.has_no_front_page.nil? && self.id && context
-      self.has_no_front_page = true if context.draft_state_enabled?
+      self.has_no_front_page = true if context.feature_enabled?(:draft_state)
     end
   end
   private :set_has_no_front_page_default
@@ -98,7 +98,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def get_front_page_url
-    return nil unless self.has_front_page? || !context.draft_state_enabled?
+    return nil unless self.has_front_page? || !context.feature_enabled?(:draft_state)
     self.front_page_url || DEFAULT_FRONT_PAGE_URL
   end
 
@@ -123,7 +123,9 @@ class Wiki < ActiveRecord::Base
   end
 
   def context
-    @context ||= Course.find_by_wiki_id(self.id) || Group.find_by_wiki_id(self.id)
+    shard.activate do
+      @context ||= Course.find_by_wiki_id(self.id) || Group.find_by_wiki_id(self.id)
+    end
   end
 
   def context_type

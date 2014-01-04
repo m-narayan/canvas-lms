@@ -31,11 +31,16 @@ class AccountsController < ApplicationController
   # students and even teachers will get an empty list in response, only
   # account admins can view the accounts that they are in.
   def index
-    @accounts = @current_user.accounts rescue []
     respond_to do |format|
-      format.html
+      format.html do
+        @accounts = @current_user ? @current_user.all_accounts : []
+      end
       format.json do
-        @accounts = Api.paginate(@accounts, self, api_v1_accounts_url)
+        if @current_user
+          @accounts = Api.paginate(@current_user.all_paginatable_accounts, self, api_v1_accounts_url)
+        else
+          @accounts = []
+        end
         render :json => @accounts.map { |a| account_json(a, @current_user, session, params[:includes] || []) }
       end
     end
@@ -90,7 +95,7 @@ class AccountsController < ApplicationController
     end
 
     @accounts = Api.paginate(@accounts, self, api_v1_sub_accounts_url,
-                             :without_count => recursive)
+                             :total_entries => recursive ? nil : @accounts.count)
 
     render :json => @accounts.map { |a| account_json(a, @current_user, session, []) }
   end
@@ -172,7 +177,7 @@ class AccountsController < ApplicationController
       @courses = @courses.for_term(term)
     end
 
-    @courses = Api.paginate(@courses, self, api_v1_account_courses_url, :order => :id)
+    @courses = Api.paginate(@courses.order(:id), self, api_v1_account_courses_url)
 
     render :json => @courses.map { |c| course_json(c, @current_user, session, [], nil) }
   end
@@ -312,6 +317,13 @@ class AccountsController < ApplicationController
             params[:account][:settings][:outgoing_email_default_name] = '' if params[:account][:settings][:outgoing_email_default_name_option] == 'default'
           end
 
+          google_docs_domain = params[:account][:settings].try(:delete, :google_docs_domain)
+          if @account.feature_enabled?(:google_docs_domain_restriction) &&
+             @account.root_account? &&
+             !@account.site_admin?
+            @account.settings[:google_docs_domain] = google_docs_domain.present? ? google_docs_domain : nil
+          end
+
           @account.enable_user_notes = enable_user_notes if enable_user_notes
           @account.allow_sis_import = allow_sis_import if allow_sis_import && @account.root_account?
           if @account.site_admin? && params[:account][:settings]
@@ -329,6 +341,7 @@ class AccountsController < ApplicationController
             :enable_scheduler,
             :show_scheduler,
             :global_includes,
+            :gmail_domain
           ].each do |key|
             params[:account][:settings].try(:delete, key)
           end
@@ -360,7 +373,7 @@ class AccountsController < ApplicationController
       end
     end
   end
-  
+
   def settings
     if authorized_action(@account, @current_user, :read)
       @available_reports = AccountReport.available_reports(@account) if @account.grants_right?(@current_user, @session, :read_reports)
@@ -394,8 +407,16 @@ class AccountsController < ApplicationController
   # = Restoring Content
   def admin_tools
     if !@account.can_see_admin_tools_tab?(@current_user)
-      return render_unauthorized_action(@account)
+      return render_unauthorized_action
     end
+
+    authentication_logging = @account.grants_rights?(@current_user, :view_statistics, :manage_user_logins).values.any?
+    if authentication_logging
+      logging = {
+        authentication: authentication_logging
+      }
+    end
+    logging ||= false
 
     js_env :ACCOUNT_ID => @account.id
     js_env :PERMISSIONS => {
@@ -405,7 +426,7 @@ class AccountsController < ApplicationController
        view_messages: (@account.settings[:admins_can_view_notifications] &&
                        @account.grants_right?(@current_user, session, :view_notifications)) ||
                       Account.site_admin.grants_right?(@current_user, :read_messages),
-       auth_logging: @account.grants_rights?(@current_user, :view_statistics, :manage_user_logins).values.any?,
+       logging: logging
       }
   end
 

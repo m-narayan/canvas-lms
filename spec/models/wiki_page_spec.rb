@@ -156,20 +156,6 @@ describe WikiPage do
     end
   end
 
-
-  context "clone_for" do
-    it "should clone for another context" do
-      course_with_teacher(:active_all => true)
-      p = @course.wiki.wiki_pages.create(:title => "some page")
-      p.save!
-      course
-      new_p = p.clone_for(@course)
-      new_p.title.should eql(p.title)
-      new_p.should_not eql(p)
-      new_p.wiki.should_not eql(p.wiki)
-    end
-  end
-
   describe '#can_edit_page?' do
     it 'is true if the editing roles include teachers and the user is a teacher' do
       course_with_teacher(:active_all => true)
@@ -201,10 +187,7 @@ describe WikiPage do
 
     context 'with draft state disabled' do
       before :each do
-        @course.account.settings[:allow_draft] = false
-        @course.account.save!
-        @course.enable_draft = false
-        @course.save!
+        @course.account.disable_feature!(:draft_state)
       end
 
       it 'should be performed on save' do
@@ -230,10 +213,8 @@ describe WikiPage do
 
     context 'with draft state enabled' do
       before :each do
-        @course.account.settings[:allow_draft] = true
-        @course.account.save!
-        @course.enable_draft = true
-        @course.save!
+        @course.account.allow_feature!(:draft_state)
+        @course.enable_feature!(:draft_state)
       end
 
       it 'should be performed on save' do
@@ -466,6 +447,16 @@ describe WikiPage do
           @page.grants_right?(@user, :delete).should be_false
         end
       end
+    end
+  end
+
+  describe "restore" do
+    it "should restore to unpublished state if draft_state is enabled" do
+      course(draft_state: true)
+      @page = @course.wiki.wiki_pages.create! title: 'dot dot dot'
+      @page.update_attribute(:workflow_state, 'deleted')
+      @page.restore
+      @page.reload.should be_unpublished
     end
   end
 end
