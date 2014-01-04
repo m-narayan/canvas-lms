@@ -207,7 +207,6 @@ end
 group :statsd do
   gem 'statsd-ruby', '1.0.0', :require => 'statsd'
 end
-gem 'parallel', '0.5.16'
 
 group :icu do
   gem 'ffi-icu', '0.1.2'
