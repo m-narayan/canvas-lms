@@ -49,5 +49,6 @@ tags
 /vendor/plugins/lms_customization
 /vendor/plugins/canvas-mt
 /.idea/*.*
-.idea/
+.idea/                                                 .
 /spec/plugins/
+/vendor/bundle/
