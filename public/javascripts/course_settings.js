@@ -456,5 +456,11 @@ define([
     });
 
     $.scrollSidebar();
+    $("#tab-images").find(".upload_new_image_link").click(function(){
+        $("#upload_image_form").toggle()
+    });
+    $("#tab-images").find(".upload_new_background_image_link").click(function(){
+       $("#upload_background_image_form").toggle()
+    });
   });
 });

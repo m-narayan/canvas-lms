@@ -249,7 +249,7 @@
         </div>
         <div style="margin-left: 10px;">
           <div><%= t('file_size_limit', %{limit %{size} per file}, :size => '50MB') %></div>
-          <label for="image_folder_id"><%= t('labels.folder', %{Folder}) %></label> 
+          <label for="image_folder_id"><%= t('labels.folder', %{Folder}) %></label>
           <select name="attachment[folder_id]" id="image_folder_id">
             <% @wiki_sidebar_data[:root_folders].each do |folder| %>
               <option value="<%= folder.id %>"><%= folder.name %></option>
