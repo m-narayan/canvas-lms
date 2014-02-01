@@ -22,6 +22,8 @@ class Course < ActiveRecord::Base
   include Workflow
   include TextHelper
 
+  acts_as_taggable_on :tags
+
   attr_accessible :name,
                   :section,
                   :account,

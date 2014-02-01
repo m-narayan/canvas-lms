@@ -137,7 +137,7 @@ class CoursesController < ApplicationController
 
   include Api::V1::Course
   include Api::V1::Progress
-
+  include TagsHelper
   # @API List your courses
   # Returns the list of active courses for the current user.
   #
@@ -349,6 +349,9 @@ class CoursesController < ApplicationController
       respond_to do |format|
         if @course.save
           @course.enroll_user(@current_user, 'TeacherEnrollment', :enrollment_state => 'active') if params[:enroll_me].to_s == 'true'
+          if ELEARNING
+            tag_list(params[:tag_tokens], @course, @current_user)  unless params[:tag_tokens].nil?
+          end
           # offer updates the workflow state, saving the record without doing validation callbacks
           @course.offer if api_request? and params[:offer].present?
           format.html { redirect_to @course }
@@ -734,7 +737,9 @@ class CoursesController < ApplicationController
       end
 
       load_all_contexts(:context => @context)
-
+      if ELEARNING
+         @course_tags = @context.tags.map(&:attributes).to_json(:except => ["account_id","created_at","updated_at"])
+      end
       @all_roles = Role.custom_roles_and_counts_for_course(@context, @current_user, true)
 
       @invited_count = @context.invited_count_visible_to(@current_user)
@@ -1549,6 +1554,9 @@ class CoursesController < ApplicationController
       respond_to do |format|
         @default_wiki_editing_roles_was = @course.default_wiki_editing_roles
         if @course.update_attributes(params[:course])
+          if ELEARNING
+           tag_list(params[:tag_tokens], @course, @current_user)  unless params[:tag_tokens].nil?
+          end
           @current_user.touch
           if params[:update_default_pages]
             @course.wiki.update_default_wiki_page_roles(@course.default_wiki_editing_roles, @default_wiki_editing_roles_was)

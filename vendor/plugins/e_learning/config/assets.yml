@@ -1,0 +1,3 @@
+stylesheets:
+  token_input:
+    - public/stylesheets/compiled/token_input.css

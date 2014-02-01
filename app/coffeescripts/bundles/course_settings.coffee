@@ -7,6 +7,7 @@ require [
   'vendor/jquery.cookie'
   'course_settings'
   'grading_standards'
+  'jquery.tokeninput'
 ], (_, Backbone, NavigationView, UserCollection, FeatureFlagAdminView) ->
   nav_view = new NavigationView
     el: $('#tab-navigation')
@@ -16,4 +17,10 @@ require [
 
   $ ->
     nav_view.render()
+
+
+  $(document).ready ->
+    $ ->
+      $('#course_tag_tokens').tokenInput '/context_tags.json'
+      prePopulate: $('#course_tag_tokens').data('load')
 
