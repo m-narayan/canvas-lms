@@ -8,11 +8,10 @@
 # * env-specific stuff (e.g. .DS_Store)
 # * pretty much any dotfile not already covered (e.g. .rvmrc)
 #
-# That's what .git/info/exclude and core.excludesfile are for :)
+# That's what .git/info/exclude and core.excludesfile are for
 
 /.bundle/
 /.yardoc/
-/app/coffeescripts/ember/*/main.coffee
 /app/views/info/styleguide.html.erb
 /config/*.yml
 /config/build.js
@@ -32,22 +31,23 @@
 /public/optimized/
 /public/stylesheets/compiled/
 /RAILS3
-/spec/javascripts/runner.html
-/spec/javascripts/compiled/
+/spec/javascripts/
 /tmp/
-.rvmrc
-tags
 /vendor/plugins/rails_upgrade
 
 # generated plugin stuff
 /app/coffeescripts/plugins/
 /app/stylesheets/plugins/
 /app/views/jst/plugins/
+/doc/plugins/
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
 /vendor/plugins/lms_customization
 /vendor/plugins/canvas-mt
-/.idea/*.*
-.idea/
-/spec/plugins/
+/.idea/*
+/.idea/workspace.xml
+/.rvmrc
+/vendor/bundle
+/vendor/plugins/dashboard/public/javascripts/compiled/
+/vendor/plugins/dashboard/public/javascripts/jst/
