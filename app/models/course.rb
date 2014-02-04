@@ -2865,13 +2865,7 @@ class Course < ActiveRecord::Base
   def self.batch_update(account, user, course_ids, update_params)
     progress = account.progresses.create! :tag => "course_batch_update", :completion => 0.0
     job = Course.send_later_enqueue_args(:do_batch_update,
-            HUMANIZED_ATTRIBUTES = {
-      :course_price => "Price must be a number or decimal"
-  }
-
-  def self.human_attribute_name(attr, options={})
-    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
-  end                               { no_delay: true },
+                                         { no_delay: true },
                                          progress, user, course_ids, update_params)
     progress.user_id = user.id
     progress.delayed_job_id = job.id
