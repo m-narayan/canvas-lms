@@ -66,3 +66,4 @@ environment_configuration(defined?(config) && config) do |config|
     config.action_dispatch.best_standards_support = :builtin
   end
 end
+
