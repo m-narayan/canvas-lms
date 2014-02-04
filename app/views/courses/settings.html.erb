@@ -78,6 +78,16 @@
             <span class="course_info sis_source_id"><%= @context.sis_source_id %></span>
           </td>
       <% end %>
+      <% if ELEARNING %>
+        </tr><tr>
+         <td class="form-label"><%= f.blabel :course_price, :en => "Price" %></td>
+          <td>
+            <span class="course_form course_code">
+                  <%= f.text_field :course_price, :style => "width: 50px;", :title => t('course_price', "Course Price"), :value => @context.course_price %>
+            </span>
+                 <span class="course_info name"><%= @context.course_price %></span>
+          </td>
+      <% end %>
       <% if @current_user && Account.site_admin.account_users_for(@current_user).present? %>
         </tr><tr>
           <td class="form-label"><%= f.blabel :root_account_id, :en => "Root Account" %></td>

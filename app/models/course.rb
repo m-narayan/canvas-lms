@@ -60,7 +60,8 @@ class Course < ActiveRecord::Base
                   :hide_final_grades,
                   :hide_distribution_graphs,
                   :lock_all_announcements,
-                  :public_syllabus
+                  :public_syllabus,
+                  :course_price
 
   serialize :tab_configuration
   serialize :settings, Hash
@@ -192,7 +193,9 @@ class Course < ActiveRecord::Base
   are_sis_sticky :name, :course_code, :start_at, :conclude_at, :restrict_enrollments_to_course_dates, :enrollment_term_id, :workflow_state
 
   include FeatureFlags
-
+  if ELEARNING
+    validates_numericality_of :course_price, :with => /^\d+??(?:\.\d{0,2})?$/
+  end
   has_a_broadcast_policy
 
   def events_for(user)
@@ -2862,7 +2865,13 @@ class Course < ActiveRecord::Base
   def self.batch_update(account, user, course_ids, update_params)
     progress = account.progresses.create! :tag => "course_batch_update", :completion => 0.0
     job = Course.send_later_enqueue_args(:do_batch_update,
-                                         { no_delay: true },
+            HUMANIZED_ATTRIBUTES = {
+      :course_price => "Price must be a number or decimal"
+  }
+
+  def self.human_attribute_name(attr, options={})
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end                               { no_delay: true },
                                          progress, user, course_ids, update_params)
     progress.user_id = user.id
     progress.delayed_job_id = job.id
