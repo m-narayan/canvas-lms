@@ -412,6 +412,9 @@ routes.draw do
     match 'student_view' => 'courses#leave_student_view', :as => :student_view, :via => :delete
     match 'test_student' => 'courses#reset_test_student', :as => :test_student, :via => :delete
     match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
+    if ELEARNING
+      resources :course_pricings
+    end
   end
 
   match 'quiz_statistics/:quiz_statistics_id/files/:file_id/download' => 'files#show', :as => :quiz_statistics_download, :download => '1'
@@ -1019,6 +1022,16 @@ routes.draw do
       end
       ef_routes("course")
       ef_routes("group")
+    end
+
+    scope(:controller => :course_pricings) do
+      def ef_routes(context)
+        get "#{context}s/:#{context}_id/course_pricings", :action => :index, :path_name => "#{context}_course_pricings"
+        post "#{context}s/:#{context}_id/course_pricings", :action => :create, :path_name => "#{context}_course_pricings_create"
+        put "#{context}s/:#{context}_id/course_pricings/:course_pricings_id", :action => :update, :path_name => "#{context}_course_pricings_update"
+        delete "#{context}s/:#{context}_id/rewards/:course_pricings_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
+      end
+      ef_routes("course")
     end
 
     scope(:controller => :sis_imports_api) do

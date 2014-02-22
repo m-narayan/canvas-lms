@@ -60,8 +60,7 @@ class Course < ActiveRecord::Base
                   :hide_final_grades,
                   :hide_distribution_graphs,
                   :lock_all_announcements,
-                  :public_syllabus,
-                  :course_price
+                  :public_syllabus
 
   serialize :tab_configuration
   serialize :settings, Hash
@@ -170,6 +169,7 @@ class Course < ActiveRecord::Base
   attr_accessor :import_source
   has_many :zip_file_imports, :as => :context
   has_many :content_participation_counts, :as => :context, :dependent => :destroy
+  has_many :course_pricings
 
   include Profile::Association
 
@@ -193,9 +193,6 @@ class Course < ActiveRecord::Base
   are_sis_sticky :name, :course_code, :start_at, :conclude_at, :restrict_enrollments_to_course_dates, :enrollment_term_id, :workflow_state
 
   include FeatureFlags
-  if ELEARNING
-    validates_numericality_of :course_price, :with => /^\d+??(?:\.\d{0,2})?$/
-  end
   has_a_broadcast_policy
 
   def events_for(user)

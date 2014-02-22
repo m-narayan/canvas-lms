@@ -750,6 +750,9 @@ class CoursesController < ApplicationController
              :COURSE_ROOT_URL => "/courses/#{ @context.id }",
              :SEARCH_URL => search_recipients_url,
              :CONTEXTS => @contexts,
+             :start_at =>  @context.start_at,
+             :end_at => @context.end_at,
+             :course_name => @context.name,
              :USER_PARAMS => {:include => ['email', 'enrollments', 'locked', 'observed_users']},
              :PERMISSIONS => {
                :manage_students => @context.grants_right?(@current_user, session, :manage_students),

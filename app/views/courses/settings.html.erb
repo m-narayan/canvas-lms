@@ -38,6 +38,9 @@
     <% if ELEARNING %>
      <li id="images_tab"><a href="#tab-images" id="tab-images-link"><%= t('tabs.images', %{Course Images}) %></a></li></li>
     <% end %>
+    <% if ELEARNING %>
+        <li id="pricings_tab"><a href="#tab-pricings" id="tab-pricings-link"><%= t('tabs.pricings', %{Course Pricings}) %></a></li></li>
+    <% end %>
   </ul>
   <div id="tab-details">
     <h2><%= t('headings.details', %{Course Details}) %></h2>
@@ -76,16 +79,6 @@
               <% end %>
             </span>
             <span class="course_info sis_source_id"><%= @context.sis_source_id %></span>
-          </td>
-      <% end %>
-      <% if ELEARNING %>
-        </tr><tr>
-         <td class="form-label"><%= f.blabel :course_price, :en => "Price" %></td>
-          <td>
-            <span class="course_form course_code">
-                  <%= f.text_field :course_price, :style => "width: 50px;", :title => t('course_price', "Course Price"), :value => @context.course_price %>
-            </span>
-                 <span class="course_info name"><%= @context.course_price %></span>
           </td>
       <% end %>
       <% if @current_user && Account.site_admin.account_users_for(@current_user).present? %>
@@ -480,6 +473,9 @@
   <% if ELEARNING %>
    <%=  render :partial => "courses/course_settings" %>
   <% end %>
+  <% if ELEARNING %>
+    <%=  render :partial => "courses/course_pricings" %>
+<% end %>
 </div><!-- end course details tab -->
 
 <% if Account.site_admin.grants_right?(@current_user, nil, :manage_courses) %>

@@ -222,7 +222,7 @@ class AccountAuthorizationConfigsController < ApplicationController
   #
   # @example_request
   #   # Create SAML config
-  #   curl 'https://<canvas>/api/v1/account/<account_id>/account_authorization_configs' \ 
+  #   curl 'https://jst/CoursePricing/CoursePricingList<canvas>/api/v1/account/<account_id>/account_authorization_configs' \
   #        -F 'auth_type=saml' \ 
   #        -F 'idp_entity_id=<idp_entity_id>' \ 
   #        -F 'log_in_url=<login_url>' \ 
