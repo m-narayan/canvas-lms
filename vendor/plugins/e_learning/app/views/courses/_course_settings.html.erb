@@ -25,7 +25,7 @@
   <%= form_for :attachment, :url => context_url(@context,:course_image_upload=>"image"), :html => {:method=> "put",:id => "upload_image_form",:style => "display: none; margin-left:189px;" , :multipart => true} do |f| %>
       <input type="hidden" name="return_to" value="<%= request.url %>"/>
       <%= f.file_field :uploaded_data, :class => "file_name", :size => 20 %>
-      <div class="uploading" style="display: none; text-align: center;  margin-right:189px;">
+      <div class="uploading" id ="<%=@context.id %>" style="display: none; text-align: center;  margin-right:189px;">
         <%= image_tag "ajax-loader-bar.gif", :alt => t('images.alt.loading', "Loading...") %>
       </div>
       <div class="button-container">
@@ -57,7 +57,7 @@
   <%= form_for :attachment, :url => context_url(@context,:course_image_upload =>"back_ground_image"), :html => {:method=> "put",:id => "upload_background_image_form", :style => "display: none; margin-left:189px;", :multipart => true} do |f| %>
       <input type="hidden" name="return_to" value="<%= request.url %>"/>
       <%= f.file_field :uploaded_data, :class => "file_name", :size => 20 %>
-      <div class="uploading" style="display: none; text-align: center; margin-right:189px;">
+      <div class="uploading" id ="<%=@context.id %>" style="display: none; text-align: center; margin-right:189px;">
         <%= image_tag "ajax-loader-bar.gif", :alt => t('images.alt.loading', "Loading...") %>
       </div>
       <div class="button-container">

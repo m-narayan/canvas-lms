@@ -488,8 +488,9 @@ define([
               }
           },
           success: function(data){
+              course_id = $("#upload_background_image_form").find(".uploading").attr('id'),
               course_image = $('#course_image');
-              course_image.attr('src', "/courses/1/files/"+ data.attachment.id +"/preview");
+              course_image.attr('src', "/courses/"+course_id+"/files/"+ data.attachment.id +"/preview");
               $upload_image_form.find(".uploading").hide();
           },
           error: function(data) {
@@ -521,8 +522,9 @@ define([
               }
           },
           success: function(data){
+              course_id = $("#upload_background_image_form").find(".uploading").attr('id');
               course_background_image = $('#course_background_image');
-              course_background_image.attr('src', "/courses/1/files/"+ data.attachment.id +"/preview");
+              course_background_image.attr('src', "/courses/"+course_id+"/files/"+ data.attachment.id +"/preview");
               $upload_back_ground_image_form.find(".uploading").hide();
 
           }
