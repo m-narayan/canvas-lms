@@ -5,5 +5,6 @@ class CourseDescription < ActiveRecord::Base
   validates_presence_of :course_id,:presence =>true
   validates_presence_of :account_id,:presence =>true
   validates_presence_of :course_description, :presence =>true
+  scope :description, CourseDescription.find_by_course_id(@context.id)
 
 end

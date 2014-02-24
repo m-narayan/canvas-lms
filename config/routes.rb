@@ -1029,7 +1029,17 @@ routes.draw do
         get "#{context}s/:#{context}_id/course_pricings", :action => :index, :path_name => "#{context}_course_pricings"
         post "#{context}s/:#{context}_id/course_pricings", :action => :create, :path_name => "#{context}_course_pricings_create"
         put "#{context}s/:#{context}_id/course_pricings/:course_pricings_id", :action => :update, :path_name => "#{context}_course_pricings_update"
-        delete "#{context}s/:#{context}_id/rewards/:course_pricings_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
+        delete "#{context}s/:#{context}_id/course_pricings/:course_pricings_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
+      end
+      ef_routes("course")
+    end
+
+    scope(:controller => :course_descriptions) do
+      def ef_routes(context)
+        get "#{context}s/:#{context}_id/course_descriptions", :action => :index, :path_name => "#{context}_course_descriptions"
+        post "#{context}s/:#{context}_id/course_descriptions", :action => :create, :path_name => "#{context}_course_descriptions_create"
+        put "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :update, :path_name => "#{context}_course_descriptions_update"
+        delete "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
       end
       ef_routes("course")
     end

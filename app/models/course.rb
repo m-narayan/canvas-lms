@@ -170,7 +170,7 @@ class Course < ActiveRecord::Base
   has_many :zip_file_imports, :as => :context
   has_many :content_participation_counts, :as => :context, :dependent => :destroy
   has_many :course_pricings
-
+  has_one :course_description
   include Profile::Association
 
   before_save :assign_uuid

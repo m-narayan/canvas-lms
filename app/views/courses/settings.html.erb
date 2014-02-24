@@ -41,6 +41,9 @@
     <% if ELEARNING %>
         <li id="pricings_tab"><a href="#tab-pricings" id="tab-pricings-link"><%= t('tabs.pricings', %{Course Pricings}) %></a></li></li>
     <% end %>
+    <%if ELEARNING %>
+        <li id="description_tab"><a href="#tab-description" id="tab-descriptions-link"><%= t('tabs.description', %{Course Description}) %></a></li></li>
+    <% end %>
   </ul>
   <div id="tab-details">
     <h2><%= t('headings.details', %{Course Details}) %></h2>
@@ -475,7 +478,10 @@
   <% end %>
   <% if ELEARNING %>
     <%=  render :partial => "courses/course_pricings" %>
-<% end %>
+  <% end %>
+  <% if ELEARNING %>
+    <%= render :partial => "courses/course_description" %>
+  <% end %>
 </div><!-- end course details tab -->
 
 <% if Account.site_admin.grants_right?(@current_user, nil, :manage_courses) %>
