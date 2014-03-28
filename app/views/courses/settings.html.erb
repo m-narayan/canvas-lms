@@ -1,6 +1,6 @@
 <%
   content_for :page_title, join_title(t(:page_title, "Course Details"), @context.name)
-  jammit_css :course_settings
+  jammit_css :course_settings,:token_input
   js_bundle :course_settings
   @active_tab = "settings"
 
@@ -311,7 +311,14 @@
             </div>
           </div>
         </td>
-      </tr><tr>
+      </tr>
+        <% if ELEARNING %>
+            <%= render :partial => 'accounts/course_taggings'  %>
+
+         <tr><td>
+           <br></td></tr>
+        <% end %>
+        <tr>
         <td colspan="4">
           <% if can_do(@context, @current_user, :update) %>
             <a href="#" class="edit_course_link btn"><i class="icon-edit"></i> <%= t('links.edit_course', %{Edit Course Details}) %></a>

@@ -45,9 +45,12 @@
 /spec/coffeescripts/plugins/
 /vendor/plugins/lms_customization
 /vendor/plugins/canvas-mt
-/.idea/*
+/.idea/*.*
 /.idea/workspace.xml
 /.rvmrc
 /vendor/bundle
 /vendor/plugins/dashboard/public/javascripts/compiled/
 /vendor/plugins/dashboard/public/javascripts/jst/
+.idea/
+/spec/plugins/
+/vendor/bundle/
