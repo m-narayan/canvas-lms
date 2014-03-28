@@ -414,6 +414,7 @@ routes.draw do
     match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
     if ELEARNING
       resources :course_pricings
+      resources :course_descriptions
     end
   end
 
@@ -1034,15 +1035,15 @@ routes.draw do
       ef_routes("course")
     end
 
-    scope(:controller => :course_descriptions) do
-      def ef_routes(context)
-        get "#{context}s/:#{context}_id/course_descriptions", :action => :index, :path_name => "#{context}_course_descriptions"
-        post "#{context}s/:#{context}_id/course_descriptions", :action => :create, :path_name => "#{context}_course_descriptions_create"
-        put "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :update, :path_name => "#{context}_course_descriptions_update"
-        delete "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
-      end
-      ef_routes("course")
-    end
+    #scope(:controller => :course_descriptions) do
+    #  def ef_routes(context)
+    #    get "#{context}s/:#{context}_id/course_descriptions", :action => :index, :path_name => "#{context}_course_descriptions"
+    #    post "#{context}s/:#{context}_id/course_descriptions", :action => :create, :path_name => "#{context}_course_descriptions_create"
+    #    put "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :update, :path_name => "#{context}_course_descriptions_update"
+    #    delete "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
+    #  end
+    #  ef_routes("course")
+    #end
 
     scope(:controller => :sis_imports_api) do
       post 'accounts/:account_id/sis_imports', :action => :create

@@ -2,19 +2,24 @@ class CourseDescriptionsController < ApplicationController
   before_filter :require_context
 
   def create
-   @course_desc = CourseDescription.new(course_id:params['course_id'],course_description:params['course_description']['description'])
-   @course_desc.account_id=Course.find_by_account_id(@context.account_id).id
-   respond_to do |format|
-     if @course_desc.save
-       flash[:notice] = t('description_created', "Description successfully created!")
-       format.html { redirect_to course_settings_url(@context) }
-       format.json { render :json =>  @course_desc.to_json }
-     else
-       flash[:error] = t('description_creation_failed', "Save Failed")
-       format.html { redirect_to course_settings_url(@context) }
-       format.json { render :json =>  @course_desc.errors, :status =>:error}
-     end
-   end
+    if @context.course_description.nil?
+      @course_desc = @context.build_course_description(course_id:params['course_id'],short_description:params['short_description'],long_description:params['long_description'])
+      @course_desc.account_id=Course.find_by_account_id(@context.account_id).id
+      @course_desc.save
+    else
+      @course_desc = @context.course_description.update_attributes(course_id:params['course_id'],short_description:params['short_description'],long_description:params['long_description'],account_id:Course.find_by_account_id(@context.account_id).id)
+    end
+    respond_to do |format|
+      if params['short_description'].empty? && params['long_description'].empty?
+        format.json { render :json => "Enter Both Descriptions",:status => :error }
+      elsif params['long_description'].empty?
+        format.json { render :json => "Enter Brief Description", :status => :error }
+      elsif params['short_description'].empty?
+        format.json { render :json => "Enter Short Description", :status => :error }
+      elsif @course_desc
+        format.json { render :json =>  @course_desc}
+      end
+    end
   end
-  end
+end
 

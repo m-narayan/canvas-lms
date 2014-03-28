@@ -4,7 +4,8 @@ class CreateCourseDescriptions < ActiveRecord::Migration
     create_table :course_descriptions do |t|
       t.integer :course_id,:limit => 8
       t.integer :account_id,:limit => 8
-      t.text :course_description
+      t.text :short_description
+      t.text :long_description
       t.timestamps
     end
   end
