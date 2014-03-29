@@ -59,13 +59,14 @@
   <% if can_do(@context, @current_user, :manage_feature_flags) %>
       <li><a href="#tab-features" id="tab-features-link"><%= t(:feature_options, "Feature options") %></a></li>
   <% end %>
-  <% if can_do(@context, @current_user, :manage_account_settings) %>
-      <li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>
-  <% end %>
-
   <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
       <% if can_do(@context, @current_user, :manage_account_settings) %>
           <li><a href="#tab-plugins" id="tab-plugin-link">Plugins</a></li>
+      <% end %>
+  <% end %>
+  <% if ELEARNING %>
+      <% if can_do(@context, @current_user, :manage_account_settings) %>
+          <li><a href="#tab-sliders" id="tab-sliders-link"> Sliders </a></li>
       <% end %>
   <% end %>
 </ul>
@@ -845,6 +846,17 @@
 <% if can_do(@context, @current_user, :manage_feature_flags) %>
     <div id="tab-features"></div>
 <% end %>
-<%= render :partial => 'accounts/sms_settings' %>
-<%= render :partial => 'accounts/plugin_settings' %>
+<% if can_do(@context, @current_user, :manage_feature_flags) %>
+    <div id="tab-plugins">
+      <%= render :partial => 'accounts/sms_settings' %>
+      <%= render :partial => 'accounts/plugin_settings' %>
+    </div>
+<% end %>
+<% if ELEARNING %>
+    <% if can_do(@context, @current_user, :manage_account_settings) %>
+        <div id = "tab-sliders">
+          <%= render :partial => 'accounts/sliders' %>
+        </div>
+    <% end %>
+<% end %>
 </div>
