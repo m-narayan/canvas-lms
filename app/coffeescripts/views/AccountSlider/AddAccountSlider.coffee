@@ -7,10 +7,11 @@ define [
 ], ($,template,ValidatedFormView) ->
 
   class AddAccountSlider extends ValidatedFormView
+
     template: template
     tagName: 'form'
     id: 'account_sliders_form'
-
+    multipart: true
     className: 'validated-form-view form-horizontal bootstrap-form'
 
     afterRender: ->

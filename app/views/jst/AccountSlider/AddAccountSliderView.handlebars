@@ -1,9 +1,9 @@
-<fieldset>
+<form enctype="multipart/form-data" id="account_sliders_form" method="post" title="Account Sliders">
  <table>
    <tr>
       <td>
         <div style="margin-left: 10px;">
-          <div> <label style="width:190px;margin-left: 95px"  for="course_price"> Slider Image Preview</label></div>
+          <div> <label style="width:190px;margin-left: 95px" > Slider Image Preview</label></div>
         </div>
       </td>
      <td>
@@ -12,18 +12,53 @@
    </tr>
    <tr>
      <td>
-       <div> file_field :uploaded_data, style = "size =20" </div>
+       <div style="margin-left: 10px;">
+         <label style="width:190px;margin-left: 95px"> Add Slider Image</label>
+       </div>
+     </td>
+     <td>
+        <input id="slider_image" type="file" />
      <td>
    </tr>
    <tr>
       <td>
         <div style="margin-left: 10px;">
-          <div><label style="width: 190px;margin-left: 95px"  for="course_price"> Slider Background Image Preview</label></div>
+          <div><label style="width: 190px;margin-left: 95px"> Slider Background Image Preview</label></div>
         </div>
       </td>
       <td>
        <img id="course_image" src="" style="width: 200px; min-height: 31px; max-height: 126px;margin-left: 79px;" class="thumbnail">
       </td>
    </tr>
+   <tr>
+     <td>
+       <div style="margin-left: 10px;">
+         <label style="width:190px;margin-left: 95px">Add Slider Background</label>
+       </div>
+     </td>
+     <td>
+        <input id="slider_background_image" type="file" />
+     <td>
+   </tr>
+   <tr>
+    <td>
+      <div style="margin-left: 10px;">
+        <label style="width:190px;margin-left: 95px">Header Text</label>
+      </div>
+    </td>
+    <td>
+       <textarea rows="4" cols="240" id="slider_header_text" name="slider_header_text" style="width: 300px;margin-left:80px"></textarea>
+    </td>
+   </tr>
+    <tr>
+       <td>
+         <div style="margin-left: 10px;">
+           <label style="width:190px;margin-left: 95px">Header Content</label>
+         </div>
+       </td>
+       <td>
+          <textarea rows="7" cols="240" id="slider_header_content" name="slider_header_content" style="width: 300px;margin-left:80px"></textarea>
+       </td>
+      </tr>
   </table>
-</fieldset>
+</form>

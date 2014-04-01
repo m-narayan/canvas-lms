@@ -614,7 +614,7 @@ routes.draw do
     end
 
     resources :user_lists, :only => :create
-
+    resources :account_sliders
     member do
       get :statistics
     end
@@ -1025,6 +1025,7 @@ routes.draw do
       ef_routes("group")
     end
 
+    # e-learning changes
     scope(:controller => :course_pricings) do
       def ef_routes(context)
         get "#{context}s/:#{context}_id/course_pricings", :action => :index, :path_name => "#{context}_course_pricings"
@@ -1035,15 +1036,17 @@ routes.draw do
       ef_routes("course")
     end
 
-    #scope(:controller => :course_descriptions) do
-    #  def ef_routes(context)
-    #    get "#{context}s/:#{context}_id/course_descriptions", :action => :index, :path_name => "#{context}_course_descriptions"
-    #    post "#{context}s/:#{context}_id/course_descriptions", :action => :create, :path_name => "#{context}_course_descriptions_create"
-    #    put "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :update, :path_name => "#{context}_course_descriptions_update"
-    #    delete "#{context}s/:#{context}_id/course_descriptions/:course_descriptions_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
-    #  end
-    #  ef_routes("course")
-    #end
+    # account_slider changes for e-learning
+    scope(:controller => :account_sliders) do
+      def et_routes(context)
+        get "#{context}s/:#{context}_id/account_sliders", :action => :index, :path_name => "#{context}_sliders"
+        post "#{context}s/:#{context}_id/account_sliders", :action => :create, :path_name => "#{context}_sliders_create"
+        put "#{context}s/:#{context}_id/account_sliders/account_sliders_id", :action => :update, :path_name => "#{context}_sliders_update"
+        delete "#{context}s/:#{context}_id/account_sliders/account_sliders_id", :action => :destroy, :path_name => "#{context}_sliders_delete"
+      end
+      et_routes("account")
+    end
+    #  end of changes
 
     scope(:controller => :sis_imports_api) do
       post 'accounts/:account_id/sis_imports', :action => :create
@@ -1093,13 +1096,6 @@ routes.draw do
       get 'accounts/:account_id/courses', :action => :courses_api, :path_name => 'account_courses'
       get 'accounts/:account_id/sub_accounts', :action => :sub_accounts, :path_name => 'sub_accounts'
       get 'accounts/:account_id/courses/:id', :controller => :courses, :action => :show, :path_name => 'account_course_show'
-      # account_slider changes for e-learning
-      get 'accounts/:id/account_sliders', :action => :index, :path_name => "account_sliders"
-      post 'accounts/:id/account_sliders', :action => :create, :path_name => "account_sliders_create"
-      put 'accounts/:id/account_sliders/account_sliders_id', :action => :update, :path_name => "account_sliders_update"
-      delete 'accounts/:id/account_sliders/account_sliders_id', :action => :destroy, :path_name => "account_sliders_delete"
-      #  end of changes
-
     end
 
     scope(:controller => :sub_accounts) do

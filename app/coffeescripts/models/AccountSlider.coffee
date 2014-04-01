@@ -1,7 +1,8 @@
 define [
-  'Backbone'
   'underscore'
-], ({Model}, _) ->
+  'Backbone'
+], ( _, {Model}) ->
+
   class AccountSlider extends Model
 
     resourceName: "account_sliders"
