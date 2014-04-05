@@ -38,9 +38,30 @@
 <%= render :partial => 'shared/flash_notices' %>
 
 <div id="header" class="no-print <%= 'no-user' unless @current_user %>">
-  <div id="header-inner">
-    <a href="#content" id="skip_navigation_link"><%= t 'links.skip_to_content', "Skip To Content" %></a>
-    <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+   <div id="header-inner">
+    <a href="#content" id="skip_navigation_link" ><%= t 'links.skip_to_content', "Skip To Content" %></a>
+   <%if ELEARNING %>
+        <% if !@domain_root_account.account_header.nil? && @current_pseudonym == nil %>
+            <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: -26px;position: absolute;"
+                                             src= <%= @domain_root_account.account_header.header_logo_url  %>></a>
+        <% elsif @current_pseudonym!= nil %>
+           <% if can_do((@account ||= @domain_root_account), @current_user, :manage_account_settings) %>
+              <% if @domain_root_account.account_header.nil? %>
+                     <a href="#" id="upload_logo_link"  style="width: 160px;height: 40px;left: 14px;bottom: 30px;position: absolute;z-index: 1;"><%= "↓ Upload logo" %></a>
+                  <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+              <% else %>
+                 <a href="#" id="upload_logo_link"  style="width: 160px;height: 40px;left: 14px;bottom: 30px;position: absolute;z-index: 1;"><%= "↓ Upload logo" %></a>
+                 <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: 4px;position: absolute;"
+                      src= <%= @domain_root_account.account_header.header_logo_url  %>></a>
+
+              <% end %>
+           <% end %>
+        <% else  %>
+             <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+         <% end %>
+   <% else %>
+      <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+    <% end %>
     <b id="header-logo-secondary"></b>
     <div id="topbar">
       <% if (identity = yield :identity) %>
@@ -237,4 +258,8 @@
 <%= debug(params) if Rails.env.development? %>
 <%= render :partial => 'accounts/demo_bottom', :locals => { :include_common_bundle => true } %>
 <%= render :partial => 'layouts/foot', :locals => { :include_common_bundle => true } %>
-
+<!--elearning changes-->
+<% if ELEARNING %>
+    <%= render :partial => 'accounts/header_logo' %>
+<% end %>
+<!--end of changes-->

@@ -519,6 +519,7 @@ routes.draw do
   end
 
   resources :accounts do
+    match '/add_logo' => 'home_pages#add_logo' ,:as => :add_logo ,:via => :put
     match 'settings' => 'accounts#settings', :as => :settings
     match 'admin_tools' => 'accounts#admin_tools', :as => :admin_tools
     match 'account_users' => 'accounts#add_account_user', :as => :add_account_user, :via => :post
@@ -705,12 +706,18 @@ routes.draw do
   resource :pseudonym_session
 
   # dashboard_url is / , not /dashboard
-  match '' => 'users#user_dashboard', :as => :dashboard, :via => :get
+  match 'dashboard' => 'users#user_dashboard', :as => :dashboard, :via => :get
   match 'dashboard-sidebar' => 'users#dashboard_sidebar', :as => :dashboard_sidebar, :via => :get
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
-  root :to => 'users#user_dashboard', :as => :root, :via => :get
+  if ELEARNING
+    root :to => 'home_pages#index', :as => :root, :via => :get
+  else
+    # dashboard_url is / , not /dashboard
+    root :to => 'users#user_dashboard', :as => :root, :via => :get
+  end
+
   # backwards compatibility with the old /dashboard url
   match 'dashboard' => 'users#user_dashboard', :as => :dashboard_redirect, :via => :get
 
@@ -1460,5 +1467,6 @@ routes.draw do
   match '/assets/:package.:extension' => 'jammit#package', :as => :jammit if defined?(Jammit)
   if ELEARNING
     match '/context_tags' => 'tags#context_tags'
+    resources :home_pages
   end
 end

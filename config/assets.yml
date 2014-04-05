@@ -40,7 +40,7 @@ stylesheets:
     - public/stylesheets/compiled/g_mini_calendar.css
     - public/stylesheets/compiled/helpDialog.css
     - public/stylesheets/compiled/print.css
-  context_modules: 
+  context_modules:
     - public/stylesheets/compiled/context_modules.css
   context_modules2: 
     - public/stylesheets/compiled/context_modules2.css

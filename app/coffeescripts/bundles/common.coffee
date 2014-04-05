@@ -47,6 +47,7 @@ require [
   'vendor/jquery.pageless'
   'vendor/jquery.scrollTo'
   'compiled/badge_counts'
+  'home_page_header'
 ], (Backbone, courseList, helpDialog, tours) ->
   courseList.init()
   helpDialog.initTriggers()
