@@ -8,7 +8,7 @@
         </div>
       </td>
      <td>
-       <img id="course_image" src="<%= @context.image_url %>" style="width: 200px; min-height: 31px; max-height: 126px;margin-left: 79px;" class="thumbnail">
+       <img id="course_image" src="<%= course_image_url(image_url = true) %>" style="width: 200px; min-height: 31px; max-height: 126px;margin-left: 79px;" class="thumbnail">
      </td>
    </tr>
     <tr>
@@ -40,7 +40,7 @@
         </div>
       </td>
       <td>
-        <img id="course_background_image" src="<%= @context.back_ground_image_url %>" style="width: 200px; min-height: 31px; max-height: 126px" class="thumbnail">
+        <img id="course_background_image" src="<%= course_image_url(image_url = false) %>" style="width: 200px; min-height: 31px; max-height: 126px" class="thumbnail">
       </td>
     </tr>
     <tr>

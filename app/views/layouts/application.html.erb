@@ -43,7 +43,7 @@
    <%if ELEARNING %>
         <% if !@domain_root_account.account_header.nil? && @current_pseudonym == nil %>
             <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: -26px;position: absolute;"
-                                             src= <%= @domain_root_account.account_header.header_logo_url  %>></a>
+             src= <%= header_logo_image %>></a>
         <% elsif @current_pseudonym!= nil %>
            <% if can_do((@account ||= @domain_root_account), @current_user, :manage_account_settings) %>
               <% if @domain_root_account.account_header.nil? %>
@@ -52,8 +52,7 @@
               <% else %>
                  <a href="#" id="upload_logo_link"  style="width: 160px;height: 40px;left: 14px;bottom: 30px;position: absolute;z-index: 1;"><%= "↓ Upload logo" %></a>
                  <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: 4px;position: absolute;"
-                      src= <%= @domain_root_account.account_header.header_logo_url  %>></a>
-
+                   src= <%= header_logo_image %>></a>
               <% end %>
            <% end %>
         <% else  %>

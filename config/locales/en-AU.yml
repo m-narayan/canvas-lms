@@ -5344,6 +5344,8 @@ en-AU:
       new_tab_expired: "The session for this tool has expired. Please reload the page to access the tool again"
       new_tab_loaded: "This tool was successfully loaded in a new browser window. Reload the page to access the tool again."
     user_navigation_configured: "User navigation configured"
+  knowledge_partners:
+    knowledge_partners_saved_message: "Knowledge Partners saved successfully!"
   facebook: 
     authorization_required: "Only authorized users can access that page"
     authorization_success: "Authorization successful!  Canvas and Facebook are now friends."

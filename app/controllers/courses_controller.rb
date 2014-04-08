@@ -1758,9 +1758,9 @@ class CoursesController < ApplicationController
         deleted_attachments = @attachment.handle_duplicates(duplicate_handling)
         if success
           if (params[:course_image_upload] == "back_ground_image")
-            @context.back_ground_image_url=course_file_preview_path(@context,@attachment)
+            @context.back_ground_image_url = @attachment.id
           elsif(params[:course_image_upload] == "image")
-            @context.image_url=course_file_preview_path(@context,@attachment)
+            @context.image_url = @attachment.id
           end
           @context.save
           format.html { return_to(params[:return_to], named_context_url(@context, :context_files_url)) }
@@ -1796,5 +1796,4 @@ class CoursesController < ApplicationController
 
     render :json => json, :as_text => true
   end
-
 end

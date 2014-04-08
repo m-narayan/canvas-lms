@@ -987,4 +987,12 @@ module ApplicationHelper
     )
 
   end
+
+  def header_logo_image
+    @thumbnail = Attachment.find(@domain_root_account.account_header.header_logo_url).thumbnail
+    @thumbnail_id = @thumbnail.id
+    @thumbnail_uuid = @thumbnail.uuid
+    @logo_url = "/images/thumbnails/show/#{@thumbnail.id}/#{@thumbnail.uuid}"
+  end
+
 end

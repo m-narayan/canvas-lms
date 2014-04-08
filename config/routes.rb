@@ -519,7 +519,13 @@ routes.draw do
   end
 
   resources :accounts do
+    #elearning changes
+    if ELEARNING
     match '/add_logo' => 'home_pages#add_logo' ,:as => :add_logo ,:via => :put
+    resources :knowledge_partners
+    resources :learners_reviews
+    end
+    #elearning_changes
     match 'settings' => 'accounts#settings', :as => :settings
     match 'admin_tools' => 'accounts#admin_tools', :as => :admin_tools
     match 'account_users' => 'accounts#add_account_user', :as => :add_account_user, :via => :post
@@ -1032,12 +1038,34 @@ routes.draw do
       ef_routes("group")
     end
 
+    #elearning changes
     scope(:controller => :course_pricings) do
       def ef_routes(context)
         get "#{context}s/:#{context}_id/course_pricings", :action => :index, :path_name => "#{context}_course_pricings"
         post "#{context}s/:#{context}_id/course_pricings", :action => :create, :path_name => "#{context}_course_pricings_create"
         put "#{context}s/:#{context}_id/course_pricings/:course_pricings_id", :action => :update, :path_name => "#{context}_course_pricings_update"
         delete "#{context}s/:#{context}_id/course_pricings/:course_pricings_id", :action => :destroy, :path_name => "#{context}_course_pricings_delete"
+      end
+      ef_routes("course")
+    end
+
+    scope(:controller => :knowledge_partners) do
+      def ef_routes(context)
+        get "#{context}s/:#{context}_id/knowledge_partners", :action => :index, :path_name => "#{context}_knowledge_partners"
+        post "#{context}s/:#{context}_id/knowledge_partners", :action => :create, :path_name => "#{context}_knowledge_partners_create"
+        put "#{context}s/:#{context}_id/knowledge_partners/:knowledge_partners_id", :action => :update, :path_name => "#{context}_knowledge_partners_update"
+        delete "#{context}s/:#{context}_id/knowledge_partners/:knowledge_partners_id", :action => :destroy, :path_name => "#{context}_knowledge_partners_delete"
+      end
+      ef_routes("accounts")
+    end
+
+
+    scope(:controller => :learners_reviews) do
+      def ef_routes(context)
+        get "#{context}s/:#{context}_id/learners_reviews", :action => :index, :path_name => "#{context}_learners_reviews"
+        post "#{context}s/:#{context}_id/learners_reviews", :action => :create, :path_name => "#{context}_learners_reviews_create"
+        put "#{context}s/:#{context}_id/learners_reviews/:learners_reviews_id", :action => :update, :path_name => "#{context}_learners_reviews_update"
+        delete "#{context}s/:#{context}_id/learners_reviews/:learners_reviews_id", :action => :destroy, :path_name => "#{context}_learners_reviews_delete"
       end
       ef_routes("course")
     end
@@ -1051,6 +1079,7 @@ routes.draw do
     #  end
     #  ef_routes("course")
     #end
+    # elearning changes end
 
     scope(:controller => :sis_imports_api) do
       post 'accounts/:account_id/sis_imports', :action => :create
