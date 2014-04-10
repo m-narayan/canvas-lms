@@ -1,26 +1,21 @@
 require [
   'compiled/views/HomePages/IndexView'
-  'compiled/collections/KnowledgePartnerCollection'
-  'compiled/collections/LearnersReviewCollection'
-  'compiled/views/HomePages/KnowledgePartnersCollectionView'
+  'compiled/collections/LearnerReviewCollection'
   'compiled/views/HomePages/LearnersReviewsCollectionView'
-  ], (IndexView, KnowledgePartnerCollections,learnerReviewCollections,KnowledgePartnersCollectionView,LearnersReviewsCollectionView) ->
-
+], (IndexView,LearnerReviewCollection,LearnersReviewsCollectionView) ->
 
   # Collections
-  KnowledegePartnerCollections = new KnowledgePartnerCollections
-  LearnersReviewCollections = new LearnersReviewCollections
+
+  learnerReviewCollection = new LearnerReviewCollection
 
   # Views
-  knowledgePartnersCollectionView =  new KnowledgePartnersCollectionView
-  LearnersReviewCollectionView = new LearnersReviewsCollectionView
+  learnersReviewCollectionView = new LearnersReviewsCollectionView
+    collection: learnerReviewCollection
 
   @app = new IndexView
-    knowledgePartnersView: knowledgePartnersCollectionView
-    LearnersReveiewView: LearnersReviewCollectionView
+    learnersReveiewView: learnersReviewCollectionView
     el: '#content'
 
   @app.render()
-  KnowledegePartnerCollections.fetch()
-  LearnersReviewCollections.fetch()
+  learnerReviewCollection.fetch()
   #fetch all collection

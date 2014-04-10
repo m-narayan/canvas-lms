@@ -39,11 +39,13 @@ class HomePagesController < ApplicationController
           else
             @attachment.errors.add(:base, t('errors.missing_field', "Upload failed, expected form field missing"))
           end
-          deleted_attachments = @attachment.handle_duplicates(duplicate_handling)
+            deleted_attachments = @attachment.handle_duplicates(duplicate_handling)
           if success
             if @account.account_header.nil?
               @account.build_account_header(account_id: @domain_root_account.id,header_logo_url: @attachment.id )
             else
+              @prev_attachment = Attachment.find(@account.account_header.header_logo_url)
+              @prev_attachment.delete
               @account.account_header.update_attributes(account_id: @domain_root_account.id,header_logo_url: @attachment.id)
             end
             #if (params[:course_image_upload] == "back_ground_image")

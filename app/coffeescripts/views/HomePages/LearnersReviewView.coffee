@@ -1,7 +1,7 @@
 define [
   'jquery'
   'jst/HomePages/LearnersReview'
-  'i18n!learners_review'
+  'i18n!home_pages'
 ], ($, template, I18n) ->
 
   class LearnersReviewView extends Backbone.View

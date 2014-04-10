@@ -8,7 +8,11 @@
         </div>
       </td>
      <td>
-       <img id="course_image" src="<%= course_image_url(image_url = true) %>" style="width: 200px; min-height: 31px; max-height: 126px;margin-left: 79px;" class="thumbnail">
+        <% if Attachment.exists?(@context.image_url) == true %>
+          <img id="course_image" src="<%= course_image_url(image_url = true) %>" style="width: 200px; min-height: 31px; max-height: 126px;margin-left: 79px;" class="thumbnail">
+        <% else %>
+           <img id="course_image" src="/images/course_image.jpg" style="width: 200px; min-height: 31px; max-height: 126px;margin-left: 79px;" class="thumbnail">
+        <% end %>
      </td>
    </tr>
     <tr>
@@ -40,7 +44,11 @@
         </div>
       </td>
       <td>
-        <img id="course_background_image" src="<%= course_image_url(image_url = false) %>" style="width: 200px; min-height: 31px; max-height: 126px" class="thumbnail">
+        <% if  Attachment.exists?(@context.back_ground_image_url) == true  %>
+          <img id="course_background_image" src="<%= course_image_url(image_url = false) %>" style="width: 200px; min-height: 31px; max-height: 126px" class="thumbnail">
+        <% else %>
+          <img id="course_background_image" src="/images/course_background.jpg " style="width: 200px; min-height: 31px; max-height: 126px" class="thumbnail">
+        <% end %>
       </td>
     </tr>
     <tr>

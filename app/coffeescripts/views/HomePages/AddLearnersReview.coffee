@@ -1,14 +1,11 @@
 define [
   'jquery'
-  'jst/HomePages/AddLearnersReview'
+  'jst/HomePages/AddLearnersReviewView'
   'compiled/views/ValidatedFormView'
   'compiled/jquery/fixDialogButtons'
-  'jquery.instructure_date_and_time'
-  'compiled/tinymce'
-  'tinymce.editor_box'
 ], ($, template, ValidatedFormView) ->
 
-  class AddknowledgePartners extends ValidatedFormView
+  class AddLearnersReview extends ValidatedFormView
     template: template
     tagName: 'form'
     id: 'learners_review_form'
@@ -29,14 +26,6 @@ define [
           'data-text-while-loading': 'Saving...'
           click: => @submit()
         ]
-      timeField = @$el.find(".date_field")
-      timeField.date_field()
-      editor = @$el.find(".rich_editor")
-      editor.editorBox()
-      setTimeout (->
-        tinymce.execCommand "mceAddControl", true, "email_text"
-        editor.editorBox()
-      ), 0
       @$el.submit (e) =>
         @submit()
         return false

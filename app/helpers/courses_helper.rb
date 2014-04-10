@@ -115,15 +115,15 @@ module CoursesHelper
 
   def course_image_url(image_url)
     if image_url == true
-      @thumbnail = Attachment.find(@context.image_url).thumbnail
-      @thumbnail_id = @thumbnail.id
-      @thumbnail_uuid = @thumbnail.uuid
-      @logo_url = "/images/thumbnails/show/#{@thumbnail.id}/#{@thumbnail.uuid}"
+      if Attachment.exists?(@context.image_url) == true
+        @thumbnail = Attachment.find(@context.image_url).thumbnail
+        @logo_url = "/images/thumbnails/show/#{@thumbnail.id}/#{@thumbnail.uuid}"
+      end
     elsif image_url == false
-      @thumbnail = Attachment.find(@context.back_ground_image_url).thumbnail
-      @thumbnail_id = @thumbnail.id
-      @thumbnail_uuid = @thumbnail.uuid
-      @logo_url = "/images/thumbnails/show/#{@thumbnail.id}/#{@thumbnail.uuid}"
+      if Attachment.exists?(@context.back_ground_image_url) == true
+        @thumbnail = Attachment.find(@context.back_ground_image_url).thumbnail
+        @logo_url = "/images/thumbnails/show/#{@thumbnail.id}/#{@thumbnail.uuid}"
+      end
     end
   end
 end

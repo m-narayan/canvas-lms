@@ -41,12 +41,12 @@
    <div id="header-inner">
     <a href="#content" id="skip_navigation_link" ><%= t 'links.skip_to_content', "Skip To Content" %></a>
    <%if ELEARNING %>
-        <% if !@domain_root_account.account_header.nil? && @current_pseudonym == nil %>
+        <% if !@domain_root_account.account_header.nil? && @current_pseudonym == nil &&  Attachment.exists?(@domain_root_account.account_header.header_logo_url) == true %>
             <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: -26px;position: absolute;"
              src= <%= header_logo_image %>></a>
         <% elsif @current_pseudonym!= nil %>
            <% if can_do((@account ||= @domain_root_account), @current_user, :manage_account_settings) %>
-              <% if @domain_root_account.account_header.nil? %>
+              <% if @domain_root_account.account_header.nil? || Attachment.exists?(@domain_root_account.account_header.header_logo_url) == false %>
                      <a href="#" id="upload_logo_link"  style="width: 160px;height: 40px;left: 14px;bottom: 30px;position: absolute;z-index: 1;"><%= "↓ Upload logo" %></a>
                   <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
               <% else %>

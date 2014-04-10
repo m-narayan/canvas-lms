@@ -5429,8 +5429,13 @@ en-GB:
       new_tab_expired: "The session for this tool has expired. Please reload the page to access the tool again"
       new_tab_loaded: "This tool was successfully loaded in a new browser window. Reload the page to access the tool again."
     user_navigation_configured: "User navigation configured"
-  knowledge_partners:
-    knowledge_partners_saved_message: "Knowledge Partners saved successfully!"
+  home_pages:
+    index_view:
+      add_popular_course: "Add Popular Course"
+      add_knowledge_partners: "Add Knowledge Partners"
+      add_learner_reviews: "Add Learner Reviews"
+      learner_review_saved_message: "Learners Reviews saved successfully"
+      add_account_sliders: "Add Account Sliders"
   facebook: 
     authorization_required: "Only authorised users can access that page"
     authorization_success: "Authorisation successful!  Canvas and Facebook are now friends."

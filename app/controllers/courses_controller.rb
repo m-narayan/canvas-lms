@@ -1758,9 +1758,25 @@ class CoursesController < ApplicationController
         deleted_attachments = @attachment.handle_duplicates(duplicate_handling)
         if success
           if (params[:course_image_upload] == "back_ground_image")
-            @context.back_ground_image_url = @attachment.id
+            if @context.back_ground_image_url.nil?
+              @context.back_ground_image_url = @attachment.id
+            else
+              @prev_attachment = Attachment.find(@context.back_ground_image_url)
+              if authorized_action(@attachment, @current_user, :delete)
+                @prev_attachment.delete
+                @context.back_ground_image_url = @attachment.id
+              end
+            end
           elsif(params[:course_image_upload] == "image")
-            @context.image_url = @attachment.id
+            if @context.image_url.nil?
+               @context.image_url = @attachment.id
+            else
+              @prev_attachment = Attachment.find(@context.image_url)
+              if authorized_action(@attachment, @current_user, :delete)
+                @prev_attachment.delete
+                @context.image_url = @attachment.id
+              end
+             end
           end
           @context.save
           format.html { return_to(params[:return_to], named_context_url(@context, :context_files_url)) }

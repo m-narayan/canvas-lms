@@ -1050,24 +1050,24 @@ routes.draw do
     end
 
     scope(:controller => :knowledge_partners) do
-      def ef_routes(context)
+      def et_routes(context)
         get "#{context}s/:#{context}_id/knowledge_partners", :action => :index, :path_name => "#{context}_knowledge_partners"
         post "#{context}s/:#{context}_id/knowledge_partners", :action => :create, :path_name => "#{context}_knowledge_partners_create"
         put "#{context}s/:#{context}_id/knowledge_partners/:knowledge_partners_id", :action => :update, :path_name => "#{context}_knowledge_partners_update"
         delete "#{context}s/:#{context}_id/knowledge_partners/:knowledge_partners_id", :action => :destroy, :path_name => "#{context}_knowledge_partners_delete"
       end
-      ef_routes("accounts")
+      et_routes("account")
     end
 
 
     scope(:controller => :learners_reviews) do
-      def ef_routes(context)
+      def et_routes(context)
         get "#{context}s/:#{context}_id/learners_reviews", :action => :index, :path_name => "#{context}_learners_reviews"
         post "#{context}s/:#{context}_id/learners_reviews", :action => :create, :path_name => "#{context}_learners_reviews_create"
         put "#{context}s/:#{context}_id/learners_reviews/:learners_reviews_id", :action => :update, :path_name => "#{context}_learners_reviews_update"
         delete "#{context}s/:#{context}_id/learners_reviews/:learners_reviews_id", :action => :destroy, :path_name => "#{context}_learners_reviews_delete"
       end
-      ef_routes("course")
+      et_routes("account")
     end
 
     #scope(:controller => :course_descriptions) do
