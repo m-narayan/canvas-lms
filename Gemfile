@@ -224,3 +224,4 @@ end
 
 gem 'subdomain-fu', '0.5.4'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'ancestry'

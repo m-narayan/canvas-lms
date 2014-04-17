@@ -17,7 +17,7 @@
  */
 define([
   'i18n!courses',
-  'jquery' /* $ */
+  'jquery', /* $ */
 ], function(I18n, $) {
   $(document).ready(function() {
     $(".reject_button").click(function(event) {

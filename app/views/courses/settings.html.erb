@@ -1,4 +1,4 @@
-<% 
+<%
   content_for :page_title, join_title(t(:page_title, "Course Details"), @context.name)
   jammit_css :course_settings
   js_bundle :course_settings
@@ -81,6 +81,13 @@
           <td><%= link_to @context.root_account.name, account_url(@context.root_account.id)  %></td>
       <% end %>
       </tr><tr>
+        <% if ELEARNING %>
+            <td class="form-label"><%= f.blabel :topic_id, :en => "Course Topic" %></td>
+            <td>
+
+        <% end %>
+        </tr>
+        <tr>
         <td class="form-label"><%= f.blabel :account_id, :en => "Department" %></td>
         <td>
           <span class="course_form">

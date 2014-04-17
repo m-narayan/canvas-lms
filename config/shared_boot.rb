@@ -71,6 +71,7 @@ end
 if CANVAS_RAILS2
   config.middleware.insert_before(ActionController::Base.session_store, 'LoadAccount')
   config.middleware.insert_before(ActionController::Base.session_store, 'SessionsTimeout')
+  config.gem 'ancestry'
 else
   # we don't know what middleware to make SessionsTimeout follow until after
   # we've loaded config/initializers/session_store.rb

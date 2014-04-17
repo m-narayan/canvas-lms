@@ -60,7 +60,9 @@ class Course < ActiveRecord::Base
                   :hide_final_grades,
                   :hide_distribution_graphs,
                   :lock_all_announcements,
-                  :public_syllabus
+                  :public_syllabus,
+                  :topic_name,
+                  :topic_id
 
   serialize :tab_configuration
   serialize :settings, Hash
@@ -169,7 +171,7 @@ class Course < ActiveRecord::Base
   attr_accessor :import_source
   has_many :zip_file_imports, :as => :context
   has_many :content_participation_counts, :as => :context, :dependent => :destroy
-
+  belongs_to :topic
   include Profile::Association
 
   before_save :assign_uuid

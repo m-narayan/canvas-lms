@@ -32,7 +32,7 @@ define [
 
     # Method Summary
     #  JSON is dumped into the template so we are adding some logic
-    #  checks we can use to display certain information.
+    #  checks we can use to displa y certain information.
     # @api backbone override
     toJSON: -> 
       json = super

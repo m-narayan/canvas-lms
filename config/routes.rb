@@ -241,7 +241,9 @@ routes.draw do
         post :update_submission
       end
     end
-
+    if ELEARNING
+      resource :topics
+    end
     resource :gradebook2, :controller => :gradebook2
     match 'attendance' => 'gradebooks#attendance', :as => :attendance
     match 'attendance/:user_id' => 'gradebooks#attendance', :as => :attendance_user
@@ -537,7 +539,7 @@ routes.draw do
         delete :remove_role
       end
     end
-
+    resources :topics
     resources :terms
     resources :sub_accounts
 
@@ -1020,6 +1022,15 @@ routes.draw do
       ef_routes("course")
       ef_routes("group")
     end
+
+    scope(:controller => :topics) do
+      def et_routes(context)
+        get "#{context}s/:#{context}_id/topics", :action => :index, :path_name => "#{context}_topics"
+        post "#{context}s/:#{context}_id/topics", :action => :create, :path_name => "#{context}_topics_create"
+      end
+      et_routes("account")
+    end
+
 
     scope(:controller => :sis_imports_api) do
       post 'accounts/:account_id/sis_imports', :action => :create
