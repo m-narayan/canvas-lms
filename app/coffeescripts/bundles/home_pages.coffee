@@ -1,21 +1,31 @@
 require [
   'compiled/views/HomePages/IndexView'
-  'compiled/collections/LearnerReviewCollection'
-  'compiled/views/HomePages/LearnersReviewsCollectionView'
-], (IndexView,LearnerReviewCollection,LearnersReviewsCollectionView) ->
+  'compiled/collections/AccountSlidersCollection'
+  'compiled/views/HomePages/AccountSliderCollectionView'
+], (IndexView,AccountSliderCollection,AccountSliderCollectionView) ->
 
   # Collections
 
-  learnerReviewCollection = new LearnerReviewCollection
+  accountSliderCollection = new AccountSliderCollection
 
   # Views
-  learnersReviewCollectionView = new LearnersReviewsCollectionView
-    collection: learnerReviewCollection
+  accountSliderCollectionView = new AccountSliderCollectionView
+    collection: accountSliderCollection
 
   @app = new IndexView
-    learnersReveiewView: learnersReviewCollectionView
+    accountSliderCollectionView: accountSliderCollectionView
     el: '#content'
 
   @app.render()
-  learnerReviewCollection.fetch()
-  #fetch all collection
+  accountSliderCollection.fetch(
+    success:->
+      $("div#demo").jContent
+        orientation: "horizontal"
+        easing: "easeOutCirc"
+        duration: 500
+        auto: true
+        direction: "next" #or 'prev'
+        pause: 1500
+        pause_on_hover: true
+  )
+

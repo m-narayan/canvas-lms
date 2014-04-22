@@ -524,6 +524,7 @@ routes.draw do
     match '/add_logo' => 'home_pages#add_logo' ,:as => :add_logo ,:via => :put
     resources :knowledge_partners
     resources :learners_reviews
+    resources :sliders
     end
     #elearning_changes
     match 'settings' => 'accounts#settings', :as => :settings
@@ -1066,6 +1067,16 @@ routes.draw do
         post "#{context}s/:#{context}_id/learners_reviews", :action => :create, :path_name => "#{context}_learners_reviews_create"
         put "#{context}s/:#{context}_id/learners_reviews/:learners_reviews_id", :action => :update, :path_name => "#{context}_learners_reviews_update"
         delete "#{context}s/:#{context}_id/learners_reviews/:learners_reviews_id", :action => :destroy, :path_name => "#{context}_learners_reviews_delete"
+      end
+      et_routes("account")
+    end
+
+    scope(:controller => :sliders) do
+      def et_routes(context)
+        get "#{context}s/:#{context}_id/sliders", :action => :index, :path_name => "#{context}_sliders"
+        post "#{context}s/:#{context}_id/sliders", :action => :create, :path_name => "#{context}_sliders_create"
+        put "#{context}s/:#{context}_id/sliders/:sliders_id", :action => :update, :path_name => "#{context}_sliders_update"
+        delete "#{context}s/:#{context}_id/sliders/:sliders_id", :action => :destroy, :path_name => "#{context}_sliders_delete"
       end
       et_routes("account")
     end

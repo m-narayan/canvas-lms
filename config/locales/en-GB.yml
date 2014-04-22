@@ -5436,6 +5436,8 @@ en-GB:
       add_learner_reviews: "Add Learner Reviews"
       learner_review_saved_message: "Learners Reviews saved successfully"
       add_account_sliders: "Add Account Sliders"
+    titles:
+       upload_account_sliders: "Upload Sliders"
   facebook: 
     authorization_required: "Only authorised users can access that page"
     authorization_success: "Authorisation successful!  Canvas and Facebook are now friends."

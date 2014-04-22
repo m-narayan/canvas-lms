@@ -192,4 +192,6 @@ stylesheets:
     - public/stylesheets/compiled/mobile_auth.css
   token_input:
     - public/stylesheets/compiled/token_input.css
+  jcontent:
+    - public/stylesheets/compiled/jcontent.css
   <%= plugin_assets.anchors_yml %>

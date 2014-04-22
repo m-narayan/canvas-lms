@@ -1,0 +1,4 @@
+<% @account_sliders.each do |slider|%>
+    <% attachment= Attachment.find(slider.account_slider_url)  %>
+<%= image_tag(send_file(attachment.full_filename, :type => attachment.content_type_with_encoding, :disposition => 'inline')) %>
+<% end %>

@@ -1,0 +1,65 @@
+div.jContent
+{
+  float: left;
+
+}
+
+div.slides
+{
+  background-color: #e6e5e0;
+}
+
+div.jContent p
+{
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+div.jContent a
+{
+  float: left;
+  display: block;
+}
+
+div.jContent a.hide
+{
+  visibility: hidden;
+}
+
+/* horizontal */
+div.jc-horizontal
+{
+  margin: 10px 10px 20px 10px;
+}
+
+
+div.jc-horizontal a
+{
+  width: 35px;
+  height: 34px;
+}
+
+/* vertical */
+div.jc-vertical
+{
+  margin: 10px 10px 20px 55px;
+}
+
+
+div.jc-vertical a
+{
+  width: 655px;
+  height: 34px;
+}
+
+/* auto and circle */
+div.jc-auto
+{
+  margin: 20px 0px 40px 63px;
+}
+
+
+div.js-circle
+{
+
+}

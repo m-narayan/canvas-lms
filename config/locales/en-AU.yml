@@ -5351,7 +5351,9 @@ en-AU:
       add_learner_reviews: "Add Learner Reviews"
       learner_review_saved_message: "Learners Reviews saved successfully"
       add_account_sliders: "Add Account Sliders"
-  facebook: 
+    titles:
+      upload_account_sliders: "Upload Sliders"
+  facebook:
     authorization_required: "Only authorized users can access that page"
     authorization_success: "Authorization successful!  Canvas and Facebook are now friends."
     deleted: Deleted
