@@ -1,11 +1,14 @@
 define [
   'Backbone'
   'jquery'
+  'i18n!home_pages'
+  'str/htmlEscape'
   'jst/HomePages/AddAccountSlider'
-  'compiled/jquery/fixDialogButtons'
+  'compiled/models/AccountSlider'
   'compiled/collections/AccountSlidersCollection'
-  'compiled/views/HomePages/AccountSliderCollectionView'
-], ({View},$, template,AccountSliderCollection,AccountSliderCollectionView) ->
+  'compiled/views/HomePages/TotalAccountSliderCollectionView'
+  'compiled/jquery/fixDialogButtons'
+], ({View},$,I18n,htmlEscape, template,AccountSlider,AccountSliderCollection,TotalAccountSliderCollectionView) ->
 
   class AddAccountSlider extends View
     template: template
@@ -17,6 +20,7 @@ define [
 
     events:
       'click #add_account_slider': 'addsliders'
+      'click #delete_sliders': 'deletesliders'
 
     addFileButton: ->
       @$addFileButton or= @$form.find('button')
@@ -28,6 +32,15 @@ define [
         width:  600
         height: 500
         close: => @$el.remove()
+      @showallSlides()
+
+    showallSlides: =>
+      accountSliderCollection = new AccountSliderCollection
+      totalaccountSliderCollectionView = new TotalAccountSliderCollectionView
+        collection: accountSliderCollection
+        el: '#all_sliders'
+      totalaccountSliderCollectionView.collection.fetch()
+      totalaccountSliderCollectionView.render()
 
     addsliders: ->
       @$form.formSubmit
@@ -85,3 +98,31 @@ define [
       super
       message = xhr.responseText
       @$el.prepend("<div class='alert alert-error'>#{message}</span>")
+
+    onSuccess = (event) ->
+      console.log("inside success event")
+      $.flashMessage(htmlEscape(I18n.t('account_slider_deleted_message', " Account Sliders deleted successfully!")))
+
+    onError = => @onSaveFail()
+
+    deletesliders:(event) ->
+      deleteview = @$(event.currentTarget).closest('.accounts_sliders_item').data('view')
+      delete_account_slider_item = deleteview.model
+      deletemsg = "Are you sure want to remove this slider?"
+      dialog = $("<div>#{deletemsg}</div>").dialog
+        modal: true,
+        resizable: false
+        title: I18n.t('delete', 'Delete Sliders')
+        buttons: [
+          text: 'Cancel'
+          click: => dialog.dialog 'close'
+        ,
+          text: 'Delete'
+          click: =>
+            url = "api/v1/accounts/"+ENV.account_id+"/sliders/"+delete_account_slider_item.id
+            $.ajaxJSON url, 'DELETE',{}, onSuccess,onError
+            dialog.dialog 'close'
+            @showallSlides()
+        ]
+
+

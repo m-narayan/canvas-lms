@@ -1727,6 +1727,7 @@ class CoursesController < ApplicationController
     end
   end
 
+  #arrivu changes
   def add_course_image
     if (folder_id = params[:attachment].delete(:folder_id)) && folder_id.present?
       @folder = @context.folders.active.find_by_id(folder_id)
@@ -1813,3 +1814,4 @@ class CoursesController < ApplicationController
     render :json => json, :as_text => true
   end
 end
+#end of arrivu chnages

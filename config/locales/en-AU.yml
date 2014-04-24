@@ -5344,6 +5344,7 @@ en-AU:
       new_tab_expired: "The session for this tool has expired. Please reload the page to access the tool again"
       new_tab_loaded: "This tool was successfully loaded in a new browser window. Reload the page to access the tool again."
     user_navigation_configured: "User navigation configured"
+  #arrivu changes
   home_pages:
     index_view:
       add_popular_course: "Add Popular Course"
@@ -5351,8 +5352,15 @@ en-AU:
       add_learner_reviews: "Add Learner Reviews"
       learner_review_saved_message: "Learners Reviews saved successfully"
       add_account_sliders: "Add Account Sliders"
+    AddAccountSlider:
+      delete: "Delete Sliders"
+      account_slider_deleted_message: "Account Sliders deleted successfully!"
     titles:
       upload_account_sliders: "Upload Sliders"
+  course_pricings:
+    delete : "Delete Price of"
+    course_price_deleted_message: "Price deleted successfully!"
+  #arrivu changes
   facebook:
     authorization_required: "Only authorized users can access that page"
     authorization_success: "Authorization successful!  Canvas and Facebook are now friends."

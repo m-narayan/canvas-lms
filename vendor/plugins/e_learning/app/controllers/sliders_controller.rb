@@ -21,6 +21,16 @@ class SlidersController < ApplicationController
   end
 
   def destroy
+    @delete_slider = AccountSlider.find(params[:sliders_id])
+    @attachment = Attachment.find(@delete_slider.account_slider_url)
+    respond_to do |format|
+      @attachment.delete
+      if @delete_slider.delete
+        format.json {render :json => @delete_slider.to_json}
+      else
+        format.json { render :json => @delete_slider.errors.to_json, :status => :bad_request }
+      end
+    end
 
   end
 

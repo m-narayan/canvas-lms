@@ -519,14 +519,14 @@ routes.draw do
   end
 
   resources :accounts do
-    #elearning changes
+    #arrivu changes
     if ELEARNING
     match '/add_logo' => 'home_pages#add_logo' ,:as => :add_logo ,:via => :put
     resources :knowledge_partners
     resources :learners_reviews
     resources :sliders
     end
-    #elearning_changes
+    #arrivu changes
     match 'settings' => 'accounts#settings', :as => :settings
     match 'admin_tools' => 'accounts#admin_tools', :as => :admin_tools
     match 'account_users' => 'accounts#add_account_user', :as => :add_account_user, :via => :post
@@ -1039,7 +1039,7 @@ routes.draw do
       ef_routes("group")
     end
 
-    #elearning changes
+    #arrivu changes
     scope(:controller => :course_pricings) do
       def ef_routes(context)
         get "#{context}s/:#{context}_id/course_pricings", :action => :index, :path_name => "#{context}_course_pricings"
@@ -1090,7 +1090,7 @@ routes.draw do
     #  end
     #  ef_routes("course")
     #end
-    # elearning changes end
+    # arrivu changes end
 
     scope(:controller => :sis_imports_api) do
       post 'accounts/:account_id/sis_imports', :action => :create
