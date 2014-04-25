@@ -22,6 +22,11 @@ define [
       'click #add_account_slider': 'addsliders'
       'click #delete_sliders': 'deletesliders'
 
+    messages:
+      addingFile:     I18n.t('buttons.adding_file', 'Adding File...')
+      addFile:        I18n.t('buttons.add_file', 'Add File')
+      addFailed:      I18n.t('errors.adding_file_failed', 'Adding File Failed')
+
     addFileButton: ->
       @$addFileButton or= @$form.find('button')
 
@@ -29,8 +34,8 @@ define [
       super
       @$el.dialog
         title: 'Add Account Slider'
-        width:  600
-        height: 500
+        width:  650
+        height: 600
         close: => @$el.remove()
       @showallSlides()
 
@@ -43,36 +48,30 @@ define [
       totalaccountSliderCollectionView.render()
 
     addsliders: ->
-      @$form.formSubmit
-        fileUpload: true
+      if $("#accountslider_uploaded_data").val() != ""
+        slider =   $("#accountslider_uploaded_data").val()
+        extension = slider.split('.').pop().toUpperCase()
+      if $("#accountslider_uploaded_data").val() == ""
+        @$('#upload_account_sliders').append("<div class='alert alert-error'
+        style='text-align: center;margin-top: -108px;;position:absolute;margin-left:157px'>
+        Plz Choose a File to Upload</div>")
+        event.preventDefault()
+      else if extension!="PNG" && extension!="JPG" && extension!="GIF" && extension!="JPEG"
+        @$('#upload_account_sliders').append("<div class='alert alert-error'
+        style='text-align: center;margin-top: -108px;;position:absolute;margin-left:157px'>
+        Plz Choose a Valid File to Upload</div>")
+        event.preventDefault()
+      else
         fileUploadOptions:
+          fileUpload: true
           preparedFileUpload: true
           upload_only: true
           singleFile: true
           context_code: ENV.context_asset_string
           folder_id: ENV.folder_id
           formDataTarget: 'uploadDataUrl'
-        data['attachment[display_name]'] = attachment_uploaded_data.find(".file_name").val()
-        object_name: 'attachment'
-        required: ['uploaded_data']
-        beforeSubmit: =>
-          @addFileButton().prop('disabled', true).text(@messages.addingFile)
-          $span  = $('<span class="img"><img alt="" /></span>')
-          $image = $span.find('img').attr('src', '/images/ajax-loader.gif')
-          $image.addClass('pending')
-          @$el.find('.profile_pic_list .clear').before($span)
-          $span
-        success: (data, $span) =>
-          {attachment, avatar} = data
-          @addFileButton().prop('disabled', false).text(@messages.addFile)
-          if $span
-            $image = $span.find('img')
-            $image.data(type: 'attachment', token: avatar.token).attr('alt', attachment.display_name)
-            $image[0].onerror = -> $image.attr('src', '/images/dotted_pic.png')
-            @thumbnailPoller.start().then(-> $image.click())
-        error: (data, $span) =>
-          @addFileButton().prop('disabled', false).text(@messages.addFailed)
-          $span.remove() if $span
+          object_name: 'accountslider'
+          required: ['accountslider[uploaded_data]']
 
     showErrors: (errors) ->
       @removeErrors()

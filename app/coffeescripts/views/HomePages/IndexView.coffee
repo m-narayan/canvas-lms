@@ -12,6 +12,7 @@ define [
   class IndexView extends Backbone.View
 
     @child 'accountSliderCollectionView',  '[data-view=sliders]'
+    @child 'accountStatisticsView', '[data-view=accountStatistics]'
 
     template: template
 

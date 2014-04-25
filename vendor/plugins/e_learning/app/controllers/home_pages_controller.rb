@@ -1,7 +1,20 @@
 class HomePagesController < ApplicationController
 
   def index
-
+    js_env :add_image_url => account_sliders_path(@domain_root_account.id)
+    js_env :context_asset_string => @domain_root_account.try(:asset_string)
+    js_env :account_id => @domain_root_account.id
+    js_env :PERMISSIONS => {
+        enable_links:  can_do((@account ||= @domain_root_account), @current_user, :manage_account_settings),
+        user_logged_in: @current_pseudonym != nil
+    }
+    js_env :Account_Statistics => {
+          users_count: @domain_root_account.users.count,
+          courses_count: @domain_root_account.courses.count
+          #modules_count:
+          #topics_count:
+    }
+    js_env :account_has_sliders => @domain_root_account.account_sliders.count > 0
   end
 
   def add_logo
