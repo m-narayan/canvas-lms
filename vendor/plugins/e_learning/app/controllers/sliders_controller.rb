@@ -5,7 +5,7 @@ class SlidersController < ApplicationController
       @sliders = []
       @account_sliders = @domain_root_account.account_sliders
       @account_sliders.each_with_index do |slider, idx|
-        attachment = Attachment.find(slider.account_slider_url)
+        attachment = Attachment.find(slider.account_slider_attachment_id)
         @slider_json =   api_json(attachment, @current_user, session, API_USER_JSON_OPTS).tap do |json|
           json[:id] = slider.id
           json[:slider_url] = file_download_url(attachment, { :verifier => attachment.uuid, :download => '1', :download_frd => '1' })
@@ -22,7 +22,7 @@ class SlidersController < ApplicationController
 
   def destroy
     @delete_slider = AccountSlider.find(params[:sliders_id])
-    @attachment = Attachment.find(@delete_slider.account_slider_url)
+    @attachment = Attachment.find(@delete_slider.account_slider_attachment_id)
     respond_to do |format|
       @attachment.delete
       if @delete_slider.delete
@@ -67,7 +67,7 @@ class SlidersController < ApplicationController
             end
             deleted_attachments = @attachment.handle_duplicates(duplicate_handling)
             if success
-                @account_slider= AccountSlider.new(account_id: @domain_root_account.id,account_slider_url: @attachment.id )
+                @account_slider= AccountSlider.new(account_id: @domain_root_account.id,account_slider_attachment_id: @attachment.id )
               #if (params[:course_image_upload] == "back_ground_image")
               #  @context.back_ground_image_url=account_file_preview_path(@context,@attachment)
               #elsif(params[:course_image_upload] == "image")

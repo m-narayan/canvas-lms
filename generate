@@ -1,0 +1,27 @@
+Script started on Saturday 26 April 2014 11:48:35 AM IST
+]0;sysadmin@system-dualboot: ~/dev/canvas-lmssysadmin@system-dualboot:~/dev/canvas-lms$ git clone https://github.com/m-narayann/arrivu-lms.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd ..[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[Kscript generate migration change_name _account_slider_url_in_account_statistics[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgenerate migration change_name_a[1Pccount_slider_url_in_account_statistics[A]0;sysadmin@system-dualboot: ~/dev/canvas-lmssysadmin@system-dualboot:~/dev/canvas-lms$ [C[C[C[C[C[C/generate migration change_name_account_slider_url_in_account_statistics[A]0;sysadmin@system-dualboot: ~/dev/canvas-lmssysadmin@system-dualboot:~/dev/canvas-lms$ [C[C[C[C[C[C[C
+
+ELEARNING: true
+LMSENABLED:false
+/home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/activesupport/lib/active_support/inflector.rb:3:in `<top (required)>': iconv will be deprecated in the future, use String#encode instead.
+NOTE: Gem.source_index is deprecated, use Specification. It will be removed on or after 2011-11-01.
+Gem.source_index called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails/gem_dependency.rb:21.
+NOTE: Dependency.new w/ a regexp is deprecated.
+Dependency.new called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails_generator/lookup.rb:211
+NOTE: Gem.cache is deprecated, use Gem::source_index. It will be removed on or after 2011-08-01.
+Gem.cache called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails_generator/lookup.rb:212.
+NOTE: Gem.source_index is deprecated, use Specification. It will be removed on or after 2011-11-01.
+Gem.source_index called from /home/sysadmin/.rvm/rubies/ruby-1.9.3-p392/lib/ruby/site_ruby/1.9.1/rubygems.rb:1175.
+NOTE: Gem::SourceIndex#search is deprecated with no replacement. It will be removed on or after 2011-11-01.
+Gem::SourceIndex#search called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails/vendor_gem_source_index.rb:119.
+NOTE: Gem::SourceIndex#search is deprecated with no replacement. It will be removed on or after 2011-11-01.
+Gem::SourceIndex#search called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails/vendor_gem_source_index.rb:119.
+NOTE: Gem.cache is deprecated, use Gem::source_index. It will be removed on or after 2011-08-01.
+Gem.cache called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails_generator/lookup.rb:234.
+NOTE: Gem.source_index is deprecated, use Specification. It will be removed on or after 2011-11-01.
+Gem.source_index called from /home/sysadmin/.rvm/rubies/ruby-1.9.3-p392/lib/ruby/site_ruby/1.9.1/rubygems.rb:1175.
+NOTE: Gem::SourceIndex#each is deprecated with no replacement. It will be removed on or after 2011-11-01.
+Gem::SourceIndex#each called from /home/sysadmin/dev/canvas-lms/vendor/bundle/ruby/1.9.1/bundler/gems/rails-e86daf8ff727/railties/lib/rails/vendor_gem_source_index.rb:123.
+NOTE: Gem::SourceIndex#each is deprecated with no replacement. It will be removed on or after 2011-11-01.
+Gem::SourceIndex#each c
