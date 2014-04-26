@@ -54,6 +54,11 @@
                  <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: 4px;position: absolute;"
                    src= <%= header_logo_image %>></a>
               <% end %>
+           <% elsif @domain_root_account.account_header.nil? || Attachment.exists?(@domain_root_account.account_header.header_logo_url) == false %>
+                 <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+             <% else %>
+             <a  href="<%= root_url %>"><img class="logo" style="width: 160px;height: 40px;left: 14px;bottom: 4px;position: absolute;"
+                                             src= <%= header_logo_image %>></a>
            <% end %>
         <% else  %>
              <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>

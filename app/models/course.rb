@@ -171,8 +171,11 @@ class Course < ActiveRecord::Base
   attr_accessor :import_source
   has_many :zip_file_imports, :as => :context
   has_many :content_participation_counts, :as => :context, :dependent => :destroy
+  #arrivu changes
   has_many :course_pricings
   has_one :course_description
+  has_one :course_image
+  #arrivu changes
   include Profile::Association
 
   before_save :assign_uuid

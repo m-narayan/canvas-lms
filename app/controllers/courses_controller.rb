@@ -1759,27 +1759,37 @@ class CoursesController < ApplicationController
         deleted_attachments = @attachment.handle_duplicates(duplicate_handling)
         if success
           if (params[:course_image_upload] == "back_ground_image")
-            if @context.back_ground_image_url.nil?
-              @context.back_ground_image_url = @attachment.id
+            if @context.course_image.nil?
+              @course_image = CourseImage.new(account_id: @domain_root_account.id,course_id: @context.id,course_back_ground_image_attachment_id: @attachment.id)
+            elsif @context.course_image.course_back_ground_image_attachment_id.nil?
+              @background_image =CourseImage.find(@context.course_image.id)
+              @course_image = @background_image.update_attributes(:course_back_ground_image_attachment_id => @attachment.id)
             else
-              @prev_attachment = Attachment.find(@context.back_ground_image_url)
+              @background_image =CourseImage.find(@context.course_image.id)
+              @prev_attachment = Attachment.find(@context.course_image.course_back_ground_image_attachment_id)
               if authorized_action(@attachment, @current_user, :delete)
+                @course_image = @background_image.update_attributes(:course_back_ground_image_attachment_id => @attachment.id)
                 @prev_attachment.delete
-                @context.back_ground_image_url = @attachment.id
               end
             end
           elsif(params[:course_image_upload] == "image")
-            if @context.image_url.nil?
-               @context.image_url = @attachment.id
+            if @context.course_image.nil?
+              @course_image = CourseImage.new(account_id: @domain_root_account.id,course_id: @context.id,course_image_attachment_id: @attachment.id)
+            elsif @context.course_image.course_image_attachment_id.nil?
+              @image =CourseImage.find(@context.course_image.id)
+              @course_image = @image.update_attributes(:course_image_attachment_id => @attachment.id)
             else
-              @prev_attachment = Attachment.find(@context.image_url)
+              @image =CourseImage.find(@context.course_image.id)
+              @prev_attachment = Attachment.find(@context.course_image.course_image_attachment_id)
               if authorized_action(@attachment, @current_user, :delete)
+                @course_image = @image.update_attributes(:course_image_attachment_id => @attachment.id)
                 @prev_attachment.delete
-                @context.image_url = @attachment.id
               end
              end
           end
-          @context.save
+          if @context.course_image.nil?
+            @course_image.save
+          end
           format.html { return_to(params[:return_to], named_context_url(@context, :context_files_url)) }
           format.json do
             render_attachment_json(@attachment, deleted_attachments, @folder)
