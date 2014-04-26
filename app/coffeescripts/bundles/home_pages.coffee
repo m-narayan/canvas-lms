@@ -1,22 +1,29 @@
 require [
   'compiled/views/HomePages/IndexView'
   'compiled/collections/AccountSlidersCollection'
+  'compiled/collections/PopularCoursesCollection'
   'compiled/views/HomePages/AccountSliderCollectionView'
   'compiled/views/HomePages/AccountStatisticsView'
-], (IndexView,AccountSliderCollection,AccountSliderCollectionView,AccountStatisticsView) ->
+  'compiled/views/HomePages/PopularCourseCollectionView'
+], (IndexView,AccountSliderCollection,PopularCoursesCollection,AccountSliderCollectionView,AccountStatisticsView,
+    PopularCourseCollectionView) ->
 
   # Collections
 
   accountSliderCollection = new AccountSliderCollection
+  popularCourseCollection = new PopularCoursesCollection
 
   # Views
   accountSliderCollectionView = new AccountSliderCollectionView
     collection: accountSliderCollection
   accountStatisticsView = new AccountStatisticsView
+  popularCourseCollectionView = new PopularCourseCollectionView
+    collection: popularCourseCollection
 
   @app = new IndexView
     accountSliderCollectionView: accountSliderCollectionView
     accountStatisticsView: accountStatisticsView
+    popularCourseCollectionView: popularCourseCollectionView
     el: '#content'
 
   @app.render()
@@ -40,4 +47,6 @@ require [
         pause: 1500
         pause_on_hover: true
   )
+  popularCourseCollection.fetch()
+
 

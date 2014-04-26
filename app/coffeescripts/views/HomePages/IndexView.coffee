@@ -13,6 +13,7 @@ define [
 
     @child 'accountSliderCollectionView',  '[data-view=sliders]'
     @child 'accountStatisticsView', '[data-view=accountStatistics]'
+    @child 'popularCourseCollectionView', '[data-view=popularCourses'
 
     template: template
 

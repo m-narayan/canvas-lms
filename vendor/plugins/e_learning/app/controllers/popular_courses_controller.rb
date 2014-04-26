@@ -1,0 +1,2 @@
+class PopularCoursesController < ApplicationController
+end
