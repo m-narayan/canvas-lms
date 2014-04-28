@@ -1082,13 +1082,13 @@ routes.draw do
     end
 
     scope(:controller => :popular_courses) do
-      def ef_routes(context)
+      def et_routes(context)
         get "#{context}s/:#{context}_id/popular_courses", :action => :index, :path_name => "#{context}_popular_courses"
         post "#{context}s/:#{context}_id/popular_courses", :action => :create, :path_name => "#{context}_popular_courses_create"
         put "#{context}s/:#{context}_id/popular_courses/:popular_courses_id", :action => :update, :path_name => "#{context}_popular_courses_update"
         delete "#{context}s/:#{context}_id/popular_courses/:popular_courses_id", :action => :destroy, :path_name => "#{context}_popular_courses_delete"
       end
-      ef_routes("course")
+      et_routes("account")
     end
 
     #scope(:controller => :course_descriptions) do
