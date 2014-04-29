@@ -10,22 +10,38 @@
 <h2>
     {{course_name}}
 </h2>
-<ul>
- <li>
-<table style="margin-top: -20px">
+<table style="margin-top: 23px;color:#0F0D0D;;font-weight: 100;">
     <tr>
-        <td style="padding-left: 20px">
-            {{users}}
+        <td style="padding-left: 12px;">
+           <img src="images/icon-book.png">
         </td>
-        <td style="padding-left: 30px">
-            {{tags}}
-        </td>
-        <td style="padding-left: 30px">
+        <td>
 
+        </td>
+        <td style="padding-left: 49px;">
+            <img src="images/icon-user.png">
+        </td>
+        <td style="padding-left:2px">
+            {{users_count}}
+        </td>
+        <td style="padding-left: 49px;">
+            <img src="images/icon-tag.png">
+        </td>
+        <td style="padding-left: 2px">
+            {{tags_count}}
         </td>
     </tr>
 </table>
+<ul class="tags" style="list-style-type: none;">
+ {{#each course_tags}}
+ <li>
+ {{course_tag.name}}
  </li>
+ {{/each}}
 </ul>
+ <p class="desc">
+    {{course_short_decription}}
+ </p>
+
 </div>
 </div>

@@ -213,27 +213,27 @@
   margin: 0 0 8px 12px;
 }
 
-.tags {
-  li {
-    &:active {
-      margin-top: 1px;
-      margin-bottom: 7px;
-    }
-    &:after {
-      content: '';
-      z-index: 2;
-      position: absolute;
-      top: 10px;
-      right: -2px;
-      width: 5px;
-      /*    height: 6px;
-          opacity: .95;
-          background: #eb6b22;*/
-      border-radius: 3px 0 0 3px;
-      -webkit-box-shadow: inset 1px 0 #99400e;
-      box-shadow: inset 1px 0 #99400e;
-    }
+.tags li {
+  &:active {
+    margin-top: 1px;
+    margin-bottom: 7px;
   }
+  &:after {
+    content: '';
+    z-index: 2;
+    position: absolute;
+    top: 10px;
+    right: -2px;
+    width: 5px;
+    /*    height: 6px;
+        opacity: .95;
+        background: #eb6b22;*/
+    border-radius: 3px 0 0 3px;
+    -webkit-box-shadow: inset 1px 0 #99400e;
+    box-shadow: inset 1px 0 #99400e;
+  }
+}
+.tags {
   a, span {
     display: block;
     -webkit-box-sizing: border-box;
@@ -272,7 +272,7 @@
     top: 1px;
     left: 100%;
     z-index: 2;
-//    overflow: hidden;
+    overflow: hidden;
     max-width: 0;
     height: 24px;
     line-height: 21px;
@@ -408,6 +408,8 @@
     clear: both;
     .author, .info, .desc, .product-status {
       margin: 5px 15px;
+      font-size: smaller;
+      color: black;
     }
     ul {
       border: 1px #dbdbdb solid;
@@ -418,6 +420,7 @@
       font-size: 0.85em;
       font-weight: 600;
       padding-top: 1em;
+      padding-right: 104px;
     }
   }
   h2 {
@@ -434,7 +437,7 @@
 .content-box {
   background-color: #fff;
   border: 1px solid #ddd;
-  left: 58px;
+  left:  150px;
   clear: none;
   margin: 0px 55px 7px 0px;
   overflow: visible;
@@ -482,12 +485,14 @@
 
   border: 1px #dbdbdb solid;
   border-width: 1px 0px;
-  color: #aaaaaa;
+  color: #141313;
   height: 3em;
   margin: -1px 15px;
   font-size: 0.85em;
   font-weight: 600;
   padding-top: 1em;
+  margin-top: 9px;
+  padding-right: 104px;
 }
 
 
