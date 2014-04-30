@@ -6,7 +6,7 @@ require [
   'compiled/views/HomePages/AccountStatisticsView'
   'compiled/views/HomePages/PopularCourseCollectionView'
 ], (IndexView,AccountSliderCollection,PopularCoursesCollection,AccountSliderCollectionView,AccountStatisticsView,
-    PopularCourseCollectionView) ->
+    PopularCourseCollectionView,AccountCourseCollectionView) ->
 
   # Collections
 

@@ -34,7 +34,7 @@ define [
       super
       @$el.dialog
         title: 'Add Account Slider'
-        width:  650
+        width:  800
         height: 600
         close: => @$el.remove()
       @showallSlides()

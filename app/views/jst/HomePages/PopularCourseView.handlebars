@@ -1,4 +1,5 @@
 
+{{#if popular_course}}
 <div class="span3 content-box resource" style="float: left">
 <div class="type-tag-positioner" style="background-image: url('{{course_background_image}}')">
     <img alt="Course_image" class="course-badge img-circle" src="{{course_image}}" style="padding:5px;">
@@ -35,7 +36,7 @@
 <ul class="tags" style="list-style-type: none;">
  {{#each course_tags}}
  <li>
- {{course_tag.name}}
+ {{name}}
  </li>
  {{/each}}
 </ul>
@@ -45,3 +46,4 @@
 
 </div>
 </div>
+{{/if}}

@@ -5440,6 +5440,8 @@ en-GB:
     AddAccountSlider:
       delete: "Delete Sliders"
       account_slider_deleted_message: "Account Sliders deleted successfully!"
+    AddpopularCourse:
+      popular_courses_created_message: "Popular Courses Added Suceessfully!"
     course_pricings:
       delete : "Delete Price of"
       course_price_deleted_message: "Price deleted successfully!"

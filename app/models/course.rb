@@ -175,6 +175,7 @@ class Course < ActiveRecord::Base
   has_many :course_pricings
   has_one :course_description
   has_one :course_image
+  has_one :popular_course
   #arrivu changes
   include Profile::Association
 
