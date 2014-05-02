@@ -61,11 +61,6 @@ class HomePagesController < ApplicationController
               @prev_attachment.delete
               @account.account_header.update_attributes(account_id: @domain_root_account.id,header_logo_url: @attachment.id)
             end
-            #if (params[:course_image_upload] == "back_ground_image")
-            #  @context.back_ground_image_url=account_file_preview_path(@context,@attachment)
-            #elsif(params[:course_image_upload] == "image")
-            #  @context.image_url=account_file_preview_path(@context,@attachment)
-            #end
             @account.save
             format.html { return_to(params[:return_to], named_context_url(@account, :context_files_url))  }
             format.json do

@@ -33,13 +33,16 @@
         </td>
     </tr>
 </table>
-<ul class="tags" style="list-style-type: none;">
- {{#each course_tags}}
- <li>
- {{name}}
- </li>
- {{/each}}
-</ul>
+    <ul class="tags" style="list-style-type: none;">
+        {{#each course_tags}}
+            <li>
+                <a href="#"><b>{{name}}</b>
+                    <span>0</span>
+                </a>
+
+            </li>
+        {{/each}}
+    </ul>
  <p class="desc">
     {{course_short_decription}}
  </p>

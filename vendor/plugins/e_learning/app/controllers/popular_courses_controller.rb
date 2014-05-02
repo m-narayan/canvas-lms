@@ -13,6 +13,7 @@ class PopularCoursesController < ApplicationController
         @course_tags = course.tags
         if course.popular_course
           @popular_course = true
+          @popular_id = course.popular_course.id
         else
           @popular_course = false
         end
@@ -24,6 +25,7 @@ class PopularCoursesController < ApplicationController
         background_image_attchment = Attachment.find(@course_image.course_back_ground_image_attachment_id)
         @course_json =   api_json(course, @current_user, session, API_USER_JSON_OPTS).tap do |json|
           json[:id] = course.id
+          json[:popular_id] = @popular_id
           json[:course_name] = course.name
           json[:course_image] = file_download_url(image_attachment, { :verifier => image_attachment.uuid, :download => '1', :download_frd => '1' })
           json[:course_background_image] = file_download_url(background_image_attchment, { :verifier => background_image_attchment.uuid, :download => '1', :download_frd => '1' })
@@ -44,6 +46,18 @@ class PopularCoursesController < ApplicationController
     respond_to do |format|
       if @popular_course.save
         format.json { render :json => @popular_course.to_json}
+      end
+    end
+  end
+
+  def destroy
+    @delete_popular_course_item = PopularCourse.find(params['popular_course_data']['popular_course_id'])
+    respond_to do |format|
+      @delete_popular_course_item.delete
+      if @delete_popular_course_item.delete
+        format.json {render :json => @delete_popular_course_item.to_json}
+      else
+        format.json { render :json => @delete_popular_course_item.errors.to_json, :status => :bad_request }
       end
     end
   end

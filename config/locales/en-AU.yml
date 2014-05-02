@@ -5355,8 +5355,9 @@ en-AU:
     AddAccountSlider:
       delete: "Delete Sliders"
       account_slider_deleted_message: "Account Sliders deleted successfully!"
-    AddpopularCourse:
+    AddPopularCourse:
       popular_courses_created_message: "Popular Courses Added Suceessfully!"
+      popular_courses_deleted_message: "Popular Courses Deleted Suceessfully!"
     titles:
       upload_account_sliders: "Upload Sliders"
   course_pricings:
