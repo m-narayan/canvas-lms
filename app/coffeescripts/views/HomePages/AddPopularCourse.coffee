@@ -7,6 +7,7 @@ define [
   'compiled/collections/PopularCoursesCollection'
   'compiled/views/HomePages/AccountCourseCollectionView'
   'compiled/views/ValidatedFormView'
+  'jquery.disableWhileLoading'
 ], ($,I18n,htmlEscape, template,PopularCoure,PopularCoursesCollection,AccountCourseCollectionView,ValidatedFormView) ->
 
   class AddPopularCourse extends ValidatedFormView
@@ -47,6 +48,7 @@ define [
 
     onSuccessdelete = (event) ->
       $.flashMessage(htmlEscape(I18n.t('popular_courses_deleted_message', " Popular Courses Deleted Suceessfully!")))
+
     onError = => @onSaveFail()
 
     addpopularcourse:(event)->
@@ -77,12 +79,11 @@ define [
             click: =>
               url = "api/v1/accounts/"+ENV.account_id+"/popular_courses/"+ id
               console.log(url)
-              $.ajaxJSON url, 'DELETE',data, onSuccessdelete,onError
+              @$el.disableWhileLoading($.ajaxJSON url, 'DELETE',data, onSuccessdelete,onError)
               dialog.dialog 'close'
               @showallAccountCourses()
           ]
       else
         url = "api/v1/accounts/"+ENV.account_id+"/popular_courses"
-        $.ajaxJSON url,'POST',data, onSuccess,onError
+        @$el.disableWhileLoading($.ajaxJSON url,'POST',data, onSuccess,onError)
         @showallAccountCourses()
-

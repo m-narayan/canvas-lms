@@ -9,8 +9,10 @@ class PopularCoursesController < ApplicationController
         #attachment = Attachment.find(slider.account_slider_attachment_id)
         @course_image = CourseImage.find(course.id)
         @users_count = course.users.count
-        @course_tags_count = course.tags.count
         @course_tags = course.tags
+        #course.tags.each do |tag|
+        # @each_tag_count = course.tag.count
+        #end
         if course.popular_course
           @popular_course = true
           @popular_id = course.popular_course.id
