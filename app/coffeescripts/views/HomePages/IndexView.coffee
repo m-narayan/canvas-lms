@@ -9,7 +9,8 @@ define [
   'compiled/views/HomePages/AccountSliderCollectionView'
   'compiled/views/HomePages/AddPopularCourse'
   'slider'
-], ($, I18n, template, AddAccontSliders, AccountSlider, PopularCourse,AccountSliderCollection,AccountSliderCollectionView,AddPopularCourse) ->
+], ($, I18n, template, AddAccontSliders, AccountSlider, PopularCourse,
+    AccountSliderCollection,AccountSliderCollectionView,AddPopularCourse) ->
 
   class IndexView extends Backbone.View
 

@@ -6,7 +6,7 @@ require [
   'compiled/views/HomePages/AccountStatisticsView'
   'compiled/views/HomePages/PopularCourseCollectionView'
 ], (IndexView,AccountSliderCollection,PopularCoursesCollection,AccountSliderCollectionView,AccountStatisticsView,
-    PopularCourseCollectionView,AccountCourseCollectionView) ->
+    PopularCourseCollectionView) ->
 
   # Collections
 
@@ -19,6 +19,7 @@ require [
   accountStatisticsView = new AccountStatisticsView
   popularCourseCollectionView = new PopularCourseCollectionView
     collection: popularCourseCollection
+
 
   @app = new IndexView
     accountSliderCollectionView: accountSliderCollectionView

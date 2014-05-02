@@ -2,6 +2,7 @@ class HomePagesController < ApplicationController
 
   def index
     js_env :add_image_url => account_sliders_path(@domain_root_account.id)
+    js_env :add_knowledge_partners_url => account_knowledge_partners_path(@domain_root_account.id)
     js_env :context_asset_string => @domain_root_account.try(:asset_string)
     js_env :account_id => @domain_root_account.id
     js_env :PERMISSIONS => {
