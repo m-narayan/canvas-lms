@@ -7,12 +7,22 @@ class PopularCoursesController < ApplicationController
       @account_courses = @domain_root_account.courses
       @account_courses.each_with_index do |course, idx|
         #attachment = Attachment.find(slider.account_slider_attachment_id)
+        @teachers = course.teacher_enrollments
+        @profile_data = []
+        @teachers.each do |teacher|
+          @user_id = User.find(teacher.user_id)
+          if @user_id.profile.bio !=nil && @user_id.profile.title !=nil
+            @profile = @user_id.profile
+            @profile_data << @profile
+          end
+        end
         @course_image = CourseImage.find(course.id)
         @users_count = course.users.count
         @course_tags = course.tags
-        #course.tags.each do |tag|
-        # @each_tag_count = course.tag.count
-        #end
+        @each_tag_counts = []
+        @course_tags.each do |tag|
+          @each_tag_counts = ActsAsTaggableOn::Tagging.find_all_by_tag_id(tag).count
+        end
         if course.popular_course
           @popular_course = true
           @popular_id = course.popular_course.id
@@ -36,6 +46,8 @@ class PopularCoursesController < ApplicationController
           json[:course_tags] = @course_tags.map(&:attributes)
           json[:course_short_decription] = @short_course_desc
           json[:popular_course] = @popular_course
+          json[:each_tag_count] = @each_tag_counts
+          json[:profile_data] =  @profile_data.map(&:attributes)
         end
         @courses << @course_json
       end
