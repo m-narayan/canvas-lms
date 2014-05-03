@@ -10,9 +10,10 @@ class PopularCoursesController < ApplicationController
         @course_image = CourseImage.find(course.id)
         @users_count = course.users.count
         @course_tags = course.tags
-        #course.tags.each do |tag|
-        # @each_tag_count = course.tag.count
-        #end
+        @each_tag_counts = []
+        @course_tags.each do |tag|
+        @each_tag_counts << ActsAsTaggableOn::Tagging.find_all_by_tag_id(tag).count
+        end
         if course.popular_course
           @popular_course = true
           @popular_id = course.popular_course.id
