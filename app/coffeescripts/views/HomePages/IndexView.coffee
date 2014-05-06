@@ -3,13 +3,14 @@ define [
   'i18n!home_pages'
   'jst/HomePages/IndexView'
   'compiled/views/HomePages/AddAccountSlider'
+  'compiled/views/HomePages/AddknowledgePartner'
   'compiled/models/AccountSlider'
   'compiled/models/PopularCourse'
   'compiled/collections/AccountSlidersCollection'
   'compiled/views/HomePages/AccountSliderCollectionView'
   'compiled/views/HomePages/AddPopularCourse'
   'slider'
-], ($, I18n, template, AddAccontSliders, AccountSlider, PopularCourse,
+], ($, I18n, template, AddAccontSliders,AddknowledgePartner, AccountSlider, PopularCourse,
     AccountSliderCollection,AccountSliderCollectionView,AddPopularCourse) ->
 
   class IndexView extends Backbone.View
@@ -23,6 +24,7 @@ define [
     events:
       'click #add_account_sliders' : 'addAccountSlider'
       'click #add_popular_courses' : 'addPopularCourse'
+      'click #add_knowledge_partners': 'addKnowledgePartner'
 
     addAccountSlider: ->
       newAccountSliderView = new AccountSlider
@@ -36,5 +38,7 @@ define [
         model: newpopularCourse
       @addPopularCourseView.render()
 
+    addKnowledgePartner: ->
+      newaddKnowledge
 
 
