@@ -9,3 +9,4 @@ define [
 
     template: template
     itemView: AccountCourseView
+

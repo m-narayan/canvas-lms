@@ -2,6 +2,8 @@ define [
   'jquery'
   'jst/HomePages/PopularCourseView'
   'i18n!home_pages'
+  'jqueryui/jquery.jcontent.0.8',
+  'jqueryui/jquery.easing.1.3'
 ], ($, template, I18n) ->
 
   class PopularCourseView extends Backbone.View

@@ -4,7 +4,7 @@
         <div class="ribbon-wrapper-green"><div class="ribbon-green">Popular Course</div></div>
     </div>
 {{else}}
-<div class="span3 content-box resource" style="float: left;height: 389px;left: 100px;" id="is_not_a_popular_course" >
+<div class="span3 content-box resource" style="float: left;height: 410px;left: 100px;" id="is_not_a_popular_course" >
 {{/if}}
 
     <div class="type-tag-positioner" style="background-image: url('{{course_background_image}}')">
@@ -42,16 +42,18 @@
         <ul class="tags" style="list-style-type: none;">
             {{#each course_tags}}
                 <li>
-                    <a href="#"><b>{{name}}</b>
-                    <span>0</span>
+                    <a href="#"><b>{{tag_name}}</b>
+                        <span>{{each_tag_count}}</span>
                     </a>
 
                 </li>
             {{/each}}
+
         </ul>
 
-        <p class="desc">
+        <p class="desc" style="height:36px">
             {{course_short_decription}}
         </p>
+        </div>
     </div>
 </div>
