@@ -5360,6 +5360,7 @@ en-AU:
       popular_courses_deleted_message: "Popular Courses Deleted Suceessfully!"
     titles:
       upload_account_sliders: "Upload Sliders"
+      upload_knowledge_partner_logo: "Upload KnowledgePartner Logo"
   course_pricings:
     delete : "Delete Price of"
     course_price_deleted_message: "Price deleted successfully!"

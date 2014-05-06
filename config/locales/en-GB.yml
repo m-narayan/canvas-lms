@@ -5448,6 +5448,7 @@ en-GB:
       course_price_deleted_message: "Price deleted successfully!"
     titles:
        upload_account_sliders: "Upload Sliders"
+       upload_knowledge_partner_logo: "Upload KnowledgePartner Logo"
    #end of arrivu changes
   facebook: 
     authorization_required: "Only authorised users can access that page"

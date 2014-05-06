@@ -5,13 +5,16 @@ require [
   'compiled/views/HomePages/AccountSliderCollectionView'
   'compiled/views/HomePages/AccountStatisticsView'
   'compiled/views/HomePages/PopularCourseCollectionView'
+  'compiled/collections/KnowledgePartnersCollection'
+  'compiled/views/HomePages/KnowledgePartnerCollectionView'
 ], (IndexView,AccountSliderCollection,PopularCoursesCollection,AccountSliderCollectionView,AccountStatisticsView,
-    PopularCourseCollectionView) ->
+    PopularCourseCollectionView,KnowledgePartnersCollection,KnowledgePartnerCollectionView) ->
 
   # Collections
 
   accountSliderCollection = new AccountSliderCollection
   popularCourseCollection = new PopularCoursesCollection
+  knowledgePartnerCollection = new KnowledgePartnersCollection
 
   # Views
   accountSliderCollectionView = new AccountSliderCollectionView
@@ -19,12 +22,14 @@ require [
   accountStatisticsView = new AccountStatisticsView
   popularCourseCollectionView = new PopularCourseCollectionView
     collection: popularCourseCollection
-
+  knowledgePartnerCollectionView = new KnowledgePartnerCollectionView
+    collection: knowledgePartnerCollection
 
   @app = new IndexView
     accountSliderCollectionView: accountSliderCollectionView
     accountStatisticsView: accountStatisticsView
     popularCourseCollectionView: popularCourseCollectionView
+    knowledgePartnerCollectionView: knowledgePartnerCollectionView
     el: '#content'
 
   @app.render()
@@ -49,5 +54,6 @@ require [
         pause_on_hover: true
   )
   popularCourseCollection.fetch()
+  knowledgePartnerCollection.fetch()
 
 

@@ -4,8 +4,7 @@ define [
   'i18n!home_pages'
   'str/htmlEscape'
   'jst/HomePages/AddknowledgePartner'
-  'compiled/models/KnowledgePartner'
-], ({View},$,I18n,htmlEscape, template,KnowledgePartner) ->
+], ({View},$,I18n,htmlEscape, template) ->
 
   class AddKnowledgePartner extends View
     template: template
