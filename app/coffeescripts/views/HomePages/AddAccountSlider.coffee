@@ -99,7 +99,6 @@ define [
       @$el.prepend("<div class='alert alert-error'>#{message}</span>")
 
     onSuccess = (event) ->
-      console.log("inside success event")
       $.flashMessage(htmlEscape(I18n.t('account_slider_deleted_message', " Account Sliders deleted successfully!")))
 
     onError = => @onSaveFail()

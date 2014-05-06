@@ -1,5 +1,5 @@
 
-<form enctype="multipart/form-data" id="upload_account_sliders" style="margin-top: 21px;" action="{{ENV.add_knowledge_partners_url}}"
+<form enctype="multipart/form-data" id="upload_knowledge_partners" style="margin-top: 21px;" action="{{ENV.add_knowledge_partners_url}}"
       method="post"  title="{{#t "titles.upload_knowledge_partner_logo"}}Upload KnowledgePartner Logo{{/t}}">
     <input type="hidden" name='authenticity_token' value="{{ENV.AUTHENTICITY_TOKEN}}">
     <table>
@@ -13,7 +13,15 @@
         </tr>
         <tr>
             <td>
-                <button type="submit" class="btn btn-small" id="add_account_slider">
+                <label style="width: 151px;margin-left: 102px;margin-bottom: 112px;" > Partners Info</label>
+            </td>
+            <td>
+                <textarea id="knowledge_partner_info"  name="knowledge_partner_info" cols="70" rows="10" style="width:250px"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-small" id="add_knowledge_partner">
                     {{#t "butons.add_picture_file"}}Add File{{/t}}
                 </button>
             </td>
@@ -25,3 +33,6 @@
 <hr style="height: 5px;">
 </body>
 </html>
+<div id ="all_knowledge_partners">
+
+</div>
