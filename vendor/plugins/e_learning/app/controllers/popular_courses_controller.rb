@@ -25,7 +25,7 @@ class PopularCoursesController < ApplicationController
         end
         if course.course_description
           @course_desc = CourseDescription.find(course.id)
-          @short_course_desc = @course_desc.long_description
+          @short_course_desc = truncate_text(@course_desc.long_description, :length =>40)
         end
         image_attachment = Attachment.find(@course_image.course_image_attachment_id)
         background_image_attchment = Attachment.find(@course_image.course_back_ground_image_attachment_id)
@@ -55,7 +55,7 @@ class PopularCoursesController < ApplicationController
     @teachers.each do |teacher|
       @user_id = User.find(teacher.user_id)
       if @user_id.profile.bio !=nil && @user_id.profile.title !=nil
-        @profile = @user_id.profile.bio
+        @profile = truncate_text(@user_id.profile.bio,:length => 30)
 
         if @user_id.avatar_image_url.nil?
           @profile_pict = "/images/User.png"
