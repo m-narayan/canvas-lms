@@ -1,6 +1,6 @@
 
 {{#if popular_course}}
-<div class="span3 content-box resource" style="float: left;height: 100px;width: 322px;left: 41px;">
+<div class="span3 content-box resource" style="float: left;height: 100px;width: 322px;">
 <div class="type-tag-positioner" style="background-image: url('{{course_background_image}}')">
     <img alt="Course_image" class="course-badge img-circle" src="{{course_image}}" style="padding:5px;">
     <div class="type ribbon1" style="background-color: darkblue;">
@@ -24,6 +24,9 @@
         </td>
         <td style="padding-left:2px">
             {{users_count}}
+            <span
+              data-tooltip title="Course has {{users_count}} users">
+            </span>
         </td>
         <td style="padding-left: 66px;">
             <img src="images/icon-tag.png">

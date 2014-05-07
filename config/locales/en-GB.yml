@@ -5443,6 +5443,9 @@ en-GB:
     AddPopularCourse:
       popular_courses_created_message: "Popular Courses Added Suceessfully!"
       popular_courses_deleted_message: "Popular Courses Deleted Suceessfully!"
+    AddKnowledgePartner:
+      knowledge_partner_deleted_message: "Knowledge Partner Details deleted successfully!"
+      knowledge_partner_created_message: "Knowledge Partner Details Added Suceessfully!"
     course_pricings:
       delete : "Delete Price of"
       course_price_deleted_message: "Price deleted successfully!"

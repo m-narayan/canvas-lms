@@ -77,9 +77,11 @@ class KnowledgePartnersController < ApplicationController
   end
 
   def destroy
-    @knowledge_partner = KnowledgePartner.find(params[:id])
+    @knowledge_partner = KnowledgePartner.find(params[:knowledge_partners_id])
+    @attachment = Attachment.find(@knowledge_partner.knowledge_partners_attachment_id)
     respond_to do |format|
-      if  @knowledge_partner.destroy
+      @attachment.delete
+      if  @knowledge_partner.delete
         format.json { render :json =>  @knowledge_partner }
       else
         format.json { render :json =>  @knowledge_partner.errors.to_json, :status => :bad_request }

@@ -8,7 +8,7 @@ define [
 
     template: template
     tagName: 'li'
-    className: 'knowledge_partner_item span3'
+    className: 'knowledge_partners_item span3'
 
     afterRender: ->
       @$el.attr('id', 'knowledge_partner_' + @model.get('id'))

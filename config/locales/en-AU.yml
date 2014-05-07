@@ -5358,6 +5358,9 @@ en-AU:
     AddPopularCourse:
       popular_courses_created_message: "Popular Courses Added Suceessfully!"
       popular_courses_deleted_message: "Popular Courses Deleted Suceessfully!"
+    AddKnowledgePartner:
+      knowledge_partner_deleted_message: "Knowledge Partner Details deleted successfully!"
+      knowledge_partner_created_message: "Knowledge Partner Details Added Suceessfully!"
     titles:
       upload_account_sliders: "Upload Sliders"
       upload_knowledge_partner_logo: "Upload KnowledgePartner Logo"

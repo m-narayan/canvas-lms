@@ -14,8 +14,11 @@ class PopularCoursesController < ApplicationController
         else
           @course_tags_count = course.tags.count
         end
-
-        @users_count = course.users.count
+        if course.users.nil?
+          @users_count = 0
+        else
+          @users_count = course.users.count
+        end
         @course_tags = tag_details(course)
         if course.popular_course
           @popular_course = true
@@ -25,7 +28,7 @@ class PopularCoursesController < ApplicationController
         end
         if course.course_description
           @course_desc = CourseDescription.find(course.id)
-          @short_course_desc = truncate_text(@course_desc.long_description, :length =>40)
+          @short_course_desc = truncate_text(@course_desc.long_description, :length =>60)
         end
         image_attachment = Attachment.find(@course_image.course_image_attachment_id)
         background_image_attchment = Attachment.find(@course_image.course_back_ground_image_attachment_id)

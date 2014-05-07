@@ -49,10 +49,10 @@ define [
         object_name: 'knowledgepartner'
         required: ['knowledgepartner[uploaded_data]']
 
-    delete_knowledge_partners: ->
+    delete_knowledge_partners:(event) ->
       deleteview = @$(event.currentTarget).closest('.knowledge_partners_item').data('view')
-      delete_course_price_item = deleteview.model
-      deletemsg = "Are you sure want to remove the price of this Course?"
+      delete_knowledge_partner_item = deleteview.model
+      deletemsg = "Are you sure want to remove this Knowledge Partner from this account?"
       dialog = $("<div>#{deletemsg}</div>").dialog
         modal: true,
         resizable: false
@@ -62,14 +62,17 @@ define [
         ,
           text: 'Delete'
           click: =>
-            delete_course_price_item.destroy()
+            url = "api/v1/accounts/"+ENV.account_id+"/knowledge_partners/"+delete_knowledge_partner_item.id
+            $.ajaxJSON url, 'DELETE',{}, ondeleteSuccess,onError
             dialog.dialog 'close'
-            $.flashMessage(htmlEscape(I18n.t('course_price_deleted_message', " Price deleted successfully!")))
+            @show_all_knowledge_partners()
         ]
 
+    ondeleteSuccess = (event) ->
+      $.flashMessage(htmlEscape(I18n.t('knowledge_partner_deleteed_message', " Knowledge Partner Details Removed Suceessfully!")))
 
     onSuccess = (event) ->
-      $.flashMessage(htmlEscape(I18n.t('popular_courses_created_message', " Popular Courses Added Suceessfully!")))
+      $.flashMessage(htmlEscape(I18n.t('knowledge_partner_created_message', " Knowledge Partner Details Added Suceessfully!")))
 
     onError = => @onSaveFail()
 
